@@ -1,4 +1,4 @@
-# Contributing to Casper Swift SDK
+# Contributing to Casper Kotlin SDK
 We appreciate all type of inputs. We want to make contributing to this project as easy and transparent as possible, whether it's:
 
 - Reporting a bug
@@ -28,7 +28,7 @@ In short, when you submit code changes, your submissions are understood to be un
 ## Sign your work
 
 We use the Developer Certificate of Origin (DCO) as a additional safeguard
-for the Casper Swift SDK project. This is a well established and widely used
+for the Casper Kotlin SDK project. This is a well established and widely used
 mechanism to assure contributors have confirmed their right to license
 their contribution under the project's license.
 Please read [developer-certificate-of-origin](.github/developer-certificate-of-origin).

@@ -53,9 +53,15 @@ class GetDeployResult {
                 executableDeployItem.itsType = ExecutableDeployItem.MODULE_BYTES
                 var eMB: ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
                 eMB.module_bytes = "aaaa"
-                eMB.module_bytes = deployPaymentMB.get("ModuleBytes").get("module_bytes").toString()
+                //eMB.module_bytes = deployPaymentMB.get("ModuleBytes").get("module_bytes").toString()
                 executableDeployItem.itsValue.add(eMB)
                 deploy.payment = executableDeployItem
+                var obj =  deploy.payment.itsValue.component1()
+                if (obj is ExecutableDeployItem_ModuleBytes) {
+                    println("First of deploy payment is module bytes")
+                } else {
+                    println("First of deploy payment is NOT module bytes")
+                }
             } else {
                 println("Not module bytes")
             }

@@ -1,5 +1,8 @@
 package com.casper.sdk.getdeploy.ExecutableDeployItem
 
-class RuntimeArgs (
-    var listNamedArg: MutableList<NamedArg>,
-        )
+class RuntimeArgs {
+    var listNamedArg: MutableList<NamedArg> = mutableListOf()
+    constructor() {
+
+    }
+}

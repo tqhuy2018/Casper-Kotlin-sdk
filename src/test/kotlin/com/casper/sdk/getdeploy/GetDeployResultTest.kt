@@ -8,6 +8,7 @@ internal class GetDeployResultTest {
 
     @Test
     fun getDeployFromJsonStr() {
-
+        var getDeployResult: GetDeployResult = GetDeployResult()
+        //getDeployResult = GetDeployResult.
     }
 }

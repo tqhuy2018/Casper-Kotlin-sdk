@@ -1,5 +1,7 @@
 package com.casper.sdk.getdeploy
 
+import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem
+import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem_ModuleBytes
 import com.casper.sdk.getpeers.GetPeersResult
 import com.casper.sdk.getpeers.PeerEntry
 import net.jemzart.jsonkraken.get
@@ -40,11 +42,20 @@ class GetDeployResult {
         getDeployResult.api_version = json.get("result").get("api_version").toString()
         val deployPayment:String = json.get("result").get("deploy").get("payment").toJsonString()
         println("Deploy payment is:" + deployPayment)
+        var deploy:Deploy = Deploy()
+        deploy.hash = json.get("result").get("deploy").get("hash").toString()
+        var executableDeployItem:ExecutableDeployItem = ExecutableDeployItem()
         val deployPaymentMB = json.get("result").get("deploy").get("payment")
         if (deployPaymentMB is JsonObject) {
-            val innerMB:String = deployPaymentMB.get("ModuleBytes").toJsonString()
-            if(innerMB != "null" ) {
-                println("InnerMB----:" + innerMB)
+            val innerPayment:String = deployPaymentMB.get("ModuleBytes").toJsonString()
+            if(innerPayment != "null" ) {
+                println("InnerMB----:" + innerPayment)
+                executableDeployItem.itsType = ExecutableDeployItem.MODULE_BYTES
+                var eMB: ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
+                eMB.module_bytes = "aaaa"
+                eMB.module_bytes = deployPaymentMB.get("ModuleBytes").get("module_bytes").toString()
+                executableDeployItem.itsValue.add(eMB)
+                deploy.payment = executableDeployItem
             } else {
                 println("Not module bytes")
             }

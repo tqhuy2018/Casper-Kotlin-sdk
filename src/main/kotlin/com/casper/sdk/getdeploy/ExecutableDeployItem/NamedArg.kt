@@ -1,6 +1,8 @@
 package com.casper.sdk.getdeploy.ExecutableDeployItem
 
-class NamedArg (
-    var itsName:String,
-    //CLValue
-        )
+import com.casper.sdk.clvalue.CLValue
+
+class NamedArg {
+    var itsName:String = ""
+    var clValue:CLValue = CLValue()
+}

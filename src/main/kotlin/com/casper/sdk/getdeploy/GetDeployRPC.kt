@@ -3,9 +3,11 @@ package com.casper.sdk.getdeploy
 import com.casper.sdk.ConstValues
 import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem
 import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem_ModuleBytes
+import com.casper.sdk.getdeploy.ExecutableDeployItem.RuntimeArgs
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.toJsonString
+import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 import java.net.URI
 import java.net.URLEncoder
@@ -25,7 +27,6 @@ class GetDeployRPC {
             .header("Content-Type", "application/json")
             .build()
         val response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        //println(response.body())
         val json =response.body().toJson()
         println(json.toJsonString())
         getDeployResult.api_version = json.get("result").get("api_version").toString()
@@ -41,16 +42,17 @@ class GetDeployRPC {
                 println("InnerMB----:" + innerPayment)
                 executableDeployItem.itsType = ExecutableDeployItem.MODULE_BYTES
                 var eMB: ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
-                eMB.module_bytes = "aaaa"
-                //eMB.module_bytes = deployPaymentMB.get("ModuleBytes").get("module_bytes").toString()
+                //eMB.module_bytes = "aaaa"
+                eMB.module_bytes = deployPaymentMB.get("ModuleBytes").get("module_bytes").toString()
                 executableDeployItem.itsValue.add(eMB)
                 deploy.payment = executableDeployItem
-                var obj =  deploy.payment.itsValue.component1()
+                eMB.args = RuntimeArgs.fromJsonArrayToObj(deployPaymentMB.get("ModuleBytes").get("args") as JsonArray)
+                /*var obj =  deploy.payment.itsValue.component1()
                 if (obj is ExecutableDeployItem_ModuleBytes) {
                     println("First of deploy payment is module bytes")
                 } else {
                     println("First of deploy payment is NOT module bytes")
-                }
+                }*/
             } else {
                 println("Not module bytes")
             }

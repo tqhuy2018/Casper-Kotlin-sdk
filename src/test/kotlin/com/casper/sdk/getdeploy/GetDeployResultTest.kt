@@ -8,7 +8,7 @@ internal class GetDeployResultTest {
     fun getDeployFromJsonStr() {
         var getDeployResult: GetDeployRPC = GetDeployRPC()
         var getDeployParams:GetDeployParams = GetDeployParams()
-        getDeployParams.deploy_hash = "f26a173a4c3d72905d9c83008d980df574bf6f6ec2d69a1a591f8b2f21203b3b"
+        getDeployParams.deploy_hash = "ca0b2dc4dd552a638e90c5102c8808d04936c2428fa96bf6cfb26d9148269fdb"
         var str = getDeployParams.toJsonStr()
         getDeployResult.getDeployFromJsonStr(str)
         //getDeployResult.getDeployFromJsonStr()

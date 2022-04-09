@@ -41,7 +41,7 @@ internal class GetStateRootHashTest {
         var stateRootHash4 = getStateRootHashTest.getStateRootHash(str4)
         print("stateroothash4:${stateRootHash4}")
         assert(stateRootHash4.length>0)
-        //Call5: Get state root hash with BlockIdentifier of type Block Height with incorrect Block Height
+        //Call5: Get state root hash with BlockIdentifier of type Block Height with incorrect Block Height, expected result: Error
         bi.blockType = BlockIdentifierType.HEIGHT
         bi.blockHeight = 6673033u
         val str5:String = bi.toJsonStr(ConstValues.RPC_GET_STATE_ROOT_HASH)

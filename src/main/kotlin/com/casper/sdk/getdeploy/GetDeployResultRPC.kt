@@ -2,29 +2,25 @@ package com.casper.sdk.getdeploy
 
 import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem
 import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem_ModuleBytes
-import com.casper.sdk.getpeers.GetPeersResult
-import com.casper.sdk.getpeers.PeerEntry
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.toJsonString
-import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
-import netscape.javascript.JSObject
 import java.net.URI
 import java.net.URLEncoder
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-class GetDeployResult {
+class GetDeployResultRPC {
     var api_version:String = ""
     var methodName:String = "info_get_peers"
     var casperURLTestNet:String = "https://node-clarity-testnet.make.services/rpc";
     lateinit var deploy:Deploy
     var execution_results:MutableList<JsonExecutionResult> = mutableListOf()
-    fun getDeployFromJsonStr(str:String):GetDeployResult {
+    fun getDeployFromJsonStr(str:String):GetDeployResultRPC {
         println("param:" + str)
-        var getDeployResult:GetDeployResult = GetDeployResult()
+        var getDeployResult:GetDeployResultRPC = GetDeployResultRPC()
        // val deployParams = mapOf("deploy_hash" to "6e74f836d7b10dd5db7430497e106ddf56e30afee993dd29b85a91c1cd903583")
       //  val values = mapOf("id" to "1", "method" to "info_get_peers", "jsonrpc" to "2.0","params" to deployParams)
         val client = HttpClient.newBuilder().build();
@@ -75,8 +71,8 @@ class GetDeployResult {
     fun String.utf8(): String = URLEncoder.encode(this, "UTF-8")
 
     /*companion object {
-        fun getDeployFromJsonStr():GetDeployResult {
-            var getDeployResult:GetDeployResult = GetDeployResult()
+        fun getDeployFromJsonStr():GetDeployResultRPC {
+            var getDeployResult:GetDeployResultRPC = GetDeployResultRPC()
             return getDeployResult
         }
     }*/

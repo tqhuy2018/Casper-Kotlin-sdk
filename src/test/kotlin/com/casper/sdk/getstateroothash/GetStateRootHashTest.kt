@@ -3,16 +3,13 @@ package com.casper.sdk.getstateroothash
 import com.casper.sdk.BlockIdentifier
 import com.casper.sdk.BlockIdentifierType
 import com.casper.sdk.ConstValues
-import com.casper.sdk.getstateroothash.GetStateRootHash
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class GetStateRootHashTest {
 
     @Test
     fun getStateRootHash() {
-        var getStateRootHashTest:GetStateRootHash = GetStateRootHash()
+        var getStateRootHashTest:GetStateRootHashRPC = GetStateRootHashRPC()
         //Call 1: Get state root hash with non parameter
         val bi: BlockIdentifier = BlockIdentifier()
         bi.blockType = BlockIdentifierType.NONE;

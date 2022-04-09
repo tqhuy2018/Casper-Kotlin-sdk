@@ -1,17 +1,13 @@
 package com.casper.sdk.getstateroothash
-import com.casper.sdk.BlockIdentifier
-import com.casper.sdk.BlockIdentifierType
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.toJsonString
 import java.net.URI
-import java.net.URLEncoder
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
-import com.casper.sdk.ConstValues
 
-class GetStateRootHash {
+class GetStateRootHashRPC {
     var methodName:String = "chain_get_state_root_hash"
     var casperURLTestNet:String = "https://node-clarity-testnet.make.services/rpc";
     fun getStateRootHash(parameterStr:String) :String {

@@ -3,9 +3,6 @@ package com.casper.sdk.getpeers
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.toJsonString
-import  net.jemzart.jsonkraken.toJsonArray
-import  net.jemzart.jsonkraken.toJsonObject
-import  net.jemzart.jsonkraken.*
 
 import net.jemzart.jsonkraken.values.JsonArray
 import java.net.URI
@@ -14,7 +11,7 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-class GetPeers {
+class GetPeersRPC {
     var methodName:String = "info_get_peers"
     var casperURLTestNet:String = "https://node-clarity-testnet.make.services/rpc";
     fun getPeers() :GetPeersResult {

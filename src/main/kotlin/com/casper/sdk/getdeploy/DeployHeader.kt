@@ -2,11 +2,11 @@ package com.casper.sdk.getdeploy
 
 class DeployHeader {
     var account: String = ""
-    var body_hash: String = ""
-    var chain_name: String = ""
-    var dependencies: MutableList<Any> = mutableListOf()
-    var gas_price: Int = 0
-    var timestamp: String = ""
+    var bodyHash: String = ""
+    var chainName: String = ""
+    var dependencies: MutableList<String> = mutableListOf()
+    var gasPrice: ULong = 0u
+    var timeStamp: String = ""
     var ttl: String = ""
     constructor() {
 

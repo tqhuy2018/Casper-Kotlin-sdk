@@ -1,5 +1,6 @@
 package com.casper.sdk.getdeploy.ExecutableDeployItem
 
+import com.casper.sdk.clvalue.CLValue
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
@@ -13,14 +14,10 @@ class RuntimeArgs {
            var totalObj = jsonArray.size - 1
            println("Total args:${totalObj}")
            for(i in 0..totalObj) {
-               println("i = ${i}")
+               println("Get arg item number :${i}")
                println(jsonArray[i].toJsonString())
-               var oneItem:JsonArray = jsonArray[0] as JsonArray
-               var itemName = oneItem[0].toJsonString()
-               print("item name:${itemName}")
-              /* var oneJson:JsonObject = JsonObject(jsonArray[i])
-               var oneNA : NamedArg = NamedArg()
-               oneNA.itsName = oneJson.get()*/
+               var oneNA:NamedArg = NamedArg.fromJsonToNamedArg(jsonArray[i] as JsonArray)
+               ret.listNamedArg.add(oneNA)
            }
            return ret
        }

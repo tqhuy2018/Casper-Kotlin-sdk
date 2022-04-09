@@ -1,10 +1,10 @@
 package com.casper.sdk.clvalue
 
+import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.values.JsonObject
 
 class CLParsed {
     var itsValueInStr:String = ""
-    var itsCLTypeInStr:String = ""
     var itsCLType:CLType = CLType()
     var isPrimitive:Boolean = true
     //itsValue to hold value for the following type:
@@ -16,10 +16,29 @@ class CLParsed {
     fun isPrimitiveType():Boolean {
         return false
     }
-    companion object {
-        fun  fromObjToCLParsed(from: JsonObject):CLParsed {
+    companion object
+    {
+        fun  fromObjToCLParsed(from: Any, withCLType: CLType):CLParsed {
             var ret:CLParsed = CLParsed()
+            ret.itsCLType = withCLType
+            if (withCLType.itsTypeStr == ConstValues.CLTYPE_U512) {
+                ret.itsValueInStr = from as String
+                println("Parsed value U512 is:${ret.itsValueInStr}")
+            } else if (withCLType.itsTypeStr == ConstValues.CLTYPE_U128) {
+                ret.itsValueInStr = from as String
+                println("Parsed value U128 is:${ret.itsValueInStr}")
+            } else if (withCLType.itsTypeStr == ConstValues.CLTYPE_U256) {
+                ret.itsValueInStr = from as String
+                println("Parsed value U256 is:${ret.itsValueInStr}")
+            } else if (withCLType.itsTypeStr == ConstValues.CLTYPE_U64) {
+                ret.itsValueInStr = from.toString()
+                println("Parsed value U64 is:${ret.itsValueInStr}")
+            }  else if (withCLType.itsTypeStr == ConstValues.CLTYPE_STRING) {
+                ret.itsValueInStr = from as String
+                println("Parsed value String is:${ret.itsValueInStr}")
+            }
             return ret
         }
     }
+
 }

@@ -4,7 +4,7 @@ import net.jemzart.jsonkraken.values.JsonObject
 
 class CLValue {
     var itsBytes:String = ""
-    var istParse:CLParsed = CLParsed()
+    var itsParse:CLParsed = CLParsed()
     var itsCLType:CLType = CLType()
     companion object {
         fun  fromJsonObjToCLValue(fromJson:JsonObject):CLValue {
@@ -18,6 +18,8 @@ class CLValue {
             } else {
                 ret.itsCLType = CLType.fromJSonToCLType(fromJson["cl_type"] as JsonObject)
             }
+            ret.itsParse.itsCLType = ret.itsCLType
+            ret.itsParse = CLParsed.fromObjToCLParsed(fromJson["parsed"] as Any, ret.itsCLType)
             return ret
         }
     }

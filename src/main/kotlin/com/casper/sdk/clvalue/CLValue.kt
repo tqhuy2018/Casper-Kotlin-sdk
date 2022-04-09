@@ -19,7 +19,7 @@ class CLValue {
                 ret.itsCLType = CLType.fromJSonToCLType(fromJson["cl_type"] as JsonObject)
             }
             ret.itsParse.itsCLType = ret.itsCLType
-            ret.itsParse = CLParsed.fromObjToCLParsed(fromJson["parsed"] as Any, ret.itsCLType)
+           // ret.itsParse = CLParsed.fromObjToCLParsed(fromJson["parsed"] as Any, ret.itsCLType)
             return ret
         }
     }

@@ -32,8 +32,10 @@ class GetDeployRPC {
         deploy.hash = json.get("result").get("deploy").get("hash").toString()
         var executableDeployItem:ExecutableDeployItem = ExecutableDeployItem()
         val deployPaymentMB = json.get("result").get("deploy").get("payment") as JsonObject
+        println("------------------------------------Get PAYMENT!---------------------------------------------")
         getDeployResult.deploy.payment = ExecutableDeployItem.fromJsonToExecutableDeployItem(deployPaymentMB)
         //Get session
+        println("------------------------------------GET SESSIOIN!---------------------------------------------")
         val deploySessionMB :JsonObject = json.get("result").get("deploy").get("session") as JsonObject
         getDeployResult.deploy.session = ExecutableDeployItem.fromJsonToExecutableDeployItem(deploySessionMB)
         return getDeployResult

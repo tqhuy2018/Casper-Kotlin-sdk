@@ -16,6 +16,7 @@ class NamedArg {
             var clObj : JsonObject = from[1] as JsonObject
             print("item CLValue:${clObj.toJsonString()}\n")
             ret.clValue = CLValue.fromJsonObjToCLValue(clObj)
+            println("Done get CLValue")
             return ret
         }
     }

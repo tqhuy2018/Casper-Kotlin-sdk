@@ -75,18 +75,22 @@ class CLType {
             } else if (from == ConstValues.CLTYPE_ANY) {
                 ret.itsTypeStr = ConstValues.CLTYPE_ANY
                 ret.isPrimitive = true
+            } else if (from == ConstValues.CLTYPE_KEY) {
+                ret.itsTypeStr = ConstValues.CLTYPE_KEY
+                ret.isPrimitive = true
             }
             return ret
         }
         fun fromJSonToCLType(from:JsonObject):CLType {
             var ret:CLType = CLType()
-            from[ConstValues.CLTYPE_OPTION] ?: run {
+            from[ConstValues.CLTYPE_OPTION] ?.let  {
                 println("Of type Option")
                 ret.itsTypeStr = ConstValues.CLTYPE_OPTION
                 ret.isPrimitive = false
                 return ret
             }
             println("Of type compound not option")
+            println("Done")
             return ret
         }
     }

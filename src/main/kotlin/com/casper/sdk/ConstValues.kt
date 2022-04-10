@@ -44,5 +44,13 @@ class ConstValues {
         const val CLTYPE_ANY            = "Any"
         //NULL value
         const val  VALUE_NULL           = "NULL_VALUE"
+        //ExecutionResult
+        const val EXECUTION_RESULT_SUCCESS = "Success"
+        const val EXECUTION_RESULT_FAIL     = "Failure"
+        //OpKind
+        const val OPKIND_READ = "Read"
+        const val OPKIND_WRITE = "Write"
+        const val OPKIND_ADD = "Add"
+        const val OPKIND_NOOP = "NoOp"
     }
 }

@@ -1,5 +1,6 @@
 package com.casper.sdk.clvalue
 
+import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.values.JsonObject
 
 class CLValue {
@@ -10,16 +11,19 @@ class CLValue {
         fun  fromJsonObjToCLValue(fromJson:JsonObject):CLValue {
             var ret: CLValue = CLValue()
             ret.itsBytes = fromJson["bytes"].toString()
-            println("\nBytes is:${ret.itsBytes}")
+            println("Bytes is:${ret.itsBytes}")
             var clType = fromJson["cl_type"]
-            if (clType is String) {
-                print("Of type primitive")
-                ret.itsCLType = CLType.fromStringToCLType(clType)
-            } else {
-                ret.itsCLType = CLType.fromJSonToCLType(fromJson["cl_type"] as JsonObject)
-            }
+            ret.itsCLType = CLType.getCLType(clType as Any)
             ret.itsParse.itsCLType = ret.itsCLType
-           // ret.itsParse = CLParsed.fromObjToCLParsed(fromJson["parsed"] as Any, ret.itsCLType)
+            println("About to get parsed")
+            if(fromJson["parsed"].toString() != "null") {
+                ret.itsParse = CLParsed.getCLParsed(fromJson["parsed"] as Any, ret.itsCLType)
+            } else {
+                println("Parse of type Option but got value NULL")
+                var clParsed:CLParsed = CLParsed()
+                clParsed.itsValueInStr = ConstValues.VALUE_NULL
+                ret.itsParse = clParsed
+            }
             return ret
         }
     }

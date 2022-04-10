@@ -12,11 +12,9 @@ class NamedArg {
         fun fromJsonToNamedArg(from:JsonArray):NamedArg {
             var ret:NamedArg = NamedArg()
             ret.itsName = from[0].toString()
-            print("item name:${ret.itsName}\n")
+            println("item name:${ret.itsName}")
             var clObj : JsonObject = from[1] as JsonObject
-            print("item CLValue:${clObj.toJsonString()}\n")
             ret.clValue = CLValue.fromJsonObjToCLValue(clObj)
-            println("Done get CLValue")
             return ret
         }
     }

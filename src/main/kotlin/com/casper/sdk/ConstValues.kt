@@ -42,5 +42,7 @@ class ConstValues {
         const val CLTYPE_TUPLE2         = "Tuple2"
         const val CLTYPE_TUPLE3         = "Tuple3"
         const val CLTYPE_ANY            = "Any"
+        //NULL value
+        const val  VALUE_NULL           = "NULL_VALUE"
     }
 }

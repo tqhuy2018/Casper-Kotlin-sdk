@@ -14,8 +14,7 @@ class RuntimeArgs {
            var totalObj = jsonArray.size - 1
            println("Total args:${totalObj}")
            for(i in 0..totalObj) {
-               println("Get arg item number :${i}")
-               println(jsonArray[i].toJsonString())
+               println("----------Get arg item number :${i}----------")
                var oneNA:NamedArg = NamedArg.fromJsonToNamedArg(jsonArray[i] as JsonArray)
                ret.listNamedArg.add(oneNA)
            }

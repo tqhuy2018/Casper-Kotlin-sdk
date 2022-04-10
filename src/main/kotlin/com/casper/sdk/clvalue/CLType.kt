@@ -5,6 +5,9 @@ import net.jemzart.jsonkraken.values.JsonObject
 
 class CLType {
     var itsTypeStr:String = ""
+    lateinit var innerCLType1:CLType
+    lateinit var innerCLType2:CLType
+    lateinit var innerCLType3: CLType
     var itsInnerType:MutableList<CLType> = mutableListOf()
     var isPrimitive:Boolean = false
 
@@ -30,7 +33,16 @@ class CLType {
         return false
     }
     companion object {
-        fun fromStringToCLType(from:String):CLType {
+        fun getCLType(from:Any):CLType {
+            var ret:CLType = CLType()
+            if (from is String) {
+                ret = CLType.getCLTypePrimitive(from as String)
+            } else {
+                ret = CLType.getCLTypeCompound(from as JsonObject)
+            }
+            return ret
+        }
+        fun getCLTypePrimitive(from:String):CLType {
             var ret:CLType = CLType()
             if (from == ConstValues.CLTYPE_BOOL) {
                 ret.itsTypeStr = ConstValues.CLTYPE_BOOL
@@ -60,7 +72,11 @@ class CLType {
                 println("CLTYPE OF TYPE U512")
                 ret.itsTypeStr = ConstValues.CLTYPE_U512
                 ret.isPrimitive = true
-            }  else  if (from == ConstValues.CLTYPE_UNIT) {
+            }  else  if (from == ConstValues.CLTYPE_STRING) {
+                println("CLTYPE OF TYPE STRING")
+                ret.itsTypeStr = ConstValues.CLTYPE_STRING
+                ret.isPrimitive = true
+            } else  if (from == ConstValues.CLTYPE_UNIT) {
                 ret.itsTypeStr = ConstValues.CLTYPE_UNIT
                 ret.isPrimitive = true
             } else if (from == ConstValues.CLTYPE_UREF) {
@@ -81,12 +97,24 @@ class CLType {
             }
             return ret
         }
-        fun fromJSonToCLType(from:JsonObject):CLType {
+        fun getCLTypeCompound(from:JsonObject):CLType {
             var ret:CLType = CLType()
             from[ConstValues.CLTYPE_OPTION] ?.let  {
                 println("Of type Option")
                 ret.itsTypeStr = ConstValues.CLTYPE_OPTION
                 ret.isPrimitive = false
+                ret.innerCLType1 = CLType();
+                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_OPTION] as Any)
+                println("Option done clType")
+                return ret
+            }
+            from[ConstValues.CLTYPE_LIST] ?.let  {
+                println("Of type List")
+                ret.itsTypeStr = ConstValues.CLTYPE_LIST
+                ret.isPrimitive = false
+                ret.innerCLType1 = CLType()
+                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_LIST] as Any)
+                println("List done clType")
                 return ret
             }
             println("Of type compound not option")

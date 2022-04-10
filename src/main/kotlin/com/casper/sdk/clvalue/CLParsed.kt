@@ -81,7 +81,7 @@ class CLParsed {
                 println("Parsed value PublicKey is:${ret.itsValueInStr}")
             }  else if (withCLType.itsTypeStr == ConstValues.CLTYPE_BYTEARRAY) {
                 ret.itsValueInStr = from as String
-                println("Parsed value PublicKey is:${ret.itsValueInStr}")
+                println("Parsed value BytesArray is:${ret.itsValueInStr}")
             } else {
                 println("Of differnet type")
             }

@@ -1,7 +1,9 @@
 package com.casper.sdk.getdeploy
 
+import com.casper.sdk.getdeploy.JsonExecutionResultPackage.JsonExecutionResult
+
 class GetDeployResult {
     var api_version:String = ""
     var deploy:Deploy = Deploy()
-    var execution_results:MutableList<JsonExecutionResult> = mutableListOf()
+    var executionResults:MutableList<JsonExecutionResult> = mutableListOf()
 }

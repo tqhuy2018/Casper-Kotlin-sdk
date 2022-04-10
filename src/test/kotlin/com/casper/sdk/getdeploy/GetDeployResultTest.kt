@@ -75,6 +75,7 @@ internal class GetDeployResultTest {
         assert(na1.itsName == "merkleRoot")
         assert(na1.clValue.itsBytes == "bde21f5eb8bd073acdfa59ac7d613f865cd101ccaf3d787cb5dc909f0111a9c2")
         assert(na1.clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_BYTEARRAY)
-       // assert(na1.clValue.itsParse.itsValueInStr == "bde21f5eb8bd073acdfa59ac7d613f865cd101ccaf3d787cb5dc909f0111a9c2")*/
+        assert(na1.clValue.itsParse.itsValueInStr == "bde21f5eb8bd073acdfa59ac7d613f865cd101ccaf3d787cb5dc909f0111a9c2")
+        //430df377ae04726de907f115bb06c52e40f6cd716b4b475a10e4cd9226d1317e List(String)
     }
 }

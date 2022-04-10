@@ -1,6 +1,7 @@
 package com.casper.sdk.clvalue
 
 import com.casper.sdk.ConstValues
+import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
@@ -82,6 +83,9 @@ class CLParsed {
             }  else if (withCLType.itsTypeStr == ConstValues.CLTYPE_BYTEARRAY) {
                 ret.itsValueInStr = from as String
                 println("Parsed value BytesArray is:${ret.itsValueInStr}")
+            } else if (withCLType.itsTypeStr == ConstValues.CLTYPE_ANY) {
+                ret.itsValueInStr = ConstValues.VALUE_NULL
+                println("Parsed value BytesArray is:${ret.itsValueInStr}")
             } else {
                 println("Of differnet type")
             }
@@ -89,10 +93,56 @@ class CLParsed {
         }
         fun getCLParsedCompound(from: Any, withCLType: CLType):CLParsed {
             var ret: CLParsed = CLParsed()
+            ret.itsCLType = withCLType
             if (withCLType.itsTypeStr == ConstValues.CLTYPE_OPTION) {
                 println("Get CLParsed of type Compound Option, with innerType:${withCLType.innerCLType1.itsTypeStr}")
                 ret.innerParsed1 = CLParsed()
                 ret.innerParsed1 = CLParsed.getCLParsed(from,withCLType.innerCLType1)
+            } else if (withCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE1) {
+                println("Get CLParsed of type Compound Tuple2, with Tuple1 type:${withCLType.innerCLType1.itsTypeStr}")
+                ret.innerParsed1 = CLParsed()
+                var jsonArray:JsonArray = from as JsonArray
+                ret.innerParsed1 = CLParsed.getCLParsed(jsonArray[0] as Any,withCLType.innerCLType1)
+                return ret
+            }else if (withCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE2) {
+                println("Get CLParsed of type Compound Tuple2, with Tuple1 type:${withCLType.innerCLType1.itsTypeStr}")
+                println("Get CLParsed of type Compound Tuple2, with Tuple2 type:${withCLType.innerCLType2.itsTypeStr}")
+                ret.innerParsed1 = CLParsed()
+                ret.innerParsed2 = CLParsed()
+                var jsonArray:JsonArray = from as JsonArray
+                ret.innerParsed1 = CLParsed.getCLParsed(jsonArray[0] as Any,withCLType.innerCLType1)
+                ret.innerParsed2 = CLParsed.getCLParsed(jsonArray[1] as Any,withCLType.innerCLType2)
+                return ret
+            }else if (withCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE3) {
+                println("Get CLParsed of type Compound Tuple3, with Tuple1 type:${withCLType.innerCLType1.itsTypeStr}")
+                println("Get CLParsed of type Compound Tuple3, with Tuple2 type:${withCLType.innerCLType2.itsTypeStr}")
+                println("Get CLParsed of type Compound Tuple3, with Tuple3 type:${withCLType.innerCLType3.itsTypeStr}")
+                ret.innerParsed1 = CLParsed()
+                ret.innerParsed2 = CLParsed()
+                ret.innerParsed3 = CLParsed()
+                var jsonArray:JsonArray = from as JsonArray
+                ret.innerParsed1 = CLParsed.getCLParsed(jsonArray[0] as Any,withCLType.innerCLType1)
+                ret.innerParsed2 = CLParsed.getCLParsed(jsonArray[1] as Any,withCLType.innerCLType2)
+                ret.innerParsed3 = CLParsed.getCLParsed(jsonArray[2] as Any,withCLType.innerCLType3)
+                return ret
+            }else if (withCLType.itsTypeStr == ConstValues.CLTYPE_RESULT) {
+                println("Get CLParsed of type Compound Result, with ok type:${withCLType.innerCLType1.itsTypeStr}")
+                println("Get CLParsed of type Compound Result, with err type:${withCLType.innerCLType2.itsTypeStr}")
+                val parseOK = from.get("Ok").toJsonString()
+                if(parseOK != "null") {
+                    ret.itsValueInStr = "Ok"
+                    ret.innerParsed1 = CLParsed()
+                    ret.innerParsed1 = CLParsed.getCLParsed(from.get("Ok") as Any,withCLType.innerCLType1)
+                    return ret
+                }
+                val parseErr = from.get("Err").toJsonString()
+                if(parseErr != "null") {
+                    ret.itsValueInStr = "Err"
+                    ret.innerParsed1 = CLParsed()
+                    ret.innerParsed1 = CLParsed.getCLParsed(from.get("Err") as Any,withCLType.innerCLType1)
+                    return ret
+                }
+
             } else if(withCLType.itsTypeStr == ConstValues.CLTYPE_LIST) {
                 println("Get CLParsed of type Compound List")
                 var listJson:JsonArray = from as JsonArray
@@ -105,6 +155,28 @@ class CLParsed {
                         ret.itsValue.add(oneParsed)
                     }
                 }
+            } else if(withCLType.itsTypeStr == ConstValues.CLTYPE_MAP) {
+                //innerParse1.itsValue is the list of map-key value
+                //innerParse2.itsValue is the list of map-value value
+                println("Get CLParsed of type Compound MAP")
+                var listJson:JsonArray = from as JsonArray
+                var totalElement = listJson.count()
+                if(totalElement>0) {
+                    ret.innerParsed1 = CLParsed()
+                    ret.innerParsed2 = CLParsed()
+                    for(i in 0..totalElement-1) {
+                        var oneElement:Any = listJson[i] as JsonObject
+                        //add item for map-key
+                        var parsedKey:CLParsed = CLParsed()
+                        parsedKey = getCLParsed(oneElement.get("key") as Any,withCLType.innerCLType1)
+                        ret.innerParsed1.itsValue.add(parsedKey)
+                        //add item for map-value
+                        var parsedValue:CLParsed = CLParsed()
+                        parsedValue = getCLParsed(oneElement.get("value") as Any, withCLType.innerCLType2)
+                        ret.innerParsed2.itsValue.add(parsedValue)
+                    }
+                }
+                return ret
             }
             return ret;
         }

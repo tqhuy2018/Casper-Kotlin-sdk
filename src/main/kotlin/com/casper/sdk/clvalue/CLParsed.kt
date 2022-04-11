@@ -25,6 +25,14 @@ class CLParsed {
             println("CLParsed value: ${itsValueInStr}")
         } else {
             println("CLParsed for CLTYpe of type compound")
+            if (itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST){
+                println("CLParsed for CLTYpe of type List, with total element:${this.itsValue.count()}")
+                //this.innerParsed1.logInfo();
+                for(i in 0..this.itsValue.count()-1) {
+                    var oneParse: CLParsed = this.itsValue[i] as CLParsed
+                    oneParse.logInfo()
+                }
+            }
         }
     }
     companion object

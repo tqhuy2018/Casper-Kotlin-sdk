@@ -52,5 +52,25 @@ class ConstValues {
         const val OPKIND_WRITE = "Write"
         const val OPKIND_ADD = "Add"
         const val OPKIND_NOOP = "NoOp"
+        //Transform
+        const val  TRANSFORM_IDENTITY                   = "Identity"
+        const val  TRANSFORM_WRITE_CLVALUE              = "WriteCLValue"
+        const val  TRANSFORM_WRITE_ACCOUNT              = "WriteAccount"
+        const val  TRANSFORM_WRITE_CONTRACT_WASM        = "WriteContractWasm"
+        const val  TRANSFORM_WRITE_CONTRACT             = "WriteContract"
+        const val  TRANSFORM_WRITE_CONTRACT_PACKAGE     = "WriteContractPackage"
+        const val  TRANSFORM_WRITE_DEPLOY_INFO          = "WriteDeployInfo"
+        const val  TRANSFORM_WRITE_ERA_INFO             = "WriteEraInfo"
+        const val  TRANSFORM_WRITE_TRANSFER             = "WriteTransfer"
+        const val  TRANSFORM_WRITE_BID                  = "WriteBid"
+        const val  TRANSFORM_WRITE_WITHDRAW             = "WriteWithdraw"
+        const val  TRANSFORM_ADD_INT32                  = "AddInt32"
+        const val  TRANSFORM_ADD_UINT64                 = "AddUInt64"
+        const val  TRANSFORM_ADD_UINT128                = "AddUInt128"
+        const val  TRANSFORM_ADD_UINT256                = "AddUInt256"
+        const val  TRANSFORM_ADD_UINT512                = "AddUInt512"
+        const val  TRANSFORM_ADD_KEY                    = "AddKeys"
+        const val  TRANSFORM_FAILURE                    = "Failure"
+
     }
 }

@@ -46,7 +46,7 @@ class ConstValues {
         const val  VALUE_NULL           = "NULL_VALUE"
         //ExecutionResult
         const val EXECUTION_RESULT_SUCCESS = "Success"
-        const val EXECUTION_RESULT_FAIL     = "Failure"
+        const val EXECUTION_RESULT_FAILURE     = "Failure"
         //OpKind
         const val OPKIND_READ = "Read"
         const val OPKIND_WRITE = "Write"

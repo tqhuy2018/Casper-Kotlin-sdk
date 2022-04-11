@@ -1,4 +1,4 @@
-package com.casper.sdk.getdeploy.JsonExecutionResultPackage
+package com.casper.sdk.getdeploy.ExecutionResult
 
 class ExecutionEffect {
     var operations:MutableList<CasperOperation> = mutableListOf()

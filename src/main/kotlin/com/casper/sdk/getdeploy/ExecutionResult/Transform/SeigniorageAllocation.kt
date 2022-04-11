@@ -1,4 +1,4 @@
-package com.casper.sdk.getdeploy.JsonExecutionResultPackage.Transform
+package com.casper.sdk.getdeploy.ExecutionResult.Transform
 
 import com.casper.sdk.common.classes.U512Class
 import net.jemzart.jsonkraken.get

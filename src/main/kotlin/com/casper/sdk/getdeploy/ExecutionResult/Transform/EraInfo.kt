@@ -1,4 +1,4 @@
-package com.casper.sdk.getdeploy.JsonExecutionResultPackage.Transform
+package com.casper.sdk.getdeploy.ExecutionResult.Transform
 
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject

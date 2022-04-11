@@ -1,4 +1,4 @@
-package com.casper.sdk.getdeploy.JsonExecutionResultPackage
+package com.casper.sdk.getdeploy.ExecutionResult
 
 class CasperTransform {
     //itsType is 1 among 18 possible values

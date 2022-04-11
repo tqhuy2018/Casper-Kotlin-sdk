@@ -28,18 +28,17 @@ class GetDeployRPC {
         val response = client.send(request, HttpResponse.BodyHandlers.ofString());
         val json =response.body().toJson()
         getDeployResult.api_version = json.get("result").get("api_version").toString()
-        var deploy:Deploy = Deploy()
-        deploy.hash = json.get("result").get("deploy").get("hash").toString()
-        getDeployResult.deploy = deploy
-        println("Deplo hash is:${deploy.hash}")
+        getDeployResult.deploy.hash = json.get("result").get("deploy").get("hash").toString()
         var executableDeployItem:ExecutableDeployItem = ExecutableDeployItem()
-        val deployPaymentMB = json.get("result").get("deploy").get("payment") as JsonObject
+        val deployPayment = json.get("result").get("deploy").get("payment") as JsonObject
         println("------------------------------------Get PAYMENT!---------------------------------------------")
-        getDeployResult.deploy.payment = ExecutableDeployItem.fromJsonToExecutableDeployItem(deployPaymentMB)
+        getDeployResult.deploy.payment = ExecutableDeployItem.fromJsonToExecutableDeployItem(deployPayment)
         //Get session
         println("------------------------------------GET SESSION!---------------------------------------------")
-        val deploySessionMB :JsonObject = json.get("result").get("deploy").get("session") as JsonObject
-        getDeployResult.deploy.session = ExecutableDeployItem.fromJsonToExecutableDeployItem(deploySessionMB)
+        val deploySession :JsonObject = json.get("result").get("deploy").get("session") as JsonObject
+        getDeployResult.deploy.session = ExecutableDeployItem.fromJsonToExecutableDeployItem(deploySession)
+        //get execution result
+
         return getDeployResult
     }
     fun String.utf8(): String = URLEncoder.encode(this, "UTF-8")

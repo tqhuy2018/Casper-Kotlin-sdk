@@ -1,4 +1,4 @@
-package com.casper.sdk.getdeploy.JsonExecutionResultPackage
+package com.casper.sdk.getdeploy.ExecutionResult
 
 import com.casper.sdk.ConstValues
 import com.casper.sdk.common.classes.U512Class

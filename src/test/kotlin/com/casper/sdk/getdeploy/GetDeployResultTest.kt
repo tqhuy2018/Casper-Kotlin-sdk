@@ -225,7 +225,38 @@ internal class GetDeployResultTest {
 
         //Test Transform of type WriteAccount for ExecutionResult item number 13 and CLValue of type List(ByteArray) for session ModuleBytes item number 3
         //https://testnet.cspr.live/deploy/ac654d996f17720e780fe4eae9a7d57d57cdadb069998666a369a0833aebb7f8
-    //Test 8 Transform of type AddKeys
+        getDeployParams.deploy_hash = "ac654d996f17720e780fe4eae9a7d57d57cdadb069998666a369a0833aebb7f8"
+        var postParameter5 = getDeployParams.generatePostParameterStr()
+        getDeployRPC.postURL = ConstValues.TESTNET_URL
+        var getDeployResult5 = getDeployRPC.getDeployFromJsonStr(postParameter5)
+        assert(getDeployResult5.deploy.hash == "ac654d996f17720e780fe4eae9a7d57d57cdadb069998666a369a0833aebb7f8")
+        assert(getDeployResult5.deploy.session.itsType == ExecutableDeployItem.MODULE_BYTES)
+        var session5Value:ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
+        session5Value = getDeployResult5.deploy.session.itsValue[0] as ExecutableDeployItem_ModuleBytes
+        assert(session5Value.args.listNamedArg.count() == 9)
+        //asssertion for CLValue of type List(ByteArray)
+        val sessionNA5:NamedArg = session5Value.args.listNamedArg[3]
+        assert(sessionNA5.itsName == "accounts")
+        val clValueSession5:CLValue = sessionNA5.clValue
+        assert(clValueSession5.itsBytes == "04000000cc77e0fef426adc63f5380d13e20ab62832f70afae299bef6fcf3f985eb6e5937aebb6de622b00ced00fc0ed16562b5c0d7ee3a3a894fc42001eb7fb2da4d102713910b4d6f4fed1ab28b06e93c2562f845c570ac6861b93bee6a67f4aeedb035c6c49477ffa1dabc642d4cc894a21b248e721ee66128c59588393acea1ff196")
+        assert(clValueSession5.itsCLType.itsTypeStr==ConstValues.CLTYPE_LIST)
+        assert(clValueSession5.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_BYTEARRAY)
+        assert(clValueSession5.itsParse.itsValue[0].itsValueInStr == "cc77e0fef426adc63f5380d13e20ab62832f70afae299bef6fcf3f985eb6e593")
+        assert(clValueSession5.itsParse.itsValue[1].itsValueInStr == "7aebb6de622b00ced00fc0ed16562b5c0d7ee3a3a894fc42001eb7fb2da4d102")
+        //asssertion for CLValue of type List(U8)
+        val sessionNA51:NamedArg = session5Value.args.listNamedArg[4]
+        assert(sessionNA51.itsName == "weights")
+        assert(sessionNA51.clValue.itsBytes == "0400000001010100")
+        assert(sessionNA51.clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST)
+        assert(sessionNA51.clValue.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_U8)
+        assert(sessionNA51.clValue.itsParse.itsValue[0].itsValueInStr == "1")
+        assert(sessionNA51.clValue.itsParse.itsValue[3].itsValueInStr == "0")
+        //assertion for Transform of type WriteAccount for ExecutionResult item 16, 18
+        var effect5:ExecutionEffect = getDeployResult5.executionResults[0].result.effect
+        val transformWriteAccount1:TransformEntry = effect5.transforms[16]
+        assert(transformWriteAccount1.key == "account-hash-5c6c49477ffa1dabc642d4cc894a21b248e721ee66128c59588393acea1ff196")
+        assert(transformWriteAccount1.transform.itsType == ConstValues.TRANSFORM_WRITE_ACCOUNT)
+        //Test 8 Transform of type AddKeys
         //Negative Path:
         //Get Deploy with wrong deploy hash
         //Get Deploy with no parameter - no deploy hash

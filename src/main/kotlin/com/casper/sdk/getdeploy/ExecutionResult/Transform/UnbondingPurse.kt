@@ -1,6 +1,7 @@
 package com.casper.sdk.getdeploy.ExecutionResult.Transform
 
 import com.casper.sdk.common.classes.U512Class
+import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
 class UnbondingPurse {
@@ -15,7 +16,9 @@ class UnbondingPurse {
             ret.bondingPurse = from["bonding_purse"].toString()
             ret.validatorPublicKey = from["validator_public_key"].toString()
             ret.unbonderPublicKey = from["unbonder_public_key"].toString()
-            ret.eraOfCreation = from["unbonder_public_key"].toString().toULong()
+            //val era = from["era_of_creation"].toJsonString()
+           // println("era:${era}")
+            ret.eraOfCreation = from["era_of_creation"].toJsonString().toULong()
             ret.amount = U512Class.fromStringToU512(from["amount"].toString())
             return ret
         }

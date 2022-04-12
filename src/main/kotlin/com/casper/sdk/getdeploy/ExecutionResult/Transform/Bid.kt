@@ -24,11 +24,13 @@ class Bid {
             ret.inactive = from["inactive"].toString().toBoolean()
             ret.stakedAmount = U512Class.fromStringToU512(from["staked_amount"].toString())
             ret.validatorPublicKey = from["validator_public_key"].toString()
+            println("get bid, validatorPublicKey:${ret.validatorPublicKey}")
             val delegatorList:JsonObject = from["delegators"] as JsonObject
             var listKey:List<String> = delegatorList.keys.toList()
             var listValue:List<JsonObject> = delegatorList.values.toList() as List<JsonObject>
             var totalElement = listKey.count() - 1
             for(i in 0 .. totalElement) {
+               // println("Get delegator number :${i}")
                 var oneDelegator:Delegator = Delegator()
                 oneDelegator = Delegator.fromJsonToDelegator(listValue[i])
                 oneDelegator.itsPublicKey = listKey[i].toString()

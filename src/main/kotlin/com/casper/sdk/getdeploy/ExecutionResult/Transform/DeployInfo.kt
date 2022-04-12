@@ -1,7 +1,6 @@
 package com.casper.sdk.getdeploy.ExecutionResult.Transform
 
 import com.casper.sdk.common.classes.U512Class
-import com.casper.sdk.getdeploy.Deploy
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
@@ -10,7 +9,7 @@ class DeployInfo {
     var from:String = ""//AccountHash
     var source:String = ""//URef
     var gas:U512Class = U512Class()
-    var transfer:MutableList<String> = mutableListOf() //TransferAddr list
+    var transfers:MutableList<String> = mutableListOf() //TransferAddr list
     companion object {
         fun fromJsonToDeployInfo(from:JsonObject):DeployInfo {
            var ret: DeployInfo = DeployInfo()
@@ -23,7 +22,7 @@ class DeployInfo {
             val totalTransfer = transferList.count()
             if(totalTransfer > 0) {
                 for(i in 0..totalTransfer-1) {
-                    ret.transfer.add(transferList[i].toString())
+                    ret.transfers.add(transferList[i].toString())
                 }
             }
             return ret

@@ -11,13 +11,13 @@ class VestingSchedule {
     companion object {
         fun fromJsonToVestingSchedule(from: JsonObject):VestingSchedule {
             var ret:VestingSchedule = VestingSchedule()
-            val valueInStr = from["initial_release_timestamp_millis"].toString()
+            val valueInStr = from["initial_release_timestamp_millis"].toJsonString()
             ret.initialReleaseTimestampMillis = valueInStr.toULong()
             val listLAJA = from["locked_amounts"] as JsonArray
             val totalLA = listLAJA.count()
             if(totalLA > 0) {
                 for(i in 0..totalLA-1) {
-                    var oneItem:U512Class = U512Class.fromStringToU512(listLAJA[i].toJsonString())
+                    var oneItem:U512Class = U512Class.fromStringToU512(listLAJA[i].toString())
                     ret.lockedAmounts.add(oneItem)
                 }
             }

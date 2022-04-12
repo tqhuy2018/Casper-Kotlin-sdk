@@ -146,7 +146,7 @@ class TransformEntry {
                     println("Of type AddUInt512, value:${addU512}")
                     var casperTransform:CasperTransform = CasperTransform()
                     casperTransform.itsType = ConstValues.TRANSFORM_ADD_UINT512
-                    casperTransform.itsValue.add(addU512)
+                    casperTransform.itsValue.add(transform[ConstValues.TRANSFORM_ADD_UINT512].toString())
                     ret.transform = casperTransform
                     return ret
                 }

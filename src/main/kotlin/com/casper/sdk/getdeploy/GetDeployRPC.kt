@@ -31,15 +31,15 @@ class GetDeployRPC {
         val json =response.body().toJson()
         val jsonResult:JsonObject = json.get("result") as JsonObject
         getDeployResult.api_version = jsonResult.get("api_version").toString()
+        getDeployResult.deploy.header = DeployHeader.fromJsonToDeployHeader(jsonResult.get("deploy").get("header") as JsonObject)
         getDeployResult.deploy.hash = jsonResult.get("deploy").get("hash").toString()
         var executableDeployItem:ExecutableDeployItem = ExecutableDeployItem()
         val deployPayment = jsonResult.get("deploy").get("payment") as JsonObject
-        println("------------------------------------Get PAYMENT!---------------------------------------------")
         getDeployResult.deploy.payment = ExecutableDeployItem.fromJsonToExecutableDeployItem(deployPayment)
-        //Get session
-        println("------------------------------------GET SESSION!---------------------------------------------")
         val deploySession :JsonObject = jsonResult.get("deploy").get("session") as JsonObject
         getDeployResult.deploy.session = ExecutableDeployItem.fromJsonToExecutableDeployItem(deploySession)
+        //get approvals
+        getDeployResult.deploy.approvals = Deploy.fromJsonToListApprovals(jsonResult.get("deploy").get("approvals") as JsonArray)
         //get execution result
         val listER:JsonArray = jsonResult.get("execution_results") as JsonArray
         val totalER:Int = listER.count()
@@ -48,7 +48,6 @@ class GetDeployRPC {
             val oneItem = listER[i]
             jer.blockHash = oneItem.get("block_hash").toString()
             jer.result = ExecutionResult.fromJsonToExecutionResult(oneItem.get("result") as JsonObject)
-            println("ER, blockHash:${jer.blockHash}")
             getDeployResult.executionResults.add(jer)
         }
         return getDeployResult

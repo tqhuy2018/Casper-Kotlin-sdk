@@ -16,14 +16,18 @@ class ExecutionEffect {
                     val totalOperation:Int = operationArray.count() - 1
                     println("Total operation:${totalOperation}")
                     for(i in 0.. totalOperation) {
-
+                        var oneOJson:JsonObject = operationArray[i] as JsonObject
+                        var oneOperation:CasperOperation = CasperOperation()
+                        oneOperation.key = oneOJson.get("key").toString()
+                        oneOperation.kind = oneOJson.get("kind").toString()
+                        ret.operations.add(oneOperation)
                     }
                 } else {
-                    println("operations empty")
+                    println("Operations list empty")
                 }
                 val transformArray:JsonArray = from["transforms"] as JsonArray
                 if (transformArray.count() > 0) {
-                    println("Array of transform not null")
+                    println("Array of transform not empty")
                     val totalTransform = transformArray.count()-1
                     for(i in 0..totalTransform) {
                         println("Get transform number ${i}")
@@ -31,7 +35,7 @@ class ExecutionEffect {
                         ret.transforms.add(oneTransform)
                     }
                 } else {
-                    println("Array of transform null")
+                    println("Transform list empty")
                 }
             } else {
                 println("Effect Empty")

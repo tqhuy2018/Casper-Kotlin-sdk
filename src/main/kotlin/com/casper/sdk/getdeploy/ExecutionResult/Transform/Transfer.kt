@@ -9,8 +9,8 @@ class Transfer {
     var from:String = ""
     lateinit var to:String// Optional value
     lateinit var id:String//Optional value of ULong u64 but stored as String for easier manipulation
-    var isToExisted:Boolean = false
-    var isIDExisted:Boolean = false
+    var isToExisted:Boolean = true
+    var isIDExisted:Boolean = true
     var source:String = ""// URef
     var target:String = ""// URef
     var amount:U512Class = U512Class()
@@ -18,8 +18,6 @@ class Transfer {
     companion object {
         fun fromJsonToTransfer(from: JsonObject):Transfer {
             var ret:Transfer = Transfer()
-            ret.isToExisted = true
-            ret.isIDExisted = true
             ret.deployHash = from["deploy_hash"].toString()
             ret.from = from["from"].toString()
             ret.source = from["source"].toString()
@@ -34,7 +32,8 @@ class Transfer {
             }
             val to = from["to"].toJsonString()
             if(to != "null") {
-                ret.to = to
+                println("Get to with value:${to}")
+                ret.to = from["to"].toString()
             } else {
                 ret.isToExisted = false
             }

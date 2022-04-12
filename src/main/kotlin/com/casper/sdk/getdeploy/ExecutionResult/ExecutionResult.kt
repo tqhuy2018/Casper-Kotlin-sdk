@@ -21,11 +21,13 @@ class ExecutionResult {
                 val successJsonObject:JsonObject = from["Success"] as JsonObject
                 ret.itsType = ConstValues.EXECUTION_RESULT_SUCCESS
                 ret.cost = U512Class.fromStringToU512(successJsonObject["cost"].toString())
-                println("Success, Cost is ${ret.cost.itsValue}")
                 val transferArray : JsonArray = successJsonObject["transfers"] as JsonArray
                 ret.effect = ExecutionEffect.fromJsonToExecutionEffect(successJsonObject["effect"] as JsonObject)
                 if (transferArray.count() > 0) {
-
+                    var totalTransfer:Int = transferArray.count()-1
+                    for(i in 0..totalTransfer) {
+                        ret.transfers.add(transferArray[i].toString())
+                    }
                 } else {
                     println("TransferArray  empty")
                 }

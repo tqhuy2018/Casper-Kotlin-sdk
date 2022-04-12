@@ -5,6 +5,7 @@ import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
 class Delegator {
+    var itsPublicKey:String = ""
     var bondingPurse:String = ""
     var stakedAmount:U512Class = U512Class()
     var validatorPublicKey:String = ""

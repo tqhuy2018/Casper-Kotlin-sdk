@@ -2,14 +2,12 @@ package com.casper.sdk.getdeploy
 
 import com.casper.sdk.ConstValues
 import com.casper.sdk.clvalue.CLValue
-import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem
-import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem_ModuleBytes
-import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem_StoredContractByHash
-import com.casper.sdk.getdeploy.ExecutableDeployItem.NamedArg
+import com.casper.sdk.getdeploy.ExecutableDeployItem.*
 import com.casper.sdk.getdeploy.ExecutionResult.ExecutionEffect
 import com.casper.sdk.getdeploy.ExecutionResult.Transform.*
 import com.casper.sdk.getdeploy.ExecutionResult.TransformEntry
 import org.junit.jupiter.api.Test
+import kotlin.test.assertSame
 
 internal class GetDeployResultTest {
 
@@ -419,13 +417,28 @@ internal class GetDeployResultTest {
         val transformCLValueTuple2:TransformEntry = effect7.transforms[31]
         assert(transformCLValueTuple2.key == "uref-75789066d17abd5a2629c3f5b82af2827c2098edde6868356ea5114d7d6fa86d-000")
         assert(transformCLValueTuple2.transform.itsType == ConstValues.TRANSFORM_WRITE_CLVALUE)
-        val clValueTuple2: CLValue = transformCLValueResult2.transform.itsValue[0] as CLValue
+        val clValueTuple2: CLValue = transformCLValueTuple2.transform.itsValue[0] as CLValue
         assert(clValueTuple2.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE2)
         assert(clValueTuple2.itsBytes == "030000006162630101")
         assert(clValueTuple2.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
-        assert(clValueTuple2.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_U512)
+        assert(clValueTuple2.itsCLType.innerCLType2.itsTypeStr == ConstValues.CLTYPE_U512)
         assert(clValueTuple2.itsParse.innerParsed1.itsValueInStr == "abc")
         assert(clValueTuple2.itsParse.innerParsed2.itsValueInStr == "1")
+
+        //assertion for CLType Tuple 3
+        val transformCLValueTuple3:TransformEntry = effect7.transforms[36]
+        assert(transformCLValueTuple3.key == "uref-e8c07b8ebbd0e7af43283a767975d5d82a334cd92b339eba5c1a1a7ba0137a27-000")
+        assert(transformCLValueTuple3.transform.itsType == ConstValues.TRANSFORM_WRITE_CLVALUE)
+        val clValueTuple3: CLValue = transformCLValueTuple3.transform.itsValue[0] as CLValue
+        assert(clValueTuple3.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE3)
+        assert(clValueTuple3.itsBytes == "01a018bf278f32fdb7b06226071ce399713ace78a28d43a346055060a660ba7aa901030000006162630102")
+        assert(clValueTuple3.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_PUBLIC_KEY)
+        assert(clValueTuple3.itsCLType.innerCLType2.itsTypeStr == ConstValues.CLTYPE_OPTION)
+        assert(clValueTuple3.itsCLType.innerCLType2.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
+        assert(clValueTuple3.itsCLType.innerCLType3.itsTypeStr == ConstValues.CLTYPE_U512)
+        assert(clValueTuple3.itsParse.innerParsed1.itsValueInStr == "01a018bf278f32fdb7b06226071ce399713ace78a28d43a346055060a660ba7aa9")
+        assert(clValueTuple3.itsParse.innerParsed2.innerParsed1.itsValueInStr == "abc")
+        assert(clValueTuple3.itsParse.innerParsed3.itsValueInStr == "2")
         //Test 8 for CLValue of Map and Any
         //Base on this Deploy at this address
         //https://testnet.cspr.live/deploy/430df377ae04726de907f115bb06c52e40f6cd716b4b475a10e4cd9226d1317e
@@ -456,6 +469,74 @@ internal class GetDeployResultTest {
         assert(clValueAny.itsCLType.itsTypeStr == ConstValues.CLTYPE_ANY)
         assert(clValueAny.itsBytes == "100000000fe56b296e7d896d3d9710a1a9dfa7100720000000ff2a5885d14b4c44252e32973262141d2cb0240f18ce5edb3788a83b979d698d160000007072696365315f63756d756c61746976655f6c617374")
         assert(clValueAny.itsParse.itsValueInStr == ConstValues.VALUE_NULL)
+        //Test for CLType of List(Map(String,String))
+        //Base on deploy at this address
+        //https://testnet.cspr.live/deploy/a91d468e2ddc8936f7866bc594794b322f747508c2192fd4eca90ef8a121d45e
+        getDeployParams.deploy_hash = "a91d468e2ddc8936f7866bc594794b322f747508c2192fd4eca90ef8a121d45e"
+        val postParameter9 = getDeployParams.generatePostParameterStr()
+        getDeployRPC.postURL = ConstValues.TESTNET_URL
+        val getDeployResult9 = getDeployRPC.getDeployFromJsonStr(postParameter9)
+        assert(getDeployResult9.deploy.hash == "a91d468e2ddc8936f7866bc594794b322f747508c2192fd4eca90ef8a121d45e")
+        assert(getDeployResult9.deploy.session.itsType == ExecutableDeployItem.STORED_CONTRACT_BY_HASH)
+        var session9Value:ExecutableDeployItem_StoredContractByHash = ExecutableDeployItem_StoredContractByHash()
+        session9Value = getDeployResult9.deploy.session.itsValue[0] as ExecutableDeployItem_StoredContractByHash
+        assert(session9Value.args.listNamedArg.count() == 4)
+        //assertion for CLValue of type Key - Account again
+        assert(session9Value.args.listNamedArg[0].itsName == "recipient")
+        assert(session9Value.args.listNamedArg[0].clValue.itsBytes == "00c6d93dd827202f3b37297382b1cb9269c07d71a79a49824bb1a008c650a04473")
+        assert(session9Value.args.listNamedArg[0].clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_KEY)
+        assert(session9Value.args.listNamedArg[0].clValue.itsParse.itsValueInStr == "account-hash-c6d93dd827202f3b37297382b1cb9269c07d71a79a49824bb1a008c650a04473")
+       //assertion for CLValue of type Option(List(String))
+        val clValueOptionListString = session9Value.args.listNamedArg[1].clValue as CLValue
+        assert(clValueOptionListString.itsCLType.itsTypeStr == ConstValues.CLTYPE_OPTION)
+        assert(clValueOptionListString.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_LIST)
+        assert(clValueOptionListString.itsCLType.innerCLType1.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
+        assert(clValueOptionListString.itsBytes == "010100000018000000363165353465636231656366653538376561663963636530")
+        assert(clValueOptionListString.itsParse.innerParsed1.itsValue.count() == 1)
+        assert(clValueOptionListString.itsParse.innerParsed1.itsValue[0].itsValueInStr == "61e54ecb1ecfe587eaf9cce0")
+        //assertion for CLValue of type List(Map(String,String))
+        val clValueListMap = session9Value.args.listNamedArg[2].clValue as CLValue
+        assert(clValueListMap.itsBytes == "0100000004000000040000006e616d650f000000546573742050726f642041646d696e0b0000006465736372697074696f6e0700000054657374696e6708000000697066735f75726c5000000068747470733a2f2f676174657761792e70696e6174612e636c6f75642f697066732f516d6175505535726338676868795a465178423952356a43626161664777324d6e65514a524d44574c567a6a615511000000697066735f6d657461646174615f75726c5000000068747470733a2f2f676174657761792e70696e6174612e636c6f75642f697066732f516d627279797641795664426d355a346e774133613738316d6d717563366e476165754541504b393661334c506e")
+        assert(clValueListMap.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST)
+        assert(clValueListMap.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_MAP)
+        assert(clValueListMap.itsCLType.innerCLType1.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
+        assert(clValueListMap.itsCLType.innerCLType1.innerCLType2.itsTypeStr == ConstValues.CLTYPE_STRING)
+        assert(clValueListMap.itsParse.itsValue.count() == 1)
+        //map key list
+        assert(clValueListMap.itsParse.itsValue[0].innerParsed1.itsValue.count() == 4)
+        assert(clValueListMap.itsParse.itsValue[0].innerParsed1.itsValue[0].itsValueInStr == "name")
+        //map value list
+        assert(clValueListMap.itsParse.itsValue[0].innerParsed2.itsValue.count() == 4)
+        assert(clValueListMap.itsParse.itsValue[0].innerParsed2.itsValue[0].itsValueInStr == "Test Prod Admin")
+        //assertion for CLValue of type List(Map(String,String)) but parse empty
+        val clValueListMap2 = session9Value.args.listNamedArg[3].clValue as CLValue
+        assert(clValueListMap2.itsBytes == "0100000000000000")
+        assert(clValueListMap2.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST)
+        assert(clValueListMap2.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_MAP)
+        assert(clValueListMap2.itsCLType.innerCLType1.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
+        assert(clValueListMap2.itsCLType.innerCLType1.innerCLType2.itsTypeStr == ConstValues.CLTYPE_STRING)
+        assert(clValueListMap2.itsParse.itsValue.count() == 1)
+        assert(clValueListMap2.itsParse.itsValue[0].isInnerParsed1Initialize() == false)
+        assert(clValueListMap2.itsParse.itsValue[0].isInnerParsed2Initialize() == false)
+        //Test for Session of type StoredVersionedContractByHash and CLType of U256
+        //Base on the deploy at this address
+        //https://testnet.cspr.live/deploy/9d13abf758dce8663c070a223d95cca8b2e6f014d91fc6cd6f40ed21dbf55aba
+        getDeployParams.deploy_hash = "9d13abf758dce8663c070a223d95cca8b2e6f014d91fc6cd6f40ed21dbf55aba"
+        val postParameter10 = getDeployParams.generatePostParameterStr()
+        getDeployRPC.postURL = ConstValues.TESTNET_URL
+        val getDeployResult10 = getDeployRPC.getDeployFromJsonStr(postParameter10)
+        assert(getDeployResult10.deploy.hash == "9d13abf758dce8663c070a223d95cca8b2e6f014d91fc6cd6f40ed21dbf55aba")
+        assert(getDeployResult10.deploy.session.itsType == ExecutableDeployItem.STORED_VERSIONED_CONTRACT_BY_HASH)
+        var session10Value:ExecutableDeployItem_StoredVersionedContractByHash = ExecutableDeployItem_StoredVersionedContractByHash()
+        session10Value = getDeployResult10.deploy.session.itsValue[0] as ExecutableDeployItem_StoredVersionedContractByHash
+        assert(session10Value.args.listNamedArg.count() == 2)
+        assert(session10Value.itsHash == "5daa83c7d18629fcdf3910ef4a284b6a3288e8879b24b199966857e857244844")
+        assert(session10Value.isVersionExisted == false)
+        assert(session10Value.entryPoint == "flash_borrow")
+        assert(session10Value.args.listNamedArg[1].itsName == "amount")
+        assert(session10Value.args.listNamedArg[1].clValue.itsBytes == "02ae08")
+        assert(session10Value.args.listNamedArg[1].clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_U256)
+        assert(session10Value.args.listNamedArg[1].clValue.itsParse.itsValueInStr == "2222")
 
         //Negative Path:
         //Get Deploy with wrong deploy hash

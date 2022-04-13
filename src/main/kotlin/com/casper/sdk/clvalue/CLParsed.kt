@@ -18,6 +18,24 @@ class CLParsed {
     lateinit var innerParsed3:CLParsed
     //This property is for holding array value of List and FixList
     var itsValue:MutableList<CLParsed> = mutableListOf()
+    fun isInnerParsed1Initialize():Boolean {
+        if(this::innerParsed1.isInitialized) {
+            return true
+        }
+        return false
+    }
+    fun isInnerParsed2Initialize():Boolean {
+        if(this::innerParsed2.isInitialized) {
+            return true
+        }
+        return false
+    }
+    fun isInnerParsed3Initialize():Boolean {
+        if(this::innerParsed3.isInitialized) {
+            return true
+        }
+        return false
+    }
     fun logInfo() {
         println("Information for CLParsed")
         if(itsCLType.isCLTypePrimitive()) {

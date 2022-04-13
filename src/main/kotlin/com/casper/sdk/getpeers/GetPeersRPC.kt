@@ -1,5 +1,6 @@
 package com.casper.sdk.getpeers
 
+import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.toJsonString
@@ -12,14 +13,14 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 class GetPeersRPC {
-    var methodName:String = "info_get_peers"
-    var casperURLTestNet:String = "https://node-clarity-testnet.make.services/rpc";
+    var methodName:String = ConstValues.RPC_INFO_GET_PEERS
+    var methodURL:String = ConstValues.TESTNET_URL
     fun getPeers() :GetPeersResult {
-        val values = mapOf("id" to "1", "method" to "info_get_peers", "jsonrpc" to "2.0","params" to "[]")
+        val parameterStr = """{"id" : 1,"method" : "info_get_peers","params" : [],"jsonrpc" : "2.0"}"""
         val client = HttpClient.newBuilder().build();
         val request = HttpRequest.newBuilder()
-            .uri(URI.create(this.casperURLTestNet))
-            .POST(formData(values))
+            .uri(URI.create(this.methodURL))
+            .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
             .header("Content-Type", "application/json")
             .build()
         val response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -28,25 +29,13 @@ class GetPeersRPC {
         var getPeersResult:GetPeersResult = GetPeersResult()
         getPeersResult.api_version = json.get("result").get("api_version").toString()
         if (peerList is JsonArray) {
-            var counter:Int = 0
             for(peer in peerList) {
                 var onePeerEntry:PeerEntry = PeerEntry()
                 onePeerEntry.address = peer.get("address").toString()
-                onePeerEntry.node_id = peer.get("nod_id").toString()
+                onePeerEntry.node_id = peer.get("node_id").toString()
                 getPeersResult.peers.add(onePeerEntry)
-               // println("Peer number:" + counter + " node_id is:" + peer.get("node_id").toString() + " address:" + peer.get("address").toString())
-                counter ++
             }
         }
         return getPeersResult
-    }
-    fun String.utf8(): String = URLEncoder.encode(this, "UTF-8")
-    fun formData(data: Map<String, String>): HttpRequest.BodyPublisher? {
-
-        var res = data.map {(k, v) -> "\"${k}\":\"${v}\""}
-            .joinToString(",")
-        res = "{" + res + "}"
-        println(res)
-        return HttpRequest.BodyPublishers.ofString(res)
     }
 }

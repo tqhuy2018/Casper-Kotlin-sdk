@@ -415,6 +415,17 @@ internal class GetDeployResultTest {
         assert(clValueResult.itsBytes == "010a000000676f6f64726573756c74")
         assert(clValueResult.itsParse.itsValueInStr == "Ok")
         assert(clValueResult.itsParse.innerParsed1.itsValueInStr == "goodresult")
+        //assertion for CLType Tuple 2
+        val transformCLValueTuple2:TransformEntry = effect7.transforms[31]
+        assert(transformCLValueTuple2.key == "uref-75789066d17abd5a2629c3f5b82af2827c2098edde6868356ea5114d7d6fa86d-000")
+        assert(transformCLValueTuple2.transform.itsType == ConstValues.TRANSFORM_WRITE_CLVALUE)
+        val clValueTuple2: CLValue = transformCLValueResult2.transform.itsValue[0] as CLValue
+        assert(clValueTuple2.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE2)
+        assert(clValueTuple2.itsBytes == "030000006162630101")
+        assert(clValueTuple2.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
+        assert(clValueTuple2.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_U512)
+        assert(clValueTuple2.itsParse.innerParsed1.itsValueInStr == "abc")
+        assert(clValueTuple2.itsParse.innerParsed2.itsValueInStr == "1")
         //Test 8 for CLValue of Map and Any
         //Base on this Deploy at this address
         //https://testnet.cspr.live/deploy/430df377ae04726de907f115bb06c52e40f6cd716b4b475a10e4cd9226d1317e
@@ -424,7 +435,7 @@ internal class GetDeployResultTest {
         val getDeployResult8 = getDeployRPC.getDeployFromJsonStr(postParameter8)
         assert(getDeployResult8.deploy.hash == "430df377ae04726de907f115bb06c52e40f6cd716b4b475a10e4cd9226d1317e")
         val effect8:ExecutionEffect = getDeployResult8.executionResults[0].result.effect
-        //assertion for Transform of type CLValue Option(String)
+        //assertion for Transform of type CLValue Map(String,String)
         val transformCLValueMap:TransformEntry = effect8.transforms[86]
         assert(transformCLValueMap.key == "uref-857fcc81c7d3005f3fc8076efafb4eeda5c7a2e3243f3492a9599be80f2a7ad1-000")
         assert(transformCLValueMap.transform.itsType == ConstValues.TRANSFORM_WRITE_CLVALUE)
@@ -437,7 +448,16 @@ internal class GetDeployResultTest {
         assert(clValueMap.itsParse.innerParsed1.itsValue[0].itsValueInStr == "contract_package_hash")
         assert(clValueMap.itsParse.innerParsed2.itsValue.count() == 4)
         assert(clValueMap.itsParse.innerParsed2.itsValue[0].itsValueInStr == "d32DE152c0bBFDcAFf5b2a6070Cd729Fc0F3eaCF300a6b5e2abAB035027C49bc")
-    //Negative Path:
+        //assertion for Transform of type CLValue Any
+        val transformCLValueAny:TransformEntry = effect8.transforms[81]
+        assert(transformCLValueAny.key == "dictionary-3f26bd6e2d853683dc35fd5353a4ff051c14efbd766a25b01a49cc9dab8c8120")
+        assert(transformCLValueAny.transform.itsType == ConstValues.TRANSFORM_WRITE_CLVALUE)
+        val clValueAny : CLValue = transformCLValueAny.transform.itsValue[0] as CLValue
+        assert(clValueAny.itsCLType.itsTypeStr == ConstValues.CLTYPE_ANY)
+        assert(clValueAny.itsBytes == "100000000fe56b296e7d896d3d9710a1a9dfa7100720000000ff2a5885d14b4c44252e32973262141d2cb0240f18ce5edb3788a83b979d698d160000007072696365315f63756d756c61746976655f6c617374")
+        assert(clValueAny.itsParse.itsValueInStr == ConstValues.VALUE_NULL)
+
+        //Negative Path:
         //Get Deploy with wrong deploy hash
         //Get Deploy with no parameter - no deploy hash
     }

@@ -1,4 +1,5 @@
 package com.casper.sdk.getstateroothash
+import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.toJsonString
@@ -8,8 +9,10 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 class GetStateRootHashRPC {
-    var methodName:String = "chain_get_state_root_hash"
-    var casperURLTestNet:String = "https://node-clarity-testnet.make.services/rpc";
+    var methodName:String = ConstValues.RPC_GET_STATE_ROOT_HASH
+    var casperURLTestNet:String = ConstValues.TESTNET_URL
+
+    @Throws(IllegalArgumentException::class)
     fun getStateRootHash(parameterStr:String) :String {
         val client = HttpClient.newBuilder().build();
         val request = HttpRequest.newBuilder()
@@ -19,17 +22,12 @@ class GetStateRootHashRPC {
             .build()
         val response = client.send(request, HttpResponse.BodyHandlers.ofString());
         val json =response.body().toJson()
-        println(json.toJsonString())
         //Check for error
         if(json.get("error") != null) {
-            print("Error")
-            return "Error"
-            //throw
-        } else {
-            //If not error then get the state root hash
-            println(json.get("result").get("state_root_hash"))
-            val state_root_hash = json.get("result").get("state_root_hash").toString()
-            return state_root_hash
+            throw IllegalArgumentException("Error get state root hash")
+        } else { //If not error then get the state root hash
+            val stateRootHash = json.get("result").get("state_root_hash").toString()
+            return stateRootHash
         }
     }
 }

@@ -19,8 +19,9 @@ import java.net.http.HttpResponse
 
 class GetDeployRPC {
     var postURL:String = ""
-    fun getDeployFromJsonStr(str:String):GetDeployResult {
-        var getDeployResult:GetDeployResult = GetDeployResult()
+    @Throws(IllegalArgumentException::class)
+    fun getDeployFromJsonStr(str:String):GetDeployResult? {
+        val getDeployResult:GetDeployResult = GetDeployResult()
         val client = HttpClient.newBuilder().build();
         val request = HttpRequest.newBuilder()
             .uri(URI.create(postURL))
@@ -29,11 +30,16 @@ class GetDeployRPC {
             .build()
         val response = client.send(request, HttpResponse.BodyHandlers.ofString());
         val json =response.body().toJson()
+        //check for error getting deploy
+        //error can happen if send the wrong deploy hash
+        val jsonError = json.get("error").toJsonString()
+        if (jsonError != "null") {
+            throw IllegalArgumentException("Deploy hash is not valid")
+        }
         val jsonResult:JsonObject = json.get("result") as JsonObject
         getDeployResult.api_version = jsonResult.get("api_version").toString()
         getDeployResult.deploy.header = DeployHeader.fromJsonToDeployHeader(jsonResult.get("deploy").get("header") as JsonObject)
         getDeployResult.deploy.hash = jsonResult.get("deploy").get("hash").toString()
-        var executableDeployItem:ExecutableDeployItem = ExecutableDeployItem()
         val deployPayment = jsonResult.get("deploy").get("payment") as JsonObject
         getDeployResult.deploy.payment = ExecutableDeployItem.fromJsonToExecutableDeployItem(deployPayment)
         val deploySession :JsonObject = jsonResult.get("deploy").get("session") as JsonObject

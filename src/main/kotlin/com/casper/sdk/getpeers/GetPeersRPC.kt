@@ -23,25 +23,18 @@ class GetPeersRPC {
             .header("Content-Type", "application/json")
             .build()
         val response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        //println(response.body())
         val json =response.body().toJson()
-        println(json.toJsonString()) //prints: {"getting":{"started":"Hello World"}}
-        // println(json.get("result").get("state_root_hash")) //prints: Hello World
-        //About to parse the body back
         val peerList = json.get("result").get("peers")
-
         var getPeersResult:GetPeersResult = GetPeersResult()
         getPeersResult.api_version = json.get("result").get("api_version").toString()
-
         if (peerList is JsonArray) {
-            println("Length:" + peerList.size)
             var counter:Int = 0
             for(peer in peerList) {
                 var onePeerEntry:PeerEntry = PeerEntry()
                 onePeerEntry.address = peer.get("address").toString()
                 onePeerEntry.node_id = peer.get("nod_id").toString()
                 getPeersResult.peers.add(onePeerEntry)
-                println("Peer number:" + counter + " node_id is:" + peer.get("node_id").toString() + " address:" + peer.get("address").toString())
+               // println("Peer number:" + counter + " node_id is:" + peer.get("node_id").toString() + " address:" + peer.get("address").toString())
                 counter ++
             }
         }

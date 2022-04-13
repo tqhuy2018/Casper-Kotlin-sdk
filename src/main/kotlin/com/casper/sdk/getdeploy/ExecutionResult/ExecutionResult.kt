@@ -18,8 +18,8 @@ class ExecutionResult {
             var ret:ExecutionResult = ExecutionResult()
             val successJson = from["Success"].toJsonString()
             if(successJson != "null") {
-                val successJsonObject:JsonObject = from["Success"] as JsonObject
                 ret.itsType = ConstValues.EXECUTION_RESULT_SUCCESS
+                val successJsonObject:JsonObject = from["Success"] as JsonObject
                 ret.cost = U512Class.fromStringToU512(successJsonObject["cost"].toString())
                 val transferArray : JsonArray = successJsonObject["transfers"] as JsonArray
                 ret.effect = ExecutionEffect.fromJsonToExecutionEffect(successJsonObject["effect"] as JsonObject)
@@ -28,15 +28,20 @@ class ExecutionResult {
                     for(i in 0..totalTransfer) {
                         ret.transfers.add(transferArray[i].toString())
                     }
-                } else {
-                    println("TransferArray  empty")
                 }
             } else {
                 ret.itsType = ConstValues.EXECUTION_RESULT_FAILURE
                 val failureJsonObject:JsonObject = from["Failure"] as JsonObject
                 ret.cost = U512Class.fromStringToU512(failureJsonObject["cost"].toString())
                 ret.errorMessage = failureJsonObject["error_message"].toString()
-                println("Failure, Cost is ${ret.cost.itsValue}, errorMessage:${ret.errorMessage}")
+                val transferArray : JsonArray = failureJsonObject["transfers"] as JsonArray
+                ret.effect = ExecutionEffect.fromJsonToExecutionEffect(failureJsonObject["effect"] as JsonObject)
+                if (transferArray.count() > 0) {
+                    var totalTransfer:Int = transferArray.count()-1
+                    for(i in 0..totalTransfer) {
+                        ret.transfers.add(transferArray[i].toString())
+                    }
+                }
             }
             return ret
         }

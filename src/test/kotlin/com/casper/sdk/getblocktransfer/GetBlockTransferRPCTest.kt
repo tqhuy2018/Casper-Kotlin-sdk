@@ -52,5 +52,7 @@ internal class GetBlockTransferRPCTest {
             assert(transfer.gas.itsValue == "0")
             assert(transfer.isIDExisted == false)
         } catch (e:IllegalArgumentException) {}
+        //Negative path
+
     }
 }

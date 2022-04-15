@@ -1,4 +1,4 @@
-package com.casper.sdk.getblocktransfer
+package com.casper.sdk.getblock
 
 import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.get
@@ -9,10 +9,10 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-class GetBlockTransferRPC {
+class GetBlockRPC {
     var methodURL:String = ConstValues.TESTNET_URL
     @Throws(IllegalArgumentException::class)
-    fun getBlockTransfer(parameterStr:String):GetBlockTransfersResult {
+    fun getBlock(parameterStr:String): GetBlockResult {
         val client = HttpClient.newBuilder().build();
         val request = HttpRequest.newBuilder()
             .uri(URI.create(this.methodURL))
@@ -23,9 +23,9 @@ class GetBlockTransferRPC {
         val json =response.body().toJson()
         //Check for error
         if(json.get("error") != null) {
-            throw IllegalArgumentException("Error get block transfer")
-        } else { //If not error then get the block transfer
-            val ret:GetBlockTransfersResult = GetBlockTransfersResult.fromJsonToGetBlockTransfersResult(json.get("result") as JsonObject)
+            throw IllegalArgumentException("Error get block")
+        } else { //If not error then get the state root hash
+            val ret: GetBlockResult = GetBlockResult.fromJsonObjectToGetBlockResult(json.get("result") as JsonObject)
             return ret
         }
     }

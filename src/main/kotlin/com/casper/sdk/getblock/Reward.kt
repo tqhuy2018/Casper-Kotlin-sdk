@@ -8,7 +8,7 @@ class Reward {
     var amount:ULong = 0u
     companion object {
         fun fromJsonToReward(from:JsonObject):Reward {
-            var ret:Reward = Reward()
+            val ret:Reward = Reward()
             ret.validator = from["validator"].toString()
             ret.amount = from["amount"].toJsonString().toULong()
             return ret

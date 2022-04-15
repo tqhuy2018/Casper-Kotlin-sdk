@@ -3,6 +3,7 @@ package com.casper.sdk.getblocktransfer
 import com.casper.sdk.BlockIdentifier
 import com.casper.sdk.BlockIdentifierType
 import com.casper.sdk.ConstValues
+import com.casper.sdk.getblock.GetBlockResult
 import com.casper.sdk.getdeploy.ExecutionResult.Transform.Transfer
 import org.junit.jupiter.api.Test
 
@@ -15,9 +16,9 @@ internal class GetBlockTransferRPCTest {
         val getBlockTransferRPC : GetBlockTransferRPC = GetBlockTransferRPC()
         val bi: BlockIdentifier = BlockIdentifier()
         bi.blockType = BlockIdentifierType.NONE;
-        val str:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
+        val parameter1:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
         try {
-            val getBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(str)
+            val getBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(parameter1)
             if(getBlockTransfersResult!=null) {
                 assert(getBlockTransfersResult.apiVersion=="1.4.5")
                 assert(getBlockTransfersResult.blockHash.length>0)
@@ -27,18 +28,18 @@ internal class GetBlockTransferRPCTest {
         //Call 2: Get block transfer with BlockIdentifier of type Block Hash with correct Block Hash
         bi.blockType = BlockIdentifierType.HASH
         bi.blockHash = "fe35810a3dcfbf853b9d3ac2445fe1fa4aaab047d881d95d9009dc257d396e7e"
-        val str2:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
+        val parameter2:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
         try {
-            val getBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(str2)
+            val getBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(parameter2)
             assert(getBlockTransfersResult.blockHash=="fe35810a3dcfbf853b9d3ac2445fe1fa4aaab047d881d95d9009dc257d396e7e")
            //??? assert(getBlockTransfersResult.isTransferInit()==false)
         } catch (e:IllegalArgumentException) {}
         //Call3: Get state root hash with BlockIdentifier of type Block Height with correct Block Height
         bi.blockType = BlockIdentifierType.HEIGHT
         bi.blockHeight = 108u
-        val str3:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
+        val parameter3:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
         try {
-            val getBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(str3)
+            val getBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(parameter3)
             assert(getBlockTransfersResult.blockHash=="b4da7924b335c6ae00141726ac42513edee521ab0ee3fccb1e20827cf96de84c")
             assert(getBlockTransfersResult.isTransferInit()==true)
             assert(getBlockTransfersResult.transfers.count() == 1)
@@ -53,6 +54,24 @@ internal class GetBlockTransferRPCTest {
             assert(transfer.isIDExisted == false)
         } catch (e:IllegalArgumentException) {}
         //Negative path
-
+        //Negative path 1: Test with sending block identifier with wrong block hash, latest block is retrieved
+        bi.blockType = BlockIdentifierType.HASH;
+        bi.blockHash = "AAA_0101f5170c996cc02b581d8200f0d95a737840234f31bf1fa21cca35137f8507b0"
+        val parameter5:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
+        try {
+            val getBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(parameter5)
+            assert(getBlockTransfersResult.blockHash.length > 0)
+            assert(getBlockTransfersResult.apiVersion.length > 0)
+        } catch (e:IllegalArgumentException) {}
+        //Negative path 2: Test with sending block identifier with wrong block height - example very big block height
+        //Error is thrown
+        bi.blockType = BlockIdentifierType.HEIGHT;
+        bi.blockHeight = 11111111111111111u
+        val parameter6:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK)
+        try {
+            val getBlockTransfersResult: GetBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(parameter6)
+        } catch (e:IllegalArgumentException) {
+            println("Error get block with too big height")
+        }
     }
 }

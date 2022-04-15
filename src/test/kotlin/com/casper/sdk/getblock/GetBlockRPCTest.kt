@@ -141,6 +141,14 @@ internal class GetBlockRPCTest {
             assert(getBlockResult.block.header.parentHash.length>0)
         } catch (e:IllegalArgumentException) { }
         //Negative path 2: Test with sending block identifier with wrong block height - example very big block height
-
+        //Error is thrown
+        bi.blockType = BlockIdentifierType.HEIGHT;
+        bi.blockHeight = 11111111111111111u
+        val parameter6:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK)
+        try {
+            val getBlockResult: GetBlockResult = getBlock.getBlock(parameter6)
+        } catch (e:IllegalArgumentException) {
+            println("Error get block with too big height")
+        }
     }
 }

@@ -71,6 +71,16 @@ class ConstValues {
         const val  TRANSFORM_ADD_UINT512                = "AddUInt512"
         const val  TRANSFORM_ADD_KEY                    = "AddKeys"
         const val  TRANSFORM_FAILURE                    = "Failure"
-
+        //StoredValue enum
+        const val STORED_VALUE_CLVALUE                  = "CLValue"
+        const val STORED_VALUE_ACCOUNT                  = "Account"
+        const val STORED_VALUE_CONTRACT_WASM            = "ContractWasm"
+        const val STORED_VALUE_CONTRACT                 = "Contract"
+        const val STORED_VALUE_CONTRACT_PACKAGE         = "ContractPackage"
+        const val STORED_VALUE_TRANSFER                 = "Transfer"
+        const val STORED_VALUE_DEPLOY_INFO              = "DeployInfo"
+        const val STORED_VALUE_ERA_INFO                 = "EraInfo"
+        const val STORED_VALUE_BID                      = "Bid"
+        const val STORED_VALUE_WITHDRAW                 = "Withdraw"
     }
 }

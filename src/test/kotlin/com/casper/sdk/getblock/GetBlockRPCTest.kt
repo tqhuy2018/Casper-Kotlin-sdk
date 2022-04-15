@@ -57,7 +57,6 @@ internal class GetBlockRPCTest {
         bi.blockType = BlockIdentifierType.HEIGHT
         bi.blockHeight = 3345u
         val parameter3:String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK)
-        println(parameter3)
         try {
             val getBlockResult3 = getBlock.getBlock(parameter3)
             assert(getBlockResult3.block.blockHash == "2a1a22b8379a9c8ff1e77d858f5173a68b934e188c663dce3dead0c6faead471")

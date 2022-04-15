@@ -70,22 +70,29 @@ internal class GetBlockRPCTest {
             assert(blockHeader.randomBit == false)
             assert(blockHeader.accumulatedSeed == "f2a59808392ec8cfd094a0d34c1a43d9d72ca2bd4f0d3a65202746ed89efe150")
             assert(blockHeader.isEraEndInit() == true)
-            assert(blockHeader.eraEnd.eraReport)
+            assert(blockHeader.eraEnd.eraReport.equivocators.count() == 0)
+            assert(blockHeader.eraEnd.eraReport.rewards.count() == 100)
+            assert(blockHeader.eraEnd.eraReport.rewards[0].validator == "010268bb35bd370a499ba775877aaadef1ba87bff64ca527ae55f88cd8af9791de")
+            assert(blockHeader.eraEnd.eraReport.rewards[0].amount.toString() == "453224416229")
+            assert(blockHeader.eraEnd.eraReport.inactiveValidators.count() == 0)
+            assert(blockHeader.eraEnd.nextEraValidatorWeights.count() == 100)
+            assert(blockHeader.eraEnd.nextEraValidatorWeights[0].validator == "010268bb35bd370a499ba775877aaadef1ba87bff64ca527ae55f88cd8af9791de")
+            assert(blockHeader.eraEnd.nextEraValidatorWeights[0].weight.toString() == "2084445503223")
+
             assert(blockHeader.timestamp == "2021-04-12T09:37:00.416Z")
             assert(blockHeader.eraId.toString() == "43")
             assert(blockHeader.height.toString() == "3345")
             assert(blockHeader.protocolVersion == "1.0.0")
             // block body assertion
             val body:JsonBlockBody = getBlockResult3.block.body
-            assert(body.proposer=="01a03c687285634a0115c0af1015ab0a53809f4826ee863c94e32ce48bcfdf447d")
+            assert(body.proposer=="01c642ea7442d6271119cee66f76848525d67932de3f1ec36e236e37b38d97a03b")
             assert(body.transferHashes.count() == 0)
-            assert(body.deployHashes.count() == 1)
-            assert(body.deployHashes[0]=="db058cbd45f55d07f8b7a54c025bfb808ce748d516e0ebc130d635e3974068cf")
+            assert(body.deployHashes.count() == 0)
             // proofs assertion
             val proofs:MutableList<JsonProof> = getBlockResult3.block.proofs
             assert(proofs.count() == 100)
-            assert(proofs[0].publicKey == "0101f5170c996cc02b581d8200f0d95a737840234f31bf1fa21cca35137f8507b0")
-            assert(proofs[0].signature == "011eff8fe46b617dde8ff3c694307fe23584f1f0cfba6f4827e13c7199f35f8525059c3232fddbc693189a1d8e9ebe0f481666c63b8582c662dbc7be9f17ae890d")
+            assert(proofs[0].publicKey == "010268bb35bd370a499ba775877aaadef1ba87bff64ca527ae55f88cd8af9791de")
+            assert(proofs[0].signature == "018fda329a99957b73272d2b9597b413c40136a2fe45a254db85c8616d3b39d6897b793ca51478b2a4d0896245a8618176ff11005c6a10eaf67d5d838047ae0e0a")
         } catch (e:IllegalArgumentException) {}
     }
 }

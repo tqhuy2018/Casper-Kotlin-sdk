@@ -114,68 +114,52 @@ Here is the example of getting the state root hash with block identifier with co
 
 ### II. Get Peers List  
 
-The task is done in file "GetPeerResult.h" and "GetPeerResult.m"
+The task is done in file "GetPeersRPC.kotlin" in package "com.casper.sdk.getpeers"
 
 #### 1. Method declaration
 
 ```Kotlin
-+(void) getPeerResultWithJsonParam:(NSString*) jsonString;
+fun getPeers(): GetPeersResult
 ```
 
 #### 2. Input & Output: 
 
-Input: NSString represents the json parameter needed to send along with the POST method to Casper server. This string is just simple as:
+Input: None. When send the POST method to server, the following fixed string parameter is sent:
 
 ```Kotlin
 {"params" : [],"id" : 1,"method":"info_get_peers","jsonrpc" : "2.0"}
 ```
 
-The code under  function handler the getting of peerlist
+The result in Json is then parsed back to GetPeersResult class object, with the following code:
 
 ```Kotlin
-[HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_INFO_GET_PEERS];
+ var getPeersResult:GetPeersResult = GetPeersResult()
+        getPeersResult.api_version = json.get("result").get("api_version").toString()
+        if (peerList is JsonArray) {
+            for(peer in peerList) {
+                var onePeerEntry:PeerEntry = PeerEntry()
+                onePeerEntry.address = peer.get("address").toString()
+                onePeerEntry.node_id = peer.get("node_id").toString()
+                getPeersResult.peers.add(onePeerEntry)
+            }
+        }
 ```
 
-From this, in HttpHandler class, the retrieve of PeerEntry List is done with this function:
+#### 3. The Unit test file for GetPeerResult is in file "GetPeersTest.kotlin"
+
+The function getPeers in this file do just simple work of declare a GetPeerRPC class object and call the getPeers() function from this object, to get the getPeersResult object.
 
 ```Kotlin
-+(GetPeerResult*) fromJsonObjToGetPeerResult:(NSDictionary*) jsonDict;
+val getPeers = GetPeersRPC()
+val getPeersResult = getPeers.getPeers()
 ```
 
-- Output: List of peer defined in class GetPeersResult, which contain a list of PeerEntry - a class contain of nodeId and address.
-
-#### 3. The Unit test file for GetPeerResult is in file "GetPeerResultTest.m"
-
-The steps in doing the test.
-
-1.Declare the json parameter to send to POST request
-
+The result is then put into assertion. Since the number of the peer can vary among the call, then only the assertion of number of peer > 0 is tested and the first peer information is printed out
 ```Kotlin
-NSString *jsonString = @"{\"params\" : [],\"id\" : 1,\"method\":\"info_get_peers\",\"jsonrpc\" : \"2.0\"}";
-```
-From the POST request, the json data is retrieved and stored in forJSONObject variable.
-
-2. Get GetPeerResult from the forJSONObject variable
-
-```Kotlin
-GetPeerResult * gpr = [[GetPeerResult alloc] init];
-        gpr = [GetPeerResult fromJsonObjToGetPeerResult:forJSONObject];
-```
-
-From this you can Log out the retrieved information, such as the following code Log out total peer and print address and node id for each peer.
-
-```Kotlin
-NSLog(@"Get peer result api_version:%@",gpr.api_version);
-NSLog(@"Get peer result, total peer entry:%lu",[gpr.PeersMap count]);
-NSLog(@"List of peer printed out:");
-NSInteger totalPeer = [gpr.PeersMap count];
-NSInteger  counter = 1;
-for (int i = 0 ; i < totalPeer;i ++) {
-    PeerEntry * pe = [[PeerEntry alloc] init];
-    pe = [gpr.PeersMap objectAtIndex:i];
-    NSLog(@"Peer number %lu address:%@ and node id:%@",counter,pe.address,pe.nodeID);
-    counter = counter + 1;
-}
+assert(getPeersResult.api_version.length>0)
+assert(getPeersResult.peers.size>0)
+val onePeerEntry:PeerEntry = getPeersResult.peers[0]
+println("First peer entry nodeId:${onePeerEntry.node_id} and address:${onePeerEntry.address}")
 ```
 
 ### III. Get Deploy 

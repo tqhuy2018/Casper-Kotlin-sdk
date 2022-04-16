@@ -18,7 +18,7 @@ class GetItemParams {
                 }
             }
             pathStr = pathStr + "]"
-        }
-        return return """{"id" : 1,"method" : "${ConstValues.RPC_STATE_GET_ITEM}","params": {"state_root_hash":"${this.stateRootHash}","key":"${this.key}","path":"${pathStr}"},"jsonrpc" : "2.0"}"""
+         }
+        return return """{"id" : 1,"method" : "${ConstValues.RPC_STATE_GET_ITEM}","params": {"state_root_hash":"${this.stateRootHash}","key":"${this.key}","path":${pathStr}},"jsonrpc" : "2.0"}"""
     }
 }

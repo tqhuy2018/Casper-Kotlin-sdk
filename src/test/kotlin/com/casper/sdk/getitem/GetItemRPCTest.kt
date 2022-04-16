@@ -7,6 +7,7 @@ import com.casper.sdk.getdeploy.ExecutionResult.Transform.Transfer
 import com.casper.sdk.storedvalue.Account
 import com.casper.sdk.storedvalue.StoredValue
 import com.casper.sdk.getdeploy.ExecutionResult.Transform.Bid
+import com.casper.sdk.getdeploy.ExecutionResult.Transform.Withdraw
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -22,6 +23,7 @@ internal class GetItemRPCTest {
             getItemParameter.stateRootHash = "340a09b06bae99d868c68111b691c70d9d5a253c0f2fd7ee257a04a198d3818e"
             getItemParameter.key = "uref-ba620eee2b06c6df4cd8da58dd5c5aa6d42f3a502de61bb06dc70b164eee4119-007"
             val params: String = getItemParameter.generateParameterStr()
+            println(params)
             val getItemResult = getItemRPC.getItem(params)
             assert(getItemResult.apiVersion == "1.4.5")
             assert(getItemResult.merkleProof.length == 35056)
@@ -30,12 +32,16 @@ internal class GetItemRPCTest {
             assert(clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_ANY)
             assert(clValue.itsParse.itsValueInStr == ConstValues.VALUE_NULL)
             assert(clValue.itsBytes == "050000006b69747479040000000c0000004f6666696365205370616365010c00000050756c702046696374696f6e011200000054686520426c7565732042726f7468657273000d00000054686520476f6466617468657200")
-        } catch (e:IllegalArgumentException) {}
+            println("Done for CLValue")
+        } catch (e:IllegalArgumentException) {
+            println("Error get item 1")
+        }
         //Test for StoredValue of type Account
         try {
             getItemParameter.stateRootHash = "b31f42523b6799d6d403a3119596c958abf2cdba31066322f01e5fa38ef999aa"
             getItemParameter.key = "account-hash-ff2ae80f71c1ffcac4921100a21b67ddecf59a30fb86eb6979f47c8838b3b7d3"
             val params : String = getItemParameter.generateParameterStr()
+            println(params)
             val getItemResult = getItemRPC.getItem(params)
             assert(getItemResult.apiVersion == "1.4.5")
             assert(getItemResult.merkleProof.length == 25428)
@@ -50,12 +56,16 @@ internal class GetItemRPCTest {
             assert(account.associatedKeys[0].weight.toString() == "1")
             assert(account.actionThresholds.deployment.toString() == "1")
             assert(account.actionThresholds.keyManagement.toString() == "1")
-        } catch (e:IllegalArgumentException) {}
+            println("Done for Account")
+        } catch (e:IllegalArgumentException) {
+            println("Error get item 2")
+        }
         //Test for StoredValue of type Transfer
         try {
             getItemParameter.stateRootHash = "1416302b2c637647e2fe8c0b9f7ee815582cc7a323af5823313ff8a8684c8cf8"
             getItemParameter.key = "transfer-8218fa8c55c19264e977bf2bae9f5889082aee4d2c4eaf9642478173c37d1ed4"
             val params: String = getItemParameter.generateParameterStr()
+            println("Transfer param:${params}")
             val getItemResult = getItemRPC.getItem(params)
             assert(getItemResult.apiVersion == "1.4.5")
             assert(getItemResult.merkleProof.length == 41424)
@@ -70,12 +80,16 @@ internal class GetItemRPCTest {
             assert(transfer.amount.itsValue == "2500000000")
             assert(transfer.gas.itsValue == "0")
             assert(transfer.id == "0")
-        } catch (e:IllegalArgumentException) {}
+            println("Done for Transfer")
+        } catch (e:IllegalArgumentException) {
+            println("Error get item 3")
+        }
         //Test for StoredValue of type DeployInfo
         try {
             getItemParameter.stateRootHash = "1416302b2c637647e2fe8c0b9f7ee815582cc7a323af5823313ff8a8684c8cf8"
             getItemParameter.key = "deploy-a49c06f9b2adf02812a7b2fdcad08804a2ce4896ffec7c06c920d417e7e39cfe"
             val params: String = getItemParameter.generateParameterStr()
+            println(params)
             val getItemResult = getItemRPC.getItem(params)
             assert(getItemResult.apiVersion == "1.4.5")
             assert(getItemResult.merkleProof.length == 39984)
@@ -88,12 +102,17 @@ internal class GetItemRPCTest {
             assert(deployInfo.gas.itsValue == "100000000")
             assert(deployInfo.transfers.count() == 1)
             assert(deployInfo.transfers[0] == "transfer-c749305c07f8de0aa1898929db4a93b3b136e408707878ae15155910d840b4c7")
-        } catch (e:IllegalArgumentException) {}
+            println("Done for DeployInfo")
+        } catch (e:IllegalArgumentException) {
+            println("Error get item 4")
+        }
         //Test for StoredValue of type Bid
         try {
+            getItemRPC.methodURL = ConstValues.MAINNET_URL
             getItemParameter.stateRootHash = "647C28545316E913969B032Cf506d5D242e0F857061E70Fb3DF55980611ace86"
             getItemParameter.key = "bid-24b6D5Aabb8F0AC17D272763A405E9CECa9166B75B745Cf200695E172857c2dD"
             val params: String = getItemParameter.generateParameterStr()
+            println(params)
             val getItemResult = getItemRPC.getItem(params)
             assert(getItemResult.apiVersion == "1.4.5")
             assert(getItemResult.merkleProof.length > 0)
@@ -127,8 +146,31 @@ internal class GetItemRPCTest {
             assert(bid.delegators[41].vestingSchedule.initialReleaseTimestampMillis.toString() == "1624978800000")
             assert(bid.delegators[41].vestingSchedule.lockedAmounts.count() == 14)
             assert(bid.delegators[41].vestingSchedule.lockedAmounts[0].itsValue == "33805201971412311")
-
-
+            assert(bid.delegators[41].vestingSchedule.lockedAmounts[1].itsValue == "31204801819765211")
+            println("Done for Bid")
+        } catch (e:IllegalArgumentException) {
+            println("Error get item 5")
+        }
+        //Test for StoredValue of type Withdraw
+        try {
+            getItemRPC.methodURL = ConstValues.TESTNET_URL
+            getItemParameter.stateRootHash = "d360e2755f7cee816cce3f0eeb2000dfa03113769743ae5481816f3983d5f228"
+            getItemParameter.key = "withdraw-df067278a61946b1b1f784d16e28336ae79f48cf692b13f6e40af9c7eadb2fb1"
+            val params: String = getItemParameter.generateParameterStr()
+            println(params)
+            val getItemResult = getItemRPC.getItem(params)
+            assert(getItemResult.apiVersion == "1.4.5")
+            assert(getItemResult.merkleProof.length > 0)
+            val storedValue: StoredValue = getItemResult.storedValue
+            assert(storedValue.itsType == ConstValues.STORED_VALUE_WITHDRAW)
+            val withdraw:Withdraw = storedValue.itsValue[0] as Withdraw
+            assert(withdraw.listUnbondingPurse.count() == 1)
+            assert(withdraw.listUnbondingPurse[0].bondingPurse == "uref-5fcc3031ea2572f9929e0cfcfc84c6c3131bfe1e78bce8cb61f99f59eace7795-007")
+            assert(withdraw.listUnbondingPurse[0].validatorPublicKey == "01d949a3a1963db686607a00862f79b76ceb185fc134d0aeedb686f1c151f4ae54")
+            assert(withdraw.listUnbondingPurse[0].amount.itsValue == "500")
+            assert(withdraw.listUnbondingPurse[0].unbonderPublicKey == "01d949a3a1963db686607a00862f79b76ceb185fc134d0aeedb686f1c151f4ae54")
+            assert(withdraw.listUnbondingPurse[0].eraOfCreation.toString() == "3319")
+            println("Done for withdraw")
         } catch (e:IllegalArgumentException) {}
     }
 }

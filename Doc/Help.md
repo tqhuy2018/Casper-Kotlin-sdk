@@ -1,4 +1,4 @@
-# ObjectiveC Casper SDK manual on classes and methods
+# Kotlin Casper SDK manual on classes and methods
 
 ## RPC Calls
 
@@ -44,7 +44,7 @@ The task is done in file "GetStateRootHash.h" and "GetStateRootHash.m"
 
 #### 1. Method declaration
 
-```ObjectiveC
+```Kotlin
 +(void) getStateRootHashWithJsonParam:(NSString*) jsonString 
 ```
 
@@ -54,7 +54,7 @@ Input: NSString represents the json parameter needed to send along with the POST
 
 When call this method to get the state root hash, you need to declare a BlockIdentifier object and then assign the height or hash or just none to the BlockIdentifier. Then the BlockIdentifier is transfer to the jsonString parameter. The whole sequence can be seen as the following code:
 1. Declare a BlockIdentifier and assign its value
-```ObjectiveC
+```Kotlin
     BlockIdentifier * bi = [[BlockIdentifier alloc] init];
     bi.blockType = USE_NONE;
     
@@ -73,18 +73,18 @@ When call this method to get the state root hash, you need to declare a BlockIde
 ```
 2. Use the jsonString to call the function:
 
-```ObjectiveC
+```Kotlin
 +(void) getStateRootHashWithJsonParam:(NSString*) jsonString 
 ```
 
 Output: the actual output is retrieved within the function body of getStateRootHashWithJsonParam function:
 
-```ObjectiveC
+```Kotlin
 [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_GET_STATE_ROOT_HASH];
 ```
 From this the other method is called
 
-```ObjectiveC
+```Kotlin
 +(NSString*) fromJsonToStateRootHash:(NSDictionary*) nsData 
 ```
 
@@ -96,7 +96,7 @@ In Unit test, the GetStateRootHash is done within the following sequence:
 
 1. Declare a BlockIdentifier and assign its atributes
 
-```ObjectiveC
+```Kotlin
     BlockIdentifier * bi = [[BlockIdentifier alloc] init];
     bi.blockType = USE_NONE;
     
@@ -115,7 +115,7 @@ In Unit test, the GetStateRootHash is done within the following sequence:
 ```
 2. Call the function to get the state root hash
 
-```ObjectiveC
+```Kotlin
 [self getStateRootHashWithJsonParam:jsonString];
 ```
 
@@ -125,7 +125,7 @@ The task is done in file "GetPeerResult.h" and "GetPeerResult.m"
 
 #### 1. Method declaration
 
-```ObjectiveC
+```Kotlin
 +(void) getPeerResultWithJsonParam:(NSString*) jsonString;
 ```
 
@@ -133,19 +133,19 @@ The task is done in file "GetPeerResult.h" and "GetPeerResult.m"
 
 Input: NSString represents the json parameter needed to send along with the POST method to Casper server. This string is just simple as:
 
-```ObjectiveC
+```Kotlin
 {"params" : [],"id" : 1,"method":"info_get_peers","jsonrpc" : "2.0"}
 ```
 
 The code under  function handler the getting of peerlist
 
-```ObjectiveC
+```Kotlin
 [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_INFO_GET_PEERS];
 ```
 
 From this, in HttpHandler class, the retrieve of PeerEntry List is done with this function:
 
-```ObjectiveC
+```Kotlin
 +(GetPeerResult*) fromJsonObjToGetPeerResult:(NSDictionary*) jsonDict;
 ```
 
@@ -157,21 +157,21 @@ The steps in doing the test.
 
 1.Declare the json parameter to send to POST request
 
-```ObjectiveC
+```Kotlin
 NSString *jsonString = @"{\"params\" : [],\"id\" : 1,\"method\":\"info_get_peers\",\"jsonrpc\" : \"2.0\"}";
 ```
 From the POST request, the json data is retrieved and stored in forJSONObject variable.
 
 2. Get GetPeerResult from the forJSONObject variable
 
-```ObjectiveC
+```Kotlin
 GetPeerResult * gpr = [[GetPeerResult alloc] init];
         gpr = [GetPeerResult fromJsonObjToGetPeerResult:forJSONObject];
 ```
 
 From this you can Log out the retrieved information, such as the following code Log out total peer and print address and node id for each peer.
 
-```ObjectiveC
+```Kotlin
 NSLog(@"Get peer result api_version:%@",gpr.api_version);
 NSLog(@"Get peer result, total peer entry:%lu",[gpr.PeersMap count]);
 NSLog(@"List of peer printed out:");
@@ -191,7 +191,7 @@ for (int i = 0 ; i < totalPeer;i ++) {
 
 The call for Get Deploy RPC method is done through this function in "GetDeployResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getDeployWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_INFO_GET_DEPLOY];
 }
@@ -199,7 +199,7 @@ The call for Get Deploy RPC method is done through this function in "GetDeployRe
 
 From this the GetDeployResult is retrieved through this function, also in "GetDeployResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetDeployResult*) fromJsonDictToGetDeployResult:(NSDictionary*) fromDict  
 ```
 
@@ -207,13 +207,13 @@ From this the GetDeployResult is retrieved through this function, also in "GetDe
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getDeployWithParams:(NSString*) jsonString
 ```
 
 Input is the string of parameter sent to Http Post request to the RPC method, which in form of
 
-```ObjectiveC
+```Kotlin
 {"id" : 1,"method" : "info_get_deploy","params" : {"deploy_hash" : "6e74f836d7b10dd5db7430497e106ddf56e30afee993dd29b85a91c1cd903583"},"jsonrpc" : "2.0"}
 ```
 To generate such string, you need to use GetDeployParams class, which declared in file "GetDeployParams.h" and "GetDeployParams.m"
@@ -223,7 +223,7 @@ Instantiate the GetDeployParams, then assign the deploy_hash to the object and u
 Sample  code for this process
 
 
-```ObjectiveC
+```Kotlin
 GetDeployParams * item = [[GetDeployParams alloc]init];
 item.deploy_hash = @"acb4d78cbb900fe91a896ea8a427374c5d600cd9206efae2051863316265f1b1";
 NSString * paramStr = [item generatePostParam];
@@ -233,7 +233,7 @@ Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictT
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(GetDeployResult*) fromJsonDictToGetDeployResult:(NSDictionary*) fromDict  
 ```
 
@@ -247,7 +247,7 @@ Output: The GetDeployResult which contains all information of the Deploy. From t
 
 The call for Get Status RPC method is done through this function in "GetStatusResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getStatusWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_INFO_GET_STATUS];
 }
@@ -255,7 +255,7 @@ The call for Get Status RPC method is done through this function in "GetStatusRe
 
 From this the GetStatusResult is retrieved through this function, also in "GetStatusResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetStatusResult *) fromJsonDictToGetStatusResult:(NSDictionary*) jsonDict
 ```
 
@@ -263,12 +263,12 @@ From this the GetStatusResult is retrieved through this function, also in "GetSt
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getStatusWithParams:(NSString*) jsonString
 ```
 
 Input: a JsonString of value 
-```ObjectiveC
+```Kotlin
 {"params" : [],"id" : 1,"method":"info_get_status","jsonrpc" : "2.0"}
 ```
 
@@ -276,7 +276,7 @@ Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictT
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(GetStatusResult *) fromJsonDictToGetStatusResult:(NSDictionary*) jsonDict
 ```
 
@@ -290,7 +290,7 @@ Output: The GetStatusResult which contains all information of the status. From t
 
 The call for Get Block Transfers RPC method is done through this function in "GetBlockTransfersResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getBlockTransfersWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_CHAIN_GET_BLOCK_TRANSFERS];
 }
@@ -298,7 +298,7 @@ The call for Get Block Transfers RPC method is done through this function in "Ge
 
 From this the GetBlockTransfersResult is retrieved through this function, also in "GetBlockTransfersResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetBlockTransfersResult *) fromJsonDictToGetBlockTransfersResult:(NSDictionary*) jsonDict
 ```
 
@@ -306,12 +306,12 @@ From this the GetBlockTransfersResult is retrieved through this function, also i
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getBlockTransfersWithParams:(NSString*) jsonString
 ```
 
 Input: a JsonString of such value:
-```ObjectiveC
+```Kotlin
 {"method" : "chain_get_block_transfers","id" : 1,"params" : {"block_identifier" : {"Hash" :"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"}},"jsonrpc" : "2.0"}
 ```
 
@@ -321,7 +321,7 @@ Instantiate the BlockIdentifier, then assign the block with block hash or block 
 
 Sample  code for this process
 
-```ObjectiveC
+```Kotlin
 BlockIdentifier * bi = [[BlockIdentifier alloc] init];
 bi.blockType = USE_BLOCK_HASH;
 [bi assignBlockHashWithParam:@"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"];
@@ -333,7 +333,7 @@ Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictT
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(GetBlockTransfersResult *) fromJsonDictToGetBlockTransfersResult:(NSDictionary*) jsonDict
 ```
 
@@ -347,7 +347,7 @@ Output: The GetBlockTransfersResult which contains all information of the Block 
 
 The call for Get Block Transfers RPC method is done through this function in "GetBlockResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getBlockWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_CHAIN_GET_BLOCK];
 }
@@ -355,7 +355,7 @@ The call for Get Block Transfers RPC method is done through this function in "Ge
 
 From this the GetBlockResult is retrieved through this function, also in "GetBlockResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetBlockResult*) fromJsonDictToGetBlockResult:(NSDictionary *) jsonDict
 ```
 
@@ -363,14 +363,14 @@ From this the GetBlockResult is retrieved through this function, also in "GetBlo
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getBlockWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_CHAIN_GET_BLOCK];
 }
 ```
 
 Input: a JsonString of such value:
-```ObjectiveC
+```Kotlin
 {"method" : "chain_get_block","id" : 1,"params" : {"block_identifier" : {"Hash" :"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"}},"jsonrpc" : "2.0"}
 ```
 
@@ -380,7 +380,7 @@ Instantiate the BlockIdentifier, then assign the block with block hash or block 
 
 Sample  code for this process
 
-```ObjectiveC
+```Kotlin
 BlockIdentifier * bi = [[BlockIdentifier alloc] init];
 bi.blockType = USE_BLOCK_HASH;
 [bi assignBlockHashWithParam:@"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"];
@@ -392,7 +392,7 @@ Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictT
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(GetBlockResult *) fromJsonDictToGetBlockResult:(NSDictionary*) jsonDict
 ```
 
@@ -406,7 +406,7 @@ Output: The GetBlockResult which contains all information of the block. From thi
 
 The call for Get Era Info RPC method is done through this function in "GetEraInfoResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getEraInfoWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_CHAIN_GET_ERA_BY_SWITCH_BLOCK];
 }
@@ -414,7 +414,7 @@ The call for Get Era Info RPC method is done through this function in "GetEraInf
 
 From this the GetEraInfoResult is retrieved through this function, also in "GetEraInfoResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetEraInfoResult*) fromJsonDictToGetEraInfoResult:(NSDictionary*) fromDict
 ```
 
@@ -422,14 +422,14 @@ From this the GetEraInfoResult is retrieved through this function, also in "GetE
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getEraInfoWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_CHAIN_GET_ERA_BY_SWITCH_BLOCK];
 }
 ```
 
 Input: a JsonString of such value:
-```ObjectiveC
+```Kotlin
 {"method" : "chain_get_era_info_by_switch_block","id" : 1,"params" : {"block_identifier" : {"Hash" :"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"}},"jsonrpc" : "2.0"}
 ```
 
@@ -439,7 +439,7 @@ Instantiate the BlockIdentifier, then assign the block with block hash or block 
 
 Sample  code for this process
 
-```ObjectiveC
+```Kotlin
 BlockIdentifier * bi = [[BlockIdentifier alloc] init];
 bi.blockType = USE_BLOCK_HASH;
 [bi assignBlockHashWithParam:@"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"];
@@ -451,7 +451,7 @@ Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictT
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(GetEraInfoResult*) fromJsonDictToGetEraInfoResult:(NSDictionary*) fromDict 
 ```
 
@@ -466,7 +466,7 @@ Output: The GetEraInfoResult which contains all information of the era info. Fro
 
 The call for Get Item RPC method is done through this function in "GetItemResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getItemWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_ITEM];
 }
@@ -474,7 +474,7 @@ The call for Get Item RPC method is done through this function in "GetItemResult
 
 From this the GetItemResult is retrieved through this function, also in "GetItemResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetItemResult*) fromJsonDictToGetItemResult:(NSDictionary*) fromDict
 ```
 
@@ -482,14 +482,14 @@ From this the GetItemResult is retrieved through this function, also in "GetItem
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getItemWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_ITEM];
 }
 ```
 
 Input: a JsonString of such value:
-```ObjectiveC
+```Kotlin
 {"method" : "state_get_item","id" : 1,"params" :{"state_root_hash" : "d360e2755f7cee816cce3f0eeb2000dfa03113769743ae5481816f3983d5f228","key":"withdraw-df067278a61946b1b1f784d16e28336ae79f48cf692b13f6e40af9c7eadb2fb1","path":[]},"jsonrpc" : "2.0"}
 ```
 
@@ -499,7 +499,7 @@ Instantiate the GetItemParams, then assign the GetItemParams object with state_r
 
 Sample  code for this process:
 
-```ObjectiveC
+```Kotlin
 GetItemParams * item = [[GetItemParams alloc] init];
 item.state_root_hash = @"d360e2755f7cee816cce3f0eeb2000dfa03113769743ae5481816f3983d5f228";
 item.key = @"withdraw-df067278a61946b1b1f784d16e28336ae79f48cf692b13f6e40af9c7eadb2fb1";
@@ -511,7 +511,7 @@ Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictT
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(GetItemResult*) fromJsonDictToGetItemResult:(NSDictionary*) fromDict 
 ```
 
@@ -525,7 +525,7 @@ Output: The GetItemResult which contains all information of the item. From this 
 
 The call for Get Dictionary Item RPC method is done through this function in "GetDictionaryItemResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getDictionaryItemWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_DICTIONARY_ITEM];
 }
@@ -533,7 +533,7 @@ The call for Get Dictionary Item RPC method is done through this function in "Ge
 
 From this the GetDictionaryItemResult is retrieved through this function, also in "GetDictionaryItemResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetDictionaryItemResult*) fromJsonDictToGetItemResult:(NSDictionary*) fromDict
 ```
 
@@ -541,14 +541,14 @@ From this the GetDictionaryItemResult is retrieved through this function, also i
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getDictionaryItemWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_DICTIONARY_ITEM];
 }
 ```
 
 Input: a JsonString of such value:
-```ObjectiveC
+```Kotlin
 {"method" : "state_get_dictionary_item","id" : 1,"params" :{"state_root_hash" : "146b860f82359ced6e801cbad31015b5a9f9eb147ab2a449fd5cdb950e961ca8","dictionary_identifier":{"AccountNamedKey":{"dictionary_name":"dict_name","key":"account-hash-ad7e091267d82c3b9ed1987cb780a005a550e6b3d1ca333b743e2dba70680877","dictionary_item_key":"abc_name"}}},"jsonrpc" : "2.0"}
 ```
 
@@ -560,7 +560,7 @@ When the state_root_hash and DictionaryIdentifier value are sets, use function "
 
 Sample  code for this process, with DictionaryIdentifier of type AccountNamedKey
 
-```ObjectiveC
+```Kotlin
 GetDictionaryItemParams * itemParam = [[GetDictionaryItemParams alloc] init];
 itemParam.state_root_hash = @"146b860f82359ced6e801cbad31015b5a9f9eb147ab2a449fd5cdb950e961ca8";
 DictionaryIdentifier_AccountNamedKey * item = [[DictionaryIdentifier_AccountNamedKey alloc] init];
@@ -578,7 +578,7 @@ Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictT
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(GetDictionaryItemResult*) fromJsonDictToGetItemResult:(NSDictionary*) fromDict 
 ```
 
@@ -592,7 +592,7 @@ Output: The GetDictionaryItemResult which contains all information of the dictio
 
 The call for Get Balance RPC method is done through this function in "GetBalanceResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getBalanceWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_BALANCE];
 }
@@ -600,7 +600,7 @@ The call for Get Balance RPC method is done through this function in "GetBalance
 
 From this the GetBalanceResult is retrieved through this function, also in "GetBalanceResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetBalanceResult*) fromJsonDictToGetBalanceResult:(NSDictionary*) fromDict
 ```
 
@@ -608,14 +608,14 @@ From this the GetBalanceResult is retrieved through this function, also in "GetB
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getBalanceWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_BALANCE];
 }
 ```
 
 Input: a JsonString of such value:
-```ObjectiveC
+```Kotlin
 {"method" : "state_get_balance","id" : 1,"params" :{"state_root_hash" : "8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189","purse_uref":"uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007"},"jsonrpc" : "2.0"}
 ```
 
@@ -625,7 +625,7 @@ Instantiate the GetBalanceParams, then assign the GetBalanceParams with state_ro
 
 Sample  code for this process
 
-```ObjectiveC
+```Kotlin
  GetBalanceParams * param = [[GetBalanceParams alloc] init];
  param.state_root_hash = @"8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189";
  param.purse_uref = @"uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007";
@@ -636,7 +636,7 @@ Sample  code for this process
 Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictToGetBalanceResult function, described below:
 
 * For function 
-```ObjectiveC
+```Kotlin
 +(GetBalanceResult*) fromJsonDictToGetBalanceResult:(NSDictionary*) fromDict 
 ```
 
@@ -650,7 +650,7 @@ Output: The GetBalanceResult which contains all information of the balance. From
 
 The call for Get Auction RPC method is done through this function in "GetAuctionInfoResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(void) getAuctionWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_AUCTION_INFO];
 }
@@ -658,7 +658,7 @@ The call for Get Auction RPC method is done through this function in "GetAuction
 
 From this the GetAuctionInfoResult is retrieved through this function, also in "GetAuctionInfoResult.m" file
 
-```ObjectiveC
+```Kotlin
 +(GetAuctionInfoResult*) fromJsonDictToGetAuctionResult:(NSDictionary*) fromDict
 ```
 
@@ -666,14 +666,14 @@ From this the GetAuctionInfoResult is retrieved through this function, also in "
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(void) getAuctionWithParams:(NSString*) jsonString {
     [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_AUCTION_INFO];
 }
 ```
 
 Input: a JsonString of such value:
-```ObjectiveC
+```Kotlin
 {"method" : "state_get_auction_info","id" : 1,"params" : {"block_identifier" : {"Hash" :"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"}},"jsonrpc" : "2.0"}
 ```
 
@@ -683,7 +683,7 @@ Instantiate the BlockIdentifier, then assign the block with block hash or block 
 
 Sample  code for this process
 
-```ObjectiveC
+```Kotlin
  BlockIdentifier * bi = [[BlockIdentifier alloc] init];
  bi.blockType = USE_BLOCK_HASH;
 [bi assignBlockHashWithParam:@"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"];
@@ -695,7 +695,7 @@ Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictT
 
 * For function 
 
-```ObjectiveC
+```Kotlin
 +(GetAuctionInfoResult*) fromJsonDictToGetAuctionResult:(NSDictionary*) fromDict 
 ```
 

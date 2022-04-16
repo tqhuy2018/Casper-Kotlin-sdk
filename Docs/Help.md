@@ -40,36 +40,39 @@ The calling the RPC follow this sequence:
 
 ### I. Get State Root Hash  
 
-The task is done in file "GetStateRootHash.h" and "GetStateRootHash.m"
+The task is done in file "GetStateRootHashRPC.kotlin" in package "com.casper.sdk.getstateroothash"
 
 #### 1. Method declaration
 
 ```Kotlin
-+(void) getStateRootHashWithJsonParam:(NSString*) jsonString 
+@Throws(IllegalArgumentException::class)
+    fun getStateRootHash(parameterStr:String) :String
 ```
 
 #### 2. Input & Output: 
 
-Input: NSString represents the json parameter needed to send along with the POST method to Casper server. This parameter is build based on the BlockIdentifier.
+Input: parameterStr represents the json parameter needed to send along with the POST method to Casper server. This parameter is build based on the BlockIdentifier.
+
+Output: the state root hash in form of Kotlin String data type
 
 When call this method to get the state root hash, you need to declare a BlockIdentifier object and then assign the height or hash or just none to the BlockIdentifier. Then the BlockIdentifier is transfer to the jsonString parameter. The whole sequence can be seen as the following code:
 1. Declare a BlockIdentifier and assign its value
 ```Kotlin
-    BlockIdentifier * bi = [[BlockIdentifier alloc] init];
-    bi.blockType = USE_NONE;
+    val bi: BlockIdentifier = BlockIdentifier()
+    bi.blockType = BlockIdentifierType.NONE;
     
     //or you can set the block attribute like this
     
-    //bi.blockType = USE_BLOCK_HASH;
-   // [bi assignBlockHashWithParam:@"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"];
+    bi.blockType = BlockIdentifierType.HASH;
+    bi.blockHash = "fe35810a3dcfbf853b9d3ac2445fe1fa4aaab047d881d95d9009dc257d396e7e"
    
-   or like this
+  // or like this
    
-   //bi.blockType = USE_BLOCK_HEIGHT;
-   // [bi assignBlockHeigthtWithParam:12345];
+   bi.blockType = BlockIdentifierType.HEIGHT
+   bi.blockHeight = 3345u
    
    //then you generate the jsonString to call the getStateRootHashWithJsonParam function
-    NSString * jsonString = [bi toJsonStringWithMethodName:@"chain_get_state_root_hash"];
+    val parameter:String = bi.toJsonStr(ConstValues.RPC_GET_STATE_ROOT_HASH)
 ```
 2. Use the jsonString to call the function:
 

@@ -6,9 +6,9 @@ import net.jemzart.jsonkraken.values.JsonObject
 class EntryPointType {
     var itsType:String = "Session"
     companion object {
-        fun fromJsonToEntryPointType(from:JsonObject) : EntryPointType {
+        fun fromJsonToEntryPointType(from:String) : EntryPointType {
             var ret:EntryPointType = EntryPointType()
-            ret.itsType = from["entry_point_type"].toString()
+            ret.itsType = from
             return  ret
         }
     }

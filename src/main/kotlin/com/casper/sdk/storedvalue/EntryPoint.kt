@@ -15,6 +15,8 @@ class EntryPoint {
             var retEntryPoint:EntryPoint = EntryPoint()
             retEntryPoint.name = from["name"].toString()
             retEntryPoint.ret = CLType.getCLType(from["ret"] as Any)
+            retEntryPoint.access = EntryPointAccess.fromJsonObjectToEntryPointAccess(from["access"] as JsonObject)
+            retEntryPoint.entryPointType = EntryPointType.fromJsonToEntryPointType(from["entry_point_type"] as String)
             // Get Parameters
             val parameter = from["args"]
             if(parameter!=null) {

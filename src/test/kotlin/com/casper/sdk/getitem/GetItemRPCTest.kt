@@ -172,5 +172,7 @@ internal class GetItemRPCTest {
             assert(withdraw.listUnbondingPurse[0].eraOfCreation.toString() == "3319")
             println("Done for withdraw")
         } catch (e:IllegalArgumentException) {}
+
+
     }
 }

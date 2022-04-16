@@ -35,8 +35,7 @@ class StoredValue {
             //Get StoredValue as enum type Contract
             val storeValueContract = from["Contract"]
             if(storeValueContract != null) {
-                val contract:CasperContract = CasperContract()
-               // ret.itsValue.add(from["Contract"] as String)
+                val contract:CasperContract = CasperContract.fromJsonObjectToCasperContract(from["Contract"] as JsonObject)
                 ret.itsType = ConstValues.STORED_VALUE_CONTRACT
                 ret.itsValue.add(contract)
             }
@@ -74,6 +73,13 @@ class StoredValue {
                 ret.itsType = ConstValues.STORED_VALUE_ERA_INFO
                 val eraInfo:EraInfo = EraInfo.fromJsonArrayToEraInfo(from["EraInfo"] as JsonArray)
                 ret.itsValue.add(eraInfo)
+            }
+            //Get StoredValue as enum type ContractPackage
+            val storedValueContractPackage = from["ContractPackage"]
+            if(storedValueContractPackage != null) {
+                ret.itsType = ConstValues.STORED_VALUE_CONTRACT_PACKAGE
+                val contractPackage:ContractPackage = ContractPackage.fromJsonObjectToContractPackage(from["ContractPackage"] as JsonObject)
+                ret.itsValue.add(contractPackage)
             }
             return ret
         }

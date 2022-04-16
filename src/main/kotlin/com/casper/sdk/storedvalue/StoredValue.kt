@@ -71,7 +71,7 @@ class StoredValue {
             val storedValueEraInfo = from["EraInfo"]
             if(storedValueEraInfo != null) {
                 ret.itsType = ConstValues.STORED_VALUE_ERA_INFO
-                val eraInfo:EraInfo = EraInfo.fromJsonArrayToEraInfo(from["EraInfo"] as JsonArray)
+                val eraInfo:EraInfo = EraInfo.fromJsonArrayToEraInfo(from["EraInfo"] as JsonObject)
                 ret.itsValue.add(eraInfo)
             }
             //Get StoredValue as enum type ContractPackage

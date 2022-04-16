@@ -72,7 +72,7 @@ class TransformEntry {
                 if(writeEraInfo != "null") {
                     var casperTransform:CasperTransform = CasperTransform()
                     casperTransform.itsType = ConstValues.TRANSFORM_WRITE_ERA_INFO
-                    casperTransform.itsValue.add(EraInfo.fromJsonArrayToEraInfo(transform[ConstValues.TRANSFORM_WRITE_ERA_INFO] as JsonArray))
+                    casperTransform.itsValue.add(EraInfo.fromJsonArrayToEraInfo(transform[ConstValues.TRANSFORM_WRITE_ERA_INFO] as JsonObject))
                     ret.transform = casperTransform
                     return ret
                 }

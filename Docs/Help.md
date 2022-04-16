@@ -45,8 +45,8 @@ The task is done in file "GetStateRootHashRPC.kotlin" in package "com.casper.sdk
 #### 1. Method declaration
 
 ```Kotlin
-@Throws(IllegalArgumentException::class)
-    fun getStateRootHash(parameterStr:String) :String
+@Throws(IllegalArgumentException:: class)
+    fun getStateRootHash(parameterStr: String): String
 ```
 
 #### 2. Input & Output: 

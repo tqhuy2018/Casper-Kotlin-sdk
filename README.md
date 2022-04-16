@@ -23,7 +23,7 @@ Download or clone the code from github, then open it with IntelliJ IDEA.
 
 # Documentation for classes and methods
 
-* [List of classes and methods](/Docs/Help.md#list-of-rpc-methods)
+* [List of classes and methods](../../Docs/Help.md#list-of-rpc-methods)
 
   -  [Get State Root Hash](/Docs/Help.md#i-get-state-root-hash)
 

@@ -24,7 +24,7 @@ class GetItemRPC {
         val json =response.body().toJson()
         //Check for error
         if(json.get("error") != null) {
-            throw IllegalArgumentException("Error get block")
+            throw IllegalArgumentException("Error get item")
         } else { //If not error then get the state root hash
             val ret: GetItemResult = GetItemResult.fromJsonObjectToGetItemResult(json.get("result") as JsonObject)
             return ret

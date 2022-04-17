@@ -43,7 +43,6 @@ class GetStatusRPC {
         }
         val lastABI = resultJson.get("last_added_block_info").toJsonString()
         if(lastABI != "null") {
-            println("ABI not null")
             getStatusResult.lastAddedBlockInfo = MinimalBlockInfo.fromJsonToMinimalBlockInfo(resultJson.get("last_added_block_info") as JsonObject)
         }
         val ourPublicSigningKey = resultJson.get("our_public_signing_key")

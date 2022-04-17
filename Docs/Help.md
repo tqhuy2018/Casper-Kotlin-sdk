@@ -190,7 +190,7 @@ Instantiate the GetDeployParams, then assign the deploy_hash to the object and u
 Sample  code for this process
 
 ```Kotlin
- val getDeployParams = GetDeployParams()
+val getDeployParams = GetDeployParams()
 getDeployRPC.postURL = ConstValues.TESTNET_URL
 getDeployParams.deploy_hash = "9ff98d8027795a002e41a709d5b5846e49c2e9f9c8bfbe74e4c857adc26d5571"
 val postParameter = getDeployParams.generatePostParameterStr()
@@ -207,16 +207,16 @@ try {
 
 Output: The ouput is the GetDeployResult class object, which hold all the information of a deploy such as deploy hash, deploy header, deploy session, deploy payment, deploy approvals and list of JsonExecutionResult
 
+Exception: There can be error getting the deploy when the input parameter of the calling function getDeployFromJsonStr is passed with wrong deploy hash. In this case and exception is thrown.
+
 ### IV. Get Status
 
 #### 1. Method declaration
 
-The call for Get Status RPC method is done through this function in "GetStatusResult.m" file
+The call for Get Status RPC method is done through this function in "GetStatusRPC.kotlin" file
 
 ```Kotlin
-+(void) getStatusWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_INFO_GET_STATUS];
-}
+fun getStatusResult() : GetStatusResult
 ```
 
 From this the GetStatusResult is retrieved through this function, also in "GetStatusResult.m" file
@@ -230,23 +230,13 @@ From this the GetStatusResult is retrieved through this function, also in "GetSt
 * For function 
 
 ```Kotlin
-+(void) getStatusWithParams:(NSString*) jsonString
+fun getStatusResult() : GetStatusResult
 ```
 
-Input: a JsonString of value 
+Input: there is no input calling this function. In this function, a parameter with the following content is sent to the HTTP POST method 
 ```Kotlin
 {"params" : [],"id" : 1,"method":"info_get_status","jsonrpc" : "2.0"}
 ```
-
-Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictToGetStatusResult function, described below:
-
-* For function 
-
-```Kotlin
-+(GetStatusResult *) fromJsonDictToGetStatusResult:(NSDictionary*) jsonDict
-```
-
-Input: The NSDictionaray object represents the GetStatusResult object. This NSDictionaray is returned from the POST method when call the RPC method. Information is sent back as JSON data and from that JSON data the NSDictionary part represents the GetStatusResult is taken to pass to the function to get the status information.
 
 Output: The GetStatusResult which contains all information of the status. From this result you can retrieve information such as: api_version,chainspec_name,starting_state_root_hash,peers,last_added_block_info...
 

@@ -6,8 +6,8 @@ internal class GetPeersTest {
 
     @Test
     fun getPeers() {
-        var getPeers = GetPeersRPC()
-        var getPeersResult = getPeers.getPeers()
+        val getPeers = GetPeersRPC()
+        val getPeersResult = getPeers.getPeers()
         assert(getPeersResult.api_version.length>0)
         assert(getPeersResult.peers.size>0)
         val onePeerEntry:PeerEntry = getPeersResult.peers[0]

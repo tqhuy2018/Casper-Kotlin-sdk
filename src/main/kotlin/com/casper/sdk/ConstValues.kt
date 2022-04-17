@@ -82,5 +82,10 @@ class ConstValues {
         const val STORED_VALUE_ERA_INFO                 = "EraInfo"
         const val STORED_VALUE_BID                      = "Bid"
         const val STORED_VALUE_WITHDRAW                 = "Withdraw"
+        //DictionaryIdentifier
+        const val DI_ACCOUNT_NAMED_KEY                  = "AccountNamedKey"
+        const val DI_CONTRACT_NAMED_KEY                 = "ContractNamedKey"
+        const val DI_UREF                               = "URef"
+        const val DI_DICTIONARY                         = "Dictionary"
     }
 }

@@ -20,7 +20,7 @@ import java.net.http.HttpResponse
 class GetDeployRPC {
     var postURL:String = ""
     @Throws(IllegalArgumentException::class)
-    fun getDeployFromJsonStr(str:String):GetDeployResult? {
+    fun getDeployFromJsonStr(str:String):GetDeployResult {
         val getDeployResult:GetDeployResult = GetDeployResult()
         val client = HttpClient.newBuilder().build();
         val request = HttpRequest.newBuilder()

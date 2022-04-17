@@ -16,8 +16,8 @@ internal class GetItemRPCTest {
 
     @Test
     fun getItem() {
-        var getItemRPC : GetItemRPC = GetItemRPC()
-        var getItemParameter:GetItemParams = GetItemParams()
+        val getItemRPC : GetItemRPC = GetItemRPC()
+        val getItemParameter:GetItemParams = GetItemParams()
         //Test for StoredValue of type CLValue
         try {
             getItemParameter.stateRootHash = "340a09b06bae99d868c68111b691c70d9d5a253c0f2fd7ee257a04a198d3818e"

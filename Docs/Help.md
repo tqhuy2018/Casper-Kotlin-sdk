@@ -411,39 +411,24 @@ Output: The GetItemResult which contains all information of the item. From this 
 
 #### 1. Method declaration
 
-The call for Get Dictionary Item RPC method is done through this function in "GetDictionaryItemResult.m" file
+The call for Get Dictionary Item RPC method is done through this function in "GetDictionaryItemRPC.kotlin" file in package "com.casper.sdk.getdictionary"
 
 ```Kotlin
-+(void) getDictionaryItemWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_DICTIONARY_ITEM];
-}
-```
-
-From this the GetDictionaryItemResult is retrieved through this function, also in "GetDictionaryItemResult.m" file
-
-```Kotlin
-+(GetDictionaryItemResult*) fromJsonDictToGetItemResult:(NSDictionary*) fromDict
+@Throws(IllegalArgumentException::class)
+    fun getDictionaryItem(parameterStr:String): GetDictionaryItemResult 
 ```
 
 #### 2. Input & Output: 
-
-* For function 
-
-```Kotlin
-+(void) getDictionaryItemWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_DICTIONARY_ITEM];
-}
-```
 
 Input: a JsonString of such value:
 ```Kotlin
 {"method" : "state_get_dictionary_item","id" : 1,"params" :{"state_root_hash" : "146b860f82359ced6e801cbad31015b5a9f9eb147ab2a449fd5cdb950e961ca8","dictionary_identifier":{"AccountNamedKey":{"dictionary_name":"dict_name","key":"account-hash-ad7e091267d82c3b9ed1987cb780a005a550e6b3d1ca333b743e2dba70680877","dictionary_item_key":"abc_name"}}},"jsonrpc" : "2.0"}
 ```
 
-To generate such string, you need to use an object of type GetDictionaryItemParams class, which declared in file "GetDictionaryItemParams.h" and "GetDictionaryItemParams.m"
+To generate such string, you need to use an object of type GetDictionaryItemParams class, which declared in file "GetDictionaryItemParams.kotlin" in package "com.casper.sdk.getdictionary"
 
 Instantiate the GetDictionaryItemParams, then assign the GetDictionaryItemParams object with state_root_hash and an DictionaryIdentifier value.
-The DictionaryIdentifier can be 1 among 4 possible classes defined in folder "DictionaryIdentifierEnum".
+The DictionaryIdentifier can be 1 among 4 possible values, defined in 4 classes which are: "DIAccountNamedKey", "DIContractNamedKey", "DIDictionary", "DIURef"
 When the state_root_hash and DictionaryIdentifier value are sets, use function "toJsonString" of the "GetDictionaryItemParams" class to generate such parameter string like above.
 
 Sample  code for this process, with DictionaryIdentifier of type AccountNamedKey

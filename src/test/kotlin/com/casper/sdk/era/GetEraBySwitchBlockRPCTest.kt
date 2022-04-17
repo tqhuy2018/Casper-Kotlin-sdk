@@ -37,7 +37,7 @@ internal class GetEraBySwitchBlockRPCTest {
         //1 to 4150 nothing, 10075 to 11198 none
         bi.blockHeight = 318u
         val parameter3: String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_ERA)
-        println("Get era with para:${parameter3}")
+        println("Get era with para3 :${parameter3}")
         try {
             val getEraInfoResult: GetEraInfoResult = getEraRPC.getEraInfo(parameter3)
             assert(getEraInfoResult.isEraSummaryInit() == true)

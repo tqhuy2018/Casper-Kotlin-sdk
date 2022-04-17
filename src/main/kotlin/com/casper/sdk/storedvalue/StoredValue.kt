@@ -7,7 +7,7 @@ import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
 class StoredValue {
-    var itsType:String = ConstValues.STORED_VALUE_CLVALUE
+    var itsType:String = ""
     var itsValue:MutableList<Any> = mutableListOf()
     companion object {
         fun fromJsonObjectToStoredValue(from:JsonObject): StoredValue {

@@ -20,7 +20,7 @@ class EraSummary {
             ret.eraId = from["era_id"].toJsonString().toULong()
             ret.stateRootHash = from["state_root_hash"].toString()
             ret.merkleProof = from["merkle_proof"].toString()
-            val storedValue = StoredValue.fromJsonObjectToStoredValue(from["stored_value"] as JsonObject)
+            ret.storedValue = StoredValue.fromJsonObjectToStoredValue(from["stored_value"] as JsonObject)
             return ret
         }
     }

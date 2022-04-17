@@ -454,7 +454,8 @@ val getDictionaryItemResult:GetDictionaryItemResult = getDictionaryItemRPC.getDi
 
 Output: The GetDictionaryItemResult which contains all information of the dictionary item. From this result you can retrieve information such as: api_version,dictionary_key, merkle_proof,stored_value.
 
-Exception: An error is thrown when you send the wrong parameter, for example when you pass the wrong state root hash or wrong AccountNameKey of DictionaryIdentifier type
+Exception: An error is thrown when you send the wrong parameter, for example when you pass the wrong state root hash or wrong AccountNamedKey, ContractNamedKey, URef or Dictionary inner values of DictionaryIdentifier type.
+The test unit provides 2 negative test case with 1 test case sending with wrong state root hash and 1 test case with sending wrong AccountNamedKey inner values.
 
 
 ### X. Get Balance

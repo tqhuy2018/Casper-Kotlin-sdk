@@ -462,59 +462,39 @@ The test unit provides 2 negative test case with 1 test case sending with wrong 
 
 #### 1. Method declaration
 
-The call for Get Balance RPC method is done through this function in "GetBalanceResult.m" file
+The call for Get Balance RPC method is done through this function in "GetBalanceRPC.kotlin" file in package com.casper.sdk.getbalance
 
 ```Kotlin
-+(void) getBalanceWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_BALANCE];
-}
-```
-
-From this the GetBalanceResult is retrieved through this function, also in "GetBalanceResult.m" file
-
-```Kotlin
-+(GetBalanceResult*) fromJsonDictToGetBalanceResult:(NSDictionary*) fromDict
+@Throws(IllegalArgumentException::class)
+    fun getBalance(parameterStr:String): GetBalanceResult
 ```
 
 #### 2. Input & Output: 
 
-* For function 
-
-```Kotlin
-+(void) getBalanceWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_BALANCE];
-}
-```
-
-Input: a JsonString of such value:
+Input: parameterStr is a JsonString of such value:
 ```Kotlin
 {"method" : "state_get_balance","id" : 1,"params" :{"state_root_hash" : "8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189","purse_uref":"uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007"},"jsonrpc" : "2.0"}
 ```
 
-To generate such string, you need to use an object of type GetBalanceParams class, which declared in file "GetBalanceParams.h" and "GetBalanceParams.m"
+To generate such string, you need to use an object of type GetBalanceParams class, which declared in file "GetBalanceParams.kotlin" in package "com.casper.sdk.getbalance"
 
 Instantiate the GetBalanceParams, then assign the GetBalanceParams with state_root_hash and purse_uref then use function "toJsonString" of the "GetBalanceParams" class to generate such parameter string like above.
 
 Sample  code for this process
 
 ```Kotlin
- GetBalanceParams * param = [[GetBalanceParams alloc] init];
- param.state_root_hash = @"8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189";
- param.purse_uref = @"uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007";
- NSString * jsonStr = [param toJsonString];
- [GetBalanceResult getBalance:jsonStr];
+val getBalanceRPC:GetBalanceRPC = GetBalanceRPC()
+val getBalanceParams:GetBalanceParams = GetBalanceParams()
+getBalanceParams.purseUref = "uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007"
+getBalanceParams.stateRootHash = "8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189"
+val parameterStr:String = getBalanceParams.generateParameter()
+val getBalanceResult:GetBalanceResult = getBalanceRPC.getBalance(parameterStr)
 ```
-
-Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictToGetBalanceResult function, described below:
-
-* For function 
-```Kotlin
-+(GetBalanceResult*) fromJsonDictToGetBalanceResult:(NSDictionary*) fromDict 
-```
-
-Input: The NSDictionaray object represents the GetBalanceResult object. This NSDictionaray is returned from the POST method when call the RPC method. Information is sent back as JSON data and from that JSON data the NSDictionary part represents the GetBalanceResult is taken to pass to the function to get the balance information.
 
 Output: The GetBalanceResult which contains all information of the balance. From this result you can retrieve information such as: api_version,balance_value, merkle_proof.
+
+Exception: An error is thrown when you send the wrong parameter, for example when you pass the wrong state root hash or wrong purse uref parameter.
+In the unit test, 2 example of the negative tests are given, 1 for sending with wrong state root hash, 1 for sending with wrong purse uref.
 
 ### XI. Get Auction Info
 

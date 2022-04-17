@@ -462,115 +462,81 @@ The test unit provides 2 negative test case with 1 test case sending with wrong 
 
 #### 1. Method declaration
 
-The call for Get Balance RPC method is done through this function in "GetBalanceResult.m" file
+The call for Get Balance RPC method is done through this function in "GetBalanceRPC.kotlin" file in package com.casper.sdk.getbalance
 
 ```Kotlin
-+(void) getBalanceWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_BALANCE];
-}
-```
-
-From this the GetBalanceResult is retrieved through this function, also in "GetBalanceResult.m" file
-
-```Kotlin
-+(GetBalanceResult*) fromJsonDictToGetBalanceResult:(NSDictionary*) fromDict
+@Throws(IllegalArgumentException::class)
+    fun getBalance(parameterStr:String): GetBalanceResult
 ```
 
 #### 2. Input & Output: 
 
-* For function 
-
-```Kotlin
-+(void) getBalanceWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_BALANCE];
-}
-```
-
-Input: a JsonString of such value:
+Input: parameterStr is a JsonString of such value:
 ```Kotlin
 {"method" : "state_get_balance","id" : 1,"params" :{"state_root_hash" : "8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189","purse_uref":"uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007"},"jsonrpc" : "2.0"}
 ```
 
-To generate such string, you need to use an object of type GetBalanceParams class, which declared in file "GetBalanceParams.h" and "GetBalanceParams.m"
+To generate such string, you need to use an object of type GetBalanceParams class, which declared in file "GetBalanceParams.kotlin" in package "com.casper.sdk.getbalance"
 
 Instantiate the GetBalanceParams, then assign the GetBalanceParams with state_root_hash and purse_uref then use function "toJsonString" of the "GetBalanceParams" class to generate such parameter string like above.
 
 Sample  code for this process
 
 ```Kotlin
- GetBalanceParams * param = [[GetBalanceParams alloc] init];
- param.state_root_hash = @"8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189";
- param.purse_uref = @"uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007";
- NSString * jsonStr = [param toJsonString];
- [GetBalanceResult getBalance:jsonStr];
+val getBalanceRPC:GetBalanceRPC = GetBalanceRPC()
+val getBalanceParams:GetBalanceParams = GetBalanceParams()
+getBalanceParams.purseUref = "uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007"
+getBalanceParams.stateRootHash = "8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189"
+val parameterStr:String = getBalanceParams.generateParameter()
+val getBalanceResult:GetBalanceResult = getBalanceRPC.getBalance(parameterStr)
 ```
-
-Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictToGetBalanceResult function, described below:
-
-* For function 
-```Kotlin
-+(GetBalanceResult*) fromJsonDictToGetBalanceResult:(NSDictionary*) fromDict 
-```
-
-Input: The NSDictionaray object represents the GetBalanceResult object. This NSDictionaray is returned from the POST method when call the RPC method. Information is sent back as JSON data and from that JSON data the NSDictionary part represents the GetBalanceResult is taken to pass to the function to get the balance information.
 
 Output: The GetBalanceResult which contains all information of the balance. From this result you can retrieve information such as: api_version,balance_value, merkle_proof.
+
+Exception: An error is thrown when you send the wrong parameter, for example when you pass the wrong state root hash or wrong purse uref parameter.
+In the unit test, 2 example of the negative tests are given, 1 for sending with wrong state root hash, 1 for sending with wrong purse uref.
 
 ### XI. Get Auction Info
 
 #### 1. Method declaration
 
-The call for Get Auction RPC method is done through this function in "GetAuctionInfoResult.m" file
+The call for Get Auction RPC method is done through this function in "GetAuctionInfoRPC.kotlin" file in package "com.casper.sdk.getauction"
 
 ```Kotlin
-+(void) getAuctionWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_AUCTION_INFO];
-}
-```
-
-From this the GetAuctionInfoResult is retrieved through this function, also in "GetAuctionInfoResult.m" file
-
-```Kotlin
-+(GetAuctionInfoResult*) fromJsonDictToGetAuctionResult:(NSDictionary*) fromDict
+@Throws(IllegalArgumentException::class)
+    fun getAuctionInfo(parameterStr:String): GetAuctionInfoResult
 ```
 
 #### 2. Input & Output: 
 
-* For function 
-
-```Kotlin
-+(void) getAuctionWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_AUCTION_INFO];
-}
-```
-
-Input: a JsonString of such value:
+Input: parameterStr is a JsonString of such value:
 ```Kotlin
 {"method" : "state_get_auction_info","id" : 1,"params" : {"block_identifier" : {"Hash" :"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"}},"jsonrpc" : "2.0"}
 ```
 
-To generate such string, you need to use an object of type BlockIdentifier class, which declared in file "BlockIdentifier.h" and "BlockIdentifier.m"
+To generate such string, you need to use an object of type BlockIdentifier class, which declared in file "BlockIdentifier.kotlin" 
 
-Instantiate the BlockIdentifier, then assign the block with block hash or block height or just assign nothing to the object and use function "toJsonStringWithMethodName" of the "BlockIdentifier" class to generate such parameter string like above.
-
-Sample  code for this process
-
+Input generation: The input is generated by the BlockIdentifier class. When call this RPC method to get the state root hash, you need to declare a BlockIdentifier object and then assign the height or hash or just none to the BlockIdentifier. Then the BlockIdentifier is transfer to the parameterStr parameter. The whole sequence can be seen as the following code:
+1. Declare a BlockIdentifier and assign its value
 ```Kotlin
- BlockIdentifier * bi = [[BlockIdentifier alloc] init];
- bi.blockType = USE_BLOCK_HASH;
-[bi assignBlockHashWithParam:@"d16cb633eea197fec519aee2cfe050fe9a3b7e390642ccae8366455cc91c822e"];
- NSString * paramStr = [bi toJsonStringWithMethodName:@"chain_get_block"];
-[GetAuctionInfoResult getAuctionWithParams:paramStr];
+    val bi: BlockIdentifier = BlockIdentifier()
+    bi.blockType = BlockIdentifierType.NONE;
+    
+    //or you can set the block attribute like this
+    
+    bi.blockType = BlockIdentifierType.HASH;
+    bi.blockHash = "fe35810a3dcfbf853b9d3ac2445fe1fa4aaab047d881d95d9009dc257d396e7e"
+   
+  // or like this
+   
+   bi.blockType = BlockIdentifierType.HEIGHT
+   bi.blockHeight = 3345u
+   
+   //then you generate the jsonString to call the getStateRootHashWithJsonParam function
+    val parameter:String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
 ```
-
-Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictToGetAuctionResult function, described below:
-
-* For function 
-
-```Kotlin
-+(GetAuctionInfoResult*) fromJsonDictToGetAuctionResult:(NSDictionary*) fromDict 
-```
-
-Input: The NSDictionaray object represents the GetAuctionInfoResult object. This NSDictionaray is returned from the POST method when call the RPC method. Information is sent back as JSON data and from that JSON data the NSDictionary part represents the GetAuctionInfoResult is taken to pass to the function to get the aunction information.
 
 Output: The GetAuctionInfoResult which contains all information of the aunction. From this result you can retrieve information such as: api_version,auction_state (in which you can retrieve information such as state_root_hash, block_height, list of JsonEraValidators).
+
+Exception: An error is thrown when you send the wrong parameter, for example when you pass the wrong block height (too big block height) in BlockIdentifier. If you pass a BlockIdentifier without block hash or height, or pass the wrong block hash, the latest auction info is retrieved.
+

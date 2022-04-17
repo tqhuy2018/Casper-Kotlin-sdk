@@ -407,6 +407,9 @@ var getItemParameter:GetItemParams = GetItemParams()
 
 Output: The GetItemResult which contains all information of the item. From this result you can retrieve information such as: api_version,merkle_proof, stored_value.
 
+Exception: An error is thrown when you send the wrong parameter, for example when you pass the wrong state root hash or wrong key, wrong path
+
+
 ### IX. Get Dictionaray Item
 
 #### 1. Method declaration
@@ -434,30 +437,25 @@ When the state_root_hash and DictionaryIdentifier value are sets, use function "
 Sample  code for this process, with DictionaryIdentifier of type AccountNamedKey
 
 ```Kotlin
-GetDictionaryItemParams * itemParam = [[GetDictionaryItemParams alloc] init];
-itemParam.state_root_hash = @"146b860f82359ced6e801cbad31015b5a9f9eb147ab2a449fd5cdb950e961ca8";
-DictionaryIdentifier_AccountNamedKey * item = [[DictionaryIdentifier_AccountNamedKey alloc] init];
-item.key = @"account-hash-ad7e091267d82c3b9ed1987cb780a005a550e6b3d1ca333b743e2dba70680877";
-item.dictionary_name = @"dict_name";
-item.dictionary_item_key = @"abc_name";
-itemParam.dictionaryIdentifierType = @"AccountNamedKey";
-itemParam.innerDict = [[NSMutableArray alloc] init];
-[itemParam.innerDict addObject:item];
-NSString * jsonStr = [itemParam toJsonString];
-[GetDictionaryItemResult getDictionaryItem:jsonStr];
+val getDictionaryItemRPC:GetDictionaryItemRPC = GetDictionaryItemRPC()
+val getDictionaryItemParams : GetDictionaryItemParams = GetDictionaryItemParams()
+val diAccountNamedKey:DIAccountNamedKey = DIAccountNamedKey()
+diAccountNamedKey.key = "account-hash-ad7e091267d82c3b9ed1987cb780a005a550e6b3d1ca333b743e2dba70680877"
+diAccountNamedKey.dictionaryName = "dict_name"
+diAccountNamedKey.dictionaryItemKey = "abc_name"
+val di:DictionaryIdentifier = DictionaryIdentifier()
+di.itsType = ConstValues.DI_ACCOUNT_NAMED_KEY
+di.itsValue.add(diAccountNamedKey)
+getDictionaryItemParams.dictionaryIdentifier = di
+getDictionaryItemParams.stateRootHash = "146b860f82359ced6e801cbad31015b5a9f9eb147ab2a449fd5cdb950e961ca8"
+val parameterStr:String = getDictionaryItemParams.generateParameterStr()
+val getDictionaryItemResult:GetDictionaryItemResult = getDictionaryItemRPC.getDictionaryItem(parameterStr)
 ```
-
-Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictToGetItemResult function, described below:
-
-* For function 
-
-```Kotlin
-+(GetDictionaryItemResult*) fromJsonDictToGetItemResult:(NSDictionary*) fromDict 
-```
-
-Input: The NSDictionaray object represents the GetDictionaryItemResult object. This NSDictionaray is returned from the POST method when call the RPC method. Information is sent back as JSON data and from that JSON data the NSDictionary part represents the GetDictionaryItemResult is taken to pass to the function to get the dictionary item information.
 
 Output: The GetDictionaryItemResult which contains all information of the dictionary item. From this result you can retrieve information such as: api_version,dictionary_key, merkle_proof,stored_value.
+
+Exception: An error is thrown when you send the wrong parameter, for example when you pass the wrong state root hash or wrong AccountNameKey of DictionaryIdentifier type
+
 
 ### X. Get Balance
 

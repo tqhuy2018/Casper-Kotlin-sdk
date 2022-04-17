@@ -374,58 +374,36 @@ Exception: An error is thrown when you send the wrong block height as parameter 
 
 #### 1. Method declaration
 
-The call for Get Item RPC method is done through this function in "GetItemResult.m" file
+The call for Get Item RPC method is done through this function in "GetItemRPC.kotlin" file in package "com.casper.sdk.getitem"
 
 ```Kotlin
-+(void) getItemWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_ITEM];
-}
-```
-
-From this the GetItemResult is retrieved through this function, also in "GetItemResult.m" file
-
-```Kotlin
-+(GetItemResult*) fromJsonDictToGetItemResult:(NSDictionary*) fromDict
+ @Throws(IllegalArgumentException::class)
+    fun getItem(parameterStr:String): GetItemResult {
 ```
 
 #### 2. Input & Output: 
 
-* For function 
-
-```Kotlin
-+(void) getItemWithParams:(NSString*) jsonString {
-    [HttpHandler handleRequestWithParam:jsonString andRPCMethod:CASPER_RPC_METHOD_STATE_GET_ITEM];
-}
-```
-
-Input: a JsonString of such value:
+Input:parameterStr is a JsonString of such value:
 ```Kotlin
 {"method" : "state_get_item","id" : 1,"params" :{"state_root_hash" : "d360e2755f7cee816cce3f0eeb2000dfa03113769743ae5481816f3983d5f228","key":"withdraw-df067278a61946b1b1f784d16e28336ae79f48cf692b13f6e40af9c7eadb2fb1","path":[]},"jsonrpc" : "2.0"}
 ```
 
-To generate such string, you need to use an object of type GetItemParams class, which declared in file "GetItemParams.h" and "GetItemParams.m"
+To generate such string, you need to use an object of type GetItemParams class, which declared in file "GetItemParams.kotlin" in package "com.casper.sdk.getitem"
 
-Instantiate the GetItemParams, then assign the GetItemParams object with state_root_hash, key, and path, then use function "toJsonString" of the "GetItemParams" class to generate such parameter string like above.
+Instantiate the GetItemParams, then assign the GetItemParams object with state_root_hash, key, and path, then use function "generateParameterStr" of the "GetItemParams" class to generate such parameter string like above.
 
 Sample  code for this process:
 
 ```Kotlin
-GetItemParams * item = [[GetItemParams alloc] init];
-item.state_root_hash = @"d360e2755f7cee816cce3f0eeb2000dfa03113769743ae5481816f3983d5f228";
-item.key = @"withdraw-df067278a61946b1b1f784d16e28336ae79f48cf692b13f6e40af9c7eadb2fb1";
-NSString * paramStr = [item toJsonString];
-[GetItemResult getItemWithParams:paramStr];
+var getItemRPC : GetItemRPC = GetItemRPC()
+var getItemParameter:GetItemParams = GetItemParams()
+ try {
+    getItemParameter.stateRootHash = "340a09b06bae99d868c68111b691c70d9d5a253c0f2fd7ee257a04a198d3818e"
+    getItemParameter.key = "uref-ba620eee2b06c6df4cd8da58dd5c5aa6d42f3a502de61bb06dc70b164eee4119-007"
+    val params: String = getItemParameter.generateParameterStr()
+    val getItemResult = getItemRPC.getItem(params)
+}  catch (e:IllegalArgumentException) {}
 ```
-
-Output: The ouput is handler in HttpHandler class and then pass to fromJsonDictToGetItemResult function, described below:
-
-* For function 
-
-```Kotlin
-+(GetItemResult*) fromJsonDictToGetItemResult:(NSDictionary*) fromDict 
-```
-
-Input: The NSDictionaray object represents the GetItemResult object. This NSDictionaray is returned from the POST method when call the RPC method. Information is sent back as JSON data and from that JSON data the NSDictionary part represents the GetItemResult is taken to pass to the function to get the item information.
 
 Output: The GetItemResult which contains all information of the item. From this result you can retrieve information such as: api_version,merkle_proof, stored_value.
 

@@ -10,16 +10,16 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 class GetDictionaryItemRPC {
-    var methodURL:String = ConstValues.TESTNET_URL
-    @Throws(IllegalArgumentException::class)
-    fun getDictionaryItem(parameterStr:String): GetDictionaryItemResult {
-        val client = HttpClient.newBuilder().build();
+    var methodURL: String = ConstValues.TESTNET_URL
+    @Throws(IllegalArgumentException:: class)
+    fun getDictionaryItem(parameterStr: String):  GetDictionaryItemResult {
+        val client = HttpClient.newBuilder().build()
         val request = HttpRequest.newBuilder()
             .uri(URI.create(this.methodURL))
             .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
-            .header("Content-Type", "application/json")
+            .header("Content-Type",  "application/json")
             .build()
-        val response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
         val json =response.body().toJson()
         //Check for error
         if(json.get("error") != null) {

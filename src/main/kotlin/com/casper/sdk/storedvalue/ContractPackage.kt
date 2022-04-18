@@ -6,23 +6,23 @@ import net.jemzart.jsonkraken.values.JsonObject
 import java.lang.Runtime.Version
 
 class ContractPackage {
-    var accessKey:String = ""
-    var disabledVersions:MutableList<DisabledVersion> = mutableListOf()
-    var groups:MutableList<Groups> = mutableListOf()
-    var versions:MutableList<ContractVersion> = mutableListOf()
+    var accessKey: String = ""
+    var disabledVersions: MutableList<DisabledVersion> = mutableListOf()
+    var groups: MutableList<Groups> = mutableListOf()
+    var versions: MutableList<ContractVersion> = mutableListOf()
     companion object {
-        fun  fromJsonObjectToContractPackage(from:JsonObject):ContractPackage {
-            var ret:ContractPackage = ContractPackage()
+        fun  fromJsonObjectToContractPackage(from: JsonObject): ContractPackage {
+            var ret: ContractPackage = ContractPackage()
             // Get AccessKey
             ret.accessKey = from["access_key"].toString()
             // Get DisableVersions
             val disabledVersions = from["disabled_versions"]
             if(disabledVersions != null) {
                 val disabledVersionList = from["disabled_versions"] as JsonArray
-                val totalDV:Int = disabledVersionList.count()-1
+                val totalDV: Int = disabledVersionList.count()-1
                 if(totalDV >= 0) {
                     for(i in 0 ..totalDV) {
-                        val oneDV:DisabledVersion = DisabledVersion.fromJsonObjectToDisabledVersion(disabledVersionList[i] as JsonObject)
+                        val oneDV: DisabledVersion = DisabledVersion.fromJsonObjectToDisabledVersion(disabledVersionList[i] as JsonObject)
                         ret.disabledVersions.add(oneDV)
                     }
                 }
@@ -31,10 +31,10 @@ class ContractPackage {
             val versions = from["versions"]
             if(versions != null) {
                 val versionList = from["versions"] as JsonArray
-                val totalVersion : Int = versionList.count() - 1
+                val totalVersion :  Int = versionList.count() - 1
                 if(totalVersion >=0) {
                     for(i in 0 .. totalVersion) {
-                        val oneVersion: ContractVersion = ContractVersion.fromJsonToContractVersion(versionList[i] as JsonObject)
+                        val oneVersion:  ContractVersion = ContractVersion.fromJsonToContractVersion(versionList[i] as JsonObject)
                         ret.versions.add(oneVersion)
                     }
                 }
@@ -43,10 +43,10 @@ class ContractPackage {
             val groups = from["groups"]
             if(groups != null) {
                 val groupList = from["groups"] as JsonArray
-                val totalGroup:Int = groupList.count() - 1
+                val totalGroup: Int = groupList.count() - 1
                 if(totalGroup >= 0) {
                     for(i in 0..totalGroup) {
-                        val oneGroup:Groups = Groups.fromJsonObjectToGroups(groupList[i] as JsonObject)
+                        val oneGroup: Groups = Groups.fromJsonObjectToGroups(groupList[i] as JsonObject)
                         ret.groups.add(oneGroup)
                     }
                 }

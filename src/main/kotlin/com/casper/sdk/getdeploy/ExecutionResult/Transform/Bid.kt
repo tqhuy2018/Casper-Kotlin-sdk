@@ -7,40 +7,40 @@ import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
 class Bid {
-    var bondingPurse:String = ""
-    var delegationRate:UByte = 0u
-    var inactive:Boolean = false
-    var delegators:MutableList<Delegator> = mutableListOf()
-    var stakedAmount:U512Class = U512Class()
-    var validatorPublicKey:String = ""
-    lateinit var vestingSchedule:VestingSchedule//Optional value
-    var isVestingScheduleExisted:Boolean = false
+    var bondingPurse: String = ""
+    var delegationRate: UByte = 0u
+    var inactive: Boolean = false
+    var delegators: MutableList<Delegator> = mutableListOf()
+    var stakedAmount: U512Class = U512Class()
+    var validatorPublicKey: String = ""
+    lateinit var vestingSchedule: VestingSchedule//Optional value
+    var isVestingScheduleExisted: Boolean = false
     companion object {
-        fun fromJsonToBid(from:JsonObject):Bid {
-            var ret:Bid = Bid()
+        fun fromJsonToBid(from: JsonObject): Bid {
+            var ret: Bid = Bid()
             ret.bondingPurse = from["bonding_purse"].toString()
             var dr = from["delegation_rate"].toJsonString()
             ret.delegationRate = dr.toUByte()
             ret.inactive = from["inactive"].toString().toBoolean()
             ret.stakedAmount = U512Class.fromStringToU512(from["staked_amount"].toString())
             ret.validatorPublicKey = from["validator_public_key"].toString()
-            println("get bid, validatorPublicKey:${ret.validatorPublicKey}")
-            val delegatorList:JsonObject = from["delegators"] as JsonObject
-            var listKey:List<String> = delegatorList.keys.toList()
-            var listValue:List<JsonObject> = delegatorList.values.toList() as List<JsonObject>
+            println("get bid,  validatorPublicKey: ${ret.validatorPublicKey}")
+            val delegatorList: JsonObject = from["delegators"] as JsonObject
+            var listKey: List<String> = delegatorList.keys.toList()
+            var listValue: List<JsonObject> = delegatorList.values.toList() as List<JsonObject>
             var totalElement = listKey.count() - 1
             for(i in 0 .. totalElement) {
-               // println("Get delegator number :${i}")
-                var oneDelegator:Delegator = Delegator()
+               // println("Get delegator number : ${i}")
+                var oneDelegator: Delegator = Delegator()
                 oneDelegator = Delegator.fromJsonToDelegator(listValue[i])
                 oneDelegator.itsPublicKey = listKey[i].toString()
                 ret.delegators.add(oneDelegator)
             }
-           // println("Value number 0:${delegatorList.values[0].toJsonString()}")
+           // println("Value number 0: ${delegatorList.values[0].toJsonString()}")
 
             /*var totalKey = delegatorList.count()-1
             for(i in 0 ..totalKey) {
-                var oneDelegator:Delegator = Delegator()
+                var oneDelegator: Delegator = Delegator()
                 oneDelegator = Delegator.fromJsonToDelegator(delegatorList.values.get(i) as JsonObject)
                 oneDelegator.itsPublicKey = delegatorList.keys.get(i) as String
                 ret.delegators.add(oneDelegator)
@@ -52,7 +52,7 @@ class Bid {
                 ret.vestingSchedule = VestingSchedule()
                 ret.vestingSchedule = VestingSchedule.fromJsonToVestingSchedule(from["vesting_schedule"] as JsonObject)
             } else {
-                println("In bid, vestingSchedule is NULL")
+                println("In bid,  vestingSchedule is NULL")
             }
             return ret
         }

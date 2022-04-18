@@ -6,26 +6,26 @@ import net.jemzart.jsonkraken.values.JsonObject
 /**Class built for storing the cl_type value of a CLValue object.
 For example take this CLValue object
 {
-"bytes":"0400e1f505"
-"parsed":"100000000"
-"cl_type":"U512"
+"bytes": "0400e1f505"
+"parsed": "100000000"
+"cl_type": "U512"
 }
 Then the CLType will hold the value of U512.
-There are some more attributes in the object to store more information in its value, used to build   recursived CLType, such as List, Map, Tuple, Result, Option
+There are some more attributes in the object to store more information in its value,  used to build   recursived CLType,  such as List,  Map,  Tuple,  Result,  Option
  */
 class CLType {
-    /// Type of the CLType in String, can be Bool, String, I32, I64, List, Map,...
-    var itsTypeStr:String = ""
-    //innerCLType to hold value for the following type:
-    //Option, Result, Tuple1 will take only 1 item: innerCLType1
-    //Map, Tuple2 will take 2  item: innerCLType1,innerCLType2
-    //Tuple3 will take 3 item: innerCLType1, innerCLType2, innerCLType3
-    lateinit var innerCLType1:CLType
-    lateinit var innerCLType2:CLType
-    lateinit var innerCLType3: CLType
-    //var itsInnerType:MutableList<CLType> = mutableListOf()
-///Check if the  CLType is primitive, type that has no recursive CLType inside (such as bool, i32, i64, u8, u32, u64, u128, u266, u512, string, unit, publickey, key, ...)
-    fun isCLTypePrimitive() :Boolean{
+    //Type of the CLType in String,  can be Bool,  String,  I32,  I64,  List,  Map, ...
+    var itsTypeStr: String = ""
+    //innerCLType to hold value for the following type: 
+    //Option,  Result,  Tuple1 will take only 1 item:  innerCLType1
+    //Map,  Tuple2 will take 2  item:  innerCLType1, innerCLType2
+    //Tuple3 will take 3 item:  innerCLType1,  innerCLType2,  innerCLType3
+    lateinit var innerCLType1: CLType
+    lateinit var innerCLType2: CLType
+    lateinit var innerCLType3:  CLType
+    //var itsInnerType: MutableList<CLType> = mutableListOf()
+   //Check if the  CLType is primitive,  type that has no recursive CLType inside (such as bool,  i32,  i64,  u8,  u32,  u64,  u128,  u266,  u512,  string,  unit,  publickey,  key,  ...)
+    fun isCLTypePrimitive() : Boolean{
         when(itsTypeStr) {
             ConstValues.CLTYPE_BOOL -> return true
             ConstValues.CLTYPE_I32 -> return true
@@ -47,19 +47,17 @@ class CLType {
         return false
     }
     companion object {
-        ///Generate the CLType object  from the JSON object
-        fun getCLType(from:Any):CLType {
-            var ret:CLType = CLType()
+        //Generate the CLType object  from the JSON object
+        fun getCLType(from: Any): CLType {
             if (from is String) {
-                ret = CLType.getCLTypePrimitive(from as String)
+                return CLType.getCLTypePrimitive(from)
             } else {
-                ret = CLType.getCLTypeCompound(from as JsonObject)
+                return CLType.getCLTypeCompound(from as JsonObject)
             }
-            return ret
         }
-        ///Generate the CLType object (of type primitive (such as bool, i32, i64, u8, u32, u64, u128, u266, u512, string, unit, publickey, key, ...)  from the JSON object
-        fun getCLTypePrimitive(from:String):CLType {
-            val ret:CLType = CLType()
+        //Generate the CLType object (of type primitive (such as bool,  i32,  i64,  u8,  u32,  u64,  u128,  u266,  u512,  string,  unit,  publickey,  key,  ...)  from the JSON object
+        fun getCLTypePrimitive(from: String): CLType {
+            val ret: CLType = CLType()
             if (from == ConstValues.CLTYPE_BOOL) {
                 ret.itsTypeStr = ConstValues.CLTYPE_BOOL
             }  else  if (from == ConstValues.CLTYPE_I32) {
@@ -95,12 +93,12 @@ class CLType {
             }
             return ret
         }
-        ///Generate the CLType object  of type compound (type with recursive CLValue inside its body, such as List, Map, Tuple , Result ,Option...)  from the JSON object
-        fun getCLTypeCompound(from:JsonObject):CLType {
-            val ret:CLType = CLType()
+        //Generate the CLType object  of type compound (type with recursive CLValue inside its body,  such as List,  Map,  Tuple ,  Result , Option...)  from the JSON object
+        fun getCLTypeCompound(from: JsonObject): CLType {
+            val ret: CLType = CLType()
             from[ConstValues.CLTYPE_OPTION] ?.let  {
                 ret.itsTypeStr = ConstValues.CLTYPE_OPTION
-                ret.innerCLType1 = CLType();
+                ret.innerCLType1 = CLType()
                 ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_OPTION] as Any)
                 return ret
             }

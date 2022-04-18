@@ -5,19 +5,19 @@ import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
 class Transfer {
-    var deployHash:String = ""
-    var from:String = ""
-    lateinit var to:String// Optional value
-    lateinit var id:String//Optional value of ULong u64 but stored as String for easier manipulation
-    var isToExisted:Boolean = true
-    var isIDExisted:Boolean = true
-    var source:String = ""// URef
-    var target:String = ""// URef
-    var amount:U512Class = U512Class()
-    var gas:U512Class = U512Class()
+    var deployHash: String = ""
+    var from: String = ""
+    lateinit var to: String// Optional value
+    lateinit var id: String//Optional value of ULong u64 but stored as String for easier manipulation
+    var isToExisted: Boolean = true
+    var isIDExisted: Boolean = true
+    var source: String = ""// URef
+    var target: String = ""// URef
+    var amount: U512Class = U512Class()
+    var gas: U512Class = U512Class()
     companion object {
-        fun fromJsonToTransfer(from: JsonObject):Transfer {
-            var ret:Transfer = Transfer()
+        fun fromJsonToTransfer(from:  JsonObject): Transfer {
+            var ret: Transfer = Transfer()
             ret.deployHash = from["deploy_hash"].toString()
             ret.from = from["from"].toString()
             ret.source = from["source"].toString()
@@ -32,7 +32,7 @@ class Transfer {
             }
             val to = from["to"].toJsonString()
             if(to != "null") {
-                println("Get to with value:${to}")
+                println("Get to with value: ${to}")
                 ret.to = from["to"].toString()
             } else {
                 ret.isToExisted = false

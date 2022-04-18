@@ -15,11 +15,11 @@ The package can be built an tested from IntelliJ IDEA or from command line
 
 ### Build and test in IntelliJ IDEA
 
-Download the latest IntelliJ IDEA from https://www.jetbrains.com/idea/
+Download the latest IntelliJ IDEA from https: //www.jetbrains.com/idea/
 
 The SDK is developed with IntelliJ IDEA 2021.3.3 (Community Edition). Then a Community Edition is good enough to test the SDK.
 
-Download or clone the code from github, then open it with IntelliJ IDEA.
+Download or clone the code from github,  then open it with IntelliJ IDEA.
 
 ### Build and test in command line
 

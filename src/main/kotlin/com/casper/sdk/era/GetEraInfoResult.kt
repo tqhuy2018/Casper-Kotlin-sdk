@@ -1,20 +1,20 @@
 package com.casper.sdk.era
 
 import net.jemzart.jsonkraken.values.JsonObject
-import java.time.chrono.Era
-
+/** Class built for storing GetEraInfoResult information,  taken from chain_get_era_info_by_switch_block RPC method */
 class GetEraInfoResult {
-    var apiVersion:String = ""
-    lateinit var eraSummary:EraSummary
-    fun isEraSummaryInit():Boolean {
-        if(this::eraSummary.isInitialized) {
+    var apiVersion:  String = ""
+    lateinit var eraSummary:  EraSummary
+    fun isEraSummaryInit():  Boolean {
+        if(this:: eraSummary.isInitialized) {
             return true
         }
         return false
     }
     companion object {
-        fun fromJsonToGetEraInfoResult(from:JsonObject):GetEraInfoResult {
-            var ret:GetEraInfoResult = GetEraInfoResult()
+        /** This function parse the JsonObject (taken from server RPC method call) to GetEraInfoResult object */
+        fun fromJsonToGetEraInfoResult(from: JsonObject):  GetEraInfoResult {
+            val ret: GetEraInfoResult = GetEraInfoResult()
             ret.apiVersion = from["api_version"].toString()
             val eraSummary = from["era_summary"]
             if(eraSummary != null) {

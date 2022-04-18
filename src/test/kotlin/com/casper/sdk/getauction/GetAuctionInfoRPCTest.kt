@@ -10,20 +10,20 @@ internal class GetAuctionInfoRPCTest {
 
     @Test
     fun getAuction() {
-        val getAuctionInfoRPC:GetAuctionInfoRPC = GetAuctionInfoRPC()
-        //Test 1: get auction with no parameter, latest auction state information is retrieved
-        val bi: BlockIdentifier = BlockIdentifier()
-        bi.blockType = BlockIdentifierType.NONE;
-        val parameter1:String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
+        val getAuctionInfoRPC: GetAuctionInfoRPC = GetAuctionInfoRPC()
+        //Test 1:  get auction with no parameter,  latest auction state information is retrieved
+        val bi:  BlockIdentifier = BlockIdentifier()
+        bi.blockType = BlockIdentifierType.NONE
+        val parameter1: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
             val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter1)
             assert(getAuctionInfoResult.apiVersion == "1.4.5")
             assert(getAuctionInfoResult.auctionState.stateRootHash.length > 0)
-        } catch (e:IllegalArgumentException) {}
-        //Test2: get auction with block identifier - correct block hash
+        } catch (e: IllegalArgumentException) {}
+        //Test2:  get auction with block identifier - correct block hash
         bi.blockType = BlockIdentifierType.HASH
         bi.blockHash = "fe35810a3dcfbf853b9d3ac2445fe1fa4aaab047d881d95d9009dc257d396e7e"
-        val parameter2:String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
+        val parameter2: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
             val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter2)
             assert(getAuctionInfoResult.apiVersion == "1.4.5")
@@ -50,11 +50,11 @@ internal class GetAuctionInfoRPCTest {
             assert(getAuctionInfoResult.auctionState.bids[961].bid.delegators[0].delegatee == "01a03c687285634a0115c0af1015ab0a53809f4826ee863c94e32ce48bcfdf447d")
             assert(getAuctionInfoResult.auctionState.bids[961].bid.delegators[0].publicKey == "0100100b21c886596436f7bbe7dc083f6dc7e9ce700545fa8ddfa20272fc3648bf")
             assert(getAuctionInfoResult.auctionState.bids[961].bid.delegators[0].stakedAmount.itsValue == "1323067801")
-        } catch (e:IllegalArgumentException) {}
-        //Test3: get auction with block identifier - correct block height
+        } catch (e: IllegalArgumentException) {}
+        //Test3:  get auction with block identifier - correct block height
         bi.blockType = BlockIdentifierType.HEIGHT
         bi.blockHeight = 100u
-        val parameter3:String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
+        val parameter3: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
             val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter3)
             assert(getAuctionInfoResult.apiVersion == "1.4.5")
@@ -70,26 +70,26 @@ internal class GetAuctionInfoRPCTest {
             assert(getAuctionInfoResult.auctionState.bids[0].bid.delegators.count() == 0)
             assert(getAuctionInfoResult.auctionState.bids.count() == 57)
             assert(getAuctionInfoResult.auctionState.bids[10].bid.delegators.count() == 0)
-        } catch (e:IllegalArgumentException) {}
+        } catch (e: IllegalArgumentException) {}
         //Negative test
-        //Test 4: get state root hash based on non-existing block height (too big height)
+        //Test 4:  get state root hash based on non-existing block height (too big height)
         bi.blockType = BlockIdentifierType.HEIGHT
         bi.blockHeight = 99999999999999u
-        val parameter4:String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
+        val parameter4: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
-            val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter4)
-        } catch (e:IllegalArgumentException) {
+            getAuctionInfoRPC.getAuctionInfo(parameter4)
+        } catch (e: IllegalArgumentException) {
             println("Error get auction information with wrong block height")
         }
-        //Test 5: get state root hash based on non-existing block hash
+        //Test 5:  get state root hash based on non-existing block hash
         //Lastest auction info is retrieved
         bi.blockType = BlockIdentifierType.HASH
         bi.blockHash = "AAA"
-        val parameter5:String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
+        val parameter5: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
             val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter5)
             assert(getAuctionInfoResult.apiVersion == "1.4.5")
             assert(getAuctionInfoResult.auctionState.stateRootHash.length > 0)
-        } catch (e:IllegalArgumentException) { }
+        } catch (e: IllegalArgumentException) { }
     }
 }

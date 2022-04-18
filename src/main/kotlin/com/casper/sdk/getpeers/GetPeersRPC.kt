@@ -13,24 +13,24 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 class GetPeersRPC {
-    var methodName:String = ConstValues.RPC_INFO_GET_PEERS
-    var methodURL:String = ConstValues.TESTNET_URL
-    fun getPeers() :GetPeersResult {
-        val parameterStr = """{"id" : 1,"method" : "info_get_peers","params" : [],"jsonrpc" : "2.0"}"""
-        val client = HttpClient.newBuilder().build();
+    var methodName: String = ConstValues.RPC_INFO_GET_PEERS
+    var methodURL: String = ConstValues.TESTNET_URL
+    fun getPeers() : GetPeersResult {
+        val parameterStr = """{"id" :  1, "method" :  "info_get_peers", "params" :  [], "jsonrpc" :  "2.0"}"""
+        val client = HttpClient.newBuilder().build()
         val request = HttpRequest.newBuilder()
             .uri(URI.create(this.methodURL))
             .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
-            .header("Content-Type", "application/json")
+            .header("Content-Type",  "application/json")
             .build()
-        val response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
         val json =response.body().toJson()
         val peerList = json.get("result").get("peers")
-        var getPeersResult:GetPeersResult = GetPeersResult()
+        var getPeersResult: GetPeersResult = GetPeersResult()
         getPeersResult.api_version = json.get("result").get("api_version").toString()
         if (peerList is JsonArray) {
             for(peer in peerList) {
-                var onePeerEntry:PeerEntry = PeerEntry()
+                var onePeerEntry: PeerEntry = PeerEntry()
                 onePeerEntry.address = peer.get("address").toString()
                 onePeerEntry.node_id = peer.get("node_id").toString()
                 getPeersResult.peers.add(onePeerEntry)

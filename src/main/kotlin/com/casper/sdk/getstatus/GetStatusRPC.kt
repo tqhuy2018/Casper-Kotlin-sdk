@@ -15,27 +15,27 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 class GetStatusRPC {
-    var methodName:String = ConstValues.RPC_INFO_GET_STATUS
-    var methodURL:String = ConstValues.TESTNET_URL
-    fun getStatusResult() : GetStatusResult {
-        val parameterStr = """{"id" : 1,"method" : "info_get_status","params" : [],"jsonrpc" : "2.0"}"""
-        val client = HttpClient.newBuilder().build();
+    var methodName: String = ConstValues.RPC_INFO_GET_STATUS
+    var methodURL: String = ConstValues.TESTNET_URL
+    fun getStatusResult() :  GetStatusResult {
+        val parameterStr = """{"id" :  1, "method" :  "info_get_status", "params" :  [], "jsonrpc" :  "2.0"}"""
+        val client = HttpClient.newBuilder().build()
         val request = HttpRequest.newBuilder()
             .uri(URI.create(this.methodURL))
             .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
-            .header("Content-Type", "application/json")
+            .header("Content-Type",  "application/json")
             .build()
-        val response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
         val json =response.body().toJson()
-        val resultJson:JsonObject = json.get("result") as JsonObject
+        val resultJson: JsonObject = json.get("result") as JsonObject
         val peerList = resultJson.get("peers")
-        var getStatusResult: GetStatusResult = GetStatusResult()
+        var getStatusResult:  GetStatusResult = GetStatusResult()
         getStatusResult.apiVersion = resultJson.get("api_version").toString()
         getStatusResult.chainspecName = resultJson.get("chainspec_name").toString()
         getStatusResult.startingStateRootHash = resultJson.get("starting_state_root_hash").toString()
         if (peerList is JsonArray) {
             for(peer in peerList) {
-                var onePeerEntry: PeerEntry = PeerEntry()
+                var onePeerEntry:  PeerEntry = PeerEntry()
                 onePeerEntry.address = peer.get("address").toString()
                 onePeerEntry.node_id = peer.get("node_id").toString()
                 getStatusResult.peers.add(onePeerEntry)

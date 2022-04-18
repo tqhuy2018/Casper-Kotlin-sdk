@@ -4,13 +4,16 @@ import com.casper.sdk.getdeploy.ExecutionResult.Transform.Transfer
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing GetBlockTransfersResult information, taken from chain_get_block_transfers RPC method */
+
 class GetBlockTransfersResult {
-    var apiVersion:String = ""
-    lateinit var blockHash:String
-    lateinit var transfers:MutableList<Transfer>
+    var apiVersion: String = ""
+    lateinit var blockHash: String
+    lateinit var transfers: MutableList<Transfer>
     companion object {
-        fun fromJsonToGetBlockTransfersResult(from:JsonObject):GetBlockTransfersResult {
-            var ret:GetBlockTransfersResult = GetBlockTransfersResult()
+        /** This function parse the JsonObject (taken from server RPC method call) to GetBlockTransfersResult object */
+        fun fromJsonToGetBlockTransfersResult(from: JsonObject): GetBlockTransfersResult {
+            var ret: GetBlockTransfersResult = GetBlockTransfersResult()
             ret.apiVersion = from["api_version"].toString()
             val blockHash = from["block_hash"]
             if(blockHash != null) {
@@ -29,14 +32,14 @@ class GetBlockTransfersResult {
             return ret
         }
     }
-    fun isBlockHashInit():Boolean {
-        if(this::blockHash.isInitialized) {
+    fun isBlockHashInit(): Boolean {
+        if(this:: blockHash.isInitialized) {
             return true
         }
         return false
     }
-    fun isTransferInit():Boolean {
-        if (this::transfers.isInitialized) {
+    fun isTransferInit(): Boolean {
+        if (this:: transfers.isInitialized) {
             return  true
         }
         return false

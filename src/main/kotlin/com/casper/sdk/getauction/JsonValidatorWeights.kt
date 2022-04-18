@@ -2,13 +2,14 @@ package com.casper.sdk.getauction
 
 import com.casper.sdk.common.classes.U512Class
 import net.jemzart.jsonkraken.values.JsonObject
-
+/** Class built for storing JsonValidatorWeights information */
 class JsonValidatorWeights {
-    var publicKey:String = ""
-    var weight:U512Class = U512Class()
+    var publicKey: String = ""
+    var weight: U512Class = U512Class()
     companion object {
-        fun fromJsonObjectToJsonValidatorWeights(from:JsonObject):JsonValidatorWeights {
-            var ret:JsonValidatorWeights = JsonValidatorWeights()
+        /** This function parse the JsonObject (taken from server RPC method call) to generate the JsonValidatorWeights object */
+        fun fromJsonObjectToJsonValidatorWeights(from: JsonObject): JsonValidatorWeights {
+            var ret: JsonValidatorWeights = JsonValidatorWeights()
             ret.publicKey = from["public_key"].toString()
             ret.weight = U512Class.fromStringToU512(from["weight"].toString())
             return ret

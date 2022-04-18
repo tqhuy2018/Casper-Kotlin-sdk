@@ -5,16 +5,16 @@ import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
 class Delegator {
-    var itsPublicKey:String = ""
-    var bondingPurse:String = ""
-    var stakedAmount:U512Class = U512Class()
-    var validatorPublicKey:String = ""
-    var delegatorPublicKey:String = ""
-    lateinit var vestingSchedule:VestingSchedule//Optional value
-    var isVestingScheduleExisted:Boolean = false
+    var itsPublicKey: String = ""
+    var bondingPurse: String = ""
+    var stakedAmount: U512Class = U512Class()
+    var validatorPublicKey: String = ""
+    var delegatorPublicKey: String = ""
+    lateinit var vestingSchedule: VestingSchedule//Optional value
+    var isVestingScheduleExisted: Boolean = false
     companion object {
-        fun fromJsonToDelegator(from: JsonObject):Delegator {
-            var ret:Delegator = Delegator()
+        fun fromJsonToDelegator(from:  JsonObject): Delegator {
+            var ret: Delegator = Delegator()
             ret.bondingPurse = from["bonding_purse"].toString()
             ret.stakedAmount = U512Class.fromStringToU512(from["staked_amount"].toString())
             ret.validatorPublicKey = from["validator_public_key"].toString()

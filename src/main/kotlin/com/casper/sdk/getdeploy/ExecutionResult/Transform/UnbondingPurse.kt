@@ -5,19 +5,19 @@ import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
 class UnbondingPurse {
-    var bondingPurse:String = ""
-    var validatorPublicKey:String = ""
-    var unbonderPublicKey:String = ""
-    var eraOfCreation:ULong = 0u
-    var amount:U512Class = U512Class()
+    var bondingPurse: String = ""
+    var validatorPublicKey: String = ""
+    var unbonderPublicKey: String = ""
+    var eraOfCreation: ULong = 0u
+    var amount: U512Class = U512Class()
     companion object {
-        fun  fromJsonToUnbondingPurse(from:JsonObject):UnbondingPurse {
-            var ret:UnbondingPurse = UnbondingPurse()
+        fun  fromJsonToUnbondingPurse(from: JsonObject): UnbondingPurse {
+            var ret: UnbondingPurse = UnbondingPurse()
             ret.bondingPurse = from["bonding_purse"].toString()
             ret.validatorPublicKey = from["validator_public_key"].toString()
             ret.unbonderPublicKey = from["unbonder_public_key"].toString()
             //val era = from["era_of_creation"].toJsonString()
-           // println("era:${era}")
+           // println("era: ${era}")
             ret.eraOfCreation = from["era_of_creation"].toJsonString().toULong()
             ret.amount = U512Class.fromStringToU512(from["amount"].toString())
             return ret

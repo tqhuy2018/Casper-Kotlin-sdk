@@ -5,7 +5,7 @@ import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
-
+/** Class built for storing Bid information */
 class Bid {
     var bondingPurse: String = ""
     var delegationRate: UByte = 0u
@@ -17,6 +17,7 @@ class Bid {
     var isVestingScheduleExisted: Boolean = false
     @Suppress("UNCHECKED_CAST")
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the Bid object */
         fun fromJsonToBid(from: JsonObject): Bid {
             val ret: Bid = Bid()
             ret.bondingPurse = from["bonding_purse"].toString()
@@ -39,8 +40,6 @@ class Bid {
                 ret.isVestingScheduleExisted = true
                 ret.vestingSchedule = VestingSchedule()
                 ret.vestingSchedule = VestingSchedule.fromJsonToVestingSchedule(from["vesting_schedule"] as JsonObject)
-            } else {
-                println("In bid,  vestingSchedule is NULL")
             }
             return ret
         }

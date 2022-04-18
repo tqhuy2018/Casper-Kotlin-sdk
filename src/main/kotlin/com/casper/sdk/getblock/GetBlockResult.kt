@@ -2,7 +2,6 @@ package com.casper.sdk.getblock
 import net.jemzart.jsonkraken.values.JsonObject
 
 /** Class built for storing GetBlockResult information, taken from chain_get_block RPC method */
-
 class GetBlockResult {
     var apiVersion: String = ""
     lateinit var block: JsonBlock

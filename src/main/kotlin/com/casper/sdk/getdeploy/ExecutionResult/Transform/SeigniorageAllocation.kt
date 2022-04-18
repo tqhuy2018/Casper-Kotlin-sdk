@@ -5,6 +5,7 @@ import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing SeigniorageAllocation information */
 class SeigniorageAllocation {
     //can be either Validator or Delegator
     var isValidator: Boolean = false
@@ -13,8 +14,9 @@ class SeigniorageAllocation {
     //this field is for Delegator
     var delegatorPublicKey: String = ""
     companion object {
-        fun fromJsonToSeigniorageAllocation(from:  JsonObject): SeigniorageAllocation {
-            var ret: SeigniorageAllocation = SeigniorageAllocation()
+        /** This function parse the JsonObject (taken from server RPC method call) to get the SeigniorageAllocation object */
+        fun fromJsonToSeigniorageAllocation(from: JsonObject): SeigniorageAllocation {
+            val ret: SeigniorageAllocation = SeigniorageAllocation()
             val validator = from["Validator"].toJsonString()
             if(validator != "null") {//enum of type validator
                 ret.isValidator = true

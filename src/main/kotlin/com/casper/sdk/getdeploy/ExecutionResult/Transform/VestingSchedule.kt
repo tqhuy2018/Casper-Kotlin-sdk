@@ -4,13 +4,14 @@ import com.casper.sdk.common.classes.U512Class
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
-
+/** Class built for storing VestingSchedule information */
 class VestingSchedule {
     var initialReleaseTimestampMillis: ULong = 0u
     var lockedAmounts: MutableList<U512Class> = mutableListOf()
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the VestingSchedule object */
         fun fromJsonToVestingSchedule(from:  JsonObject): VestingSchedule {
-            var ret: VestingSchedule = VestingSchedule()
+            val ret: VestingSchedule = VestingSchedule()
             val valueInStr = from["initial_release_timestamp_millis"].toJsonString()
             ret.initialReleaseTimestampMillis = valueInStr.toULong()
             val listLAJA = from["locked_amounts"] as JsonArray

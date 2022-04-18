@@ -4,6 +4,7 @@ import com.casper.sdk.common.classes.U512Class
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing Transfer information */
 class Transfer {
     var deployHash: String = ""
     var from: String = ""
@@ -16,7 +17,8 @@ class Transfer {
     var amount: U512Class = U512Class()
     var gas: U512Class = U512Class()
     companion object {
-        fun fromJsonToTransfer(from:  JsonObject): Transfer {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the Transfer object */
+        fun fromJsonToTransfer(from: JsonObject): Transfer {
             var ret: Transfer = Transfer()
             ret.deployHash = from["deploy_hash"].toString()
             ret.from = from["from"].toString()

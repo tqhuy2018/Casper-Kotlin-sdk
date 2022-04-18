@@ -8,7 +8,7 @@ class ActionThresholds {
     var keyManagement: UByte = 0u
     companion object {
         fun fromJsonObjectToActionThresholds(from: JsonObject): ActionThresholds {
-            var ret: ActionThresholds = ActionThresholds()
+            val ret: ActionThresholds = ActionThresholds()
             ret.deployment = from["deployment"].toJsonString().toUByte()
             ret.keyManagement = from["key_management"].toJsonString().toUByte()
             return ret

@@ -8,7 +8,7 @@ class AssociatedKey {
     var weight: UByte = 0u
     companion object {
         fun fromObjectToAssociatedKey(from: JsonObject): AssociatedKey {
-            var ret: AssociatedKey = AssociatedKey()
+            val ret: AssociatedKey = AssociatedKey()
             ret.accountHash = from["account_hash"].toString()
             ret.weight = from["weight"].toJsonString().toUByte()
             return ret

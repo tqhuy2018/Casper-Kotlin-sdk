@@ -26,11 +26,11 @@ class GetPeersRPC {
         val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
         val json =response.body().toJson()
         val peerList = json.get("result").get("peers")
-        var getPeersResult: GetPeersResult = GetPeersResult()
+        val getPeersResult: GetPeersResult = GetPeersResult()
         getPeersResult.api_version = json.get("result").get("api_version").toString()
         if (peerList is JsonArray) {
             for(peer in peerList) {
-                var onePeerEntry: PeerEntry = PeerEntry()
+                val onePeerEntry: PeerEntry = PeerEntry()
                 onePeerEntry.address = peer.get("address").toString()
                 onePeerEntry.node_id = peer.get("node_id").toString()
                 getPeersResult.peers.add(onePeerEntry)

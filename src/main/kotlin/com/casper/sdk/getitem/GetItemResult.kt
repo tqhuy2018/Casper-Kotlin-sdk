@@ -9,7 +9,7 @@ class GetItemResult {
     var merkleProof: String = ""
     companion object {
         fun fromJsonObjectToGetItemResult(from: JsonObject): GetItemResult {
-            var ret: GetItemResult = GetItemResult()
+            val ret: GetItemResult = GetItemResult()
             ret.apiVersion = from["api_version"].toString()
             ret.merkleProof = from["merkle_proof"].toString()
             ret.storedValue = StoredValue.fromJsonObjectToStoredValue(from["stored_value"] as JsonObject)

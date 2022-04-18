@@ -24,7 +24,7 @@ class CLType {
     lateinit var innerCLType2:CLType
     lateinit var innerCLType3: CLType
     //var itsInnerType:MutableList<CLType> = mutableListOf()
-
+///Check if the  CLType is primitive, type that has no recursive CLType inside (such as bool, i32, i64, u8, u32, u64, u128, u266, u512, string, unit, publickey, key, ...)
     fun isCLTypePrimitive() :Boolean{
         when(itsTypeStr) {
             ConstValues.CLTYPE_BOOL -> return true
@@ -47,6 +47,7 @@ class CLType {
         return false
     }
     companion object {
+        ///Generate the CLType object  from the JSON object
         fun getCLType(from:Any):CLType {
             var ret:CLType = CLType()
             if (from is String) {
@@ -56,8 +57,9 @@ class CLType {
             }
             return ret
         }
+        ///Generate the CLType object (of type primitive (such as bool, i32, i64, u8, u32, u64, u128, u266, u512, string, unit, publickey, key, ...)  from the JSON object
         fun getCLTypePrimitive(from:String):CLType {
-            var ret:CLType = CLType()
+            val ret:CLType = CLType()
             if (from == ConstValues.CLTYPE_BOOL) {
                 ret.itsTypeStr = ConstValues.CLTYPE_BOOL
             }  else  if (from == ConstValues.CLTYPE_I32) {
@@ -93,86 +95,65 @@ class CLType {
             }
             return ret
         }
+        ///Generate the CLType object  of type compound (type with recursive CLValue inside its body, such as List, Map, Tuple , Result ,Option...)  from the JSON object
         fun getCLTypeCompound(from:JsonObject):CLType {
-            var ret:CLType = CLType()
+            val ret:CLType = CLType()
             from[ConstValues.CLTYPE_OPTION] ?.let  {
-                println("Of type Option")
                 ret.itsTypeStr = ConstValues.CLTYPE_OPTION
                 ret.innerCLType1 = CLType();
                 ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_OPTION] as Any)
-                println("Option done clType")
                 return ret
             }
             from[ConstValues.CLTYPE_LIST] ?.let  {
-                println("Of type List")
                 ret.itsTypeStr = ConstValues.CLTYPE_LIST
                 ret.innerCLType1 = CLType()
                 ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_LIST] as Any)
-                println("List done clType")
                 return ret
             }
             from[ConstValues.CLTYPE_MAP] ?.let  {
-                println("Of type Map")
                 ret.itsTypeStr = ConstValues.CLTYPE_MAP
                 //clParse for key
                 ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_MAP].get("key") as Any)
                 //clParse for value
                 ret.innerCLType2 = CLType.getCLType(from[ConstValues.CLTYPE_MAP].get("value") as Any)
-                println("List done clType")
                 return ret
             }
             from[ConstValues.CLTYPE_RESULT] ?.let  {
-                println("Of type Result")
                 ret.itsTypeStr = ConstValues.CLTYPE_RESULT
                 //clParse for ok
                 ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_RESULT].get("ok") as Any)
                 //clParse for err
                 ret.innerCLType2 = CLType.getCLType(from[ConstValues.CLTYPE_RESULT].get("err") as Any)
-                println("List done clType")
                 return ret
             }
             from[ConstValues.CLTYPE_BYTEARRAY] ?.let {
-                println("Of type ByteArray")
                 ret.itsTypeStr = ConstValues.CLTYPE_BYTEARRAY
                 return ret
             }
             from[ConstValues.CLTYPE_TUPLE1] ?.let  {
-                println("Of type Tuple2")
                 ret.itsTypeStr = ConstValues.CLTYPE_TUPLE1
                 //clParse for tuple 1
                 ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE1][0] as Any)
-                println("Tuple1 type:${ret.innerCLType1.itsTypeStr}")
-                return ret
+                 return ret
             }
             from[ConstValues.CLTYPE_TUPLE2] ?.let  {
-                println("Of type Tuple2")
-                ret.itsTypeStr = ConstValues.CLTYPE_TUPLE2
+                 ret.itsTypeStr = ConstValues.CLTYPE_TUPLE2
                 //clParse for tuple 1
                 ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE2][0] as Any)
-                println("Tuple1 type:${ret.innerCLType1.itsTypeStr}")
                 //clParse for tuple 2
                 ret.innerCLType2 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE2][1] as Any)
-                println("Tuple2 type:${ret.innerCLType2.itsTypeStr}")
-                println("Tuple2 done clType")
                 return ret
             }
             from[ConstValues.CLTYPE_TUPLE3] ?.let  {
-                println("Of type Tuple3")
                 ret.itsTypeStr = ConstValues.CLTYPE_TUPLE3
                 //clParse for tuple 1
                 ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE3][0] as Any)
-                println("Tuple1 type:${ret.innerCLType1.itsTypeStr}")
                 //clParse for tuple 2
                 ret.innerCLType2 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE3][1] as Any)
-                println("Tuple2 type:${ret.innerCLType2.itsTypeStr}")
                 //clParse for tuple 3
                 ret.innerCLType3 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE3][2] as Any)
-                println("Tuple3 type:${ret.innerCLType3.itsTypeStr}")
-                println("Tuple3 done clType")
                 return ret
             }
-            println("Of type compound not option")
-            println("Done")
             return ret
         }
     }

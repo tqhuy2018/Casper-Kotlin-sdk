@@ -2,9 +2,13 @@ package com.casper.sdk.getdictionary
 
 import com.casper.sdk.ConstValues
 
+/** Class built for storing GetDictionaryItemParams, used to generate the parameter for state_get_dictionary_item RPC call */
 class GetDictionaryItemParams {
     var stateRootHash: String = ""
     var dictionaryIdentifier: DictionaryIdentifier = DictionaryIdentifier()
+
+    /** This function generate the parameter for the post method of the state_get_dictionary_item RPC call
+     * Depends on what the DictionaryIdentifier enum type, corresponding parameter is generated */
     fun generateParameterStr(): String {
         var ret: String = ""
         when(dictionaryIdentifier.itsType) {

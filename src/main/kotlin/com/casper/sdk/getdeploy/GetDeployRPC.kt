@@ -58,7 +58,7 @@ class GetDeployRPC {
         val listER: JsonArray = jsonResult.get("execution_results") as JsonArray
         val totalER: Int = listER.count()
         for(i in 0.. totalER-1) {
-            var jer:  JsonExecutionResult = JsonExecutionResult()
+            val jer:  JsonExecutionResult = JsonExecutionResult()
             val oneItem = listER[i]
             jer.blockHash = oneItem.get("block_hash").toString()
             jer.result = ExecutionResult.fromJsonToExecutionResult(oneItem.get("result") as JsonObject)
@@ -66,5 +66,4 @@ class GetDeployRPC {
         }
         return getDeployResult
     }
-    fun String.utf8():  String = URLEncoder.encode(this,  "UTF-8")
 }

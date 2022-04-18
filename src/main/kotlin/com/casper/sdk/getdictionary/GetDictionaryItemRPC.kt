@@ -9,7 +9,7 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-/**Class built for state_get_dictionary_item RPC call */
+/** Class built for state_get_dictionary_item RPC call */
 class GetDictionaryItemRPC {
     var methodURL: String = ConstValues.TESTNET_URL
     /**
@@ -35,7 +35,7 @@ class GetDictionaryItemRPC {
         //Check for error
         if(json.get("error") != null) {
             throw IllegalArgumentException("Error get dictionary item")
-        } else { //If not error then get the dictionary item
+        } else { //If not error then get the GetDictionaryItemResult
             val ret: GetDictionaryItemResult = GetDictionaryItemResult.fromJsonObjectToGetDictionaryItemResult(json.get("result") as JsonObject)
             return ret
         }

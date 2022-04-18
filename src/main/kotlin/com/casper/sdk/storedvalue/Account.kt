@@ -6,6 +6,7 @@ import com.casper.sdk.getitem.AssociatedKey
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing Account information */
 class Account {
     var accountHash: String = ""
     var namedKeys: MutableList<NamedKey> = mutableListOf()
@@ -13,8 +14,9 @@ class Account {
     var associatedKeys: MutableList<AssociatedKey> = mutableListOf()
     var actionThresholds:  ActionThresholds = ActionThresholds()
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the Account object */
         fun fromJsonObjectToAccount(from: JsonObject):  Account {
-            var ret:  Account = Account()
+            val ret = Account()
             ret.accountHash = from["account_hash"].toString()
             ret.mainPurse = from["main_purse"].toString()
             ret.actionThresholds =
@@ -22,7 +24,7 @@ class Account {
             val associatedKeysJson = from["associated_keys"]
             if(associatedKeysJson != null) {
                 val associatedKeys = from["associated_keys"] as JsonArray
-                var totalAK: Int = associatedKeys.count()-1
+                val totalAK: Int = associatedKeys.count()-1
                 if(totalAK >= 0) {
                     for(i in 0..totalAK) {
                         val oneAK = AssociatedKey.fromObjectToAssociatedKey(associatedKeys[i] as JsonObject)

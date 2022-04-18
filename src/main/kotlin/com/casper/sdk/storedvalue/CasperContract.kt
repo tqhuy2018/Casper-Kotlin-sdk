@@ -4,6 +4,7 @@ import com.casper.sdk.getdeploy.ExecutionResult.Transform.NamedKey
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing Contract information */
 class CasperContract {
     var contractPackageHash: String = ""
     var contractWasmHash: String = ""
@@ -11,8 +12,9 @@ class CasperContract {
     var namedKeys: MutableList<NamedKey> = mutableListOf()
     var protocolVersion: String = ""
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the Contract object */
         fun fromJsonObjectToCasperContract(from: JsonObject): CasperContract {
-            var ret: CasperContract = CasperContract()
+            val ret = CasperContract()
             ret.contractPackageHash = from["contract_package_hash"].toString()
             ret.contractWasmHash = from["contract_wasm_hash"].toString()
             ret.protocolVersion = from["protocol_version"].toString()

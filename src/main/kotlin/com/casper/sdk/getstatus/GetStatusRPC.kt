@@ -13,10 +13,15 @@ import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
-
+/** Class built for info_get_status RPC call */
 class GetStatusRPC {
-    var methodName: String = ConstValues.RPC_INFO_GET_STATUS
     var methodURL: String = ConstValues.TESTNET_URL
+    /**
+     * This function initiate the process of sending POST request with given parameter in JSON string format
+     * The parameter for POST method is:
+     * {"method" :  "state_get_item", "id" :  1, "params" : {"state_root_hash" :  "d360e2755f7cee816cce3f0eeb2000dfa03113769743ae5481816f3983d5f228", "key": "withdraw-df067278a61946b1b1f784d16e28336ae79f48cf692b13f6e40af9c7eadb2fb1", "path": []}, "jsonrpc" :  "2.0"}
+     * The GetStatusResult is retrieved by parsing JsonObject result from the POST request
+     */
     fun getStatusResult() :  GetStatusResult {
         val parameterStr = """{"id" :  1, "method" :  "info_get_status", "params" :  [], "jsonrpc" :  "2.0"}"""
         val client = HttpClient.newBuilder().build()
@@ -29,13 +34,13 @@ class GetStatusRPC {
         val json =response.body().toJson()
         val resultJson: JsonObject = json.get("result") as JsonObject
         val peerList = resultJson.get("peers")
-        var getStatusResult:  GetStatusResult = GetStatusResult()
+        val getStatusResult:  GetStatusResult = GetStatusResult()
         getStatusResult.apiVersion = resultJson.get("api_version").toString()
         getStatusResult.chainspecName = resultJson.get("chainspec_name").toString()
         getStatusResult.startingStateRootHash = resultJson.get("starting_state_root_hash").toString()
         if (peerList is JsonArray) {
             for(peer in peerList) {
-                var onePeerEntry:  PeerEntry = PeerEntry()
+                val onePeerEntry:  PeerEntry = PeerEntry()
                 onePeerEntry.address = peer.get("address").toString()
                 onePeerEntry.node_id = peer.get("node_id").toString()
                 getStatusResult.peers.add(onePeerEntry)

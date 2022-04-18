@@ -1,5 +1,6 @@
 package com.casper.sdk
 
+/** Class built for storing Constants used in the SDK */
 class ConstValues {
     companion object {
         //For RPC methods

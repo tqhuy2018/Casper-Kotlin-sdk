@@ -4,6 +4,7 @@ import com.casper.sdk.clvalue.CLType
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing EntryPoint information */
 class EntryPoint {
     var access: EntryPointAccess = EntryPointAccess()
     var args: MutableList<Parameter> = mutableListOf()
@@ -11,8 +12,10 @@ class EntryPoint {
     var name: String = ""
     var ret: CLType = CLType()
     companion object {
+
+        /** This function parse the JsonObject (taken from server RPC method call) to get the EntryPoint object */
         fun fromJsonObjectToEntryPoint(from: JsonObject): EntryPoint {
-            var retEntryPoint: EntryPoint = EntryPoint()
+            var retEntryPoint = EntryPoint()
             retEntryPoint.name = from["name"].toString()
             retEntryPoint.ret = CLType.getCLType(from["ret"] as Any)
             retEntryPoint.access = EntryPointAccess.fromJsonObjectToEntryPointAccess(from["access"] as JsonObject)
@@ -29,7 +32,6 @@ class EntryPoint {
                     }
                 }
             }
-            //retEntryPoint.entryPointType = EntryPointType.fromJsonToEntryPointType(from)
             return retEntryPoint
         }
     }

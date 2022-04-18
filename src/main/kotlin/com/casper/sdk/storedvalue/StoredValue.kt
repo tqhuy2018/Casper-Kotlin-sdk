@@ -6,12 +6,14 @@ import com.casper.sdk.getdeploy.ExecutionResult.Transform.*
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing StoredValue information */
 class StoredValue {
     var itsType: String = ""
     var itsValue: MutableList<Any> = mutableListOf()
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the StoredValue object */
         fun fromJsonObjectToStoredValue(from: JsonObject):  StoredValue {
-            var ret:  StoredValue = StoredValue()
+            val ret = StoredValue()
             //Get StoredValue as enum type CLValue
             val storeValueCLValue = from["CLValue"]
             if(storeValueCLValue != null) {

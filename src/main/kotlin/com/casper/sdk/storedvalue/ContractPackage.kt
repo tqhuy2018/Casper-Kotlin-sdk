@@ -5,14 +5,16 @@ import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 import java.lang.Runtime.Version
 
+/** Class built for storing ContractPackage information */
 class ContractPackage {
     var accessKey: String = ""
     var disabledVersions: MutableList<DisabledVersion> = mutableListOf()
     var groups: MutableList<Groups> = mutableListOf()
     var versions: MutableList<ContractVersion> = mutableListOf()
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the ContractPackage object */
         fun  fromJsonObjectToContractPackage(from: JsonObject): ContractPackage {
-            var ret: ContractPackage = ContractPackage()
+            val ret = ContractPackage()
             // Get AccessKey
             ret.accessKey = from["access_key"].toString()
             // Get DisableVersions

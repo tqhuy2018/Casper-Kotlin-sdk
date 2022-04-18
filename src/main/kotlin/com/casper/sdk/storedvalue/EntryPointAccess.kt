@@ -3,6 +3,7 @@ package com.casper.sdk.storedvalue
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing EntryPointAccess information */
 //This class hold 1 among 2 possible value: 
 //1 is Public in String
 //2 is Groups - a list of Group
@@ -16,8 +17,9 @@ class EntryPointAccess {
         return false
     }
     companion object{
+        /** This function parse the JsonObject (taken from server RPC method call) to get the EntryPointAccess object */
         fun fromJsonObjectToEntryPointAccess(from: JsonObject): EntryPointAccess {
-            var ret: EntryPointAccess = EntryPointAccess()
+            var ret = EntryPointAccess()
             if(from.toJsonString().toString() == "Public") {
                 ret.isPublic = true
             } else {

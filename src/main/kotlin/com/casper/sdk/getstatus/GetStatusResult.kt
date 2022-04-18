@@ -2,6 +2,7 @@ package com.casper.sdk.getstatus
 
 import com.casper.sdk.getpeers.PeerEntry
 
+/** Class built for storing GetStatusResult information, taken from info_get_status RPC method */
 class GetStatusResult {
     var chainspecName: String = ""
     var apiVersion: String = ""
@@ -13,19 +14,24 @@ class GetStatusResult {
     lateinit var nextUpgrade: NextUpgrade
     var buildVersion: String = ""
     var uptime: String = ""
-    //function check for optional values exist or not
+    // functions to check for optional values exist or not
+    // function to check if round length exists
     fun isRoundLengthInit(): Boolean {
         if(this:: roundLength.isInitialized) {
             return true
         }
         return false
     }
+
+    // function to check if nextUpgrade exists
     fun isNextUpgradeInit(): Boolean {
         if(this:: nextUpgrade.isInitialized) {
             return true
         }
         return false
     }
+
+    // function to check if ourPublicSigningKey exists
     fun isOurPublicSigningKeyInit(): Boolean {
         if(this:: ourPublicSigningKey.isInitialized) {
             return true
@@ -33,6 +39,7 @@ class GetStatusResult {
         return false
     }
 
+    // function to check if lastAddedBlockInfo exists
     fun isLastAddedBlockInfoInit(): Boolean {
         if(this:: lastAddedBlockInfo.isInitialized) {
             return true

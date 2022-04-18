@@ -2,7 +2,7 @@ package com.casper.sdk.getstatus
 
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
-
+/** Class built for storing MinimalBlockInfo information */
 class MinimalBlockInfo {
     var creator: String = ""
     var eraId:  ULong = 0u
@@ -11,8 +11,9 @@ class MinimalBlockInfo {
     var stateRootHash: String = ""
     var timeStamp: String = ""
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the MinimalBlockInfo object */
         fun  fromJsonToMinimalBlockInfo(from: JsonObject) :  MinimalBlockInfo {
-            var ret :  MinimalBlockInfo = MinimalBlockInfo()
+            val ret :  MinimalBlockInfo = MinimalBlockInfo()
             ret.creator = from["creator"].toString()
             val eraIDStr = from["era_id"].toJsonString()
             ret.eraId = eraIDStr.toULong()

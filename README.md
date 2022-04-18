@@ -25,7 +25,7 @@ To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the ima
 
 ### Build and test using Github script
 
-You can build and test the package with Github script in the "Action" section. Hit the "Action" section of this SDK and choose the latest Work Flow
+You can build and test the package with Github script in the "Action" section. Hit the "Action" section of this SDK and choose the latest Work Flow, for example with the below image, hit the green line "Update CONTRIBUTING.md"
 
 <img width="1440" alt="Screen Shot 2022-04-18 at 21 37 33" src="https://user-images.githubusercontent.com/94465107/163824425-510fd77a-9c34-42c3-b3e1-82f676e1983f.png">
 

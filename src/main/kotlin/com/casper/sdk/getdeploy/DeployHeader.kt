@@ -3,7 +3,7 @@ package com.casper.sdk.getdeploy
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
-
+/** Class built for storing DeployHeader information */
 class DeployHeader {
     var account:  String = ""
     var bodyHash:  String = ""
@@ -14,6 +14,7 @@ class DeployHeader {
     var timeStamp:  String = ""
     var ttl:  String = ""
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the DeployHeader object */
         fun fromJsonToDeployHeader(from: JsonObject): DeployHeader {
             var ret: DeployHeader = DeployHeader()
             ret.account = from["account"].toString()

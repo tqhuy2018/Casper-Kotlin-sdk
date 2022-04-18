@@ -3,14 +3,27 @@ package com.casper.sdk.clvalue
 import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.values.JsonObject
-
+/**Class built for storing the cl_type value of a CLValue object.
+For example take this CLValue object
+{
+"bytes":"0400e1f505"
+"parsed":"100000000"
+"cl_type":"U512"
+}
+Then the CLType will hold the value of U512.
+There are some more attributes in the object to store more information in its value, used to build   recursived CLType, such as List, Map, Tuple, Result, Option
+ */
 class CLType {
+    /// Type of the CLType in String, can be Bool, String, I32, I64, List, Map,...
     var itsTypeStr:String = ""
+    //innerCLType to hold value for the following type:
+    //Option, Result, Tuple1 will take only 1 item: innerCLType1
+    //Map, Tuple2 will take 2  item: innerCLType1,innerCLType2
+    //Tuple3 will take 3 item: innerCLType1, innerCLType2, innerCLType3
     lateinit var innerCLType1:CLType
     lateinit var innerCLType2:CLType
     lateinit var innerCLType3: CLType
-    var itsInnerType:MutableList<CLType> = mutableListOf()
-    //var isPrimitive:Boolean = false
+    //var itsInnerType:MutableList<CLType> = mutableListOf()
 
     fun isCLTypePrimitive() :Boolean{
         when(itsTypeStr) {

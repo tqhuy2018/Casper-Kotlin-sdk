@@ -61,11 +61,11 @@ internal class GetDictionaryItemRPCTest {
         val di3: DictionaryIdentifier = DictionaryIdentifier()
         di3.itsType = ConstValues.DI_UREF
         di3.itsValue.add(diuRef)
-        val getDictionaryItemParams3 :  GetDictionaryItemParams = GetDictionaryItemParams()
+        val getDictionaryItemParams3: GetDictionaryItemParams = GetDictionaryItemParams()
         getDictionaryItemParams3.dictionaryIdentifier = di3
         getDictionaryItemParams3.stateRootHash = "146b860f82359ced6e801cbad31015b5a9f9eb147ab2a449fd5cdb950e961ca8"
         val parameterStr3: String = getDictionaryItemParams3.generateParameterStr()
-        println(parameterStr3)
+
         val getDictionaryItemResult3: GetDictionaryItemResult = getDictionaryItemRPC.getDictionaryItem(parameterStr3)
         assert(getDictionaryItemResult3.dictionaryKey == "dictionary-5d3e90f064798d54e5e53643c4fce0cbb1024aadcad1586cc4b7c1358a530373")
         assert(getDictionaryItemResult3.apiVersion == "1.4.5")
@@ -107,8 +107,7 @@ internal class GetDictionaryItemRPCTest {
         getDictionaryItemParams5.stateRootHash = "AAAA_146b860f82359ced6e801cbad31015b5a9f9eb147ab2a449fd5cdb950e961ca8"
         val parameterStr5: String = getDictionaryItemParams5.generateParameterStr()
         try {
-            val getDictionaryItemResult5:  GetDictionaryItemResult =
-                getDictionaryItemRPC.getDictionaryItem(parameterStr5)
+            getDictionaryItemRPC.getDictionaryItem(parameterStr5)
         } catch (e: IllegalArgumentException) {
             println("Error with wrong state root hash")
         }
@@ -125,7 +124,7 @@ internal class GetDictionaryItemRPCTest {
         getDictionaryItemParams6.stateRootHash = "146b860f82359ced6e801cbad31015b5a9f9eb147ab2a449fd5cdb950e961ca8"
         val parameterStr6: String = getDictionaryItemParams6.generateParameterStr()
         try {
-            val getDictionaryItemResult:  GetDictionaryItemResult = getDictionaryItemRPC.getDictionaryItem(parameterStr6)
+            getDictionaryItemRPC.getDictionaryItem(parameterStr6)
         } catch (e: IllegalArgumentException) {
             println("Error wrong DictionayIdentifier parameter")
         }

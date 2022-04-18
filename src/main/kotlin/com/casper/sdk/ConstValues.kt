@@ -16,8 +16,8 @@ class ConstValues {
         const val RPC_STATE_GET_AUTION_INFO: String = "state_get_auction_info"
         const val RPC_PUT_DEPLOY: String = "account_put_deploy"
         //For test net and main net
-        const val TESTNET_URL: String = "https: //node-clarity-testnet.make.services/rpc"
-        const val MAINNET_URL: String = "https: //node-clarity-mainnet.make.services/rpc"
+        const val TESTNET_URL: String = "https://node-clarity-testnet.make.services/rpc"
+        const val MAINNET_URL: String = "https://node-clarity-mainnet.make.services/rpc"
         //For CLType - 23 possible values
         const val CLTYPE_BOOL           = "Bool"
         const val CLTYPE_I32            = "I32"

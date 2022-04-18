@@ -15,6 +15,7 @@ class Bid {
     var validatorPublicKey: String = ""
     lateinit var vestingSchedule: VestingSchedule//Optional value
     var isVestingScheduleExisted: Boolean = false
+    @Suppress("UNCHECKED_CAST")
     companion object {
         fun fromJsonToBid(from: JsonObject): Bid {
             val ret: Bid = Bid()
@@ -29,8 +30,7 @@ class Bid {
             val listValue: List<JsonObject> = delegatorList.values.toList() as List<JsonObject>
             val totalElement = listKey.count() - 1
             for(i in 0 .. totalElement) {
-                var oneDelegator: Delegator = Delegator()
-                oneDelegator = Delegator.fromJsonToDelegator(listValue[i])
+                val oneDelegator = Delegator.fromJsonToDelegator(listValue[i])
                 oneDelegator.itsPublicKey = listKey[i].toString()
                 ret.delegators.add(oneDelegator)
             }

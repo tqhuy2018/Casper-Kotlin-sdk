@@ -23,6 +23,19 @@ To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the ima
 
 <img width="1440" alt="Screen Shot 2022-04-18 at 20 31 31" src="https://user-images.githubusercontent.com/94465107/163815577-87bddf54-9489-4cb0-b627-e8a95680f3cf.png">
 
+### Build and test using Github script
+
+You can build and test the package with Github script in the "Action" section. Hit the "Action" section of this SDK and choose the latest Work Flow
+
+<img width="1440" alt="Screen Shot 2022-04-18 at 21 37 33" src="https://user-images.githubusercontent.com/94465107/163824425-510fd77a-9c34-42c3-b3e1-82f676e1983f.png">
+
+Then hit the "Build" button in the next screen
+
+<img width="1440" alt="Screen Shot 2022-04-18 at 21 37 52" src="https://user-images.githubusercontent.com/94465107/163824912-c92d47d3-b38c-4edf-8c72-64e45150ebcc.png">
+
+In the next screen, hit the line "Build with Maven" and scroll down to see the full list of the test
+
+<img width="1440" alt="Screen Shot 2022-04-18 at 21 38 18" src="https://user-images.githubusercontent.com/94465107/163824987-13178c63-a4e4-4f00-965a-5b4797064dc7.png">
 
 # Documentation for classes and methods
 

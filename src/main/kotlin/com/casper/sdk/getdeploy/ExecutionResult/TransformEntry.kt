@@ -6,12 +6,13 @@ import com.casper.sdk.getdeploy.ExecutionResult.Transform.*
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
-
+/** Class built for storing TransformEntry information */
 class TransformEntry {
     var key: String = ""
     var transform: CasperTransform= CasperTransform()
     companion object {
-        fun fromJsonToCasperTransform(from:  JsonObject) :  TransformEntry {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the TransformEntry object */
+        fun fromJsonToCasperTransform(from: JsonObject): TransformEntry {
             val ret: TransformEntry = TransformEntry()
             ret.key = from["key"].toString()
             val transform = from["transform"]

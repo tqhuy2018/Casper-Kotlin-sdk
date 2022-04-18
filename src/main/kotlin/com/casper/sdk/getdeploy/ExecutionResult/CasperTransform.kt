@@ -1,6 +1,6 @@
 package com.casper.sdk.getdeploy.ExecutionResult
 
-import net.jemzart.jsonkraken.values.JsonObject
+/** Class built for storing Transform information */
 
 class CasperTransform {
     //itsType is 1 among 18 possible values

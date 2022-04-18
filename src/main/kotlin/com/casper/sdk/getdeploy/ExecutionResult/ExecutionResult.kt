@@ -6,6 +6,7 @@ import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 
+/** Class built for storing ExecutionResult information */
 class ExecutionResult {
     //use default as ExecutionResult success
     var itsType: String = ConstValues.EXECUTION_RESULT_SUCCESS
@@ -14,8 +15,9 @@ class ExecutionResult {
     var effect: ExecutionEffect = ExecutionEffect()
     var transfers: MutableList<String> = mutableListOf()
     companion object {
+        /** This function parse the JsonObject (taken from server RPC method call) to get the ExecutionResult object */
         fun fromJsonToExecutionResult(from: JsonObject): ExecutionResult {
-            var ret: ExecutionResult = ExecutionResult()
+            val ret: ExecutionResult = ExecutionResult()
             val successJson = from["Success"].toJsonString()
             if(successJson != "null") {
                 ret.itsType = ConstValues.EXECUTION_RESULT_SUCCESS
@@ -24,7 +26,7 @@ class ExecutionResult {
                 val transferArray :  JsonArray = successJsonObject["transfers"] as JsonArray
                 ret.effect = ExecutionEffect.fromJsonToExecutionEffect(successJsonObject["effect"] as JsonObject)
                 if (transferArray.count() > 0) {
-                    var totalTransfer: Int = transferArray.count()-1
+                    val totalTransfer: Int = transferArray.count()-1
                     for(i in 0..totalTransfer) {
                         ret.transfers.add(transferArray[i].toString())
                     }
@@ -37,7 +39,7 @@ class ExecutionResult {
                 val transferArray :  JsonArray = failureJsonObject["transfers"] as JsonArray
                 ret.effect = ExecutionEffect.fromJsonToExecutionEffect(failureJsonObject["effect"] as JsonObject)
                 if (transferArray.count() > 0) {
-                    var totalTransfer: Int = transferArray.count()-1
+                    val totalTransfer: Int = transferArray.count()-1
                     for(i in 0..totalTransfer) {
                         ret.transfers.add(transferArray[i].toString())
                     }

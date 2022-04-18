@@ -32,7 +32,6 @@ class Transfer {
             }
             val to = from["to"].toJsonString()
             if(to != "null") {
-                println("Get to with value: ${to}")
                 ret.to = from["to"].toString()
             } else {
                 ret.isToExisted = false

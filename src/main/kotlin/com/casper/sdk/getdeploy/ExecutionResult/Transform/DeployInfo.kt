@@ -17,7 +17,6 @@ class DeployInfo {
             ret.from = from["from"].toString()
             ret.source = from["source"].toString()
             ret.gas = U512Class.fromStringToU512(from["gas"].toString())
-            println("Gas of DeployInfo: ${ret.gas.itsValue}")
             val transferList = from["transfers"] as JsonArray
             val totalTransfer = transferList.count()
             if(totalTransfer > 0) {

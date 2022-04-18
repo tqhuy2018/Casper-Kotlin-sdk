@@ -21,7 +21,7 @@ internal class GetBalanceRPCTest {
         getBalanceParams.stateRootHash = "AAA"
         val parameterStr2: String = getBalanceParams.generateParameter()
         try {
-            val getBalanceResult:  GetBalanceResult = getBalanceRPC.getBalance(parameterStr2)
+            getBalanceRPC.getBalance(parameterStr2)
         } catch (e: IllegalArgumentException) {
             println("Error get balance with wrong state root hash")
         }
@@ -30,7 +30,7 @@ internal class GetBalanceRPCTest {
         getBalanceParams.purseUref = "AAA"
         val parameterStr3: String = getBalanceParams.generateParameter()
         try {
-            val getBalanceResult:  GetBalanceResult = getBalanceRPC.getBalance(parameterStr3)
+            getBalanceRPC.getBalance(parameterStr3)
         } catch (e: IllegalArgumentException) {
             println("Error get balance with wrong purse uref")
         }

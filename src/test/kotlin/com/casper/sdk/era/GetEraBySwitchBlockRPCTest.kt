@@ -37,7 +37,6 @@ internal class GetEraBySwitchBlockRPCTest {
         //1 to 4150 nothing,  10075 to 11198 none
         bi.blockHeight = 318u
         val parameter3:  String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_ERA)
-        println("Get era with para3 : ${parameter3}")
         try {
             val getEraInfoResult:  GetEraInfoResult = getEraRPC.getEraInfo(parameter3)
             assert(getEraInfoResult.isEraSummaryInit() == true)
@@ -45,16 +44,12 @@ internal class GetEraBySwitchBlockRPCTest {
             assert(getEraInfoResult.eraSummary.eraId.toString() == "2")
             assert(getEraInfoResult.eraSummary.merkleProof.length == 26336)
             assert(getEraInfoResult.eraSummary.storedValue.itsType == ConstValues.STORED_VALUE_ERA_INFO)
-            var eraInfo: EraInfo = getEraInfoResult.eraSummary.storedValue.itsValue[0] as EraInfo
+            val eraInfo: EraInfo = getEraInfoResult.eraSummary.storedValue.itsValue[0] as EraInfo
             assert(eraInfo.seigniorageAllocations.count() == 199)
             assert(eraInfo.seigniorageAllocations[0].isValidator == false)
             assert(eraInfo.seigniorageAllocations[0].validatorPublicKey == "01026ca707c348ed8012ac6a1f28db031fadd6eb67203501a353b867a08c8b9a80")
             assert(eraInfo.seigniorageAllocations[0].delegatorPublicKey == "01128ddb51119f1df535cf3a763996344ab0cc79038faaee0aaaf098a078031ce6")
             assert(eraInfo.seigniorageAllocations[0].amount.itsValue == "87735183835")
-
-            if (getEraInfoResult.isEraSummaryInit() == true) {
-
-            }
         } catch (e:  IllegalArgumentException) {}
     }
 }

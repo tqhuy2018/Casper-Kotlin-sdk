@@ -1,5 +1,4 @@
 package com.casper.sdk.getitem
-
 import com.casper.sdk.ConstValues
 
 /** Class built for storing GetItemParams, used to generate the parameter for state_get_item RPC call */

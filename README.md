@@ -51,6 +51,12 @@ Here is a brief instruction: (For Windows)
 <img width="377" alt="step3" src="https://user-images.githubusercontent.com/94465107/163926358-1d145c73-02ff-4dd5-9130-7c545abb0c50.png">
 
 
+Click OK several times to close the "Environment Variables" setting window, then open the "Command prompt" progame in Windows, type in this command:
+
+"javac -version". You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18
+
+
+
 #### Install Maven
 
 ### Build and test using Github script

@@ -60,9 +60,15 @@ javac -version
 You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18
 
 #### Install Maven
-Follow these step in this address to install Maven
+Follow these step in this address to install Maven (for Windows & Linux)
 
 https://maven.apache.org/install.html
+
+For MacOS, run this command in Terminal
+
+```Kotlin
+brew install maven
+```
 
 Once you have maven install successfully in your machine, type this in the command prompt to check for it
 

@@ -46,6 +46,10 @@ Here is a brief instruction: (For Windows)
 
 <img width="438" alt="step2" src="https://user-images.githubusercontent.com/94465107/163925113-acd82c87-333c-404f-90e6-513a760ce523.png">
 
+5) Click New and enter the path for the jdk bin folder, in this example "C:\Program Files\Java\jdk-18\bin" (in general the default location will be this value, but if your folder is different, please enter the bin folder address for the sdk)
+
+<img width="377" alt="step3" src="https://user-images.githubusercontent.com/94465107/163926358-1d145c73-02ff-4dd5-9130-7c545abb0c50.png">
+
 
 #### Install Maven
 

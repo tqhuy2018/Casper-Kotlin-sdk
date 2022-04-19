@@ -40,9 +40,12 @@ Here is a brief instruction: (For Windows)
 2) Run the already downloaded JDK .exe file (for example "jdk-18_windows-x64_bin.exe" to setup the JDK.
 3) Open the "Environment Variables" setting
 
-<img width="270" alt="Screen Shot 2022-04-19 at 10 23 42" src="https://user-images.githubusercontent.com/94465107/163913958-ca183239-2d11-4e86-9ac8-97fbb9568054.png">
+<img width="300" alt="step1" src="https://user-images.githubusercontent.com/94465107/163914481-89014e5c-2164-41d3-99ce-ecf8c5df73ce.png">
 
-4) 
+4) Double click on the "Path" line or Click on "Path" line and then hit the "Edit" button
+
+<img width="438" alt="step2" src="https://user-images.githubusercontent.com/94465107/163925113-acd82c87-333c-404f-90e6-513a760ce523.png">
+
 
 #### Install Maven
 

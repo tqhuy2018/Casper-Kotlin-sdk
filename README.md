@@ -11,7 +11,9 @@ The SDK is built with Kotlin version 1.5
 JVM version 1.8
 ## Build and test
 
-The package can be built an tested from IntelliJ IDEA
+The package can be built and tested from IntelliJ IDEA and from command line
+
+### Build and test in IntelliJ IDEA
 
 Download the latest IntelliJ IDEA from https://www.jetbrains.com/idea/
 
@@ -22,6 +24,11 @@ Download or clone the code from github,  then open it with IntelliJ IDEA.
 To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the image below
 
 <img width="1440" alt="Screen Shot 2022-04-18 at 20 31 31" src="https://user-images.githubusercontent.com/94465107/163815577-87bddf54-9489-4cb0-b627-e8a95680f3cf.png">
+
+### Build and test in command line
+
+In order to build and test the sdk, you need to install Java JDK and JRE and Maven.
+To set up 
 
 ### Build and test using Github script
 

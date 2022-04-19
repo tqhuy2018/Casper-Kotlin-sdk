@@ -55,10 +55,23 @@ Click OK several times to close the "Environment Variables" setting window, then
 
 "javac -version". You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18
 
-
-
 #### Install Maven
+Follow these step in this address to install Maven
 
+https://maven.apache.org/install.html
+
+Once you have maven install successfully in your machine, type this in the command prompt to check for it
+mvn -v
+
+To build the SDK with Maven
+
+Enter the SDK root folder, then run the following command
+
+mvn clean package
+
+Then 
+
+mvn -B package --file pom.xml
 ### Build and test using Github script
 
 You can build and test the package with Github script in the "Action" section. Hit the "Action" section of this SDK and choose the latest Work Flow, for example with the below image, hit the green line "Update CONTRIBUTING.md"

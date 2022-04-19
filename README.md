@@ -21,6 +21,24 @@ The SDK is developed with IntelliJ IDEA 2021.3.3 (Community Edition). Then a Com
 
 Download or clone the code from github,  then open it with IntelliJ IDEA.
 
+#### Set up environment for ItelliJ IDEA
+
+The first thing to do is to set up the SDK for the Project.
+
+In IntelliJ IDEA hit "File-> Project Structure..." 
+
+<img width="1440" alt="Screen Shot 2022-04-20 at 06 12 33" src="https://user-images.githubusercontent.com/94465107/164116163-5844aa6c-75e3-4a0a-a92f-d82578785b3a.png">
+
+you will see this screen shown up
+
+<img width="1440" alt="Screen Shot 2022-04-20 at 06 13 39" src="https://user-images.githubusercontent.com/94465107/164116186-e67ff39f-8fac-4ffc-aef3-0be8b955aed3.png">
+
+Click on tab "SDKs" in the left panel to see the list of SDK being installed in your ItelliJ IDEA. You need to install the SDK from 11 or above, the suggested SDK is "openjdk-18".
+
+<img width="1440" alt="Screen Shot 2022-04-20 at 06 17 16" src="https://user-images.githubusercontent.com/94465107/164116476-9a07e449-28d5-4751-bde9-8f1ddf607f6a.png">
+
+
+
 #### Build the sdk: 
 
 To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the image below

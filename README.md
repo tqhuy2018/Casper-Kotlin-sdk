@@ -37,7 +37,23 @@ Click on tab "SDKs" in the left panel to see the list of SDK being installed in 
 
 <img width="1440" alt="Screen Shot 2022-04-20 at 06 17 16" src="https://user-images.githubusercontent.com/94465107/164116476-9a07e449-28d5-4751-bde9-8f1ddf607f6a.png">
 
+By default, the SDKs list is just "Kotlin SDK". To install more SDK, hit the "+" button and choose "Download JDK ..."
 
+<img width="1440" alt="Screen Shot 2022-04-20 at 06 26 28" src="https://user-images.githubusercontent.com/94465107/164117325-3a36cde3-791b-45a0-ba8d-20dee1fceb36.png">
+
+Select your JDK version. You can choose any option in the list box, but the suggested version is 18, then hit the "Download" button
+
+<img width="1440" alt="Screen Shot 2022-04-20 at 06 29 07" src="https://user-images.githubusercontent.com/94465107/164117560-135a3666-697e-4090-b5b2-af2b3b4d7352.png">
+
+After the downloading is completed, you'll see the "openjdk-18" item (if you install JDK version 18) together with the Kotlin SDK.
+
+Add more JDK version with the same step if you wish to test on more version of the JDK.
+
+Next in the tab Project, choose the SDK for the project. In this case the choosen SDK is "openjdk-18"
+
+<img width="1440" alt="Screen Shot 2022-04-20 at 06 31 20" src="https://user-images.githubusercontent.com/94465107/164117795-965a4138-2088-45aa-8087-5cfe171283e4.png">
+
+Just do this for the SDK configuration, left the other configurations with default values. Then click "Apply" and then "OK" to save the configruation. Now you are ready to build and test the project in IntelliJ IDEA.
 
 #### Build the sdk: 
 

@@ -27,8 +27,24 @@ To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the ima
 
 ### Build and test in command line
 
-In order to build and test the sdk, you need to install Java JDK and JRE and Maven.
-To set up 
+In order to build and test the sdk, you need to install Java JDK and Maven.
+
+#### Install Java JDK
+
+This step include the work of installing JDK and setting up the path in local system environment variable.
+
+The detail process of this stepp can be done with the manual in this address https://www.geeksforgeeks.org/setting-environment-java/
+
+Here is a brief instruction: (For Windows)
+1) Download the JDK at this address: https://www.oracle.com/java/technologies/downloads/, depends on which operating system you are using, choose the corresponding download (Windows, Mac, Linux)
+2) Run the already downloaded JDK .exe file (for example "jdk-18_windows-x64_bin.exe" to setup the JDK.
+3) Open the "Environment Variables" setting
+
+<img width="270" alt="Screen Shot 2022-04-19 at 10 23 42" src="https://user-images.githubusercontent.com/94465107/163913958-ca183239-2d11-4e86-9ac8-97fbb9568054.png">
+
+4) 
+
+#### Install Maven
 
 ### Build and test using Github script
 

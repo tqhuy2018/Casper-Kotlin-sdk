@@ -10,7 +10,6 @@ import java.net.http.HttpResponse
 /**Class built for chain_get_state_root_hash RPC call
  */
 class GetStateRootHashRPC {
-    var methodName: String = ConstValues.RPC_GET_STATE_ROOT_HASH
     var methodUrl: String = ConstValues.TESTNET_URL
     /**
      * This function initiate the process of sending POST request with given parameter in JSON string format

@@ -8,9 +8,9 @@ import com.casper.sdk.getdeploy.ExecutionResult.Transform.*
 import com.casper.sdk.getdeploy.ExecutionResult.TransformEntry
 import org.junit.jupiter.api.Test
 
-internal class GetDeployResultTest {
+internal class GetDeployRPCTest {
     @Test
-    fun getDeployFromJsonStr() {
+    fun getDeployTest() {
         val getDeployRPC:  GetDeployRPC = GetDeployRPC()
         val getDeployParams = GetDeployParams()
         getDeployRPC.methodURL = ConstValues.TESTNET_URL

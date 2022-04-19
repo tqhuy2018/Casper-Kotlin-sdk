@@ -53,7 +53,11 @@ Here is a brief instruction: (For Windows)
 
 Click OK several times to close the "Environment Variables" setting window, then open the "Command prompt" progame in Windows, type in this command:
 
-"javac -version". You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18
+```Kotlin
+javac -version
+```
+
+You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18
 
 #### Install Maven
 Follow these step in this address to install Maven
@@ -61,7 +65,10 @@ Follow these step in this address to install Maven
 https://maven.apache.org/install.html
 
 Once you have maven install successfully in your machine, type this in the command prompt to check for it
+
+```Kotlin
 mvn -v
+```
 
 To build the SDK with Maven
 

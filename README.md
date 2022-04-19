@@ -67,11 +67,16 @@ To build the SDK with Maven
 
 Enter the SDK root folder, then run the following command
 
+```Kotlin
 mvn clean package
+```
 
 Then 
 
+```Kotlin
 mvn -B package --file pom.xml
+```
+
 ### Build and test using Github script
 
 You can build and test the package with Github script in the "Action" section. Hit the "Action" section of this SDK and choose the latest Work Flow, for example with the below image, hit the green line "Update CONTRIBUTING.md"

@@ -8,7 +8,9 @@ SDK  to streamline the 3rd party Kotlin client integration processes. Such 3rd p
 
 ## System requirement
 
-- The SDK is built with Kotlin version 1.5
+- The SDK is built with Kotlin language versioned 1.5
+
+To build and test the SDK you need the flowing things installed in your computer:
 
 - Java JDK version 11 or above, Java JDK 18 is suggested
 

@@ -53,7 +53,12 @@ Next in the tab Project, choose the SDK for the project. In this case the choose
 
 <img width="1440" alt="Screen Shot 2022-04-20 at 06 31 20" src="https://user-images.githubusercontent.com/94465107/164117795-965a4138-2088-45aa-8087-5cfe171283e4.png">
 
-Just do this for the SDK configuration, left the other configurations with default values. Then click "Apply" and then "OK" to save the configruation. Now you are ready to build and test the project in IntelliJ IDEA.
+Just do this for the SDK configuration, left the other configurations with default values. Make sure that the "Language level" is "SDK default" as in the image below.
+
+<img width="1440" alt="Screen Shot 2022-04-20 at 09 17 17" src="https://user-images.githubusercontent.com/94465107/164136336-6900e4cd-bcca-41fd-97b7-f31e5aad76ee.png">
+
+
+Click "Apply" and then "OK" to save the configruation. Now you are ready to build and test the project in IntelliJ IDEA.
 
 #### Build the sdk: 
 

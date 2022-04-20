@@ -135,7 +135,7 @@ Once you have maven install successfully in your machine, type this in the comma
 mvn -v
 ```
 
-#### Build the SDK with Maven
+#### Build the SDK
 
 Enter the Casper Kotlin SDK root folder, then run the following command
 

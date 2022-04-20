@@ -135,7 +135,7 @@ Once you have maven install successfully in your machine, type this in the comma
 mvn -v
 ```
 
-If you install the Maven successfully, then you will see the result of the above command somehow like this:
+If you install Maven successfully, you will see the result of the above command somehow like this:
 
 ```Kotlin
 Maven home: /opt/homebrew/Cellar/maven/3.8.5/libexec

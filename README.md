@@ -29,7 +29,7 @@ In IntelliJ IDEA hit "File-> Project Structure..."
 
 <img width="1440" alt="Screen Shot 2022-04-20 at 06 12 33" src="https://user-images.githubusercontent.com/94465107/164116163-5844aa6c-75e3-4a0a-a92f-d82578785b3a.png">
 
-you will see this screen shown up
+You will see this screen shown up
 
 <img width="1440" alt="Screen Shot 2022-04-20 at 06 13 39" src="https://user-images.githubusercontent.com/94465107/164116186-e67ff39f-8fac-4ffc-aef3-0be8b955aed3.png">
 

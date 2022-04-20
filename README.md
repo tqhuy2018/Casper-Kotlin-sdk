@@ -146,6 +146,8 @@ Java version: 18, vendor: Homebrew, runtime: /opt/homebrew/Cellar/openjdk/18/lib
 Default locale: en_VN, platform encoding: UTF-8
 OS name: "mac os x", version: "11.5.2", arch: "aarch64", family: "mac"
 ```
+If not, please restart your computer and run the ```mvn -v``` command again.
+
 You are now ready to build and test the SDK.
 
 #### Build the SDK

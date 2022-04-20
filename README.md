@@ -119,6 +119,9 @@ javac -version
 You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18. If not, please restart your computer and type the command line ```javac -version``` again.
 
 #### Install Maven
+
+Maven can be downloaded at this address: https://maven.apache.org/download.cgi
+
 Follow these step in this address to install Maven (for Windows & Linux)
 
 https://maven.apache.org/install.html

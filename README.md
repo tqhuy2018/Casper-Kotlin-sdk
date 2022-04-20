@@ -7,8 +7,13 @@ Kotlin SDK library for interacting with a CSPR node.
 SDK  to streamline the 3rd party Kotlin client integration processes. Such 3rd parties include exchanges & app developers. 
 
 ## System requirement
-The SDK is built with Kotlin version 1.5
-JVM version 1.8
+
+- The SDK is built with Kotlin version 1.5
+
+- Java JDK version 11 or above, Java JDK 18 is suggested
+
+- Maven latest version.
+
 ## Build and test
 
 The package can be built and tested from IntelliJ IDEA and from command line

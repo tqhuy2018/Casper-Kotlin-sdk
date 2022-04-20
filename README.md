@@ -92,7 +92,7 @@ In order to build and test the sdk, you need to install Java JDK and Maven.
 
 This step include the work of installing JDK and setting up the path in local system environment variable.
 
-The detail process of this stepp can be done with the manual in this address https://www.geeksforgeeks.org/setting-environment-java/
+The detail process of this step can be done with the manual in this address https://www.geeksforgeeks.org/setting-environment-java/
 
 Here is a brief instruction: (For Windows)
 1) Download the JDK at this address: https://www.oracle.com/java/technologies/downloads/, depends on which operating system you are using, choose the corresponding download (Windows, Mac, Linux)

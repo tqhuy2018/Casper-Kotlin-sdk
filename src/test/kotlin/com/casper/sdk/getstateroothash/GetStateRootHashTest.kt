@@ -23,7 +23,7 @@ internal class GetStateRootHashTest {
         bi.blockHash = "fe35810a3dcfbf853b9d3ac2445fe1fa4aaab047d881d95d9009dc257d396e7e"
         val str2: String = bi.toJsonStr(ConstValues.RPC_GET_STATE_ROOT_HASH)
         try {
-            var stateRootHash2 = getStateRootHashTest.getStateRootHash(str2)
+            val stateRootHash2 = getStateRootHashTest.getStateRootHash(str2)
             assert(stateRootHash2 == "bb3a1f9325c1da6820358f9b4981b84e0c28d924b0ef5776f6bb4cdd1328e261")
         } catch (e: IllegalArgumentException){}
         //Call3:  Get state root hash with BlockIdentifier of type Block Height with correct Block Height
@@ -31,7 +31,7 @@ internal class GetStateRootHashTest {
         bi.blockHeight = 673033u
         val str3: String = bi.toJsonStr(ConstValues.RPC_GET_STATE_ROOT_HASH)
         try {
-            var stateRootHash3 = getStateRootHashTest.getStateRootHash(str3)
+            val stateRootHash3 = getStateRootHashTest.getStateRootHash(str3)
             assert(stateRootHash3 == "a3443a125cc55fe723d542b6d456fd42be7e412c948de924f575fb903cf2e6c5")
         } catch (e: IllegalArgumentException){}
 

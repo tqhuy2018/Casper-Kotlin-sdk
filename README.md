@@ -130,7 +130,7 @@ mvn -v
 
 To build the SDK with Maven
 
-Enter the SDK root folder, then run the following command
+Enter the Casper Kotlin SDK root folder, then run the following command
 
 ```Kotlin
 mvn clean package

@@ -95,7 +95,7 @@ This step include the work of installing JDK and setting up the path in local sy
 The detail process of this step can be done with the manual in this address https://www.geeksforgeeks.org/setting-environment-java/
 
 Here is a brief instruction: (For Windows)
-1) Download the JDK at this address: https://www.oracle.com/java/technologies/downloads/, depends on which operating system you are using, choose the corresponding download (Windows, Mac, Linux)
+1) Download the JDK at this address: https://www.oracle.com/java/technologies/downloads/, depends on which operating system you are using, choose the corresponding download (Windows, Mac, Linux). Currently the latest JDK is JDK 18 and it is suggested to install this version.
 2) Run the already downloaded JDK .exe file (for example "jdk-18_windows-x64_bin.exe" to setup the JDK.
 3) Open the "Environment Variables" setting
 

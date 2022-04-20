@@ -101,7 +101,7 @@ Here is a brief instruction: (For Windows)
 
 <img width="300" alt="step1" src="https://user-images.githubusercontent.com/94465107/163914481-89014e5c-2164-41d3-99ce-ecf8c5df73ce.png">
 
-4) Double click on the "Path" line or Click on "Path" line and then hit the "Edit" button
+4) Double click on the "Path" line or Click on "Path" line variable under System variables and then hit the "Edit" button
 
 <img width="438" alt="step2" src="https://user-images.githubusercontent.com/94465107/163925113-acd82c87-333c-404f-90e6-513a760ce523.png">
 

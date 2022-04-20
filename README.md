@@ -129,7 +129,7 @@ For MacOS, run this command in Terminal
 brew install maven
 ```
 
-Once you have maven install successfully in your machine, type this in the command prompt to check for it
+Once you have maven install successfully in your machine, type this in the Command Prompt or Terminal to check for it
 
 ```Kotlin
 mvn -v

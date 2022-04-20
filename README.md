@@ -143,10 +143,10 @@ Enter the Casper Kotlin SDK root folder, then run the following command
 mvn clean package
 ```
 
-Then 
+Then run this command
 
 ```Kotlin
-mvn -B package --file pom.xml
+mvn package
 ```
 
 #### Test the sdk

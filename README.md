@@ -135,6 +135,16 @@ Once you have maven install successfully in your machine, type this in the comma
 mvn -v
 ```
 
+If you install the Maven successfully, then you will see the result of the above command somehow like this:
+
+```Kotlin
+Maven home: /opt/homebrew/Cellar/maven/3.8.5/libexec
+Java version: 18, vendor: Homebrew, runtime: /opt/homebrew/Cellar/openjdk/18/libexec/openjdk.jdk/Contents/Home
+Default locale: en_VN, platform encoding: UTF-8
+OS name: "mac os x", version: "11.5.2", arch: "aarch64", family: "mac"
+```
+You are now ready to build and test the SDK.
+
 #### Build the SDK
 
 Enter the Casper Kotlin SDK root folder, then run the following command

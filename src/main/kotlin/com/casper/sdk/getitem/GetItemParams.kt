@@ -8,7 +8,7 @@ class GetItemParams {
     var path: MutableList<String> = mutableListOf()
 /** This function generate the parameter for the post method of the state_get_item RPC call */
 fun generateParameterStr(): String {
-        var pathStr = "[]"
+        var pathStr = "["
         val totalPath: Int = path.count() - 1
         if (totalPath >= 0) {
             pathStr = "["

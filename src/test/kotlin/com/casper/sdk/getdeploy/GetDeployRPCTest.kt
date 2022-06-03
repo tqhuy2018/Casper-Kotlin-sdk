@@ -234,7 +234,7 @@ internal class GetDeployRPCTest {
         }
         try {
             //Test 7 Transform of type WriteWithdraw and WriteBid - from MAINNET
-            // https: //cspr.live/deploy/acb4d78cbb900fe91a896ea8a427374c5d600cd9206efae2051863316265f1b1
+            // https://cspr.live/deploy/acb4d78cbb900fe91a896ea8a427374c5d600cd9206efae2051863316265f1b1
             getDeployParams.deploy_hash = "acb4d78cbb900fe91a896ea8a427374c5d600cd9206efae2051863316265f1b1"
             val postParameter4 = getDeployParams.generatePostParameterStr()
             getDeployRPC.methodURL = ConstValues.MAINNET_URL

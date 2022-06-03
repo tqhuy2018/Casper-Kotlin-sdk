@@ -26,7 +26,7 @@ class CLParsed {
     lateinit var innerParsed1: CLParsed
     lateinit var innerParsed2: CLParsed
     lateinit var innerParsed3: CLParsed
-    //This property is for holding array value of List and FixList
+    //This property is for holding array value of List and FixList,it is a list that can hold list of CLParse elements
     var itsValue: MutableList<CLParsed> = mutableListOf()
     fun isInnerParsed1Initialize(): Boolean {
         if(this:: innerParsed1.isInitialized) {
@@ -78,6 +78,8 @@ class CLParsed {
                     ret.itsValueInStr = from.get("Hash") as String
                 } else  if (from.get("Account").toJsonString() != "null") {
                     ret.itsValueInStr = from.get("Account") as String
+                } else if (from.get("URef").toJsonString() != "null") {
+                    ret.itsValueInStr = from.get("URef") as String
                 }
             }  else if (withCLType.itsTypeStr == ConstValues.CLTYPE_UREF) {
                 ret.itsValueInStr = from as String

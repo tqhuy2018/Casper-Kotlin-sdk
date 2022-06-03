@@ -32,6 +32,18 @@ class Account {
                     }
                 }
             }
+            // Get NamedKey
+            val listNameKey = from["named_keys"]
+            if(listNameKey != null) {
+                val nameKeys = from["named_keys"] as JsonArray
+                val totalNK: Int = nameKeys.count()-1
+                if(totalNK >= 0) {
+                    for(i in 0..totalNK) {
+                        val oneNK = NamedKey.fromJsonObjectToNamedKey(nameKeys[i] as JsonObject)
+                        ret.namedKeys.add(oneNK)
+                    }
+                }
+            }
             return ret
         }
     }

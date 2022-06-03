@@ -7,8 +7,15 @@ Kotlin SDK library for interacting with a CSPR node.
 SDK  to streamline the 3rd party Kotlin client integration processes. Such 3rd parties include exchanges & app developers. 
 
 ## System requirement
-The SDK is built with Kotlin version 1.5
-JVM version 1.8
+
+- The SDK is built with Kotlin language versioned 1.5
+
+To build and test the SDK you need the flowing things installed in your computer:
+
+- Java JDK version 11 or above, Java JDK 18 is suggested
+
+- Maven latest version.
+
 ## Build and test
 
 The package can be built and tested from IntelliJ IDEA and from command line
@@ -85,16 +92,16 @@ In order to build and test the sdk, you need to install Java JDK and Maven.
 
 This step include the work of installing JDK and setting up the path in local system environment variable.
 
-The detail process of this stepp can be done with the manual in this address https://www.geeksforgeeks.org/setting-environment-java/
+The detail process of this step can be done with the manual in this address https://www.geeksforgeeks.org/setting-environment-java/
 
 Here is a brief instruction: (For Windows)
-1) Download the JDK at this address: https://www.oracle.com/java/technologies/downloads/, depends on which operating system you are using, choose the corresponding download (Windows, Mac, Linux)
+1) Download the JDK at this address: https://www.oracle.com/java/technologies/downloads/, depends on which operating system you are using, choose the corresponding download (Windows, Mac, Linux). Currently the latest JDK is JDK 18 and it is suggested to install this version.
 2) Run the already downloaded JDK .exe file (for example "jdk-18_windows-x64_bin.exe" to setup the JDK.
 3) Open the "Environment Variables" setting
 
 <img width="300" alt="step1" src="https://user-images.githubusercontent.com/94465107/163914481-89014e5c-2164-41d3-99ce-ecf8c5df73ce.png">
 
-4) Double click on the "Path" line or Click on "Path" line and then hit the "Edit" button
+4) Double click on the "Path" line or Click on "Path" line variable under System variables and then hit the "Edit" button
 
 <img width="438" alt="step2" src="https://user-images.githubusercontent.com/94465107/163925113-acd82c87-333c-404f-90e6-513a760ce523.png">
 
@@ -103,15 +110,18 @@ Here is a brief instruction: (For Windows)
 <img width="377" alt="step3" src="https://user-images.githubusercontent.com/94465107/163926358-1d145c73-02ff-4dd5-9130-7c545abb0c50.png">
 
 
-Click OK several times to close the "Environment Variables" setting window, then open the "Command prompt" progame in Windows, type in this command:
+Click OK several times to close the "Environment Variables" setting window, then open the "Command Prompt" progame in Windows, type in this command:
 
 ```Kotlin
 javac -version
 ```
 
-You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18
+You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18. If not, please restart your computer and type the command line ```javac -version``` again.
 
 #### Install Maven
+
+Maven can be downloaded at this address: https://maven.apache.org/download.cgi
+
 Follow these step in this address to install Maven (for Windows & Linux)
 
 https://maven.apache.org/install.html
@@ -122,13 +132,25 @@ For MacOS, run this command in Terminal
 brew install maven
 ```
 
-Once you have maven install successfully in your machine, type this in the command prompt to check for it
+Once you have maven install successfully in your machine, type this in the Command Prompt or Terminal to check for it
 
 ```Kotlin
 mvn -v
 ```
 
-To build the SDK with Maven
+If you install Maven successfully, you will see the result of the above command somehow like this:
+
+```Kotlin
+Maven home: /opt/homebrew/Cellar/maven/3.8.5/libexec
+Java version: 18, vendor: Homebrew, runtime: /opt/homebrew/Cellar/openjdk/18/libexec/openjdk.jdk/Contents/Home
+Default locale: en_VN, platform encoding: UTF-8
+OS name: "mac os x", version: "11.5.2", arch: "aarch64", family: "mac"
+```
+If not, please restart your computer and run the ```mvn -v``` command again.
+
+You are now ready to build and test the SDK.
+
+#### Build the SDK
 
 Enter the Casper Kotlin SDK root folder, then run the following command
 
@@ -136,11 +158,20 @@ Enter the Casper Kotlin SDK root folder, then run the following command
 mvn clean package
 ```
 
-Then 
+Then run this command
 
 ```Kotlin
-mvn -B package --file pom.xml
+mvn package
 ```
+
+#### Test the sdk
+
+Enter the Casper Kotlin SDK root folder, then run the following command
+
+```Kotlin
+mvn test
+```
+
 
 ### Build and test using Github script
 

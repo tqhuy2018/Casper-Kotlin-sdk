@@ -27,7 +27,7 @@ class CLParsed {
     lateinit var innerParsed2: CLParsed
     lateinit var innerParsed3: CLParsed
     //This property is for holding array value of List and FixList,it is a list that can hold list of CLParse elements
-    var itsValue: MutableList<CLParsed> = mutableListOf()
+    var itsArrayValue: MutableList<CLParsed> = mutableListOf()
     fun isInnerParsed1Initialize(): Boolean {
         if(this:: innerParsed1.isInitialized) {
             return true
@@ -144,7 +144,7 @@ class CLParsed {
                     for(i in 0..totalElement-1) {
                         val oneElement: Any = listJson[i] as Any
                         val oneParsed = getCLParsed(oneElement, withCLType.innerCLType1)
-                        ret.itsValue.add(oneParsed)
+                        ret.itsArrayValue.add(oneParsed)
                     }
                 }
             } else if(withCLType.itsTypeStr == ConstValues.CLTYPE_MAP) {
@@ -159,10 +159,10 @@ class CLParsed {
                         val oneElement: Any = listJson[i] as JsonObject
                         //add item for map-key
                         val parsedKey = getCLParsed(oneElement.get("key") as Any, withCLType.innerCLType1)
-                        ret.innerParsed1.itsValue.add(parsedKey)
+                        ret.innerParsed1.itsArrayValue.add(parsedKey)
                         //add item for map-value
                         val parsedValue = getCLParsed(oneElement.get("value") as Any,  withCLType.innerCLType2)
-                        ret.innerParsed2.itsValue.add(parsedValue)
+                        ret.innerParsed2.itsArrayValue.add(parsedValue)
                     }
                 }
                 return ret

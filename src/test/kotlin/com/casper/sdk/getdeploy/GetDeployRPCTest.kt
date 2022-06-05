@@ -48,7 +48,7 @@ internal class GetDeployRPCTest {
             assert(sessionNA2.clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST)
             assert(sessionNA2.clValue.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
             //assertion for CLParse with only 1 item and the very first item value is correct
-            assert(sessionNA2.clValue.itsParse.itsValue[0].itsValueInStr == "61eff5566f55860c96d51d9e")
+            assert(sessionNA2.clValue.itsParse.itsArrayValue[0].itsValueInStr == "61eff5566f55860c96d51d9e")
             //assertion for session 3th element with CLValue of CLType Key - account
             val sessionNAKey:  NamedArg = session.args.listNamedArg[3]
             assert(sessionNAKey.itsName == "kyc_package_hash")
@@ -317,18 +317,18 @@ internal class GetDeployRPCTest {
             assert(clValueSession5.itsBytes == "04000000cc77e0fef426adc63f5380d13e20ab62832f70afae299bef6fcf3f985eb6e5937aebb6de622b00ced00fc0ed16562b5c0d7ee3a3a894fc42001eb7fb2da4d102713910b4d6f4fed1ab28b06e93c2562f845c570ac6861b93bee6a67f4aeedb035c6c49477ffa1dabc642d4cc894a21b248e721ee66128c59588393acea1ff196")
             assert(clValueSession5.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST)
             assert(clValueSession5.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_BYTEARRAY)
-            assert(clValueSession5.itsParse.itsValue[0].itsValueInStr == "cc77e0fef426adc63f5380d13e20ab62832f70afae299bef6fcf3f985eb6e593")
-            assert(clValueSession5.itsParse.itsValue[1].itsValueInStr == "7aebb6de622b00ced00fc0ed16562b5c0d7ee3a3a894fc42001eb7fb2da4d102")
-            assert(clValueSession5.itsParse.itsValue[2].itsValueInStr == "713910b4d6f4fed1ab28b06e93c2562f845c570ac6861b93bee6a67f4aeedb03")
-            assert(clValueSession5.itsParse.itsValue[3].itsValueInStr == "5c6c49477ffa1dabc642d4cc894a21b248e721ee66128c59588393acea1ff196")
+            assert(clValueSession5.itsParse.itsArrayValue[0].itsValueInStr == "cc77e0fef426adc63f5380d13e20ab62832f70afae299bef6fcf3f985eb6e593")
+            assert(clValueSession5.itsParse.itsArrayValue[1].itsValueInStr == "7aebb6de622b00ced00fc0ed16562b5c0d7ee3a3a894fc42001eb7fb2da4d102")
+            assert(clValueSession5.itsParse.itsArrayValue[2].itsValueInStr == "713910b4d6f4fed1ab28b06e93c2562f845c570ac6861b93bee6a67f4aeedb03")
+            assert(clValueSession5.itsParse.itsArrayValue[3].itsValueInStr == "5c6c49477ffa1dabc642d4cc894a21b248e721ee66128c59588393acea1ff196")
             //asssertion for CLValue of type List(U8)
             val sessionNA51:  NamedArg = session5Value.args.listNamedArg[4]
             assert(sessionNA51.itsName == "weights")
             assert(sessionNA51.clValue.itsBytes == "0400000001010100")
             assert(sessionNA51.clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST)
             assert(sessionNA51.clValue.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_U8)
-            assert(sessionNA51.clValue.itsParse.itsValue[0].itsValueInStr == "1")
-            assert(sessionNA51.clValue.itsParse.itsValue[3].itsValueInStr == "0")
+            assert(sessionNA51.clValue.itsParse.itsArrayValue[0].itsValueInStr == "1")
+            assert(sessionNA51.clValue.itsParse.itsArrayValue[3].itsValueInStr == "0")
             //assertion for Transform of type WriteAccount for ExecutionResult item 16,  18
             val effect5:  ExecutionEffect = getDeployResult5.executionResults[0].result.effect
             val transformWriteAccount1:  TransformEntry = effect5.transforms[16]
@@ -464,10 +464,10 @@ internal class GetDeployRPCTest {
             assert(clValueMap.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
             assert(clValueMap.itsCLType.innerCLType2.itsTypeStr == ConstValues.CLTYPE_STRING)
             assert(clValueMap.itsBytes == "0400000015000000636f6e74726163745f7061636b6167655f6861736840000000643332444531353263306242464463414666356232613630373043643732394663304633656143463330306136623565326162414230333530323743343962630a0000006576656e745f747970650400000073796e630800000072657365727665301800000034313239343931343739373335363933323135333637343708000000726573657276653118000000393931373137313437323638353639383438313432343138")
-            assert(clValueMap.itsParse.innerParsed1.itsValue.count() == 4)
-            assert(clValueMap.itsParse.innerParsed1.itsValue[0].itsValueInStr == "contract_package_hash")
-            assert(clValueMap.itsParse.innerParsed2.itsValue.count() == 4)
-            assert(clValueMap.itsParse.innerParsed2.itsValue[0].itsValueInStr == "d32DE152c0bBFDcAFf5b2a6070Cd729Fc0F3eaCF300a6b5e2abAB035027C49bc")
+            assert(clValueMap.itsParse.innerParsed1.itsArrayValue.count() == 4)
+            assert(clValueMap.itsParse.innerParsed1.itsArrayValue[0].itsValueInStr == "contract_package_hash")
+            assert(clValueMap.itsParse.innerParsed2.itsArrayValue.count() == 4)
+            assert(clValueMap.itsParse.innerParsed2.itsArrayValue[0].itsValueInStr == "d32DE152c0bBFDcAFf5b2a6070Cd729Fc0F3eaCF300a6b5e2abAB035027C49bc")
             //assertion for Transform of type CLValue Any
             val transformCLValueAny:  TransformEntry = effect8.transforms[81]
             assert(transformCLValueAny.key == "dictionary-3f26bd6e2d853683dc35fd5353a4ff051c14efbd766a25b01a49cc9dab8c8120")
@@ -501,8 +501,8 @@ internal class GetDeployRPCTest {
             assert(clValueOptionListString.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_LIST)
             assert(clValueOptionListString.itsCLType.innerCLType1.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
             assert(clValueOptionListString.itsBytes == "010100000018000000363165353465636231656366653538376561663963636530")
-            assert(clValueOptionListString.itsParse.innerParsed1.itsValue.count() == 1)
-            assert(clValueOptionListString.itsParse.innerParsed1.itsValue[0].itsValueInStr == "61e54ecb1ecfe587eaf9cce0")
+            assert(clValueOptionListString.itsParse.innerParsed1.itsArrayValue.count() == 1)
+            assert(clValueOptionListString.itsParse.innerParsed1.itsArrayValue[0].itsValueInStr == "61e54ecb1ecfe587eaf9cce0")
             //assertion for CLValue of type List(Map(String, String))
             val clValueListMap = session9Value.args.listNamedArg[2].clValue
             assert(clValueListMap.itsBytes == "0100000004000000040000006e616d650f000000546573742050726f642041646d696e0b0000006465736372697074696f6e0700000054657374696e6708000000697066735f75726c5000000068747470733a2f2f676174657761792e70696e6174612e636c6f75642f697066732f516d6175505535726338676868795a465178423952356a43626161664777324d6e65514a524d44574c567a6a615511000000697066735f6d657461646174615f75726c5000000068747470733a2f2f676174657761792e70696e6174612e636c6f75642f697066732f516d627279797641795664426d355a346e774133613738316d6d717563366e476165754541504b393661334c506e")
@@ -510,13 +510,13 @@ internal class GetDeployRPCTest {
             assert(clValueListMap.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_MAP)
             assert(clValueListMap.itsCLType.innerCLType1.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
             assert(clValueListMap.itsCLType.innerCLType1.innerCLType2.itsTypeStr == ConstValues.CLTYPE_STRING)
-            assert(clValueListMap.itsParse.itsValue.count() == 1)
+            assert(clValueListMap.itsParse.itsArrayValue.count() == 1)
             //map key list
-            assert(clValueListMap.itsParse.itsValue[0].innerParsed1.itsValue.count() == 4)
-            assert(clValueListMap.itsParse.itsValue[0].innerParsed1.itsValue[0].itsValueInStr == "name")
+            assert(clValueListMap.itsParse.itsArrayValue[0].innerParsed1.itsArrayValue.count() == 4)
+            assert(clValueListMap.itsParse.itsArrayValue[0].innerParsed1.itsArrayValue[0].itsValueInStr == "name")
             //map value list
-            assert(clValueListMap.itsParse.itsValue[0].innerParsed2.itsValue.count() == 4)
-            assert(clValueListMap.itsParse.itsValue[0].innerParsed2.itsValue[0].itsValueInStr == "Test Prod Admin")
+            assert(clValueListMap.itsParse.itsArrayValue[0].innerParsed2.itsArrayValue.count() == 4)
+            assert(clValueListMap.itsParse.itsArrayValue[0].innerParsed2.itsArrayValue[0].itsValueInStr == "Test Prod Admin")
             //assertion for CLValue of type List(Map(String, String)) but parse empty
             val clValueListMap2 = session9Value.args.listNamedArg[3].clValue
             assert(clValueListMap2.itsBytes == "0100000000000000")
@@ -524,9 +524,9 @@ internal class GetDeployRPCTest {
             assert(clValueListMap2.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_MAP)
             assert(clValueListMap2.itsCLType.innerCLType1.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
             assert(clValueListMap2.itsCLType.innerCLType1.innerCLType2.itsTypeStr == ConstValues.CLTYPE_STRING)
-            assert(clValueListMap2.itsParse.itsValue.count() == 1)
-            assert(clValueListMap2.itsParse.itsValue[0].isInnerParsed1Initialize() == false)
-            assert(clValueListMap2.itsParse.itsValue[0].isInnerParsed2Initialize() == false)
+            assert(clValueListMap2.itsParse.itsArrayValue.count() == 1)
+            assert(clValueListMap2.itsParse.itsArrayValue[0].isInnerParsed1Initialize() == false)
+            assert(clValueListMap2.itsParse.itsArrayValue[0].isInnerParsed2Initialize() == false)
         } catch (e: IllegalArgumentException) {
         }
         try {

@@ -1,7 +1,5 @@
 package com.casper.sdk.serialization
 
-import com.sun.org.apache.xpath.internal.operations.Quo
-
 class NumberSerialize {
     companion object {
         fun u8Serialize(valueInStr:String) : String {
@@ -87,7 +85,7 @@ class NumberSerialize {
                         }
                     } else {
                         remainder = nextValue % 16u
-                        val quotient2 : UInt = (nextValue - remainder) / 16
+                        val quotient2 : UInt = (nextValue - remainder) / 16u
                         val nextCharInRet : String = NumberSerialize.from10To16(quotient2)
                         ret = ret + nextCharInRet
                         startIndex += 1u
@@ -98,7 +96,7 @@ class NumberSerialize {
             retQNR.quotient = ret
             return retQNR
         }
-        fun fromDecimalToHexa(fromNumberInStr : String) : String {
+        fun fromDecimalStringToHexaString(fromNumberInStr : String) : String {
             var ret : String = ""
             val ret1 : QuotientNRemainder = NumberSerialize.findQuotientAndRemainderOfStringNumber(fromNumberInStr)
             var numberLength : UInt = ret1.quotient.length.toUInt()

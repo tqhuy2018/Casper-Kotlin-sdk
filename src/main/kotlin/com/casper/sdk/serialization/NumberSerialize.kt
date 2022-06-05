@@ -1,8 +1,11 @@
 package com.casper.sdk.serialization
 
+import org.bouncycastle.oer.its.ieee1609dot2.basetypes.UINT3
+
 class NumberSerialize {
     companion object {
-        fun u8Serialize(valueInStr:String) : String {
+        // Function for the serialization of unsigned number u8
+        fun serializeForU8(valueInStr:String) : String {
             if (valueInStr == "0") {
                 return "00"
             } else {
@@ -18,14 +21,117 @@ class NumberSerialize {
                 }
             }
         }
-        fun u32Serialize(valueInStr: String) :String {
-            if (valueInStr == "0") {
+        // Function for the serialization of unsigned number u32
+        fun serializeForU32(numberInStr: String) :String {
+            if (numberInStr == "0") {
                 return "00000000"
             }
-            return ""
+            var ret : String = NumberSerialize.fromDecimalStringToHexaString(numberInStr)
+            val retLength : Int = ret.length
+            if(retLength < 8) {
+                val total0Add : Int = 8 - retLength - 1
+                var prefix0 : String = ""
+                for(i in 0 .. total0Add) {
+                    prefix0 = prefix0 + "0"
+                }
+                ret = prefix0 + ret
+            }
+            val realRet : String = NumberSerialize.stringReversed2Digit(ret)
+            return realRet
         }
-        fun fromDecimalToHexa(number:String) : String {
-            return ""
+        // Function for the serialization of unsigned number u64
+        fun serializeForU64(numberInStr:String) : String {
+            if (numberInStr == "0") {
+                return "0000000000000000"
+            }
+            var ret : String = NumberSerialize.fromDecimalStringToHexaString(numberInStr)
+            val retLength : Int = ret.length
+            if(retLength < 16) {
+                val total0Add : Int = 16 - retLength - 1
+                var prefix0 : String = ""
+                for(i in 0 .. total0Add) {
+                    prefix0 = prefix0 + "0"
+                }
+                ret = prefix0 + ret
+            }
+            val realRet : String = NumberSerialize.stringReversed2Digit(ret)
+            return realRet
+        }
+        /**
+        Serialize for CLValue of CLType Int32
+        - Parameters:Int32 value
+        - Returns: Serialization of UInt32 if input >= 0.
+        If input < 0 Serialization of UInt32.max complement to the input
+         */
+        fun serializeForI32(numberInStr:String) : String {
+            val firstChar : String = numberInStr.substring(0,1)
+            //is input is negative number
+            if (firstChar == "-") {
+                val lastChar = numberInStr.length
+                val numberValue : UInt  = numberInStr.substring(1,lastChar-1).toUInt()
+                val maxU32 = UInt.MAX_VALUE
+                val remain : UInt = maxU32 - numberValue + 1u
+                return  NumberSerialize.serializeForU32(remain.toString())
+            } else {
+                return  NumberSerialize.serializeForU32(numberInStr)
+            }
+        }
+        /**
+        Serialize for CLValue of CLType Int64
+        - Parameters:Int64 value in String format
+        - Returns: Serialization of UInt64 if input >= 0.
+        If input < 0 Serialization of UInt64.max complement to the input
+         */
+        fun serializeForI64(numberInStr:String) : String {
+            val firstChar : String = numberInStr.substring(0,1)
+            //is input is negative number
+            if (firstChar == "-") {
+                val lastChar = numberInStr.length
+                val numberValue : UInt  = numberInStr.substring(1,lastChar-1).toUInt()
+                val maxU64 = ULong.MAX_VALUE
+                val remain : ULong = maxU64 - numberValue + 1u
+                return  NumberSerialize.serializeForU64(remain.toString())
+            } else {
+                return  NumberSerialize.serializeForU64(numberInStr)
+            }
+        }
+        /*
+        Serialize for CLValue of CLType U128 or U256 or U512, ingeneral the input value is called Big number
+        - Parameters: value of big number  with decimal value in String format
+        - Returns: Serialization for the big number, with this rule:
+        - Get the hexa value from the  the decimal big number - let call it the main serialization
+        - Get the length of the hexa value
+        -First byte is the u8 serialization of the length, let call it prefix
+        Return result = prefix + main serialization
+        Special case: If input = "0" then output = "00"
+         */
+        fun serializeForBigNumber(numberInStr:String) : String {
+            if (numberInStr == "0") {
+                return "00"
+            }
+            var retStr : String = NumberSerialize.fromDecimalStringToHexaString(numberInStr)
+            val retStrLength : Int = retStr.length
+            var bytes : Int = 0
+            if(retStrLength % 2 == 1) {
+                retStr = "0" + retStr
+                 bytes = (retStrLength + 1)/2
+            } else {
+                bytes = retStrLength/2
+            }
+            val prefixLengthString : String = NumberSerialize.serializeForU8(bytes.toString())
+            var realRet:String = NumberSerialize.stringReversed2Digit(retStr)
+            realRet = prefixLengthString + realRet
+            return realRet
+        }
+        fun stringReversed2Digit(fromString:String) : String {
+            var retStr : String = ""
+            var charIndex : Int = fromString.length
+            while(charIndex > 0) {
+                charIndex -= 2
+                val sub2 : String = fromString.substring(charIndex,2)
+                retStr += sub2
+            }
+            return  retStr
         }
         fun findQuotientAndRemainderOfStringNumber(fromNumberInStr:String) : QuotientNRemainder {
             var retQNR : QuotientNRemainder = QuotientNRemainder()

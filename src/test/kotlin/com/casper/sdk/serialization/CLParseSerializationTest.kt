@@ -1,11 +1,75 @@
 package com.casper.sdk.serialization
 
+import com.casper.sdk.ConstValues
+import com.casper.sdk.clvalue.CLParsed
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class CLParseSerializationTest {
     @Test
     fun clParseSerialize() {
+        val clParse:CLParsed = CLParsed()
+        //Bool assertion
+        clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_BOOL
+        clParse.itsValueInStr = "true"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "01")
+        clParse.itsValueInStr = "false"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "00")
+        clParse.itsValueInStr = "No"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == ConstValues.INVALID_VALUE)
 
+        //U8 assertion
+        clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_U8
+        clParse.itsValueInStr = "0"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "00")
+        clParse.itsValueInStr = "9"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "09")
+        clParse.itsValueInStr = "219"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "db")
+        clParse.itsValueInStr = "255"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "ff")
+
+        //I32 assertion
+        clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_I32
+        clParse.itsValueInStr = "0"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "00000000")
+        clParse.itsValueInStr = "-1024"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "00fcffff")
+        clParse.itsValueInStr = "-3333"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "fbf2ffff")
+        clParse.itsValueInStr = "1000"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "e8030000")
+        clParse.itsValueInStr = "1000"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "e8030000")
+        clParse.itsValueInStr = "5005"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "8d130000")
+        clParse.itsValueInStr = "12764"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "dc310000")
+        clParse.itsValueInStr = "-12369"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "afcfffff")
+
+        //I64 assertion
+        clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_I64
+        clParse.itsValueInStr = "0"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "0000000000000000")
+        clParse.itsValueInStr = "-1024"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "00fcffffffffffff")
+        clParse.itsValueInStr = "1000"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "e803000000000000")
+        clParse.itsValueInStr = "-123456789"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "eb32a4f8ffffffff")
+        clParse.itsValueInStr = "-56789"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "2b22ffffffffffff")
+        clParse.itsValueInStr = "56789"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "d5dd000000000000")
+
+        //U32 assertion
+        clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
+        clParse.itsValueInStr = "1024"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "00040000")
+        clParse.itsValueInStr = "5531024"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "90655400")
+        clParse.itsValueInStr = "0"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "00000000")
     }
 }

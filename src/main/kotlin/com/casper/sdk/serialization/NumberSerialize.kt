@@ -17,7 +17,8 @@ class NumberSerialize {
                     val quotient : UInt = (value - remainder) / 16u
                     val remainderStr : String = NumberSerialize.from10To16(remainder)
                     val quotientStr : String  = NumberSerialize.from10To16(quotient)
-                    return remainderStr + quotientStr
+                    println("remainder:" + remainderStr + " quotient:" + quotientStr + " fro number:" + valueInStr)
+                    return  quotientStr + remainderStr
                 }
             }
         }
@@ -26,7 +27,9 @@ class NumberSerialize {
             if (numberInStr == "0") {
                 return "00000000"
             }
+            println("Serialize for U32 with number : " + numberInStr)
             var ret : String = NumberSerialize.fromDecimalStringToHexaString(numberInStr)
+            println("Decimal from " + numberInStr + " to hexa is:" + ret)
             val retLength : Int = ret.length
             if(retLength < 8) {
                 val total0Add : Int = 8 - retLength - 1
@@ -64,13 +67,16 @@ class NumberSerialize {
         If input < 0 Serialization of UInt32.max complement to the input
          */
         fun serializeForI32(numberInStr:String) : String {
+            println("------------I32 for this number:" + numberInStr + " ---------")
             val firstChar : String = numberInStr.substring(0,1)
             //is input is negative number
             if (firstChar == "-") {
                 val lastChar = numberInStr.length
-                val numberValue : UInt  = numberInStr.substring(1,lastChar-1).toUInt()
+                val numberValue : UInt  = numberInStr.substring(1,lastChar).toUInt()
                 val maxU32 = UInt.MAX_VALUE
                 val remain : UInt = maxU32 - numberValue + 1u
+                println("Max U32 is:" + maxU32 + " remain:" + remain + " numberValue:" + numberValue)
+                println("------------END ======== I32 for this number:" + numberInStr + " ---------")
                 return  NumberSerialize.serializeForU32(remain.toString())
             } else {
                 return  NumberSerialize.serializeForU32(numberInStr)
@@ -87,9 +93,10 @@ class NumberSerialize {
             //is input is negative number
             if (firstChar == "-") {
                 val lastChar = numberInStr.length
-                val numberValue : UInt  = numberInStr.substring(1,lastChar-1).toUInt()
+                val numberValue : UInt  = numberInStr.substring(1,lastChar).toUInt()
                 val maxU64 = ULong.MAX_VALUE
                 val remain : ULong = maxU64 - numberValue + 1u
+                println("MaxULong is: " + maxU64 + " numberValue: " + numberValue + " number to serialize:" + remain)
                 return  NumberSerialize.serializeForU64(remain.toString())
             } else {
                 return  NumberSerialize.serializeForU64(numberInStr)
@@ -128,12 +135,13 @@ class NumberSerialize {
             var charIndex : Int = fromString.length
             while(charIndex > 0) {
                 charIndex -= 2
-                val sub2 : String = fromString.substring(charIndex,2)
+                val sub2 : String = fromString.substring(charIndex,charIndex + 2)
                 retStr += sub2
             }
             return  retStr
         }
         fun findQuotientAndRemainderOfStringNumber(fromNumberInStr:String) : QuotientNRemainder {
+            println("findQuotientAndRemainderOfStringNumber for number:" + fromNumberInStr)
             var retQNR : QuotientNRemainder = QuotientNRemainder()
             var ret : String = ""
             var strLength : UInt = fromNumberInStr.length.toUInt()
@@ -143,17 +151,22 @@ class NumberSerialize {
                 val value:UInt = fromNumberInStr.toUInt()
                 retQNR.quotient = "0"
                 retQNR.remainder = value
+                println("strlength < 2, quotient: 0, remainder" + remainder)
+                return retQNR
             } else if(strLength == 2u) {
                 val value:UInt = fromNumberInStr.toUInt()
                 remainder = value % 16u
                 val quotient : UInt = (value-remainder) / 16u
                 retQNR.quotient = quotient.toString()
                 retQNR.remainder = remainder
+                return  retQNR
+                println("Strlenth = 2, value:" + value + " remainder:" + remainder + " quotient:" + quotient)
             } else { // string length >=3
                 //take first 2 characters
                 startIndex = 2u
                 val first2 : String = fromNumberInStr.substring(0,2)
                 val value : UInt = first2.toUInt()
+                println("Number length >2, first 2 is:" + first2)
                 if(value < 16u) {
                     startIndex = 3u
                     val first3:String = fromNumberInStr.substring(0,3)
@@ -161,30 +174,40 @@ class NumberSerialize {
                     remainder = value3 % 16u
                     val quotient : UInt = (value3 - remainder) / 16u
                     ret = NumberSerialize.from10To16(quotient)
+                    println("Get value from "+ first3 + " remainder: " + remainder + " quotient:" + quotient)
                 } else {
+                    startIndex = 2u
                     remainder = value % 16u
                     val quotient : UInt = (value-remainder) / 16u
                     ret = NumberSerialize.from10To16(quotient)
+                    println("remainder for " + value + " is:" + remainder + " quotient is:"+ quotient)
                 }
                 while(startIndex < strLength) {
-                    val nextChar  = fromNumberInStr.substring(startIndex.toInt(),1)
-                    var nextValue : UInt = remainder * 10u + nextChar.toUInt()
+                    println("In while loop, Start index:" + startIndex + " strLength:" + strLength + " fromNumberInStr:" + fromNumberInStr)
+                    val nextChar  = fromNumberInStr.subSequence(startIndex.toInt(),startIndex.toInt() + 1)
+                    var nextValue : UInt = remainder * 10u + nextChar.toString().toUInt()
+                    println("NextChar:" + nextChar + " nextValue:" + nextValue)
                     if (nextValue < 16u) {
-                        if(startIndex + 2u < strLength) {
-                            ret = "0" + ret
-                            val nextChar2 = fromNumberInStr.substring(startIndex.toInt(),2)
-                            nextValue = remainder * 100u + nextChar2.toUInt()
+                        if(startIndex + 2u <= strLength) {
+                           // ret = "0" + ret
+                            ret =  ret + "0"
+                            val nextChar2 = fromNumberInStr.subSequence(startIndex.toInt(),startIndex.toInt() + 2)
+                            nextValue = remainder * 100u + nextChar2.toString().toUInt()
                             remainder = nextValue % 16u
                             val quotient2 : UInt = (nextValue - remainder) / 16u
                             val nextCharInRet : String = NumberSerialize.from10To16(quotient2)
                             ret = ret + nextCharInRet
                             startIndex += 2u
+                            println("nextValue<16, new Value:" + nextValue + " remainder:" + remainder + " quotient: "+ quotient2)
                         } else {
                             val remainChar : UInt = strLength - startIndex
-                            if(remainder == 1u) {
-                                ret = "0" + ret
-                            } else {
-                                ret = "00" + ret
+                            println("Too few character left, remainChar:" + remainChar)
+                            if(remainChar == 1u) {
+                                //ret = "0" + ret
+                                ret = ret + "0"
+                            } else if(remainChar == 2u) {
+                               // ret = "00" + ret
+                                ret = ret + "00"
                             }
                             remainder = nextValue
                             strLength = 0u
@@ -195,9 +218,11 @@ class NumberSerialize {
                         val nextCharInRet : String = NumberSerialize.from10To16(quotient2)
                         ret = ret + nextCharInRet
                         startIndex += 1u
+                        println("nextValue>16, next Value:" + nextValue + " remainder:" + remainder + " quotient: "+ quotient2)
                     }
                 }
             }
+            println("From findQuotientAndRemainderOfStringNumber function, at last Remainder is: " + remainder + " quotient is: " + ret)
             retQNR.remainder = remainder
             retQNR.quotient = ret
             return retQNR
@@ -233,7 +258,7 @@ class NumberSerialize {
             var charIndex : Int = fromString.length
             while(charIndex > 0) {
                 charIndex --
-                ret = ret + fromString.substring(charIndex,1)
+                ret = ret + fromString.substring(charIndex,charIndex + 1)
             }
             return ret
         }

@@ -133,9 +133,11 @@ internal class CLTypeSerializationTest {
         // Tuple3 CLType assertion
         // Tuple3(Bool,I32,I64) assertion
         clType.itsTypeStr = ConstValues.CLTYPE_TUPLE3
+        clType.innerCLType1 = CLType()
+        clType.innerCLType2 = CLType()
+        clType.innerCLType3 = CLType()
         clType.innerCLType1.itsTypeStr = ConstValues.CLTYPE_BOOL
         clType.innerCLType2.itsTypeStr = ConstValues.CLTYPE_I32
-        clType.innerCLType3 = CLType()
         clType.innerCLType3.itsTypeStr = ConstValues.CLTYPE_I64
         assert(CLTypeSerialization.serializeForCLType(clType) == "14000102")
         // Tuple3 (String,Key,PublicKey) assertion
@@ -143,21 +145,24 @@ internal class CLTypeSerializationTest {
         clType.innerCLType2.itsTypeStr = ConstValues.CLTYPE_KEY
         clType.innerCLType3.itsTypeStr = ConstValues.CLTYPE_PUBLIC_KEY
         assert(CLTypeSerialization.serializeForCLType(clType) == "140a0b16")
-        // Tuple3(List(Any),Map(U8,I32),Result(String))
+        // Tuple3(List(Any),Map(U8,I32),Result(String)) 14
+        //List(Any) 0e15
         clType.innerCLType1.itsTypeStr = ConstValues.CLTYPE_LIST
-        //List(Any)
         clType.innerCLType1.innerCLType1 = CLType()
         clType.innerCLType1.innerCLType1.itsTypeStr = ConstValues.CLTYPE_ANY
-        //Map(U8,I32)
+        //Map(U8,I32)110301
         clType.innerCLType2.itsTypeStr = ConstValues.CLTYPE_MAP
         clType.innerCLType2.innerCLType1 = CLType()
         clType.innerCLType2.innerCLType2 = CLType()
         clType.innerCLType2.innerCLType1.itsTypeStr = ConstValues.CLTYPE_U8
         clType.innerCLType2.innerCLType2.itsTypeStr = ConstValues.CLTYPE_I32
-        //Result(String)
+        //Result(String,U512)100a08
         clType.innerCLType3.itsTypeStr = ConstValues.CLTYPE_RESULT
         clType.innerCLType3.innerCLType1 = CLType()
         clType.innerCLType3.innerCLType1.itsTypeStr = ConstValues.CLTYPE_STRING
-        assert(CLTypeSerialization.serializeForCLType(clType) == "140e15110301100a")
+        clType.innerCLType3.innerCLType2 = CLType()
+        clType.innerCLType3.innerCLType2.itsTypeStr = ConstValues.CLTYPE_U512
+        //should be 140e15110301100a08
+        assert(CLTypeSerialization.serializeForCLType(clType) == "140e15110301100a08")
     }
 }

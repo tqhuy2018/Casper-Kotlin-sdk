@@ -11,8 +11,11 @@ class CLParseSerialization {
         fun serializeFromCLParseBool(clParse: CLParsed): String {
             if(clParse.itsValueInStr == "true") {
                 return "01"
+            } else if(clParse.itsValueInStr == "false") {
+                return "00"
+            } else {
+                return ConstValues.INVALID_VALUE
             }
-            return "00"
         }
         // Serialization for U8 parsed value
         fun serializeFromCLParseU8(clParse: CLParsed) : String {

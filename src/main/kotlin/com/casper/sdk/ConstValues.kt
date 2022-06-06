@@ -47,6 +47,7 @@ class ConstValues {
         const val CLPARSE_RESULT_ERR    = "Err"
         //NULL value
         const val  VALUE_NULL           = "NULL_VALUE"
+        const val INVALID_VALUE         = "INVALID_VALUE"
         //ExecutionResult
         const val EXECUTION_RESULT_SUCCESS = "Success"
         const val EXECUTION_RESULT_FAILURE     = "Failure"

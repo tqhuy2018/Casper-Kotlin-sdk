@@ -130,5 +130,9 @@ internal class CLParseSerializationTest {
         assert(CLParseSerialization.serializeFromCLParse(clParse) == "36000000313233343536373839313233343536373839313233343536373839313233343536373839313233343536373839313233343536373839")
         clParse.itsValueInStr = "target"
         assert(CLParseSerialization.serializeFromCLParse(clParse) == "06000000746172676574")
+        //Unit assertion
+        clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_UNIT
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "")
+        //Key assertion
     }
 }

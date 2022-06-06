@@ -118,5 +118,17 @@ internal class CLParseSerializationTest {
         clParse.itsValueInStr = "100000000"
         assert(CLParseSerialization.serializeFromCLParse(clParse) == "0400e1f505")
 
+        //String assertion
+        clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
+        clParse.itsValueInStr = "Hello, World!"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "0d00000048656c6c6f2c20576f726c6421")
+        clParse.itsValueInStr = "lWJWKdZUEudSakJzw1tn"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "140000006c574a574b645a5545756453616b4a7a7731746e")
+        clParse.itsValueInStr = "S1cXRT3E1jyFlWBAIVQ8"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "140000005331635852543345316a79466c57424149565138")
+        clParse.itsValueInStr = "123456789123456789123456789123456789123456789123456789"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "36000000313233343536373839313233343536373839313233343536373839313233343536373839313233343536373839313233343536373839")
+        clParse.itsValueInStr = "target"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "06000000746172676574")
     }
 }

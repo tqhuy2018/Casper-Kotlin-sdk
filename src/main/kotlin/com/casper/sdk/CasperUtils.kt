@@ -59,8 +59,48 @@ class CasperUtils {
                 val numHour = ttl.substring(0,ttl.length - 2).toULong()
                 ret = numHour * 3600u * 1000u
             } else if(ttl.contains("weeks")) {
-                val numHour = ttl.substring(0,ttl.length - 5).toULong()
-                ret = numHour * 3600u * 1000u
+                val num = ttl.substring(0,ttl.length - 5).toULong()
+                ret = num * 7u * 24u * 3600u * 1000u
+            } else if(ttl.contains("week")) {
+                val num = ttl.substring(0,ttl.length - 4).toULong()
+                ret = num * 7u * 24u * 3600u * 1000u
+            } else if(ttl.contains("w")) {
+                val num = ttl.substring(0,ttl.length - 1).toULong()
+                ret = num * 7u * 24u * 3600u * 1000u
+            } else if(ttl.contains("years")) {
+                val num = ttl.substring(0,ttl.length - 5).toULong()
+                ret = num * 3600u * 1000u * 24u * 365u + num * 3600u * 250u * 24u
+            } else if(ttl.contains("year")) {
+                val num = ttl.substring(0,ttl.length - 4).toULong()
+                ret = num * 3600u * 1000u * 24u * 365u + num * 3600u * 250u * 24u
+            } else if(ttl.contains("y")) {
+                val num = ttl.substring(0,ttl.length - 1).toULong()
+                ret = num * 3600u * 1000u * 24u * 365u + num * 3600u * 250u * 24u
+            } else if(ttl.contains("msec")) {
+                ret = ttl.substring(0,ttl.length - 4).toULong()
+            } else if(ttl.contains("ms")) {
+                ret = ttl.substring(0,ttl.length - 2).toULong()
+            } else if(ttl.contains("seconds")) {
+                val num = ttl.substring(0,ttl.length - 7).toULong()
+                ret = num  * 1000u
+            } else if(ttl.contains("second")) {
+                val num = ttl.substring(0,ttl.length - 6).toULong()
+                ret = num  * 1000u
+            } else if(ttl.contains("sec")) {
+                val num = ttl.substring(0,ttl.length - 3).toULong()
+                ret = num  * 1000u
+            } else if(ttl.contains("s")) { //second
+                val num = ttl.substring(0,ttl.length - 1).toULong()
+                ret = num  * 1000u
+            } else if(ttl.contains("m")) { //minute
+                val num = ttl.substring(0,ttl.length - 1).toULong()
+                ret = num  * 60u * 1000u
+            } else if(ttl.contains("h")) { //hour
+                val num = ttl.substring(0,ttl.length - 1).toULong()
+                ret = num  * 3600u * 1000u
+            } else if(ttl.contains("d")) { //day
+                val num = ttl.substring(0,ttl.length - 1).toULong()
+                ret = num  * 24u * 3600u * 1000u
             }
             return  ret
         }

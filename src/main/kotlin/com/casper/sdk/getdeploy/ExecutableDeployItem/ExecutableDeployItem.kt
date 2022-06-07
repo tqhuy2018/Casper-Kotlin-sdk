@@ -69,8 +69,8 @@ class ExecutableDeployItem {
                                 if(version == "null") {
                                         eSCBH.isVersionExisted = false
                                 } else {
-                                        val contractVersion: ContractVersion = ContractVersion.fromJsonToContractVersion(from.get("StoredVersionedContractByHash").get("version") as JsonObject)
-                                        eSCBH.version = contractVersion
+                                       // val contractVersion: ContractVersion = ContractVersion.fromJsonToContractVersion(from.get("StoredVersionedContractByHash").get("version") as JsonObject)
+                                        eSCBH.version = from.get("StoredVersionedContractByHash").get("version") as UInt
                                 }
                                 ret.itsValue.add(eSCBH)
                                 return ret
@@ -86,8 +86,8 @@ class ExecutableDeployItem {
                                 if(version == "null") {
                                         eSCBH.isVersionExisted = false
                                 } else {
-                                        val contractVersion: ContractVersion = ContractVersion.fromJsonToContractVersion(from.get("StoredVersionedContractByHash").get("version") as JsonObject)
-                                        eSCBH.version = contractVersion
+                                        //val contractVersion: ContractVersion = ContractVersion.fromJsonToContractVersion(from.get("StoredVersionedContractByHash").get("version") as JsonObject)
+                                        eSCBH.version = from.get("StoredVersionedContractByName").get("version") as UInt
                                 }
                                 ret.itsValue.add(eSCBH)
                                 return ret

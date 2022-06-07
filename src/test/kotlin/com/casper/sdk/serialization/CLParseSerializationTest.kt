@@ -187,15 +187,12 @@ internal class CLParseSerializationTest {
         assert(CLParseSerialization.serializeFromCLParse(clParse) == "")
         //List of 3 CLParse U32 number assertion
         val u321:CLParsed = CLParsed()
-        u321.itsCLType = CLType()
         u321.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
         u321.itsValueInStr = "1"
         val u322:CLParsed = CLParsed()
-        u322.itsCLType = CLType()
         u322.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
         u322.itsValueInStr = "2"
         val u323:CLParsed = CLParsed()
-        u323.itsCLType = CLType()
         u323.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
         u323.itsValueInStr = "3"
         clParse.itsArrayValue.add(u321)
@@ -207,15 +204,12 @@ internal class CLParseSerializationTest {
         clParse.itsArrayValue.removeAt(0)
         //List of 3 CLParse String assertion
         val string1:CLParsed = CLParsed()
-        string1.itsCLType = CLType()
         string1.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         string1.itsValueInStr = "Hello, World!"
         val string2:CLParsed = CLParsed()
-        string2.itsCLType = CLType()
         string2.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         string2.itsValueInStr = "Bonjour le monde"
         val string3:CLParsed = CLParsed()
-        string3.itsCLType = CLType()
         string3.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         string3.itsValueInStr = "Hola Mundo"
         clParse.itsArrayValue.add(string1)
@@ -227,15 +221,12 @@ internal class CLParseSerializationTest {
         clParse.itsArrayValue.removeAt(0)
         //List of 3 CLParse U8 assertion
         val u81:CLParsed = CLParsed()
-        u81.itsCLType = CLType()
         u81.itsCLType.itsTypeStr = ConstValues.CLTYPE_U8
         u81.itsValueInStr = "100"
         val u82:CLParsed = CLParsed()
-        u82.itsCLType = CLType()
         u82.itsCLType.itsTypeStr = ConstValues.CLTYPE_U8
         u82.itsValueInStr = "0"
         val u83:CLParsed = CLParsed()
-        u83.itsCLType = CLType()
         u83.itsCLType.itsTypeStr = ConstValues.CLTYPE_U8
         u83.itsValueInStr = "255"
         clParse.itsArrayValue.add(u81)
@@ -249,14 +240,11 @@ internal class CLParseSerializationTest {
         //base on the deploy at this address: https://testnet.cspr.live/deploy/AaB4aa0C14a37Bc9386020609aa1CabaD895c3E2E104d877B936C6Ffa2302268
         //refer to session section of the deploy, args item number 2
         val mapParse:CLParsed = CLParsed()
-        mapParse.itsCLType = CLType()
         mapParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_MAP
         val mapKey1:CLParsed = CLParsed()
-        mapKey1.itsCLType = CLType()
         mapKey1.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey1.itsValueInStr = "token_uri"
         val mapValue1:CLParsed = CLParsed()
-        mapValue1.itsCLType = CLType()
         mapValue1.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue1.itsValueInStr = "https://gateway.pinata.cloud/ipfs/QmZNz3zVNyV383fn1ZgbroxCLSxVnx7jrq4yjGyFJoZ5Vk"
         mapParse.innerParsed1 = CLParsed()
@@ -278,19 +266,15 @@ internal class CLParseSerializationTest {
 
         //Key generation
         val mapKey11:CLParsed = CLParsed()
-        mapKey11.itsCLType = CLType()
         mapKey11.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey11.itsValueInStr = "contract_package_hash"
         val mapKey12:CLParsed = CLParsed()
-        mapKey12.itsCLType = CLType()
         mapKey12.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey12.itsValueInStr = "event_type"
         val mapKey13:CLParsed = CLParsed()
-        mapKey13.itsCLType = CLType()
         mapKey13.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey13.itsValueInStr = "reserve0"
         val mapKey14:CLParsed = CLParsed()
-        mapKey14.itsCLType = CLType()
         mapKey14.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey14.itsValueInStr = "reserve1"
         clParse.innerParsed1.itsArrayValue.add(mapKey11)
@@ -300,19 +284,15 @@ internal class CLParseSerializationTest {
 
         //Value generation
         val mapValue11:CLParsed = CLParsed()
-        mapValue11.itsCLType = CLType()
         mapValue11.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue11.itsValueInStr = "d32DE152c0bBFDcAFf5b2a6070Cd729Fc0F3eaCF300a6b5e2abAB035027C49bc"
         val mapValue12:CLParsed = CLParsed()
-        mapValue12.itsCLType = CLType()
         mapValue12.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue12.itsValueInStr = "sync"
         val mapValue13:CLParsed = CLParsed()
-        mapValue13.itsCLType = CLType()
         mapValue13.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue13.itsValueInStr = "412949147973569321536747"
         val mapValue14:CLParsed = CLParsed()
-        mapValue14.itsCLType = CLType()
         mapValue14.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue14.itsValueInStr = "991717147268569848142418"
         clParse.innerParsed2.itsArrayValue.add(mapValue11)
@@ -330,27 +310,21 @@ internal class CLParseSerializationTest {
         //please refer to execution_results item 30 to see the real data
         //Key generation
         val mapKey21:CLParsed = CLParsed()
-        mapKey21.itsCLType = CLType()
         mapKey21.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey21.itsValueInStr = "contract_package_hash"
         val mapKey22:CLParsed = CLParsed()
-        mapKey22.itsCLType = CLType()
         mapKey22.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey22.itsValueInStr = "event_type"
         val mapKey23:CLParsed = CLParsed()
-        mapKey23.itsCLType = CLType()
         mapKey23.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey23.itsValueInStr = "from"
         val mapKey24:CLParsed = CLParsed()
-        mapKey24.itsCLType = CLType()
         mapKey24.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey24.itsValueInStr = "pair"
         val mapKey25:CLParsed = CLParsed()
-        mapKey25.itsCLType = CLType()
         mapKey25.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey25.itsValueInStr = "to"
         val mapKey26:CLParsed = CLParsed()
-        mapKey26.itsCLType = CLType()
         mapKey26.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapKey26.itsValueInStr = "value"
         clParse.innerParsed1.itsArrayValue.add(mapKey21)
@@ -362,27 +336,21 @@ internal class CLParseSerializationTest {
 
         //Value generation
         val mapValue21:CLParsed = CLParsed()
-        mapValue21.itsCLType = CLType()
         mapValue21.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue21.itsValueInStr = "26526c30383e5c02d684ac68d7845e576a87166926f7500bdaa303cdab52aea7"
         val mapValue22:CLParsed = CLParsed()
-        mapValue22.itsCLType = CLType()
         mapValue22.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue22.itsValueInStr = "transfer"
         val mapValue23:CLParsed = CLParsed()
-        mapValue23.itsCLType = CLType()
         mapValue23.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue23.itsValueInStr = "Key::Account(8b217a09296d5ce360847a7d20f623476157c5f022333c4e988a464035cadd80)"
         val mapValue24:CLParsed = CLParsed()
-        mapValue24.itsCLType = CLType()
         mapValue24.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue24.itsValueInStr = "Key::Hash(53a8121f219ad2c6420f007a2016ed320c519579112b81d505cb15715404b264)"
         val mapValue25:CLParsed = CLParsed()
-        mapValue25.itsCLType = CLType()
         mapValue25.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue25.itsValueInStr = "Key::Hash(26526c30383e5c02d684ac68d7845e576a87166926f7500bdaa303cdab52aea7)"
         val mapValue26:CLParsed = CLParsed()
-        mapValue26.itsCLType = CLType()
         mapValue26.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         mapValue26.itsValueInStr = "1763589511"
         clParse.innerParsed2.itsArrayValue.add(mapValue21)
@@ -409,7 +377,6 @@ internal class CLParseSerializationTest {
         //in execution_results item 16
         clParse.itsValueInStr = ConstValues.CLPARSE_RESULT_OK
         clParse.innerParsed1 = CLParsed()
-        clParse.innerParsed1.itsCLType = CLType()
         clParse.innerParsed1.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         clParse.innerParsed1.itsValueInStr = "goodresult"
         assert(CLParseSerialization.serializeFromCLParse(clParse) == "010a000000676f6f64726573756c74")
@@ -429,7 +396,6 @@ internal class CLParseSerializationTest {
         clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_TUPLE1
         //CLParse Tuple1(I32(1000)) assertion
         val clParseTuple1:CLParsed = CLParsed()
-        clParseTuple1.itsCLType = CLType()
         clParseTuple1.itsCLType.itsTypeStr = ConstValues.CLTYPE_I32
         clParseTuple1.itsValueInStr = "1000"
         clParse.innerParsed1 = clParseTuple1
@@ -437,7 +403,6 @@ internal class CLParseSerializationTest {
 
         //CLParse Tuple1(String("Hello, World!")) assertion
         val clParseTuple2:CLParsed = CLParsed()
-        clParseTuple2.itsCLType = CLType()
         clParseTuple2.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         clParseTuple2.itsValueInStr = "Hello, World!"
         clParse.innerParsed1 = clParseTuple2
@@ -449,11 +414,9 @@ internal class CLParseSerializationTest {
         //in execution_results item 31
         clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_TUPLE2
         val clParseTuple21:CLParsed = CLParsed()
-        clParseTuple21.itsCLType = CLType()
         clParseTuple21.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         clParseTuple21.itsValueInStr = "abc"
         val clParseTuple22:CLParsed = CLParsed()
-        clParseTuple22.itsCLType = CLType()
         clParseTuple22.itsCLType.itsTypeStr = ConstValues.CLTYPE_U512
         clParseTuple22.itsValueInStr = "1"
         clParse.innerParsed1 = clParseTuple21
@@ -470,22 +433,18 @@ internal class CLParseSerializationTest {
         clParse.innerParsed3 = CLParsed()
         //CLParse PublicKey generation
         val clParsePublicKey : CLParsed = CLParsed()
-        clParsePublicKey.itsCLType = CLType()
         clParsePublicKey.itsCLType.itsTypeStr = ConstValues.CLTYPE_PUBLIC_KEY
         clParsePublicKey.itsValueInStr = "01a018bf278f32fdb7b06226071ce399713ace78a28d43a346055060a660ba7aa9"
         //CLParse Option(String) generation
         val clParseOption : CLParsed = CLParsed()
-        clParseOption.itsCLType = CLType()
         clParseOption.itsCLType.itsTypeStr = ConstValues.CLTYPE_OPTION
         val clParseOptionString:CLParsed = CLParsed()
-        clParseOptionString.itsCLType = CLType()
         clParseOptionString.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
         clParseOptionString.itsValueInStr = "abc"
         clParseOption.innerParsed1 = CLParsed()
         clParseOption.innerParsed1 = clParseOptionString
         //CLParse U512 generation
         val clParseTuple3U512:CLParsed = CLParsed()
-        clParseTuple3U512.itsCLType = CLType()
         clParseTuple3U512.itsCLType.itsTypeStr = ConstValues.CLTYPE_U512
         clParseTuple3U512.itsValueInStr = "2"
         clParse.innerParsed1 = clParsePublicKey

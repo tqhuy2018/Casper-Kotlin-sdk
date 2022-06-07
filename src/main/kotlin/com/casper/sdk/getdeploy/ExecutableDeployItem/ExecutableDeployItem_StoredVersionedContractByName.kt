@@ -4,6 +4,6 @@ class ExecutableDeployItem_StoredVersionedContractByName {
     var itsName: String = ""
     var entryPoint: String = ""
     var args: RuntimeArgs = RuntimeArgs()
-    lateinit var version: ContractVersion
+    var version: UInt = 0u
     var isVersionExisted: Boolean = false
 }

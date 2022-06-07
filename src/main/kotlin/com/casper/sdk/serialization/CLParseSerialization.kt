@@ -112,10 +112,10 @@ class CLParseSerialization {
             } else if (keyStr.contains("uref-")) {
                 val array:List<String> = keyStr.split("-")
                 ret = "02" + array[1]
-                val suffix:String = array[2].substring(1,2)
+                val suffix:String = array[2].substring(1,3)
                 return  "02" + array[1] + suffix
             }
-            return "NONE_KEY"
+            return ConstValues.INVALID_VALUE
         }
         /// This function serialize  CLValue of type  URef
         /// Sample serialization for value : uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007
@@ -126,10 +126,10 @@ class CLParseSerialization {
             if (keyStr.contains("uref-")) {
                 val array:List<String> = keyStr.split("-")
                 ret = "02" + array[1]
-                val suffix:String = array[2].substring(1,2)
+                val suffix:String = array[2].substring(1,3)
                 return  "02" + array[1] + suffix
             }
-            return "NONE_URef"
+            return ConstValues.INVALID_VALUE
         }
         //This function serialize  CLValue of type  PublicKey, just return the PublicKey value
         fun serializeFromCLParsePublicKey(clParse: CLParsed): String {
@@ -165,6 +165,7 @@ class CLParseSerialization {
             }
             var ret:String = NumberSerialize.serializeForU32(totalElement.toString())
             for(i in 0..totalElement-1) {
+                val oneCLParse:CLParsed = clParse.itsArrayValue.get(i)
                 val oneSerialization:String = CLParseSerialization.serializeFromCLParse(clParse.itsArrayValue.get(i))
                 ret = ret + oneSerialization
             }

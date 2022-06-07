@@ -161,7 +161,7 @@ class ExecutableDeployItemSerializationHelper {
                     ret = ret + nameSerialization + versionSerialization + entryPointSerialization + argsSerialization
                     return  ret
                 }
-                is ExecutableDeployItem_Transfer {
+                is ExecutableDeployItem_Transfer -> {
                     ret = "05"
                     //prefix 05 for ExecutableDeployItem as type Trasfer
                     //the result = "05" + Args.Serialized

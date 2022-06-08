@@ -5,14 +5,14 @@ import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 /** Class built for storing DeployHeader information */
 class DeployHeader {
-    var account:  String = ""
-    var bodyHash:  String = ""
-    var chainName:  String = ""
+    var account: String = ""
+    var bodyHash: String = ""
+    var chainName: String = ""
     //List of DeployHash,  can be empty
-    var dependencies:  MutableList<String> = mutableListOf()
-    var gasPrice:  ULong = 0u
-    var timeStamp:  String = ""
-    var ttl:  String = ""
+    var dependencies: MutableList<String> = mutableListOf()
+    var gasPrice: ULong = 0u
+    var timeStamp: String = ""
+    var ttl: String = ""
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the DeployHeader object */
         fun fromJsonToDeployHeader(from: JsonObject): DeployHeader {

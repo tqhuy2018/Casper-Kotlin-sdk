@@ -12,7 +12,6 @@ class CasperUtils {
             val dateStr: String = timeStamp.substring(0,timeStamp.length-1)
             val dateTime = LocalDateTime.parse(dateStr)//2020-11-17T00:39:24.072Z
             val milisecond = dateTime.toEpochSecond(ZoneOffset.UTC) * 1000 + dateTime.get(ChronoField.MILLI_OF_SECOND)
-            println("Miliseconde is:" + milisecond)
             ret = milisecond.toULong()
             return ret
         }

@@ -2,6 +2,7 @@ package com.casper.sdk.crypto
 
 import com.casper.sdk.CasperUtils.Companion.toHex
 import com.casper.sdk.ConstValues
+import org.bouncycastle.crypto.AsymmetricCipherKeyPair
 import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator
 import org.bouncycastle.crypto.Signer
 import org.bouncycastle.crypto.generators.Ed25519KeyPairGenerator
@@ -9,7 +10,9 @@ import org.bouncycastle.crypto.params.Ed25519KeyGenerationParameters
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
 import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters
 import org.bouncycastle.crypto.signers.Ed25519Signer
+import org.bouncycastle.jcajce.provider.asymmetric.edec.BCEdDSAPublicKey
 import java.io.*
+import java.security.KeyPair
 import java.security.SecureRandom
 import java.util.*
 
@@ -47,6 +50,16 @@ class Ed25519Handle {
             val secureRandom = SecureRandom()
             val generator: AsymmetricCipherKeyPairGenerator = Ed25519KeyPairGenerator();
             generator.init(Ed25519KeyGenerationParameters(secureRandom))
+            val kp : AsymmetricCipherKeyPair = generator.generateKeyPair()
+            println("Private:" + kp.private.toString())
+            val signer: Signer = Ed25519Signer()
+            signer.init(true, kp.private)
+            val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";
+            signer.update(msg.toByteArray(), 0, msg.length)
+            val signature: ByteArray = signer.generateSignature()
+            val signatureHexa : String = signature.toHex()
+            println("singatureHexa:" + signatureHexa)
+            //val keyPair:KeyPair =  KeyPair( BCEdDSAPublicKey(kp.getPublic()), new BCEdDSAPrivateKey(kp.getPrivate()));
         }
         fun readPrivateKeyFromPemFile(fileName:String) : String {
            val classLoader = javaClass.classLoader

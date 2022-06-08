@@ -19,10 +19,9 @@ import java.util.*
 
 const val ed25519PrivateKeyPemFile = "KotlinEd25519PrivateKey.pem"
 const val secp256k1PrivateKeyPemFile = "KotlinSecp256k1PrivateKey.pem"
-//For this account:0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53
+//Ed25519 For this account:0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53
 //Secp256k1 : 0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635
 class Ed25519Handle {
-
     companion object {
         fun signMessage(messageToSign:String,privateKey:Ed25519PrivateKeyParameters):String {
             //return ECKeyPair()
@@ -46,12 +45,13 @@ class Ed25519Handle {
             println("singatureHexa:" + signatureHexa)
             return  ""
         }
-        fun generateKey() {
+        fun generateKey() :AsymmetricCipherKeyPair{
             val secureRandom = SecureRandom()
             val generator: AsymmetricCipherKeyPairGenerator = Ed25519KeyPairGenerator();
             generator.init(Ed25519KeyGenerationParameters(secureRandom))
             val kp : AsymmetricCipherKeyPair = generator.generateKeyPair()
-            println("Private:" + kp.private.toString())
+
+            /*println("Private:" + kp.private.toString())
             val signer: Signer = Ed25519Signer()
             signer.init(true, kp.private)
             val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";
@@ -59,7 +59,8 @@ class Ed25519Handle {
             val signature: ByteArray = signer.generateSignature()
             val signatureHexa : String = signature.toHex()
             println("singatureHexa:" + signatureHexa)
-            //val keyPair:KeyPair =  KeyPair( BCEdDSAPublicKey(kp.getPublic()), new BCEdDSAPrivateKey(kp.getPrivate()));
+            //val keyPair:KeyPair =  KeyPair( BCEdDSAPublicKey(kp.getPublic()), new BCEdDSAPrivateKey(kp.getPrivate()));*/
+            return kp
         }
         fun readPrivateKeyFromPemFile(fileName:String) : String {
            val classLoader = javaClass.classLoader

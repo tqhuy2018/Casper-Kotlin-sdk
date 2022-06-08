@@ -4,6 +4,7 @@ import com.casper.sdk.ConstValues
 import com.casper.sdk.clvalue.CLParsed
 import com.casper.sdk.clvalue.CLType
 import com.casper.sdk.clvalue.CLValue
+import com.casper.sdk.crypto.Ed25519Handle
 import com.casper.sdk.getdeploy.Approval
 import com.casper.sdk.getdeploy.Deploy
 import com.casper.sdk.getdeploy.DeployHeader
@@ -12,20 +13,31 @@ import com.casper.sdk.serialization.DeploySerializeHelper
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import java.time.LocalDateTime
 
 internal class PutDeployRPCTest {
 
     @Test
     fun  testAll() {
-        testPutDeploy()
+        testPutDeploy(isEd25519 = true)
     }
-    fun testPutDeploy() {
-        //val putDeployRPC:PutDeployRPC = PutDeployRPC()
+    fun testPutDeploy(isEd25519:Boolean) {
+        val accountEd25519:String = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
+        val accountSecp256k1:String = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635"
         val deploy:Deploy = Deploy()
         //Set up for header
         val deployHeader: DeployHeader = DeployHeader()
-        deployHeader.account = "01d9bf2148748a85c89da5aad8ee0b0fc2d105fd39d41a4c796536354f0ae2900c"
-        deployHeader.timeStamp = "2020-11-17T00:39:24.072Z"
+        if(isEd25519) {
+            deployHeader.account = accountEd25519
+        } else {
+            deployHeader.account = accountSecp256k1
+        }
+        var current = LocalDateTime.now().toString()
+        current = current.substring(0,current.length-3)
+        current = current + "Z"
+        println("Current Date and Time is: $current")
+       // deployHeader.timeStamp = "2020-11-17T00:39:24.072Z"
+        deployHeader.timeStamp = current
         deployHeader.ttl = "1h 30m"
         deployHeader.gasPrice = 1u
        // deployHeader.bodyHash = "4811966d37fe5674a8af4001884ea0d9042d1c06668da0c963769c3a01ebd08f"
@@ -138,11 +150,19 @@ internal class PutDeployRPCTest {
         // Setup approvals
         val listApprovals:MutableList<Approval> = mutableListOf()
         val oneA: Approval = Approval()
-        oneA.signer = "01d9bf2148748a85c89da5aad8ee0b0fc2d105fd39d41a4c796536354f0ae2900c"
-        oneA.signature = "012dbf03817a51794a8e19e0724884075e6d1fbec326b766ecfa6658b41f81290da85e23b24e88b1c8d9761185c961daee1adab0649912a6477bcd2e69bd91bd08"
+        if(isEd25519) {
+            oneA.signer = accountEd25519
+            val privateKey: = Ed25519Handle.readPrivateKeyFromPemFile()
+            val signature:String = Ed25519Handle.signMessage(oneA.signer,)
+            //oneA.signature = "012dbf03817a51794a8e19e0724884075e6d1fbec326b766ecfa6658b41f81290da85e23b24e88b1c8d9761185c961daee1adab0649912a6477bcd2e69bd91bd08"
+        } else {
+            oneA.signer = accountSecp256k1
+            //oneA.signature = "012dbf03817a51794a8e19e0724884075e6d1fbec326b766ecfa6658b41f81290da85e23b24e88b1c8d9761185c961daee1adab0649912a6477bcd2e69bd91bd08"
+        }
+        //oneA.signer = "01d9bf2148748a85c89da5aad8ee0b0fc2d105fd39d41a4c796536354f0ae2900c"
         listApprovals.add(oneA)
         deploy.approvals = listApprovals
-        deploy.hash = "01da3c604f71e0e7df83ff1ab4ef15bb04de64ca02e3d2b78de6950e8b5ee187"
+       // deploy.hash = "01da3c604f71e0e7df83ff1ab4ef15bb04de64ca02e3d2b78de6950e8b5ee187"
         val deploySerialization:String = DeploySerializeHelper.serializeForDeploy(deploy)
         PutDeployRPC.putDeploy(deploy)
     }

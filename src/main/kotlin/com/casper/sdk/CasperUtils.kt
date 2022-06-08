@@ -1,11 +1,59 @@
 package com.casper.sdk
 
+import org.bouncycastle.jcajce.provider.digest.Blake2b
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.temporal.ChronoField
 
 class CasperUtils {
     companion object {
+        fun ByteArray.toHex(): String = joinToString(separator = "") { eachByte -> "%02x".format(eachByte) }
+        //This function get the blake2b256 for the input string
+        //input string is somehow in this format:
+        //00000000000100000006000000616d6f756e74050000000400ca9a3b08050400000006000000616d6f756e740500000004005ed0b2080600000074617267657421000000015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a16020000006964090000000100000000000000000d05070000007370656e6465722100000001dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b0b
+        fun getBlake2bFromStr(from:String) : String {
+            val hexaBytes:List<UByte> = CasperUtils.fromStringToHexaArray(from)
+            val totalBytes:Int = hexaBytes.size-1
+            var hexaByteArray:ByteArray = ByteArray(totalBytes + 1)
+            for(i in 0..totalBytes) {
+                hexaByteArray.set(i,hexaBytes.get(i).toByte())
+            }
+            val blake2b: Blake2b.Blake2b256 = Blake2b.Blake2b256()
+            val hash = blake2b.digest(hexaByteArray)
+            val hexStr:String = hash.toHex()
+            return hexStr
+        }
+        //This function turn string in form of hexa format to bytes array
+        fun fromStringToHexaArray(from:String):List<UByte> {
+            val ret:MutableList<UByte> = mutableListOf()
+            val strLength:Int = from.length.toInt() / 2 - 1
+            for(i in 0 .. strLength) {
+                val onePair:String = from.substring(i * 2, i* 2 + 2)
+                val firstE:UByte = fromHexaToDecimal(onePair.substring(0,1))
+                val secondE:UByte = fromHexaToDecimal(onePair.substring(1,2))
+                val oneUInt: UInt = firstE * 16u + secondE
+                val oneUByte = oneUInt.toUByte()
+                ret.add(oneUByte)
+            }
+            return ret
+        }
+        fun fromHexaToDecimal(from:String) : UByte {
+            if (from == "a") {
+                return 10u
+            } else if(from == "b") {
+                return 11u
+            } else if(from == "c") {
+                return 12u
+            } else if(from == "d") {
+                return 13u
+            } else if(from == "e") {
+                return 14u
+            } else if(from == "f") {
+                return 15u
+            } else {
+                return from.toUByte()
+            }
+        }
         //This function change timestamp in format of "2020-11-17T00:39:24.072Z" to millisecondsSince1970 U64 number in String format like this "1605573564072"
         fun fromTimeStampToU64Str(timeStamp:String) : ULong {
             var ret:ULong = 0u

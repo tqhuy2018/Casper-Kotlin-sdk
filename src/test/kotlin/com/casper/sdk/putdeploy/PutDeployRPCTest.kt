@@ -20,7 +20,7 @@ internal class PutDeployRPCTest {
         testPutDeploy()
     }
     fun testPutDeploy() {
-        val putDeployRPC:PutDeployRPC = PutDeployRPC()
+        //val putDeployRPC:PutDeployRPC = PutDeployRPC()
         val deploy:Deploy = Deploy()
         //Set up for header
         val deployHeader: DeployHeader = DeployHeader()
@@ -133,6 +133,8 @@ internal class PutDeployRPCTest {
         ediSession.args = raSession
         session.itsValue.add(ediSession)
         deploy.session = session
+        val deployBodyHash:String = PutDeployRPC.getBodyHash(deploy)
+        deployHeader.bodyHash = deployBodyHash
         // Setup approvals
         val listApprovals:MutableList<Approval> = mutableListOf()
         val oneA: Approval = Approval()
@@ -142,6 +144,6 @@ internal class PutDeployRPCTest {
         deploy.approvals = listApprovals
         deploy.hash = "01da3c604f71e0e7df83ff1ab4ef15bb04de64ca02e3d2b78de6950e8b5ee187"
         val deploySerialization:String = DeploySerializeHelper.serializeForDeploy(deploy)
-        putDeployRPC.putDeploy(deploy)
+        PutDeployRPC.putDeploy(deploy)
     }
 }

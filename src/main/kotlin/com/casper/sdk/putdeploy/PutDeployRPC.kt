@@ -19,9 +19,12 @@ class PutDeployRPC {
         return  ret
     }
     fun  getBodyHash(deploy:Deploy):String {
-        var bodySerializedStr:String = ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.payment)
-        bodySerializedStr = bodySerializedStr + ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.session)
-        val deployHash:String = CasperUtils.getBlake2bFromStr(bodySerializedStr)
+        val paymentSerialization:String = ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.payment)
+        val sessionSerialization =  ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.session)
+        println("payment:" + paymentSerialization)
+        println("session:" + sessionSerialization)
+        println("full body serialize:" + paymentSerialization + sessionSerialization)
+        val deployHash:String = CasperUtils.getBlake2bFromStr(paymentSerialization + sessionSerialization)
         return deployHash
     }
 

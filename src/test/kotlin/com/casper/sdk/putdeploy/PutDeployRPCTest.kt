@@ -34,10 +34,9 @@ internal class PutDeployRPCTest {
         deploy.header = deployHeader
         // Setup for payment
         val payment: ExecutableDeployItem = ExecutableDeployItem()
-        payment.itsType = ExecutableDeployItem.STORED_CONTRACT_BY_NAME
-        val edi_mb: ExecutableDeployItem_StoredContractByName = ExecutableDeployItem_StoredContractByName()
-        edi_mb.itsName = "casper-example"
-        edi_mb.entryPoint = "example-entry-point"
+        payment.itsType = ExecutableDeployItem.MODULE_BYTES
+        val edi_mb: ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
+        edi_mb.module_bytes = ""
         //set up RuntimeArgs with 1 element of NamedArg only
         //setup 1st NamedArgs
         val oneNA: NamedArg = NamedArg()
@@ -93,16 +92,23 @@ internal class PutDeployRPCTest {
         //setup 3rd NamedArgs - Option(U64(0))
         val oneNASession3: NamedArg = NamedArg()
         oneNASession3.itsName = "id"
+        //clValue - Option(U64(0)) assignment
         val oneCLValueSession3: CLValue = CLValue()
+        //CLType assignment
         val oneCLTypeSession3: CLType = CLType()
         oneCLTypeSession3.itsTypeStr = ConstValues.CLTYPE_OPTION
         oneCLTypeSession3.innerCLType1 = CLType()
         oneCLTypeSession3.innerCLType1.itsTypeStr = ConstValues.CLTYPE_U64
         oneCLValueSession3.itsCLType = oneCLTypeSession3
+        //bytes assignment
         oneCLValueSession3.itsBytes = "010000000000000000"
+        //CLParse assignment
         val oneCLParseSession3: CLParsed = CLParsed()
-        oneCLParseSession3.itsCLType = oneCLTypeSession3
-        oneCLParseSession3.itsValueInStr = "0"
+        oneCLParseSession3.itsCLType.itsTypeStr = ConstValues.CLTYPE_OPTION
+        oneCLParseSession3.innerParsed1 = CLParsed()
+        oneCLParseSession3.innerParsed1.itsCLType.itsTypeStr = ConstValues.CLTYPE_U64
+        oneCLParseSession3.innerParsed1.itsValueInStr = "0"
+        oneCLValueSession3.itsParse = CLParsed()
         oneCLValueSession3.itsParse = oneCLParseSession3
         oneNASession3.clValue = oneCLValueSession3
         // 4rd namedArg of type Key
@@ -118,7 +124,6 @@ internal class PutDeployRPCTest {
         oneCLParseSession4.itsValueInStr = "hash-dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b"
         oneCLValueSession4.itsParse = oneCLParseSession4
         oneNASession4.clValue = oneCLValueSession4
-
 
         val raSession: RuntimeArgs = RuntimeArgs()
         raSession.listNamedArg.add(oneNASession1)

@@ -6,6 +6,7 @@ import org.bouncycastle.crypto.AsymmetricCipherKeyPair
 import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator
 import org.bouncycastle.crypto.Signer
 import org.bouncycastle.crypto.generators.Ed25519KeyPairGenerator
+import org.bouncycastle.crypto.params.AsymmetricKeyParameter
 import org.bouncycastle.crypto.params.Ed25519KeyGenerationParameters
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
 import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters
@@ -51,6 +52,7 @@ class Ed25519Handle {
             generator.init(Ed25519KeyGenerationParameters(secureRandom))
             val kp : AsymmetricCipherKeyPair = generator.generateKeyPair()
 
+
             /*println("Private:" + kp.private.toString())
             val signer: Signer = Ed25519Signer()
             signer.init(true, kp.private)
@@ -62,22 +64,25 @@ class Ed25519Handle {
             //val keyPair:KeyPair =  KeyPair( BCEdDSAPublicKey(kp.getPublic()), new BCEdDSAPrivateKey(kp.getPrivate()));*/
             return kp
         }
-        fun readPrivateKeyFromPemFile(fileName:String) : String {
+        @Throws(IOException::class)
+        fun readPrivateKeyFromPemFile(fileName:String) : AsymmetricKeyParameter {
            val classLoader = javaClass.classLoader
            val inputStream = classLoader.getResourceAsStream(fileName)
            try {
                val data: String? = readFromInputStream(inputStream)
                if(data.isNullOrEmpty()) {
-                   return  ConstValues.INVALID_VALUE
+                   throw IOException()
                } else {
-                   return data
+                   val privateKeyBytes: ByteArray = Base64.getDecoder().decode(data)
+                   val privateKey = Ed25519PrivateKeyParameters(privateKeyBytes, 0)
+                   return privateKey
                }
            } catch (e:java.lang.Exception){
                println("Error catch")
            } finally {
                println("Error catch finally")
            }
-            return ConstValues.INVALID_VALUE
+            throw IOException()
         }
         fun readFileLineByLineUsingForEachLine(fileName: String)
                 = File(fileName).forEachLine { println(it) }
@@ -87,7 +92,7 @@ class Ed25519Handle {
             BufferedReader(InputStreamReader(inputStream)).use { br ->
                 var line: String?
                 while (br.readLine().also { line = it } != null) {
-                    resultStringBuilder.append(line).append("\n")
+                    resultStringBuilder.append(line)//.append("\n")
                     println(line)
                 }
             }

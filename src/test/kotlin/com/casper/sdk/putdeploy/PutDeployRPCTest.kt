@@ -152,8 +152,8 @@ internal class PutDeployRPCTest {
         val oneA: Approval = Approval()
         if(isEd25519) {
             oneA.signer = accountEd25519
-            val privateKey: = Ed25519Handle.readPrivateKeyFromPemFile()
-            val signature:String = Ed25519Handle.signMessage(oneA.signer,)
+            //val privateKey: String = Ed25519Handle.readPrivateKeyFromPemFile()
+           // val signature:String = Ed25519Handle.signMessage(oneA.signer,)
             //oneA.signature = "012dbf03817a51794a8e19e0724884075e6d1fbec326b766ecfa6658b41f81290da85e23b24e88b1c8d9761185c961daee1adab0649912a6477bcd2e69bd91bd08"
         } else {
             oneA.signer = accountSecp256k1

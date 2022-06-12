@@ -48,6 +48,7 @@ class ConstValues {
         //NULL value
         const val  VALUE_NULL           = "NULL_VALUE"
         const val INVALID_VALUE         = "INVALID_VALUE"
+        const val NULL_VALUE_JSON       = "NULL"
         //ExecutionResult
         const val EXECUTION_RESULT_SUCCESS = "Success"
         const val EXECUTION_RESULT_FAILURE     = "Failure"
@@ -91,5 +92,8 @@ class ConstValues {
         const val DI_CONTRACT_NAMED_KEY                 = "ContractNamedKey"
         const val DI_UREF                               = "URef"
         const val DI_DICTIONARY                         = "Dictionary"
+        //For CLParse to Json, used for account_put_deploy RPC call
+        val PARSED_FIXED_STRING: String = "!!!!!___PARSED___!!!!!"
+
     }
 }

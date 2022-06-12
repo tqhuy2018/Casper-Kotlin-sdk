@@ -19,15 +19,18 @@ class PutDeployRPC {
             println("Deploy hash is:" + deployHash)
             return ret
         }
-
+        fun fromDeployToJsonString(deploy: Deploy):String {
+            val headerString:String = "\"header\": {\"account\": \"" + deploy.header.account + "\",\"timestamp\": \"" + deploy.header.timeStamp + "\",\"ttl\":"+deploy.header.ttl+"\",\"gas_price\":"+deploy.header.gasPrice+",\"body_hash\"" + deploy.header.bodyHash + "\",\"dependencies\": [],\"chain_name\": \"" + deploy.header.chainName + "\"}"
+            val paymentJsonStr:String = "\"payment\": " + ExecutableDeployItemHelper.toJsonString(deploy.payment)
+        }
         fun getBodyHash(deploy: Deploy): String {
             val paymentSerialization: String =
                 ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.payment)
             val sessionSerialization =
                 ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.session)
-            println("payment:" + paymentSerialization)
-            println("session:" + sessionSerialization)
-            println("full body serialize:" + paymentSerialization + sessionSerialization)
+            //println("payment:" + paymentSerialization)
+            //println("session:" + sessionSerialization)
+            //println("full body serialize:" + paymentSerialization + sessionSerialization)
             val deployHash: String = CasperUtils.getBlake2bFromStr(paymentSerialization + sessionSerialization)
             return deployHash
         }

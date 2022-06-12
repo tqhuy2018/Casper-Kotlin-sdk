@@ -32,10 +32,10 @@ class Ed25519Handle {
             //NRWHCg3aA9YAGtFgzmGJOb+HnTbGp8MUjmBQGSVfgUK
             println("Generate key called")
             // val privateKeyBytes: ByteArray = Base64.getUrlDecoder().decode("nWGxne_9WmC6hEr0kuwsxERJxWl7MmkZcDusAxyuf2A")
-            val privateKeyBytes: ByteArray = Base64.getDecoder().decode("1FYcKDdoD1gAa0WDOYYk5v4edNsanwxSOYFAZJV+BQo=")
-            val publicKeyBytes: ByteArray = Base64.getUrlDecoder().decode("11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo")
-            val privateKey = Ed25519PrivateKeyParameters(privateKeyBytes, 0)
-            val publicKey = Ed25519PublicKeyParameters(publicKeyBytes, 0)
+            //val privateKeyBytes: ByteArray = Base64.getDecoder().decode("1FYcKDdoD1gAa0WDOYYk5v4edNsanwxSOYFAZJV+BQo=")
+          //  val publicKeyBytes: ByteArray = Base64.getUrlDecoder().decode("11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo")
+            //val privateKey = Ed25519PrivateKeyParameters(privateKeyBytes, 0)
+           // val publicKey = Ed25519PublicKeyParameters(publicKeyBytes, 0)
             println("privateKey:" + privateKey.toString())
             val signer: Signer = Ed25519Signer()
             signer.init(true, privateKey)
@@ -44,15 +44,13 @@ class Ed25519Handle {
             val signature: ByteArray = signer.generateSignature()
             val signatureHexa : String = signature.toHex()
             println("singatureHexa:" + signatureHexa)
-            return  ""
+            return  signatureHexa
         }
         fun generateKey() :AsymmetricCipherKeyPair{
             val secureRandom = SecureRandom()
             val generator: AsymmetricCipherKeyPairGenerator = Ed25519KeyPairGenerator();
             generator.init(Ed25519KeyGenerationParameters(secureRandom))
             val kp : AsymmetricCipherKeyPair = generator.generateKeyPair()
-
-
             /*println("Private:" + kp.private.toString())
             val signer: Signer = Ed25519Signer()
             signer.init(true, kp.private)
@@ -65,16 +63,43 @@ class Ed25519Handle {
             return kp
         }
         @Throws(IOException::class)
-        fun readPrivateKeyFromPemFile(fileName:String) : AsymmetricKeyParameter {
+        fun readPrivateKeyFromPemFile(fileName:String) : Ed25519PrivateKeyParameters {
            val classLoader = javaClass.classLoader
            val inputStream = classLoader.getResourceAsStream(fileName)
            try {
-               val data: String? = readFromInputStream(inputStream)
+               var data: String? = readFromInputStream(inputStream)
+              // println("Key in String is:" + data)
+
                if(data.isNullOrEmpty()) {
                    throw IOException()
                } else {
-                   val privateKeyBytes: ByteArray = Base64.getDecoder().decode(data)
-                   val privateKey = Ed25519PrivateKeyParameters(privateKeyBytes, 0)
+                   data = data.replace("-----BEGIN PRIVATE KEY-----","")
+                   data = data.replace("-----END PRIVATE KEY-----","")
+                 //  println("data is:"+ data)
+                   val base64Bytes = Base64.getDecoder().decode(data)
+                  // println("Base64Bytes:" + base64Bytes.toUByteArray())
+                 //  println("Base64 total bytes:" + base64Bytes.toUByteArray().size)
+                   val base64BytesReal = base64Bytes.copyOfRange(16,base64Bytes.size)
+                  // println("base64BytesReal:" + base64BytesReal.toUByteArray())
+                   var privateKeyBytes: ByteArray = ByteArray(48)
+                   var counter:Int = 0
+                   for (bytes in base64BytesReal.toUByteArray()) {
+                     //  println("UByte is:" + bytes + " byte:" + bytes.toByte())
+                       privateKeyBytes.set(counter,bytes.toByte())
+                   }
+                   //val base64Short = Base64.getEncoder().encode(base64BytesReal.toUByteArray())
+                  // val privateKey = Ed25519PrivateKeyParameters(base64BytesReal.toUByteArray(), 0)
+                   //println("base65Short String:" + base64Short.)
+                   //val privateKeyBytes: ByteArray = Base64.getDecoder().decode(data)
+                   val privateKey = Ed25519PrivateKeyParameters(privateKeyBytes, 2)
+                  /* println("Private key generate successfully, privateKey:" + privateKey.toString())
+                   val signer: Signer = Ed25519Signer()
+                   signer.init(true, privateKey)
+                   val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";
+                   signer.update(msg.toByteArray(), 0, msg.length)
+                   val signature: ByteArray = signer.generateSignature()
+                   val signatureHexa : String = signature.toHex()
+                   println("singatureHexa:" + signatureHexa)*/
                    return privateKey
                }
            } catch (e:java.lang.Exception){

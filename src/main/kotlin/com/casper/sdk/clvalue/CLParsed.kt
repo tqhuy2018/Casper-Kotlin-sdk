@@ -237,11 +237,11 @@ class CLParsed {
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_KEY) {
                 val elements:List<String> = clParse.itsValueInStr.split("-")
                 if(elements.get(0) == "account") {
-                    return "{\"Account\":\"" + clParse.itsValueInStr + "\""
+                    return "{\"Account\":\"" + clParse.itsValueInStr + "\"}"
                 } else if(elements.get(0) == "hash") {
-                    return "{\"Hash\":\"" + clParse.itsValueInStr + "\""
+                    return "{\"Hash\":\"" + clParse.itsValueInStr + "\"}"
                 } else if(elements.get(0) == "uref") {
-                    return "{\"URef\":\"" + clParse.itsValueInStr + "\""
+                    return "{\"URef\":\"" + clParse.itsValueInStr + "\"}"
                 } else {
                     return ConstValues.INVALID_VALUE
                 }

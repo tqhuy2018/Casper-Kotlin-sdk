@@ -1,6 +1,9 @@
 package com.casper.sdk.getdeploy
 
+import com.casper.sdk.CasperUtils
 import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem
+import com.casper.sdk.serialization.DeploySerializeHelper
+import com.casper.sdk.serialization.ExecutableDeployItemSerializationHelper
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 /** Class built for storing Deploy information */
@@ -22,6 +25,19 @@ class Deploy{
             }
          }
          return ret
+      }
+      fun getDeployHash(deploy: Deploy) : String {
+         val deployHeaderSerialization:String = DeploySerializeHelper.serializeForHeader(deploy.header)
+         val deployHash:String = CasperUtils.getBlake2bFromStr(deployHeaderSerialization)
+         return deployHash
+      }
+      fun getBodyHash(deploy: Deploy): String {
+         val paymentSerialization: String =
+            ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.payment)
+         val sessionSerialization =
+            ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.session)
+         val deployBodyHash: String = CasperUtils.getBlake2bFromStr(paymentSerialization + sessionSerialization)
+         return deployBodyHash
       }
    }
 }

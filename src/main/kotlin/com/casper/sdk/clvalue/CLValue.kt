@@ -30,12 +30,12 @@ class CLValue {
             var clTypeStr : String = CLType.toJsonString(clValue.itsCLType)
             var clParsedStr: String = CLParsed.toJsonString(clValue.itsParse)
             if (clParsedStr.contains(ConstValues.PARSED_FIXED_STRING)) {
-                clParsedStr = clParsedStr.replace(ConstValues.PARSED_FIXED_STRING,"")
+                clParsedStr = clParsedStr.replace(ConstValues.PARSED_FIXED_STRING + ":","")
             }
             var bytesStr:String = CLParseSerialization.serializeFromCLParse(clValue.itsParse)
             bytesStr = "\"bytes\": \"" + bytesStr + "\""
             clTypeStr = "\"cl_type\":" + clTypeStr
-            clParsedStr = "\"parsed:\"" + clParsedStr
+            clParsedStr = "\"parsed\":" + clParsedStr
             ret = "{" + bytesStr + "," + clTypeStr + "," + clParsedStr + "}"
             return ret
         }

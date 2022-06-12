@@ -37,6 +37,7 @@ internal class PutDeployRPCTest {
         current = current.substring(0,current.length-3)
         current = current + "Z"
         println("Current Date and Time is: $current")
+        current = "2022-06-12T18:50:49.631Z"
        // deployHeader.timeStamp = "2020-11-17T00:39:24.072Z"
         deployHeader.timeStamp = current
         deployHeader.ttl = "1h 30m"
@@ -146,16 +147,18 @@ internal class PutDeployRPCTest {
         ediSession.args = raSession
         session.itsValue.add(ediSession)
         deploy.session = session
-        val deployBodyHash:String = PutDeployRPC.getBodyHash(deploy)
+        val deployBodyHash:String = Deploy.getBodyHash(deploy)
         println("Body hash is: " + deployBodyHash)
         deployHeader.bodyHash = deployBodyHash
+        deploy.hash = Deploy.getDeployHash(deploy)
+        println("Deploy hash is:" + deploy.hash)
         // Setup approvals
         val listApprovals:MutableList<Approval> = mutableListOf()
         val oneA: Approval = Approval()
         if(isEd25519) {
             oneA.signer = accountEd25519
             val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile("KotlinEd25519PrivateKey.pem")
-            var signature:String = Ed25519Handle.signMessage(oneA.signer,privateKey)
+            var signature:String = Ed25519Handle.signMessage(deploy.hash,privateKey)
             signature = "01" + signature
             println("Signature ed25519 is:" + signature)
             oneA.signature = signature//"012dbf03817a51794a8e19e0724884075e6d1fbec326b766ecfa6658b41f81290da85e23b24e88b1c8d9761185c961daee1adab0649912a6477bcd2e69bd91bd08"

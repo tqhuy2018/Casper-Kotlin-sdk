@@ -54,7 +54,13 @@ class ExecutableDeployItemHelper {
                    val retStr : String = "{\"StoredVersionedContractByName\":" + innerJson + "}"
                    return retStr
                }
-
+           } else  if (executableDeployItem.itsType == ExecutableDeployItem.TRANSFER) {
+               var transfer: ExecutableDeployItem_Transfer = ExecutableDeployItem_Transfer()
+               transfer = executableDeployItem.itsValue.get(0) as ExecutableDeployItem_Transfer
+               val argsString = ExecutableDeployItemHelper.argsToJsonString(transfer.args)
+               val innerJson: String = "{" + argsString + "}"
+               val retStr : String = "{\"Transfer\": " + innerJson + "}"
+               return retStr
            }
            return ConstValues.INVALID_VALUE
         }
@@ -70,6 +76,7 @@ class ExecutableDeployItemHelper {
                 } else {
                     ret = ret + argStr
                 }
+                counter ++
             }
             ret = "\"args\": [" + ret + "]"
             return ret

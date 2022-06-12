@@ -36,11 +36,12 @@ class Ed25519Handle {
           //  val publicKeyBytes: ByteArray = Base64.getUrlDecoder().decode("11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo")
             //val privateKey = Ed25519PrivateKeyParameters(privateKeyBytes, 0)
            // val publicKey = Ed25519PublicKeyParameters(publicKeyBytes, 0)
-            println("privateKey:" + privateKey.toString())
+            println("privateKey:" + privateKey.toString() + " message to sign:" + messageToSign)
             val signer: Signer = Ed25519Signer()
             signer.init(true, privateKey)
-            val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";
-            signer.update(msg.toByteArray(), 0, msg.length)
+            //val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";
+            //signer.update(messageToSign.toByteArray(), 0, messageToSign.length)
+            signer.update(messageToSign.toByteArray(), 0, messageToSign.length)
             val signature: ByteArray = signer.generateSignature()
             val signatureHexa : String = signature.toHex()
             println("singatureHexa:" + signatureHexa)

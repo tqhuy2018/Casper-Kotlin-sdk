@@ -41,6 +41,7 @@ class Ed25519Handle {
             signer.init(true, privateKey)
             //val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";
             //signer.update(messageToSign.toByteArray(), 0, messageToSign.length)
+            println("Message in byte array:" + messageToSign.toByteArray().toString())
             signer.update(messageToSign.toByteArray(), 0, messageToSign.length)
             val signature: ByteArray = signer.generateSignature()
             val signatureHexa : String = signature.toHex()

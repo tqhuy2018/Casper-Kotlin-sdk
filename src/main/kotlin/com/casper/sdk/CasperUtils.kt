@@ -1,6 +1,11 @@
 package com.casper.sdk
 
+import com.casper.sdk.crypto.Ed25519Handle
 import org.bouncycastle.jcajce.provider.digest.Blake2b
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.temporal.ChronoField
@@ -36,6 +41,35 @@ class CasperUtils {
                 ret.add(oneUByte)
             }
             return ret
+        }
+        fun fromStringToHexaBytes(from:String): ByteArray {
+            var ret:ByteArray = ByteArray(32)
+            val strLength:Int = from.length/2-1
+            for(i in 0..strLength) {
+                val twoChar:String = from.substring(i*2,i*2 + 2)
+                val firstChar:String = twoChar.substring(0,1)
+                val secondChar:String = twoChar.substring(1,2)
+                val hexaValue:Int = CasperUtils.from16to10(firstChar) * 16 + CasperUtils.from16to10(secondChar)
+                ret.set(i,hexaValue.toByte())
+            }
+            return ret
+        }
+        fun from16to10(from:String) : Int {
+            if(from == "a") {
+                return 10
+            } else if(from == "b"){
+                return 11
+            } else if(from == "c"){
+                return 12
+            } else if(from == "d"){
+                return 13
+            } else if(from == "e"){
+                return 14
+            } else if(from == "f"){
+                return 15
+            } else {
+                return from.toInt()
+            }
         }
         fun fromHexaToDecimal(from:String) : UByte {
             if (from == "a") {
@@ -150,6 +184,18 @@ class CasperUtils {
                 ret = num  * 24u * 3600u * 1000u
             }
             return  ret
+        }
+        @Throws(IOException::class)
+        fun readFromInputStream(inputStream: InputStream): String? {
+            val resultStringBuilder = StringBuilder()
+            BufferedReader(InputStreamReader(inputStream)).use { br ->
+                var line: String?
+                while (br.readLine().also { line = it } != null) {
+                    resultStringBuilder.append(line)//.append("\n")
+                    println(line)
+                }
+            }
+            return resultStringBuilder.toString()
         }
     }
 }

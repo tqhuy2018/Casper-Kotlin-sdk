@@ -37,13 +37,13 @@ internal class PutDeployRPCTest {
         current = current.substring(0,current.length-3)
         current = current + "Z"
         println("Current Date and Time is: $current")
-        current = "2022-06-12T18:50:49.631Z"
+        //current = "2022-06-14T09:58:16.223Z"
        // deployHeader.timeStamp = "2020-11-17T00:39:24.072Z"
         deployHeader.timeStamp = current
         deployHeader.ttl = "1h 30m"
         deployHeader.gasPrice = 1u
        // deployHeader.bodyHash = "4811966d37fe5674a8af4001884ea0d9042d1c06668da0c963769c3a01ebd08f"
-       // deployHeader.dependencies.add("0101010101010101010101010101010101010101010101010101010101010101")
+        //deployHeader.dependencies.add("0101010101010101010101010101010101010101010101010101010101010101")
         deployHeader.chainName = "casper-test"
         deploy.header = deployHeader
         // Setup for payment
@@ -161,16 +161,12 @@ internal class PutDeployRPCTest {
             var signature:String = Ed25519Handle.signMessage(deploy.hash,privateKey)
             signature = "01" + signature
             println("Signature ed25519 is:" + signature)
-            oneA.signature = signature//"012dbf03817a51794a8e19e0724884075e6d1fbec326b766ecfa6658b41f81290da85e23b24e88b1c8d9761185c961daee1adab0649912a6477bcd2e69bd91bd08"
+            oneA.signature = signature
         } else {
             oneA.signer = accountSecp256k1
-            //oneA.signature = "012dbf03817a51794a8e19e0724884075e6d1fbec326b766ecfa6658b41f81290da85e23b24e88b1c8d9761185c961daee1adab0649912a6477bcd2e69bd91bd08"
         }
-        //oneA.signer = "01d9bf2148748a85c89da5aad8ee0b0fc2d105fd39d41a4c796536354f0ae2900c"
         listApprovals.add(oneA)
         deploy.approvals = listApprovals
-       // deploy.hash = "01da3c604f71e0e7df83ff1ab4ef15bb04de64ca02e3d2b78de6950e8b5ee187"
-       // val deploySerialization:String = DeploySerializeHelper.serializeForDeploy(deploy)
         PutDeployRPC.putDeploy(deploy)
     }
 }

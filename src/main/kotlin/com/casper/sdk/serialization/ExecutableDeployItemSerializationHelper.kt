@@ -45,7 +45,6 @@ class ExecutableDeployItemSerializationHelper {
                 val clTypeSerialization: String = CLTypeSerialization.serializeForCLType(clValue.itsCLType)
                 val clValueSerialization:String = parseLengthSerialization + parsedSerialization + clTypeSerialization
                 val oneNASerialization: String =  nameSerialization + clValueSerialization
-                println("i = " + i + " oneNASerialization:" + oneNASerialization)
                 ret = ret + oneNASerialization
             }
             return  ret

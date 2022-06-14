@@ -257,7 +257,6 @@ class CLParseSerialization {
             return "NONE_PRIMITIVE"
         }
         fun serializeFromCLParseCompound(clParse: CLParsed): String {
-            println("clParse.itsCLType.itsTypeStr:" + clParse.itsCLType.itsTypeStr)
             if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_OPTION) {
                 return CLParseSerialization.serializeFromCLParseOption(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST) {

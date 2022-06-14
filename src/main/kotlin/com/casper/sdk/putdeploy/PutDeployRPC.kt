@@ -1,27 +1,39 @@
 package com.casper.sdk.putdeploy
 
-
-import com.casper.sdk.CasperUtils
+import com.casper.sdk.ConstValues
+import com.casper.sdk.getauction.GetAuctionInfoResult
 import com.casper.sdk.getdeploy.Deploy
-import com.casper.sdk.getdeploy.DeployHeader
-import com.casper.sdk.serialization.DeploySerializeHelper
-import com.casper.sdk.serialization.ExecutableDeployItemSerializationHelper
-import org.bouncycastle.crypto.digests.Blake2bDigest
-import org.bouncycastle.jcajce.provider.digest.Blake2b.Blake2b256
-import org.bouncycastle.util.encoders.Hex
-import java.io.*
+import net.jemzart.jsonkraken.get
+import net.jemzart.jsonkraken.toJson
+import net.jemzart.jsonkraken.values.JsonObject
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 
 
 class PutDeployRPC {
     companion object {
-        fun putDeploy(deploy: Deploy): Boolean {
-            var ret: Boolean = true
-            //val serialization:String = "00000000000100000006000000616d6f756e74050000000400ca9a3b08050400000006000000616d6f756e740500000004005ed0b2080600000074617267657421000000015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a16020000006964090000000100000000000000000d05070000007370656e6465722100000001dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b0b"
-            val deployBodyHash: String = Deploy.getBodyHash(deploy)//CasperUtils.getBlake2bFromStr(serialization)
-            println("Deploy hash is:" + deployBodyHash)
+        var methodURL: String = ConstValues.TESTNET_URL
+        @Throws(IllegalArgumentException:: class)
+        fun putDeploy(deploy: Deploy): PutDeployResult {
             val jsonStr:String = PutDeployRPC.fromDeployToJsonString(deploy)
-            println("Json str is:" + jsonStr)
-            return ret
+            val client = HttpClient.newBuilder().build()
+            val request = HttpRequest.newBuilder()
+                .uri(URI.create(this.methodURL))
+                .POST((HttpRequest.BodyPublishers.ofString(jsonStr)))
+                .header("Content-Type",  "application/json")
+                .build()
+            val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
+            val json =response.body().toJson()
+            //Check for error
+            if(json.get("error") != null) {
+                throw IllegalArgumentException("Error get auction")
+            } else {
+               val putDeployResult:PutDeployResult = PutDeployResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
+                println("Put deploy successfull with deploy hash:" + putDeployResult.deployHash)
+                return  putDeployResult
+            }
         }
         fun fromDeployToJsonString(deploy: Deploy):String {
             val headerString:String = "\"header\": {\"account\": \"" + deploy.header.account + "\",\"timestamp\": \"" + deploy.header.timeStamp + "\",\"ttl\":\""+deploy.header.ttl+"\",\"gas_price\":"+deploy.header.gasPrice+",\"body_hash\":\"" + deploy.header.bodyHash + "\",\"dependencies\": [],\"chain_name\": \"" + deploy.header.chainName + "\"}"
@@ -33,6 +45,24 @@ class PutDeployRPC {
             return deployJsonStr
         }
 
+        @Throws(IllegalArgumentException:: class)
+        fun getAuctionInfo(parameterStr: String): GetAuctionInfoResult {
+            val client = HttpClient.newBuilder().build()
+            val request = HttpRequest.newBuilder()
+                .uri(URI.create(this.methodURL))
+                .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
+                .header("Content-Type",  "application/json")
+                .build()
+            val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
+            val json =response.body().toJson()
+            //Check for error
+            if(json.get("error") != null) {
+                throw IllegalArgumentException("Error get auction")
+            } else { //If not error then get the state root hash
+                val ret: GetAuctionInfoResult = GetAuctionInfoResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
+                return ret
+            }
+        }
 
     }
 }

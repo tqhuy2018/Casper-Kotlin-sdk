@@ -40,8 +40,8 @@ class Ed25519Handle {
             val generator: AsymmetricCipherKeyPairGenerator = Ed25519KeyPairGenerator();
             generator.init(Ed25519KeyGenerationParameters(secureRandom))
             val kp : AsymmetricCipherKeyPair = generator.generateKeyPair()
-            /*println("Private:" + kp.private.toString())
-            val signer: Signer = Ed25519Signer()
+            println("Private:" + kp.private.toString())
+            /*val signer: Signer = Ed25519Signer()
             signer.init(true, kp.private)
             val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";
             signer.update(msg.toByteArray(), 0, msg.length)

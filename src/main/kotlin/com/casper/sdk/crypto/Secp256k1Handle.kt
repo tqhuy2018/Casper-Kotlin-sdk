@@ -16,7 +16,12 @@ import java.io.IOException
 import java.math.BigInteger
 import java.security.*
 import java.util.*
-
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
+import org.bouncycastle.openssl.PEMKeyPair
+import org.bouncycastle.openssl.PEMParser
+import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
+import java.io.StringReader
+import java.security.interfaces.ECPrivateKey
 
 class Secp256k1Handle {
 
@@ -85,7 +90,28 @@ class Secp256k1Handle {
             val pubKeyX = pubKeyHex.substring(0, 64)
             return pubKeyYPrefix + pubKeyX
         }
+        fun signMessage3(message:String) :String{
+            val privKey:ECPrivateKey = readPrivateKeyFromPemFile2("")
+            //val privKey = BigInteger("97ddae0f3a25b92268175400149d65d6887b9cefaf28ea2c078e05cdc15a3c0a", 16)
+            val pubKey = Sign.publicKeyFromPrivate(privKey.s)
+            val keyPair = ECKeyPair(privKey.s, pubKey)
+            println("Private key: " + privKey.s.toString(16))
+            println("Public key: " + pubKey.toString(16))
+            System.out.println("Public key (compressed): " + compressPubKey(pubKey))
+            //val msg = "Message for signing"
+            //val msgHash: ByteArray = message.toByteArray()
+            val msgHash: ByteArray = CasperUtils.fromStringToHexaBytes(message)
+            val signature =  Sign.signMessage(msgHash, keyPair, false)
+            //println("Msg: $msg")
+            println("Msg hash: " + Hex.toHexString(msgHash))
+            System.out.printf("Signature: [ r = %s, s = %s]\n",
+                Hex.toHexString(signature.r),
+                Hex.toHexString(signature.s))
+            println("sign message is:" + "02" + Hex.toHexString(signature.r) + Hex.toHexString(signature.s))
+            return  "02" + Hex.toHexString(signature.r) + Hex.toHexString(signature.s)
+        }
         fun GenerateKey2() {
+            //val privKey:ECPrivateKey = readPrivateKeyFromPemFile2("")
             val privKey = BigInteger("97ddae0f3a25b92268175400149d65d6887b9cefaf28ea2c078e05cdc15a3c0a", 16)
             val pubKey = Sign.publicKeyFromPrivate(privKey)
             val keyPair = ECKeyPair(privKey, pubKey)
@@ -126,9 +152,16 @@ class Secp256k1Handle {
             println("Signagure secp256k1: " + signature)
             return signature.toString()
         }
-
-
-
-
+        @Throws(IOException::class)
+        fun readPrivateKeyFromPemFile2(pemFile:String):ECPrivateKey{
+            val privateKeyString:String = "-----BEGIN EC PRIVATE KEY-----\n" +
+            "MHQCAQEEICCr27ihEOEpJ8Z+w7VS1TfJfE9mMhBmfunA5sQF/N/MoAcGBSuBBAAK\n" +
+            "oUQDQgAE096IZWexKB6qVoeoXhS08pIuGbiaPxAUx5MvRCydljXYoTIHKB0bdqWt\n" +
+            "3E0YoQC43Jyh2NlidryRe7OtTZ8TCA==\n" +
+            "-----END EC PRIVATE KEY-----\n"
+            val pemKey = PEMParser(StringReader(privateKeyString)).readObject() as PEMKeyPair
+            val ecKey = JcaPEMKeyConverter().getPrivateKey(pemKey.privateKeyInfo) as ECPrivateKey
+            return  ecKey
+        }
     }
 }

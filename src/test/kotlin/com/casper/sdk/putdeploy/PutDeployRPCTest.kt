@@ -5,6 +5,7 @@ import com.casper.sdk.clvalue.CLParsed
 import com.casper.sdk.clvalue.CLType
 import com.casper.sdk.clvalue.CLValue
 import com.casper.sdk.crypto.Ed25519Handle
+import com.casper.sdk.crypto.Secp256k1Handle
 import com.casper.sdk.getdeploy.Approval
 import com.casper.sdk.getdeploy.Deploy
 import com.casper.sdk.getdeploy.DeployHeader
@@ -20,7 +21,7 @@ internal class PutDeployRPCTest {
 
     @Test
     fun  testAll() {
-        testPutDeploy(isEd25519 = true)
+        testPutDeploy(isEd25519 = false)
     }
     fun testPutDeploy(isEd25519:Boolean) {
         val accountEd25519:String = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
@@ -164,6 +165,7 @@ internal class PutDeployRPCTest {
             oneA.signature = signature
         } else {
             oneA.signer = accountSecp256k1
+            oneA.signature = Secp256k1Handle.signMessage3(deploy.hash)
         }
         listApprovals.add(oneA)
         deploy.approvals = listApprovals

@@ -1,7 +1,6 @@
 package com.casper.sdk.putdeploy
 
 import com.casper.sdk.ConstValues
-import com.casper.sdk.getauction.GetAuctionInfoResult
 import com.casper.sdk.getdeploy.Deploy
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
@@ -28,7 +27,7 @@ class PutDeployRPC {
             val json =response.body().toJson()
             //Check for error
             if(json.get("error") != null) {
-                throw IllegalArgumentException("Error get auction")
+                throw IllegalArgumentException("Error put deploy")
             } else {
                val putDeployResult:PutDeployResult = PutDeployResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
                 println("Put deploy successfull with deploy hash:" + putDeployResult.deployHash)
@@ -42,27 +41,8 @@ class PutDeployRPC {
             val approvalJsonStr: String = "\"approvals\": [{\"signer\": \"" + deploy.approvals.get(0).signer + "\",\"signature\": \"" + deploy.approvals.get(0).signature + "\"}]"
             val hashStr = "\"hash\": \"" + deploy.hash + "\""
             val deployJsonStr: String = "{\"id\": 1,\"method\": \"account_put_deploy\",\"jsonrpc\": \"2.0\",\"params\": [{" + headerString + ","+paymentJsonStr + "," + sessionJsonStr + "," + approvalJsonStr + "," + hashStr + "}]}"
+            println(deployJsonStr)
             return deployJsonStr
         }
-
-        @Throws(IllegalArgumentException:: class)
-        fun getAuctionInfo(parameterStr: String): GetAuctionInfoResult {
-            val client = HttpClient.newBuilder().build()
-            val request = HttpRequest.newBuilder()
-                .uri(URI.create(this.methodURL))
-                .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
-                .header("Content-Type",  "application/json")
-                .build()
-            val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
-            val json =response.body().toJson()
-            //Check for error
-            if(json.get("error") != null) {
-                throw IllegalArgumentException("Error get auction")
-            } else { //If not error then get the state root hash
-                val ret: GetAuctionInfoResult = GetAuctionInfoResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
-                return ret
-            }
-        }
-
     }
 }

@@ -1,6 +1,7 @@
 package com.casper.sdk.crypto
 
 import com.casper.sdk.ConstValues
+import org.bouncycastle.crypto.AsymmetricCipherKeyPair
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import org.bouncycastle.util.encoders.Hex
@@ -11,6 +12,7 @@ import java.io.IOException
 
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.security.KeyPair
 
 
 internal class Ed25519HandleTest {
@@ -18,9 +20,14 @@ internal class Ed25519HandleTest {
     fun  testAll() {
         testGenerateKey()
         testLoadPrivateKey()
+        testWritePemPrivate()
     }
     fun testGenerateKey() {
-        Ed25519Handle.generateKey()
+        Ed25519Handle.generateKey2()
+    }
+    fun testWritePemPrivate() {
+        val keyPair: AsymmetricCipherKeyPair = Ed25519Handle.generateKey()
+        Ed25519Handle.writePrivateKeyToPemFile("privateKey1.pem",keyPair)
     }
     fun testLoadPrivateKey() {
         val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_PRIVATE_ED25519)

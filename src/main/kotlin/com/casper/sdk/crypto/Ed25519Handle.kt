@@ -4,6 +4,7 @@ import com.casper.sdk.CasperUtils
 import com.casper.sdk.CasperUtils.Companion.toHex
 import com.casper.sdk.ConstValues
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair
 import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator
 import org.bouncycastle.crypto.Signer
@@ -14,10 +15,15 @@ import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
 import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters
 import org.bouncycastle.crypto.signers.Ed25519Signer
 import org.bouncycastle.crypto.util.PrivateKeyFactory
+import org.bouncycastle.crypto.util.PrivateKeyInfoFactory
+import org.bouncycastle.crypto.util.SubjectPublicKeyInfoFactory
 import org.bouncycastle.jcajce.provider.asymmetric.edec.BCEdDSAPublicKey
 import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
+import org.bouncycastle.openssl.jcajce.JcaPEMWriter
+import org.bouncycastle.util.encoders.Hex
 import java.io.*
 import java.security.KeyPair
 import java.security.KeyPairGenerator
@@ -42,12 +48,26 @@ class Ed25519Handle {
             val signatureHexa : String = signature.toHex()
             return  signatureHexa
         }
+        fun writePrivateKeyToPemFile(filePath:String, forKeyPair:AsymmetricCipherKeyPair) {
+            Security.addProvider( BouncyCastleProvider())
+            //val converter =  JcaPEMKeyConverter().setProvider("BC")
+            val stringWriter = StringWriter(4096)
+            val writer = JcaPEMWriter(stringWriter)
+            val publicKeyParameters = SubjectPublicKeyInfoFactory.createSubjectPublicKeyInfo(forKeyPair.public)
+            val privateKeyParameters = PrivateKeyInfoFactory.createPrivateKeyInfo(forKeyPair.private)
+            writer.writeObject(PEMKeyPair(publicKeyParameters, privateKeyParameters))
+        }
         fun generateKey2() : KeyPair {
-            val keyPairGenerator = KeyPairGenerator.getInstance("01", BouncyCastleProvider.PROVIDER_NAME)
-            val ecGenParameterSpec = ECGenParameterSpec("01")
+            Security.addProvider(BouncyCastleProvider())
+            //val converter =  JcaPEMKeyConverter().setProvider("BC")
+            val keyPairGenerator = KeyPairGenerator.getInstance("Ed25519", BouncyCastleProvider.PROVIDER_NAME)
+            val ecGenParameterSpec = ECGenParameterSpec("Ed25519")
             keyPairGenerator.initialize(ecGenParameterSpec, SecureRandom())
             val ret:KeyPair = keyPairGenerator.generateKeyPair()
             val privateKey = ret.private
+            val publicKey = ret.public
+            println("Public key is:" + publicKey.toString())
+            println("Private key is: " + privateKey.toString())
             return ret
         }
         fun generateKey() :AsymmetricCipherKeyPair{
@@ -55,7 +75,8 @@ class Ed25519Handle {
             val generator: AsymmetricCipherKeyPairGenerator = Ed25519KeyPairGenerator();
             generator.init(Ed25519KeyGenerationParameters(secureRandom))
             val kp : AsymmetricCipherKeyPair = generator.generateKeyPair()
-            println("Private:" + kp.private.toString())
+            println("Private:" + Hex.toHexString(kp.private.toString().toByteArray()))
+            println("Public key generated is: " + kp.public.toString())
             /*val signer: Signer = Ed25519Signer()
             signer.init(true, kp.private)
             val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";

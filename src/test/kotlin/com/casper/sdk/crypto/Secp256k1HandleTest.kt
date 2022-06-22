@@ -10,9 +10,10 @@ internal class Secp256k1HandleTest {
         testLoadPrivateKey()
     }
     fun testLoadPrivateKey() {
-        val fileName:String = "KotlinEd25519PrivateKey.pem"
+        val fileName:String = "KotlinSecp256k1PrivateKey.pem"
         //val privateKeyStr:String = Secp256k1Handle.readPrivateKeyFromPemFile(fileName)
-        Secp256k1Handle.signMessage3("aa")
+       // Secp256k1Handle.signMessage3("aa")
+        Secp256k1Handle.loadPemFile(fileName,"aaa111")
         //Secp256k1Handle.signMessage("abc133","abc")
     }
     fun testKeyGeneration() {

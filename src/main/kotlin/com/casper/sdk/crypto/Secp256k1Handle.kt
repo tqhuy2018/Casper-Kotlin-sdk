@@ -17,15 +17,25 @@ import java.math.BigInteger
 import java.security.*
 import java.util.*
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
+import org.bouncycastle.crypto.digests.SHA256Digest
+import org.bouncycastle.crypto.ec.CustomNamedCurves
+import org.bouncycastle.crypto.params.ParametersWithRandom
+import org.bouncycastle.crypto.signers.DSADigestSigner
+import org.bouncycastle.crypto.signers.ECDSASigner
+import org.bouncycastle.crypto.signers.PlainDSAEncoding
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
+import java.io.FileReader
 import java.io.StringReader
 import java.security.interfaces.ECPrivateKey
 
 class Secp256k1Handle {
 
     companion object {
+
         fun generateKeyPair() {
             val string:String = "a1e3ce382dafebc4ed9a9efc7d771f669745e2a88b33f2b5eb4efa8c47721346"
             val privateKey: ByteArray = CasperUtils.fromStringToHexaBytes(string)
@@ -88,6 +98,12 @@ class Secp256k1Handle {
             val pubKeyHex = pubKey.toString(16)
             val pubKeyX = pubKeyHex.substring(0, 64)
             return pubKeyYPrefix + pubKeyX
+        }
+        fun signScala(message: String) : String {
+            var ret:String = ""
+            val signer =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
+            val privKey:ECPrivateKey = readPrivateKeyFromPemFile2("")
+            return ret
         }
         fun signMessage3(message:String) :String{
             val privKey:ECPrivateKey = readPrivateKeyFromPemFile2("")
@@ -161,6 +177,31 @@ class Secp256k1Handle {
             val pemKey = PEMParser(StringReader(privateKeyString)).readObject() as PEMKeyPair
             val ecKey = JcaPEMKeyConverter().getPrivateKey(pemKey.privateKeyInfo) as ECPrivateKey
             return  ecKey
+        }
+        fun loadPemFile(filePath:String,message: String) :String{
+            val CURVE_PARAMS = CustomNamedCurves.getByName("secp256k1")
+            val CURVE =  ECDomainParameters(CURVE_PARAMS.getCurve(), CURVE_PARAMS.getG(), CURVE_PARAMS.getN(), CURVE_PARAMS.getH())
+            val HALF_CURVE_ORDER = CURVE_PARAMS.getN().shiftRight(1)
+            Security.addProvider(BouncyCastleProvider())
+            val converter =  JcaPEMKeyConverter().setProvider("BC")
+            val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
+            if(pemKeyPair is org.bouncycastle.openssl.PEMKeyPair) {
+                println("Pem key is of type PEMKEYPAIR")
+                val keyPair = converter.getKeyPair(pemKeyPair)
+                val pivk = keyPair.private as BCECPrivateKey
+                val privateKeyD = pivk.d
+                val param =  ParametersWithRandom( ECPrivateKeyParameters(privateKeyD, CURVE), SecureRandom())
+                val signer =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
+                signer.init(true,param)
+                signer.update(CasperUtils.fromStringToHexaBytes(message),0,message.length/2)
+                val bytesArray: ByteArray = signer.generateSignature()
+                println("Sinature is: " + Hex.toHexString(bytesArray))
+                return  "02" + Hex.toHexString(bytesArray)
+            } else {
+                println("PEM KEY IS OF DIF KIND")
+            }
+            return  ""
+           // return BCECPrivateKey()
         }
     }
 }

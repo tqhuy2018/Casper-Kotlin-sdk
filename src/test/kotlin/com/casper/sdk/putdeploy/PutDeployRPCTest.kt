@@ -165,7 +165,11 @@ internal class PutDeployRPCTest {
             oneA.signature = signature
         } else {
             oneA.signer = accountSecp256k1
-            oneA.signature = Secp256k1Handle.signMessage3(deploy.hash)
+            val fileName:String = "KotlinSecp256k1PrivateKey.pem"
+            //val privateKeyStr:String = Secp256k1Handle.readPrivateKeyFromPemFile(fileName)
+            // Secp256k1Handle.signMessage3("aa")
+            oneA.signature = Secp256k1Handle.loadPemFile(fileName,deploy.hash)
+            //oneA.signature = Secp256k1Handle.signMessage3(deploy.hash)
         }
         listApprovals.add(oneA)
         deploy.approvals = listApprovals

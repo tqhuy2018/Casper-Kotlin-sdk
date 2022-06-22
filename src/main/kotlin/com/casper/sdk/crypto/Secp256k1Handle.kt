@@ -178,6 +178,7 @@ class Secp256k1Handle {
             val ecKey = JcaPEMKeyConverter().getPrivateKey(pemKey.privateKeyInfo) as ECPrivateKey
             return  ecKey
         }
+        //From scala version
         fun loadPemFile(filePath:String,message: String) :String{
             val CURVE_PARAMS = CustomNamedCurves.getByName("secp256k1")
             val CURVE =  ECDomainParameters(CURVE_PARAMS.getCurve(), CURVE_PARAMS.getG(), CURVE_PARAMS.getN(), CURVE_PARAMS.getH())

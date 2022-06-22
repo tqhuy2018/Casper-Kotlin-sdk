@@ -29,11 +29,10 @@ class Secp256k1Handle {
         fun generateKeyPair() {
             val string:String = "a1e3ce382dafebc4ed9a9efc7d771f669745e2a88b33f2b5eb4efa8c47721346"
             val privateKey: ByteArray = CasperUtils.fromStringToHexaBytes(string)
-
             val ec = ECKeyPair.create(BigInteger(1, privateKey))
 //ECKeyPair ec =  ECKeyPair.create(privateKey); // needs web3j utilitiy classes
 //ECKeyPair ec =  ECKeyPair.create(privateKey); // needs web3j utilitiy classes
-            println("Raw private key: " + ec.privateKey.toString(16))
+            println("Raw private key to show: " + ec.privateKey.toString(16))
             println("Raw public  key: " + ec.publicKey.toString(16))
         }
 

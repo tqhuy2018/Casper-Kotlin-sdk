@@ -94,6 +94,9 @@ class ConstValues {
         const val DI_DICTIONARY                         = "Dictionary"
         //For CLParse to Json, used for account_put_deploy RPC call
         val PARSED_FIXED_STRING: String = "!!!!!___PARSED___!!!!!"
+        //For Crypto file name
+        val PEM_PRIVATE_ED25519 : String = "KotlinEd25519PrivateKey.pem"
+        val PEM_PRIVATE_SECP256k1 : String = "KotlinSecp256k1PrivateKey.pem"
 
     }
 }

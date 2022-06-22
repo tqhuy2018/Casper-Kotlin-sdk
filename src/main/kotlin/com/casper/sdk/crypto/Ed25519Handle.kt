@@ -3,6 +3,7 @@ package com.casper.sdk.crypto
 import com.casper.sdk.CasperUtils
 import com.casper.sdk.CasperUtils.Companion.toHex
 import com.casper.sdk.ConstValues
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair
 import org.bouncycastle.crypto.AsymmetricCipherKeyPairGenerator
 import org.bouncycastle.crypto.Signer
@@ -12,10 +13,15 @@ import org.bouncycastle.crypto.params.Ed25519KeyGenerationParameters
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
 import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters
 import org.bouncycastle.crypto.signers.Ed25519Signer
+import org.bouncycastle.crypto.util.PrivateKeyFactory
 import org.bouncycastle.jcajce.provider.asymmetric.edec.BCEdDSAPublicKey
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.bouncycastle.openssl.PEMParser
+import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import java.io.*
 import java.security.KeyPair
 import java.security.SecureRandom
+import java.security.Security
 import java.util.*
 
 
@@ -50,6 +56,19 @@ class Ed25519Handle {
             println("singatureHexa:" + signatureHexa)
             //val keyPair:KeyPair =  KeyPair( BCEdDSAPublicKey(kp.getPublic()), new BCEdDSAPrivateKey(kp.getPrivate()));*/
             return kp
+        }
+        @Throws(IOException::class)
+        fun readPrivateKeyFromPemFile2(filePath:String) : Ed25519PrivateKeyParameters {
+            Security.addProvider(BouncyCastleProvider())
+            val converter =  JcaPEMKeyConverter().setProvider("BC")
+            val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
+            if(pemKeyPair is PrivateKeyInfo) {
+                val privKey = converter.getPrivateKey(pemKeyPair)
+                val privkeyparam = PrivateKeyFactory.createKey(pemKeyPair)
+                return privkeyparam as Ed25519PrivateKeyParameters
+            } else {
+                throw IOException()
+            }
         }
         @Throws(IOException::class)
         fun readPrivateKeyFromPemFile(fileName:String) : Ed25519PrivateKeyParameters {

@@ -1,10 +1,15 @@
 package com.casper.sdk.putdeploy
 
 import com.casper.sdk.ConstValues
+import com.casper.sdk.crypto.Ed25519Handle
+import com.casper.sdk.crypto.Secp256k1Handle
+import com.casper.sdk.getdeploy.Approval
 import com.casper.sdk.getdeploy.Deploy
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.values.JsonObject
+import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -14,8 +19,8 @@ import java.net.http.HttpResponse
 class PutDeployRPC {
     companion object {
         var methodURL: String = ConstValues.TESTNET_URL
-        @Throws(IllegalArgumentException:: class)
-        fun putDeploy(deploy: Deploy): PutDeployResult {
+       // @Throws(IllegalArgumentException:: class)
+        fun putDeploy(deploy: Deploy) {
             val jsonStr:String = PutDeployRPC.fromDeployToJsonString(deploy)
             val client = HttpClient.newBuilder().build()
             val request = HttpRequest.newBuilder()
@@ -27,12 +32,21 @@ class PutDeployRPC {
             val json =response.body().toJson()
             //Check for error
             if(json.get("error") != null) {
-                throw IllegalArgumentException("Error put deploy")
+                println("Error put deploy, need to send again for deploy hash:" + deploy.hash)
+                deploy.approvals.removeAt(0)
+                val oneA: Approval = Approval()
+                oneA.signer = deploy.header.account
+                val fileName:String = "KotlinSecp256k1PrivateKey.pem"
+                val privateKey: BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(fileName)
+                oneA.signature = Secp256k1Handle.signMessage(deploy.hash,privateKey)
+                deploy.approvals.add(oneA)
+                PutDeployRPC.putDeploy(deploy)
+                //throw IllegalArgumentException("Error put deploy")
             } else {
                val putDeployResult:PutDeployResult = PutDeployResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
                 println("Put deploy successfull with deploy hash:" + putDeployResult.deployHash)
-                return  putDeployResult
             }
+
         }
         fun fromDeployToJsonString(deploy: Deploy):String {
             val headerString:String = "\"header\": {\"account\": \"" + deploy.header.account + "\",\"timestamp\": \"" + deploy.header.timeStamp + "\",\"ttl\":\""+deploy.header.ttl+"\",\"gas_price\":"+deploy.header.gasPrice+",\"body_hash\":\"" + deploy.header.bodyHash + "\",\"dependencies\": [],\"chain_name\": \"" + deploy.header.chainName + "\"}"

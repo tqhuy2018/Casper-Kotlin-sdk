@@ -12,6 +12,7 @@ import com.casper.sdk.getdeploy.DeployHeader
 import com.casper.sdk.getdeploy.ExecutableDeployItem.*
 import com.casper.sdk.serialization.DeploySerializeHelper
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -21,6 +22,7 @@ internal class PutDeployRPCTest {
 
     @Test
     fun  testAll() {
+        testPutDeploy(isEd25519 = true)
         testPutDeploy(isEd25519 = false)
     }
     fun testPutDeploy(isEd25519:Boolean) {
@@ -158,18 +160,14 @@ internal class PutDeployRPCTest {
         val oneA: Approval = Approval()
         if(isEd25519) {
             oneA.signer = accountEd25519
-            val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile("KotlinEd25519PrivateKey.pem")
+            val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile2(ConstValues.PEM_PRIVATE_ED25519)
             var signature:String = Ed25519Handle.signMessage(deploy.hash,privateKey)
             signature = "01" + signature
-            println("Signature ed25519 is:" + signature)
             oneA.signature = signature
         } else {
             oneA.signer = accountSecp256k1
-            val fileName:String = "KotlinSecp256k1PrivateKey.pem"
-            //val privateKeyStr:String = Secp256k1Handle.readPrivateKeyFromPemFile(fileName)
-            // Secp256k1Handle.signMessage3("aa")
-            oneA.signature = Secp256k1Handle.loadPemFile(fileName,deploy.hash)
-            //oneA.signature = Secp256k1Handle.signMessage3(deploy.hash)
+            val privateKey:BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_PRIVATE_SECP256k1)
+            oneA.signature = Secp256k1Handle.signMessage(deploy.hash,privateKey)
         }
         listApprovals.add(oneA)
         deploy.approvals = listApprovals

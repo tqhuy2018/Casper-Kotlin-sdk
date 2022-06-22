@@ -19,7 +19,6 @@ import java.net.http.HttpResponse
 class PutDeployRPC {
     companion object {
         var methodURL: String = ConstValues.TESTNET_URL
-       // @Throws(IllegalArgumentException:: class)
         fun putDeploy(deploy: Deploy) {
             val jsonStr:String = PutDeployRPC.fromDeployToJsonString(deploy)
             val client = HttpClient.newBuilder().build()
@@ -30,18 +29,13 @@ class PutDeployRPC {
                 .build()
             val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
             val json =response.body().toJson()
-            //Check for error
             if(json.get("error") != null) {
-                println("Error put deploy, need to send again for deploy hash:" + deploy.hash)
                 deploy.approvals.removeAt(0)
                 val oneA: Approval = Approval()
                 oneA.signer = deploy.header.account
-                val fileName:String = "KotlinSecp256k1PrivateKey.pem"
-                val privateKey: BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(fileName)
-                oneA.signature = Secp256k1Handle.signMessage(deploy.hash,privateKey)
+                oneA.signature = Secp256k1Handle.signMessage(deploy.hash,PutDeployUtils.privateKey)
                 deploy.approvals.add(oneA)
                 PutDeployRPC.putDeploy(deploy)
-                //throw IllegalArgumentException("Error put deploy")
             } else {
                val putDeployResult:PutDeployResult = PutDeployResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
                 println("Put deploy successfull with deploy hash:" + putDeployResult.deployHash)

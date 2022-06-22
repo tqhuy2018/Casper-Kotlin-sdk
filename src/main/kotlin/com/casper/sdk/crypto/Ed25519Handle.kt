@@ -20,8 +20,10 @@ import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import java.io.*
 import java.security.KeyPair
+import java.security.KeyPairGenerator
 import java.security.SecureRandom
 import java.security.Security
+import java.security.spec.ECGenParameterSpec
 import java.util.*
 
 
@@ -40,7 +42,14 @@ class Ed25519Handle {
             val signatureHexa : String = signature.toHex()
             return  signatureHexa
         }
-
+        fun generateKey2() : KeyPair {
+            val keyPairGenerator = KeyPairGenerator.getInstance("01", BouncyCastleProvider.PROVIDER_NAME)
+            val ecGenParameterSpec = ECGenParameterSpec("01")
+            keyPairGenerator.initialize(ecGenParameterSpec, SecureRandom())
+            val ret:KeyPair = keyPairGenerator.generateKeyPair()
+            val privateKey = ret.private
+            return ret
+        }
         fun generateKey() :AsymmetricCipherKeyPair{
             val secureRandom = SecureRandom()
             val generator: AsymmetricCipherKeyPairGenerator = Ed25519KeyPairGenerator();
@@ -58,7 +67,7 @@ class Ed25519Handle {
             return kp
         }
         @Throws(IOException::class)
-        fun readPrivateKeyFromPemFile2(filePath:String) : Ed25519PrivateKeyParameters {
+        fun readPrivateKeyFromPemFile(filePath:String) : Ed25519PrivateKeyParameters {
             Security.addProvider(BouncyCastleProvider())
             val converter =  JcaPEMKeyConverter().setProvider("BC")
             val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
@@ -70,34 +79,6 @@ class Ed25519Handle {
                 throw IOException()
             }
         }
-        @Throws(IOException::class)
-        fun readPrivateKeyFromPemFile(fileName:String) : Ed25519PrivateKeyParameters {
-           val classLoader = javaClass.classLoader
-           val inputStream = classLoader.getResourceAsStream(fileName)
-           try {
-               var data: String? = CasperUtils.readFromInputStream(inputStream)
-               if(data.isNullOrEmpty()) {
-                   throw IOException()
-               } else {
-                   data = data.replace("-----BEGIN PRIVATE KEY-----","")
-                   data = data.replace("-----END PRIVATE KEY-----","")
-                   val base64Bytes = Base64.getDecoder().decode(data)
-                   val base64BytesReal = base64Bytes.copyOfRange(16,base64Bytes.size)
-                   var privateKeyBytes: ByteArray = ByteArray(32)
-                   var counter:Int = 0
-                   for (bytes in base64BytesReal.toUByteArray()) {
-                       privateKeyBytes.set(counter,bytes.toByte())
-                       counter ++
-                   }
-                   val privateKey = Ed25519PrivateKeyParameters(privateKeyBytes,0)
-                   return privateKey
-               }
-           } catch (e:java.lang.Exception){
-               println("Error catch")
-           } finally {
-               println("Error catch finally")
-           }
-            throw IOException()
-        }
+
     }
 }

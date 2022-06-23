@@ -69,51 +69,6 @@ class Secp256k1Handle {
             return privateKey
         }
 
-        fun compressPubKey(pubKey: BigInteger): String? {
-            val pubKeyYPrefix = if (pubKey.testBit(0)) "03" else "02"
-            val pubKeyHex = pubKey.toString(16)
-            val pubKeyX = pubKeyHex.substring(0, 64)
-            return pubKeyYPrefix + pubKeyX
-        }
-
-        fun GenerateKey2() {
-            //val privKey:ECPrivateKey = readPrivateKeyFromPemFile2("")
-            val privKey = BigInteger("97ddae0f3a25b92268175400149d65d6887b9cefaf28ea2c078e05cdc15a3c0a", 16)
-            val pubKey = Sign.publicKeyFromPrivate(privKey)
-            val keyPair = ECKeyPair(privKey, pubKey)
-            println("Private key: " + privKey.toString(16))
-            println("Public key: " + pubKey.toString(16))
-            System.out.println("Public key (compressed): " + compressPubKey(pubKey))
-            val msg = "Message for signing"
-            val msgHash: ByteArray = msg.toByteArray()
-            val signature = Sign.signMessage(msgHash, keyPair, false)
-            println("Msg: $msg")
-            println("Msg hash: " + Hex.toHexString(msgHash))
-            System.out.printf("Signature: [ r = %s, s = %s]\n",
-                Hex.toHexString(signature.r),
-                Hex.toHexString(signature.s))
-        }
-        @Throws(NoSuchAlgorithmException::class,
-            NoSuchProviderException::class,
-            InvalidAlgorithmParameterException::class)
-        fun GenerateKeys(): KeyPair? {
-            val ecSpec: ECParameterSpec = ECNamedCurveTable.getParameterSpec("B-571")
-            val g = KeyPairGenerator.getInstance("ECDSA")
-            g.initialize(ecSpec, SecureRandom())
-            return g.generateKeyPair()
-        }
-
-        @Throws(IOException::class)
-        fun readPrivateKeyFromPemFile2(pemFile:String):ECPrivateKey{
-            val privateKeyString:String = "-----BEGIN EC PRIVATE KEY-----\n" +
-            "MHQCAQEEICCr27ihEOEpJ8Z+w7VS1TfJfE9mMhBmfunA5sQF/N/MoAcGBSuBBAAK\n" +
-            "oUQDQgAE096IZWexKB6qVoeoXhS08pIuGbiaPxAUx5MvRCydljXYoTIHKB0bdqWt\n" +
-            "3E0YoQC43Jyh2NlidryRe7OtTZ8TCA==\n" +
-            "-----END EC PRIVATE KEY-----\n"
-            val pemKey = PEMParser(StringReader(privateKeyString)).readObject() as PEMKeyPair
-            val ecKey = JcaPEMKeyConverter().getPrivateKey(pemKey.privateKeyInfo) as ECPrivateKey
-            return  ecKey
-        }
         //This function read the private key from the Pem file, with input is the file path
         //The result back is a BCECPrivateKey, used for signing message for Secp256k1 Crypto
         @Throws(IOException::class)

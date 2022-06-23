@@ -42,6 +42,18 @@ class CasperUtils {
             }
             return ret
         }
+        fun fromStringToHexaBytes2(from:String): ByteArray {
+            var ret:ByteArray = ByteArray(from.length/2)
+            val strLength:Int = from.length/2-1
+            for(i in 0..strLength) {
+                val twoChar:String = from.substring(i*2,i*2 + 2)
+                val firstChar:String = twoChar.substring(0,1)
+                val secondChar:String = twoChar.substring(1,2)
+                val hexaValue:Int = CasperUtils.from16to10(firstChar) * 16 + CasperUtils.from16to10(secondChar)
+                ret.set(i,hexaValue.toByte())
+            }
+            return ret
+        }
         fun fromStringToHexaBytes(from:String): ByteArray {
             var ret:ByteArray = ByteArray(32)
             val strLength:Int = from.length/2-1

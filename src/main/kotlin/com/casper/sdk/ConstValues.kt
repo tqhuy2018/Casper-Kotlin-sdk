@@ -94,9 +94,18 @@ class ConstValues {
         const val DI_DICTIONARY                         = "Dictionary"
         //For CLParse to Json, used for account_put_deploy RPC call
         val PARSED_FIXED_STRING: String = "!!!!!___PARSED___!!!!!"
-        //For Crypto file name
+        //For Crypto file name - read from Pem file
         val PEM_PRIVATE_ED25519 : String = "KotlinEd25519PrivateKey.pem"
         val PEM_PRIVATE_SECP256k1 : String = "KotlinSecp256k1PrivateKey.pem"
+        val PEM_PUBLIC_ED25519 : String = "Ed25519/WriteSwiftPublicKeyEd25519.pem"
+        val PEM_PRIVATE2_ED25519 : String = "Ed25519/WriteSwiftPrivateKeyEd25519.pem"
+        val PEM_PUBLIC_SECP256k1 : String = "Secp256k1/KotlinSecp256k1PrivateKey.pem"
+        //For write to pem file
+        val PEM_PRIVATE_WRITE_ED25519 : String = "Ed25519/writePrivate.pem"
+        val PEM_PUBLIC_WRITE_ED25519 : String = "Ed25519/writePublic.pem"
+
+        val ED25519_PREFIX : String = "01"
+        val SECP256K1_PREFIX : String = "02"
 
     }
 }

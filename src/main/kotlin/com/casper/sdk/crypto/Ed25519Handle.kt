@@ -15,6 +15,7 @@ import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters
 import org.bouncycastle.crypto.signers.Ed25519Signer
 import org.bouncycastle.crypto.util.PrivateKeyFactory
 import org.bouncycastle.crypto.util.PrivateKeyInfoFactory
+import org.bouncycastle.crypto.util.PublicKeyFactory
 import org.bouncycastle.crypto.util.SubjectPublicKeyInfoFactory
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
 import org.bouncycastle.jcajce.provider.asymmetric.edec.BCEdDSAPublicKey
@@ -55,16 +56,36 @@ class Ed25519Handle {
             val verified = verifier.verifySignature(CasperUtils.fromStringToHexaBytes2(signature))
             return verified
         }
-        fun writePrivateKeyToPemFile(filePath:String, forKeyPair:AsymmetricCipherKeyPair) {
+        //Write private key to a pem file, base on the private key as Ed25519PrivateKeyParameters
+        //If the folder for the file is correct, the pem file is written
+        //Otherwise IOException is thrown
+        @Throws(IOException::class)
+        fun writePrivateKeyToPemFile(filePath:String, forPrivateKey:Ed25519PrivateKeyParameters) {
             Security.addProvider( BouncyCastleProvider())
-            //val converter =  JcaPEMKeyConverter().setProvider("BC")
             val stringWriter = StringWriter(4096)
             val writer = JcaPEMWriter(stringWriter)
-            val publicKeyParameters = SubjectPublicKeyInfoFactory.createSubjectPublicKeyInfo(forKeyPair.public)
-            val privateKeyParameters = PrivateKeyInfoFactory.createPrivateKeyInfo(forKeyPair.private)
-            writer.writeObject(PEMKeyPair(publicKeyParameters, privateKeyParameters))
+            writer.writeObject(PrivateKeyInfoFactory.createPrivateKeyInfo(forPrivateKey))
+            writer.flush()
+            val strPem = stringWriter.toString()
+            try {
+                File(filePath).writeText(strPem)
+            } catch (e:IOException) {
+                throw IOException()
+            }
         }
-
+        //Write public key to a pem file, base on the private key as Ed25519PublicKeyParameters
+        //If the folder for the file is correct, the pem file is written
+        //Otherwise IOException is thrown
+        @Throws(IOException::class)
+        fun writePublicKeyToPemFile(filePath:String, forPublicKey:Ed25519PublicKeyParameters) {
+            Security.addProvider( BouncyCastleProvider())
+            val stringWriter = StringWriter(4096)
+            val writer = JcaPEMWriter(stringWriter)
+            writer.writeObject(SubjectPublicKeyInfoFactory.createSubjectPublicKeyInfo(forPublicKey))
+            writer.flush()
+            val strPem = stringWriter.toString()
+            File(filePath).writeText(strPem)
+        }
          fun generateKey2() : KeyPair {
              Security.addProvider(BouncyCastleProvider())
              //val converter =  JcaPEMKeyConverter().setProvider("BC")
@@ -85,24 +106,17 @@ class Ed25519Handle {
              val kp : AsymmetricCipherKeyPair = generator.generateKeyPair()
              println("Private:" + Hex.toHexString(kp.private.toString().toByteArray()))
              println("Public key generated is: " + kp.public.toString())
-             /*val signer: Signer = Ed25519Signer()
-             signer.init(true, kp.private)
-             val msg = "0173c68fe0f2ffce805fc7a7856ef4d2ec774291159006c0c3dce1b60ed71c8785";
-             signer.update(msg.toByteArray(), 0, msg.length)
-             val signature: ByteArray = signer.generateSignature()
-             val signatureHexa : String = signature.toHex()
-             println("singatureHexa:" + signatureHexa)
-             //val keyPair:KeyPair =  KeyPair( BCEdDSAPublicKey(kp.getPublic()), new BCEdDSAPrivateKey(kp.getPrivate()));*/
              return kp
          }
-        //from scala
+        //Read private key from pem file, return the pem file as Ed25519PrivateKeyParameters object
+        //if the file path exists and the file is in correct private key format, then an Ed25519PrivateKeyParameters object is returned
+        //Otherwise IOException is thrown
         @Throws(IOException::class)
         fun readPrivateKeyFromPemFile(filePath:String) : Ed25519PrivateKeyParameters {
             Security.addProvider(BouncyCastleProvider())
             val converter =  JcaPEMKeyConverter().setProvider("BC")
             val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
             if(pemKeyPair is PrivateKeyInfo) {
-               // val privKey = converter.getPrivateKey(pemKeyPair)
                 val privkeyparam = PrivateKeyFactory.createKey(pemKeyPair)
                 return privkeyparam as Ed25519PrivateKeyParameters
             } else {

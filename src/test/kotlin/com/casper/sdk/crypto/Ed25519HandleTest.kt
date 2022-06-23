@@ -19,36 +19,67 @@ internal class Ed25519HandleTest {
     @Test
     fun  testAll() {
         testSignAndVerifyMessage()
+        testWriteToPemFile()
         //testGenerateKey()
         //testLoadPrivateKey()
         //testLoadPublicKey()
         //testWritePemPrivate()
     }
+    fun testWriteToPemFile() {
+        val keyPair = Ed25519Handle.generateKey()
+        Ed25519Handle.writePrivateKeyToPemFile(ConstValues.PEM_PRIVATE_WRITE_ED25519,keyPair.private as Ed25519PrivateKeyParameters)
+        Ed25519Handle.writePublicKeyToPemFile(ConstValues.PEM_PUBLIC_WRITE_ED25519,keyPair.public as Ed25519PublicKeyParameters)
+        //Negative path: Write private pem file to a non-exist path
+        try {
+            Ed25519Handle.writePrivateKeyToPemFile("some/nonexist/path/privateEd25519.pem",
+                keyPair.private as Ed25519PrivateKeyParameters)
+        } catch (e:IOException) {
+            println("Error write private key to a non-exist file")
+        }
+        //Negative path: Write public pem file to a non-exist path
+        try {
+            Ed25519Handle.writePublicKeyToPemFile("some/nonexist/path/publicEd25519.pem",keyPair.public as Ed25519PublicKeyParameters)
+        } catch (e:IOException) {
+            println("Error write public key to a non-exist file")
+        }
+    }
     fun  testSignAndVerifyMessage() {
         val message:String = "e5c900aef7c4d512b6ca2b4083bc926c3697da6340f6ca6acfc0c2e05e69ebae"
+        val message2:String = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d"
         //Test with auto generated key pair
         val keyPair = Ed25519Handle.generateKey()
         val privateKey = keyPair.private as Ed25519PrivateKeyParameters
         val signature = Ed25519Handle.signMessage(message,privateKey)
+        assert(signature.length > 0)
         println("SUCCESS SIGN, Signature is: " + signature)
         val isVerifySuccess:Boolean =  Ed25519Handle.verifyMessage(message,signature,keyPair.public as Ed25519PublicKeyParameters)
-        if(isVerifySuccess) {
-            println("Verify success")
-        } else {
-            println("Verify fail")
-        }
+        assert(isVerifySuccess == true)
         //Test with key load from Pem file
-        val privateKeyPem: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_PRIVATE2_ED25519)
+        var privateFile:String = "Ed25519/writePrivate.pem"
+        var publicFile:String = "Ed25519/writePublic.pem"
+        privateFile = ConstValues.PEM_PRIVATE2_ED25519
+        publicFile = ConstValues.PEM_PUBLIC_ED25519
+        val privateKeyPem: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(privateFile)
         val signature2 = Ed25519Handle.signMessage(message,privateKeyPem)
         println("SUCCESS SIGN, Signature 2 is: " + signature2)
-        val publicKeyPem:CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_PUBLIC_ED25519)
+        assert(signature2.length > 0)
+        val publicKeyPem:CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(publicFile)
         val publicKeyParameters:Ed25519PublicKeyParameters = Ed25519PublicKeyParameters(publicKeyPem.bytes)
         val isVerifySuccess2:Boolean = Ed25519Handle.verifyMessage(message,signature2,publicKeyParameters)
-        if(isVerifySuccess2) {
-            println("Verify success 2")
-        } else {
-            println("Verify fail 2")
-        }
+        assert(isVerifySuccess2 == true)
+
+        //Negative path 1 - verify with a different public key - private key pair
+        //private key from the auto generated, public key from the pem file
+        val isVerifySuccess3:Boolean = Ed25519Handle.verifyMessage(message,signature,publicKeyParameters)
+        assert(isVerifySuccess3 == false)
+        //Negative path 2 - verify with a correct public key - private key pair but wrong message
+        //private key from the auto generated, public key from the pem file
+        val isVerifySuccess4:Boolean = Ed25519Handle.verifyMessage(message2,signature2,publicKeyParameters)
+        assert(isVerifySuccess4 == false)
+        //Negative path 3 - verify with a correct public key - private key pair but wrong signature
+        //private key from the auto generated, public key from the pem file
+        val isVerifySuccess5:Boolean = Ed25519Handle.verifyMessage(message,signature,publicKeyParameters)
+        assert(isVerifySuccess5 == false)
     }
     fun testGenerateKey() {
         val keyPair = Ed25519Handle.generateKeyPair()

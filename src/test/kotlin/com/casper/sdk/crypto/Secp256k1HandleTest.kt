@@ -46,7 +46,21 @@ internal class Secp256k1HandleTest {
         signer.init(false, ecPkparam)
         signer.update(CasperUtils.fromStringToHexaBytes(message), 0, message.length/2)
         val result = signer.verifySignature(CasperUtils.fromStringToHexaBytes2(signature))
-        print("Verify is: " + result)
+        println("Verify is: " + result)
+
+        //Test with key load from Pem file
+        val privateKey2 = Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE2_SECP256k1)
+        val publicKey2 = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_SECP256k1)
+        val signature2 = Secp256k1Handle.signMessage(message,privateKey2)
+        println("Signature 2 is: " + signature2)
+        val ecPoint2 = CURVE.getCurve().decodePoint(publicKey2)
+        val ecPkparam2 =  ECPublicKeyParameters(ecPoint, CURVE)
+        val signer2 =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
+        signer2.init(false, ecPkparam2)
+        signer2.update(CasperUtils.fromStringToHexaBytes(message), 0, message.length/2)
+        val result2 = signer.verifySignature(CasperUtils.fromStringToHexaBytes2(signature2))
+        print("Verify 2 is: " + result2)
+
     }
     fun testLoadPublicKey() {
         val publicKey: ByteArray = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_SECP256k1)

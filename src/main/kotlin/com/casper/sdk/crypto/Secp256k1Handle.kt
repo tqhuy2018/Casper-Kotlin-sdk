@@ -98,17 +98,22 @@ class Secp256k1Handle {
         //Otherwise IOException is thrown
         @Throws(IOException::class)
         fun readPublicKeyFromPemFile(filePath:String) : ByteArray {
+            println("In read Public key, Pem file path:" + filePath)
             Security.addProvider(BouncyCastleProvider())
             //val converter =  JcaPEMKeyConverter().setProvider("BC")
             val converter = JcaPEMKeyConverter().setProvider(BouncyCastleProvider())
             val publicKeyInfo = PEMParser(FileReader(filePath)).readObject()
+            println(" public key type is: " + publicKeyInfo)
             if(publicKeyInfo is SubjectPublicKeyInfo) {
                 println("Public key is of PEM KEY PAIR")
                // val keyPair = converter.getKeyPair(pemKeyPair)
                 val pkey = converter.getPublicKey(publicKeyInfo)
+
                 println("Public hexa:" + Hex.toHexString(publicKeyInfo.publicKeyData.bytes))
                // val publicKey = keyPair.public as BCECPublicKey
                 return publicKeyInfo.publicKeyData.bytes
+               // return publicKeyInfo.
+               // return pkey.q.getEncoded(true)
             } else {
                 throw IOException()
             }

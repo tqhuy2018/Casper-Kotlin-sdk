@@ -99,8 +99,8 @@ class ConstValues {
         val PEM_READ_PRIVATE_SECP256k1 : String = "Ed25519/KotlinSecp256k1PrivateKey.pem"
         val PEM_READ_PUBLIC_ED25519 : String = "Ed25519/WriteSwiftPublicKeyEd25519.pem"
         val PEM_READ_PRIVATE2_ED25519 : String = "Ed25519/WriteSwiftPrivateKeyEd25519.pem"
-        val PEM_READ_PUBLIC_SECP256k1 : String = "Secp256k1/writePublicSecp256k1.pem"
-        val PEM_READ_PRIVATE2_SECP256k1 : String = "Ed25519/ReadSwiftPrivateKeySecp256k1.pem"
+        val PEM_READ_PUBLIC_SECP256k1 : String = "Secp256k1/WriteSwiftPublicKeySecp256k1.pem"
+        val PEM_READ_PRIVATE2_SECP256k1 : String = "Secp256k1/WriteSwiftPrivateKeySecp256k1.pem"
         //For write to pem file
         val PEM_WRITE_PRIVATE_ED25519 : String = "Ed25519/writePrivateEd25519.pem"
         val PEM_WRITE_PUBLIC_ED25519 : String = "Ed25519/writePublicEd25519.pem"

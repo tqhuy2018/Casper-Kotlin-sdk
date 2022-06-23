@@ -95,14 +95,17 @@ class ConstValues {
         //For CLParse to Json, used for account_put_deploy RPC call
         val PARSED_FIXED_STRING: String = "!!!!!___PARSED___!!!!!"
         //For Crypto file name - read from Pem file
-        val PEM_PRIVATE_ED25519 : String = "KotlinEd25519PrivateKey.pem"
-        val PEM_PRIVATE_SECP256k1 : String = "KotlinSecp256k1PrivateKey.pem"
-        val PEM_PUBLIC_ED25519 : String = "Ed25519/WriteSwiftPublicKeyEd25519.pem"
-        val PEM_PRIVATE2_ED25519 : String = "Ed25519/WriteSwiftPrivateKeyEd25519.pem"
-        val PEM_PUBLIC_SECP256k1 : String = "Secp256k1/KotlinSecp256k1PrivateKey.pem"
+        val PEM_READ_PRIVATE_ED25519 : String = "Ed25519/KotlinEd25519PrivateKey.pem"
+        val PEM_READ_PRIVATE_SECP256k1 : String = "Ed25519/KotlinSecp256k1PrivateKey.pem"
+        val PEM_READ_PUBLIC_ED25519 : String = "Ed25519/WriteSwiftPublicKeyEd25519.pem"
+        val PEM_READ_PRIVATE2_ED25519 : String = "Ed25519/WriteSwiftPrivateKeyEd25519.pem"
+        val PEM_READ_PUBLIC_SECP256k1 : String = "Secp256k1/WriteSwiftPublicKeySecp256k1.pem"
+        val PEM_READ_PRIVATE2_SECP256k1 : String = "Ed25519/WriteSwiftPrivateKeySecp256k1.pem"
         //For write to pem file
-        val PEM_PRIVATE_WRITE_ED25519 : String = "Ed25519/writePrivate.pem"
-        val PEM_PUBLIC_WRITE_ED25519 : String = "Ed25519/writePublic.pem"
+        val PEM_WRITE_PRIVATE_ED25519 : String = "Ed25519/writePrivateEd25519.pem"
+        val PEM_WRITE_PUBLIC_ED25519 : String = "Ed25519/writePublicEd25519.pem"
+        val PEM_WRITE_PRIVATE_SEC256K1 : String = "Secp256k1/writePrivateSecp256k1.pem"
+        val PEM_WRITE_PUBLIC_SECP256K1 : String = "Secp256k1/writePublicSecp256k1.pem"
 
         val ED25519_PREFIX : String = "01"
         val SECP256K1_PREFIX : String = "02"

@@ -1,18 +1,11 @@
 package com.casper.sdk.crypto
 
 import com.casper.sdk.ConstValues
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
-import org.bouncycastle.crypto.AsymmetricCipherKeyPair
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
 import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters
-import org.bouncycastle.crypto.util.PrivateKeyFactory
-import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
-import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.util.encoders.Hex
 import org.junit.jupiter.api.Test
 import java.io.*
-
-import java.security.KeyPair
 
 
 internal class Ed25519HandleTest {
@@ -25,8 +18,8 @@ internal class Ed25519HandleTest {
     }
     fun testWriteToPemFile() {
         val keyPair = Ed25519Handle.generateKey()
-        Ed25519Handle.writePrivateKeyToPemFile(ConstValues.PEM_PRIVATE_WRITE_ED25519,keyPair.private as Ed25519PrivateKeyParameters)
-        Ed25519Handle.writePublicKeyToPemFile(ConstValues.PEM_PUBLIC_WRITE_ED25519,keyPair.public as Ed25519PublicKeyParameters)
+        Ed25519Handle.writePrivateKeyToPemFile(ConstValues.PEM_WRITE_PRIVATE_ED25519,keyPair.private as Ed25519PrivateKeyParameters)
+        Ed25519Handle.writePublicKeyToPemFile(ConstValues.PEM_WRITE_PUBLIC_ED25519,keyPair.public as Ed25519PublicKeyParameters)
         //Negative path: Write private pem file to a non-exist path
         try {
             Ed25519Handle.writePrivateKeyToPemFile("some/nonexist/path/privateEd25519.pem",
@@ -54,8 +47,8 @@ internal class Ed25519HandleTest {
         //Test with key load from Pem file
         var privateFile:String = "Ed25519/writePrivate.pem"
         var publicFile:String = "Ed25519/writePublic.pem"
-        privateFile = ConstValues.PEM_PRIVATE2_ED25519
-        publicFile = ConstValues.PEM_PUBLIC_ED25519
+        privateFile = ConstValues.PEM_READ_PRIVATE2_ED25519
+        publicFile = ConstValues.PEM_READ_PUBLIC_ED25519
         val privateKeyPem: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(privateFile)
         val signature2 = Ed25519Handle.signMessage(message,privateKeyPem)
         assert(signature2.length > 0)
@@ -80,12 +73,12 @@ internal class Ed25519HandleTest {
 
 
     fun testLoadPublicKey() {
-        val publicKey: CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_PUBLIC_ED25519)
+        val publicKey: CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
         assert(Hex.toHexString(publicKey.bytes) == "fb0afcf77ef310bc65cee526c0d6197b9803d3a7d73de5d7fef93ee5988e32a3")
         assert(Hex.toHexString(publicKey.bytes).length == 64)
         //Negative path 1, load public key from a wrong file format
         try {
-            val publicKey2: CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_PRIVATE_ED25519)
+            val publicKey2: CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
         } catch (e: IOException) {
             println("Error load public key from a wrong file format")
         }
@@ -98,11 +91,11 @@ internal class Ed25519HandleTest {
         }
     }
     fun testLoadPrivateKey() {
-        val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_PRIVATE_ED25519)
+        val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
         assert(Hex.toHexString(privateKey.encoded) == "954b81a59283ec5bcf7186148f9f8b2f1cdfb62ebbf54652ef6a246d6fcc65f2")
         //Negative path 1, load public key from a wrong file format
         try {
-            val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_PUBLIC_ED25519)
+            val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
         } catch (e: IOException) {
             println("Error load private key from a wrong file format")
         }

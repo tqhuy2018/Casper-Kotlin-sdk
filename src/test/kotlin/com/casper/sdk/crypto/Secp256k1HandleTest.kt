@@ -1,22 +1,73 @@
 package com.casper.sdk.crypto
 
-import org.junit.jupiter.api.Assertions.*
+import com.casper.sdk.ConstValues
+import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
+import org.bouncycastle.util.encoders.Hex
 import org.junit.jupiter.api.Test
+import java.io.IOException
 
 internal class Secp256k1HandleTest {
     @Test
     fun  testAll() {
-        testKeyGeneration()
+        testWriteToPemFile()
         testLoadPrivateKey()
+        testLoadPublicKey()
+    }
+    fun testLoadPublicKey() {
+        val publicKey: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_SECP256k1)
+        println("Size of public key:" + Hex.toHexString(publicKey.encoded).length )
+        //Negative path 1, load public key from a wrong file format
+        try {
+            val publicKey2: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
+        } catch (e: IOException) {
+            println("Error load public key from a wrong file format")
+        }
+        //Negative path 2, load public key from a non-exist file
+        val wrongPemPath:String = "wrongEd25519PublicKey.pem"
+        try {
+            val publicKey2: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(wrongPemPath)
+        } catch (e: IOException) {
+            println("Error load wrong public key from a wrong path")
+        }
     }
     fun testLoadPrivateKey() {
-        val fileName:String = "KotlinSecp256k1PrivateKey.pem"
-        //val privateKeyStr:String = Secp256k1Handle.readPrivateKeyFromPemFile(fileName)
-       // Secp256k1Handle.signMessage3("aa")
-        //Secp256k1Handle.loadPemFile(fileName,"aaa111")
-        //Secp256k1Handle.signMessage("abc133","abc")
+        val privateKey: BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_SECP256k1)
+        println("Private key secep256k1: " + Hex.toHexString(privateKey.encoded).length)
+        assert(Hex.toHexString(privateKey.encoded).length == 288)
+        //assert(Hex.toHexString(privateKey.encoded) == "954b81a59283ec5bcf7186148f9f8b2f1cdfb62ebbf54652ef6a246d6fcc65f2")
+        //Negative path 1, load public key from a wrong file format
+        try {
+            val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
+        } catch (e: IOException) {
+            println("Error load private key from a wrong file format")
+        }
+        //Negative path 2, load private key from a non-exist file
+        val wrongPemPath:String = "wrongEd25519PrivateKey.pem"
+        try {
+            val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(wrongPemPath)
+        } catch (e: IOException) {
+            println("Error load wrong private key from a wrong path")
+        }
+
     }
-    fun testKeyGeneration() {
-        Secp256k1Handle.generateKeyPair()
+    fun testWriteToPemFile() {
+        val keyPair = Secp256k1Handle.generateKey()
+        Secp256k1Handle.writePrivateKeyToPemFile(ConstValues.PEM_WRITE_PRIVATE_SEC256K1,keyPair.private as BCECPrivateKey)
+        Secp256k1Handle.writePublicKeyToPemFile(ConstValues.PEM_WRITE_PUBLIC_SECP256K1,keyPair.public as BCECPublicKey)
+        //Negative path: Write private pem file to a non-exist path
+        try {
+            Secp256k1Handle.writePrivateKeyToPemFile("some/nonexist/path/privateSecp256k1.pem",
+                keyPair.private as BCECPrivateKey)
+        } catch (e: IOException) {
+            println("Error write private key to a non-exist file")
+        }
+        //Negative path: Write public pem file to a non-exist path
+        try {
+            Secp256k1Handle.writePublicKeyToPemFile("some/nonexist/path/publicSecp256k1.pem",keyPair.public as BCECPublicKey)
+        } catch (e: IOException) {
+            println("Error write public key to a non-exist file")
+        }
     }
 }

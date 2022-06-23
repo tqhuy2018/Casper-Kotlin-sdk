@@ -15,29 +15,17 @@ import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters
 import org.bouncycastle.crypto.signers.Ed25519Signer
 import org.bouncycastle.crypto.util.PrivateKeyFactory
 import org.bouncycastle.crypto.util.PrivateKeyInfoFactory
-import org.bouncycastle.crypto.util.PublicKeyFactory
 import org.bouncycastle.crypto.util.SubjectPublicKeyInfoFactory
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
 import org.bouncycastle.jcajce.provider.asymmetric.edec.BCEdDSAPublicKey
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter
-import org.bouncycastle.util.encoders.Hex
 import java.io.*
-import java.security.KeyPair
-import java.security.KeyPairGenerator
 import java.security.SecureRandom
 import java.security.Security
-import java.security.spec.ECGenParameterSpec
-import java.util.*
 
-
-//const val ed25519PrivateKeyPemFile = "KotlinEd25519PrivateKey.pem"
-//const val secp256k1PrivateKeyPemFile = "KotlinSecp256k1PrivateKey.pem"
-//Ed25519 For this account:0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53
-//Secp256k1 : 0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635
 class Ed25519Handle {
     companion object {
         fun signMessage(messageToSign:String,privateKey:Ed25519PrivateKeyParameters):String {
@@ -112,7 +100,7 @@ class Ed25519Handle {
 
         //Read public key from pem file, return the pem file as CLPublicKey object
         //The CLPublicKey object hold the main information of the PublicKey as ByteArray
-        //if the file path exists and the file is in correct private key format, then an CLPublicKey object is returned
+        //if the file path exists and the file is in correct public key format, then an CLPublicKey object is returned
         //Otherwise IOException is thrown
         @Throws(IOException::class)
         fun readPublicKeyFromPemFile(filePath:String) : CLPublicKey {

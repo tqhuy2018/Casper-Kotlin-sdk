@@ -1,9 +1,19 @@
 package com.casper.sdk.crypto
 
+import com.casper.sdk.CasperUtils
 import com.casper.sdk.ConstValues
+import org.bouncycastle.crypto.digests.SHA256Digest
+import org.bouncycastle.crypto.ec.CustomNamedCurves
+import org.bouncycastle.crypto.params.ECDomainParameters
+import org.bouncycastle.crypto.params.ECPublicKeyParameters
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
+import org.bouncycastle.crypto.signers.DSADigestSigner
+import org.bouncycastle.crypto.signers.ECDSASigner
+import org.bouncycastle.crypto.signers.PlainDSAEncoding
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import org.bouncycastle.util.encoders.Hex
 import org.junit.jupiter.api.Test
 import java.io.IOException
@@ -14,20 +24,43 @@ internal class Secp256k1HandleTest {
         testWriteToPemFile()
         testLoadPrivateKey()
         testLoadPublicKey()
+        testSignAndVerifyMessage()
+    }
+    fun testSignAndVerifyMessage() {
+        val message:String = "e5c900aef7c4d512b6ca2b4083bc926c3697da6340f6ca6acfc0c2e05e69ebae"
+        val message2:String = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d"
+        //Test with auto generated key pair
+        val keyPair = Secp256k1Handle.generateKey()
+        val privateKey = keyPair.private as BCECPrivateKey
+        val signature = Secp256k1Handle.signMessage(message,privateKey)
+        println("Signature secp256k1 is:" + signature)
+        assert(signature.length > 0)
+        val CURVE_PARAMS = CustomNamedCurves.getByName("secp256k1")
+        val CURVE = ECDomainParameters(CURVE_PARAMS.getCurve(),CURVE_PARAMS.g, CURVE_PARAMS.n, CURVE_PARAMS.h)
+        val HALF_CURVE_ORDER = CURVE_PARAMS.getN().shiftRight(1)
+        val publicKey:BCECPublicKey = keyPair.public as BCECPublicKey
+        val publicKeyBytes = publicKey.getQ().getEncoded(true)
+        val ecPoint = CURVE.getCurve().decodePoint(publicKeyBytes)
+        val ecPkparam =  ECPublicKeyParameters(ecPoint, CURVE)
+        val signer =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
+        signer.init(false, ecPkparam)
+        signer.update(CasperUtils.fromStringToHexaBytes(message), 0, message.length/2)
+        val result = signer.verifySignature(CasperUtils.fromStringToHexaBytes2(signature))
+        print("Verify is: " + result)
     }
     fun testLoadPublicKey() {
-        val publicKey: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_SECP256k1)
-        println("Size of public key:" + Hex.toHexString(publicKey.encoded).length )
+        val publicKey: ByteArray = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_SECP256k1)
+        //println("Size of public key:" + Hex.toHexString(publicKey.encoded).length )
         //Negative path 1, load public key from a wrong file format
         try {
-            val publicKey2: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
+            val publicKey2: ByteArray = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
         } catch (e: IOException) {
             println("Error load public key from a wrong file format")
         }
         //Negative path 2, load public key from a non-exist file
         val wrongPemPath:String = "wrongEd25519PublicKey.pem"
         try {
-            val publicKey2: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(wrongPemPath)
+            val publicKey2: ByteArray = Secp256k1Handle.readPublicKeyFromPemFile(wrongPemPath)
         } catch (e: IOException) {
             println("Error load wrong public key from a wrong path")
         }

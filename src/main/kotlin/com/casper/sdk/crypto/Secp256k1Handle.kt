@@ -2,34 +2,24 @@ package com.casper.sdk.crypto
 
 //import java.security.*
 import com.casper.sdk.CasperUtils
-import org.bouncycastle.asn1.sec.SECNamedCurves
-import org.bouncycastle.crypto.generators.ECKeyPairGenerator
-import org.bouncycastle.jce.ECNamedCurveTable
-import org.bouncycastle.jce.spec.ECParameterSpec
-import org.bouncycastle.util.encoders.Hex
-import org.web3j.crypto.ECKeyPair
-import org.web3j.crypto.Sign
-import java.math.BigInteger
-import java.security.*
-import java.util.*
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
 import org.bouncycastle.crypto.digests.SHA256Digest
 import org.bouncycastle.crypto.ec.CustomNamedCurves
 import org.bouncycastle.crypto.params.*
 import org.bouncycastle.crypto.signers.DSADigestSigner
 import org.bouncycastle.crypto.signers.ECDSASigner
 import org.bouncycastle.crypto.signers.PlainDSAEncoding
-import org.bouncycastle.crypto.util.PrivateKeyInfoFactory
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter
+import org.bouncycastle.util.encoders.Hex
 import java.io.*
-import java.security.interfaces.ECPrivateKey
+import java.security.*
 import java.security.spec.ECGenParameterSpec
+import java.util.*
 
 class Secp256k1Handle {
 
@@ -94,6 +84,7 @@ class Secp256k1Handle {
             if(pemKeyPair is org.bouncycastle.openssl.PEMKeyPair) {
                 val keyPair = converter.getKeyPair(pemKeyPair)
                 val pivk = keyPair.private as BCECPrivateKey
+                val pub = keyPair.public as BCECPublicKey
                 return  pivk
             } else {
                 throw IOException()
@@ -106,18 +97,21 @@ class Secp256k1Handle {
         //if the file path exists and the file is in correct private key format, then an BCECPrivateKey object is returned
         //Otherwise IOException is thrown
         @Throws(IOException::class)
-        fun readPublicKeyFromPemFile(filePath:String) : BCECPublicKey {
+        fun readPublicKeyFromPemFile(filePath:String) : ByteArray {
             Security.addProvider(BouncyCastleProvider())
-            val converter =  JcaPEMKeyConverter().setProvider("BC")
-            val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
-            if(pemKeyPair is org.bouncycastle.openssl.PEMKeyPair) {
-                val keyPair = converter.getKeyPair(pemKeyPair)
-                val publicKey = keyPair.public as BCECPublicKey
-                return  publicKey
+            //val converter =  JcaPEMKeyConverter().setProvider("BC")
+            val converter = JcaPEMKeyConverter().setProvider(BouncyCastleProvider())
+            val publicKeyInfo = PEMParser(FileReader(filePath)).readObject()
+            if(publicKeyInfo is SubjectPublicKeyInfo) {
+                println("Public key is of PEM KEY PAIR")
+               // val keyPair = converter.getKeyPair(pemKeyPair)
+                val pkey = converter.getPublicKey(publicKeyInfo)
+                println("Public hexa:" + Hex.toHexString(publicKeyInfo.publicKeyData.bytes))
+               // val publicKey = keyPair.public as BCECPublicKey
+                return publicKeyInfo.publicKeyData.bytes
             } else {
                 throw IOException()
             }
-            throw IOException()
         }
         //This function sign the message in form of string with the given private key
         //The message will be change to Hexa bytes then sign with the private key
@@ -132,7 +126,7 @@ class Secp256k1Handle {
             signer.init(true,param)
             signer.update(CasperUtils.fromStringToHexaBytes(message),0,message.length/2)
             val bytesArray: ByteArray = signer.generateSignature()
-            return  "02" + Hex.toHexString(bytesArray)
+            return  Hex.toHexString(bytesArray)
         }
         //This function is from scala, both read private key then sign the message
         /*fun loadPemFile(filePath:String,message: String) :String{

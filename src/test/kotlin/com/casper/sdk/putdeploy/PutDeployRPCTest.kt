@@ -167,7 +167,7 @@ internal class PutDeployRPCTest {
             oneA.signer = accountSecp256k1
             val privateKey:BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_SECP256k1)
             PutDeployUtils.privateKey = privateKey
-            oneA.signature = Secp256k1Handle.signMessage(deploy.hash,privateKey)
+            oneA.signature = "02" + Secp256k1Handle.signMessage(deploy.hash,privateKey)
             println("Signature for secp256k1 is: " + oneA.signature)
         }
         listApprovals.add(oneA)

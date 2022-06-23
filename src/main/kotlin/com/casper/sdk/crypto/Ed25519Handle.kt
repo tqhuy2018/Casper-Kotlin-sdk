@@ -34,8 +34,8 @@ import java.security.spec.ECGenParameterSpec
 import java.util.*
 
 
-const val ed25519PrivateKeyPemFile = "KotlinEd25519PrivateKey.pem"
-const val secp256k1PrivateKeyPemFile = "KotlinSecp256k1PrivateKey.pem"
+//const val ed25519PrivateKeyPemFile = "KotlinEd25519PrivateKey.pem"
+//const val secp256k1PrivateKeyPemFile = "KotlinSecp256k1PrivateKey.pem"
 //Ed25519 For this account:0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53
 //Secp256k1 : 0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635
 class Ed25519Handle {
@@ -86,26 +86,13 @@ class Ed25519Handle {
             val strPem = stringWriter.toString()
             File(filePath).writeText(strPem)
         }
-         fun generateKey2() : KeyPair {
-             Security.addProvider(BouncyCastleProvider())
-             //val converter =  JcaPEMKeyConverter().setProvider("BC")
-             val keyPairGenerator = KeyPairGenerator.getInstance("Ed25519", BouncyCastleProvider.PROVIDER_NAME)
-             val ecGenParameterSpec = ECGenParameterSpec("Ed25519")
-             keyPairGenerator.initialize(ecGenParameterSpec, SecureRandom())
-             val ret:KeyPair = keyPairGenerator.generateKeyPair()
-             val privateKey = ret.private
-             val publicKey = ret.public
-             println("Public key is:" + publicKey.toString())
-             println("Private key is: " + privateKey.toString())
-             return ret
-         }
+        //Generate the Ed25519 key pair, from this key pair you can write the private/public key to Pem file
+        //Or use the keys for sign/verify message for Ed25519 Crypto
          fun generateKey() :AsymmetricCipherKeyPair{
              val secureRandom = SecureRandom()
              val generator: AsymmetricCipherKeyPairGenerator = Ed25519KeyPairGenerator();
              generator.init(Ed25519KeyGenerationParameters(secureRandom))
              val kp : AsymmetricCipherKeyPair = generator.generateKeyPair()
-             println("Private:" + Hex.toHexString(kp.private.toString().toByteArray()))
-             println("Public key generated is: " + kp.public.toString())
              return kp
          }
         //Read private key from pem file, return the pem file as Ed25519PrivateKeyParameters object
@@ -114,7 +101,6 @@ class Ed25519Handle {
         @Throws(IOException::class)
         fun readPrivateKeyFromPemFile(filePath:String) : Ed25519PrivateKeyParameters {
             Security.addProvider(BouncyCastleProvider())
-            val converter =  JcaPEMKeyConverter().setProvider("BC")
             val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
             if(pemKeyPair is PrivateKeyInfo) {
                 val privkeyparam = PrivateKeyFactory.createKey(pemKeyPair)
@@ -123,14 +109,11 @@ class Ed25519Handle {
                 throw IOException()
             }
         }
-        //from scala
-        fun generateKeyPair() : KeyPair {
-            Security.addProvider(BouncyCastleProvider())
-            val keyPairGenerator = KeyPairGenerator.getInstance("Ed25519", BouncyCastleProvider.PROVIDER_NAME)
-            val ecGenParameterSpec =  ECGenParameterSpec("Ed25519")
-            keyPairGenerator.initialize(ecGenParameterSpec,  SecureRandom())
-            return keyPairGenerator.generateKeyPair()
-        }
+
+        //Read public key from pem file, return the pem file as CLPublicKey object
+        //The CLPublicKey object hold the main information of the PublicKey as ByteArray
+        //if the file path exists and the file is in correct private key format, then an CLPublicKey object is returned
+        //Otherwise IOException is thrown
         @Throws(IOException::class)
         fun readPublicKeyFromPemFile(filePath:String) : CLPublicKey {
             Security.addProvider(BouncyCastleProvider())

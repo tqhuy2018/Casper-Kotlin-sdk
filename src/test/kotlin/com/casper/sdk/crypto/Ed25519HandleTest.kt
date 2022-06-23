@@ -18,12 +18,10 @@ import java.security.KeyPair
 internal class Ed25519HandleTest {
     @Test
     fun  testAll() {
-        testSignAndVerifyMessage()
         testWriteToPemFile()
-        //testGenerateKey()
-        //testLoadPrivateKey()
-        //testLoadPublicKey()
-        //testWritePemPrivate()
+        testLoadPrivateKey()
+        testLoadPublicKey()
+        testSignAndVerifyMessage()
     }
     fun testWriteToPemFile() {
         val keyPair = Ed25519Handle.generateKey()
@@ -51,7 +49,6 @@ internal class Ed25519HandleTest {
         val privateKey = keyPair.private as Ed25519PrivateKeyParameters
         val signature = Ed25519Handle.signMessage(message,privateKey)
         assert(signature.length > 0)
-        println("SUCCESS SIGN, Signature is: " + signature)
         val isVerifySuccess:Boolean =  Ed25519Handle.verifyMessage(message,signature,keyPair.public as Ed25519PublicKeyParameters)
         assert(isVerifySuccess == true)
         //Test with key load from Pem file
@@ -61,7 +58,6 @@ internal class Ed25519HandleTest {
         publicFile = ConstValues.PEM_PUBLIC_ED25519
         val privateKeyPem: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(privateFile)
         val signature2 = Ed25519Handle.signMessage(message,privateKeyPem)
-        println("SUCCESS SIGN, Signature 2 is: " + signature2)
         assert(signature2.length > 0)
         val publicKeyPem:CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(publicFile)
         val publicKeyParameters:Ed25519PublicKeyParameters = Ed25519PublicKeyParameters(publicKeyPem.bytes)
@@ -81,42 +77,41 @@ internal class Ed25519HandleTest {
         val isVerifySuccess5:Boolean = Ed25519Handle.verifyMessage(message,signature,publicKeyParameters)
         assert(isVerifySuccess5 == false)
     }
-    fun testGenerateKey() {
-        val keyPair = Ed25519Handle.generateKeyPair()
-        println("Geneerated key pair, private key is: " + keyPair.private.toString())
-        println("Geneerated key pair, public key is: " + keyPair.public.toString())
-    }
-    fun testWritePemPrivate() {
-        //val keyPair: AsymmetricCipherKeyPair = Ed25519Handle.generateKey()
-       // Ed25519Handle.writePrivateKeyToPemFile("privateKey1.pem",keyPair)
-    }
+
+
     fun testLoadPublicKey() {
         val publicKey: CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_PUBLIC_ED25519)
-        println("Public key is:" + Hex.toHexString(publicKey.bytes))
-        assert(Hex.toHexString(publicKey.bytes) == "f1e2dc53cf3999d6fe3a3aef3227d6da44ca47f8a0027f2d17b9f697b2715e47")
+        assert(Hex.toHexString(publicKey.bytes) == "fb0afcf77ef310bc65cee526c0d6197b9803d3a7d73de5d7fef93ee5988e32a3")
+        assert(Hex.toHexString(publicKey.bytes).length == 64)
+        //Negative path 1, load public key from a wrong file format
+        try {
+            val publicKey2: CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_PRIVATE_ED25519)
+        } catch (e: IOException) {
+            println("Error load public key from a wrong file format")
+        }
+        //Negative path 2, load public key from a non-exist file
         val wrongPemPath:String = "wrongEd25519PublicKey.pem"
         try {
             val publicKey2: CLPublicKey = Ed25519Handle.readPublicKeyFromPemFile(wrongPemPath)
         } catch (e: IOException) {
             println("Error load wrong public key from a wrong path")
-        } catch (e:java.lang.Exception) {
-            println("Error load wrong public key from a wrong path2")
-        } finally {
-            println("Error load wrong public key from a wrong path finally")
         }
     }
     fun testLoadPrivateKey() {
         val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_PRIVATE_ED25519)
         assert(Hex.toHexString(privateKey.encoded) == "954b81a59283ec5bcf7186148f9f8b2f1cdfb62ebbf54652ef6a246d6fcc65f2")
+        //Negative path 1, load public key from a wrong file format
+        try {
+            val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_PUBLIC_ED25519)
+        } catch (e: IOException) {
+            println("Error load private key from a wrong file format")
+        }
+        //Negative path 2, load private key from a non-exist file
         val wrongPemPath:String = "wrongEd25519PrivateKey.pem"
         try {
             val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(wrongPemPath)
         } catch (e: IOException) {
             println("Error load wrong private key from a wrong path")
-        } catch (e:java.lang.Exception) {
-            println("Error load wrong private key from a wrong path2")
-        } finally {
-            println("Error load wrong private key from a wrong path finally")
         }
     }
 

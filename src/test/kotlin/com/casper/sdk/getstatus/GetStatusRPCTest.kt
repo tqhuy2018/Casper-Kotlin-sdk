@@ -2,13 +2,11 @@ package com.casper.sdk.getstatus
 
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 internal class GetStatusRPCTest {
 
     @Test
     fun getStatusResult() {
-        val getStatusRPC: GetStatusRPC = GetStatusRPC()
+        val getStatusRPC = GetStatusRPC()
         val getStatusResult :  GetStatusResult = getStatusRPC.getStatusResult()
         assert(getStatusResult.chainspecName == "casper-test")
         assert(getStatusResult.peers.count()>0)

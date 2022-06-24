@@ -10,14 +10,12 @@ import com.casper.sdk.getdeploy.ExecutionResult.Transform.Bid
 import com.casper.sdk.getdeploy.ExecutionResult.Transform.Withdraw
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 internal class GetItemRPCTest {
 
     @Test
     fun getItem() {
-        val getItemRPC :  GetItemRPC = GetItemRPC()
-        val getItemParameter: GetItemParams = GetItemParams()
+        val getItemRPC = GetItemRPC()
+        val getItemParameter = GetItemParams()
         //Test for StoredValue of type CLValue
         try {
             getItemParameter.stateRootHash = "340a09b06bae99d868c68111b691c70d9d5a253c0f2fd7ee257a04a198d3818e"

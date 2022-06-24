@@ -9,9 +9,9 @@ internal class GetStateRootHashTest {
 
     @Test
     fun getStateRootHash() {
-        var getStateRootHashTest: GetStateRootHashRPC = GetStateRootHashRPC()
+        val getStateRootHashTest = GetStateRootHashRPC()
         //Call 1:  Get state root hash with non parameter
-        val bi:  BlockIdentifier = BlockIdentifier()
+        val bi = BlockIdentifier()
         bi.blockType = BlockIdentifierType.NONE
         val str: String = bi.toJsonStr(ConstValues.RPC_GET_STATE_ROOT_HASH)
         try {

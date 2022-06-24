@@ -20,8 +20,8 @@ class PutDeployRPC {
     companion object {
         var methodURL: String = ConstValues.TESTNET_URL
         var putDeployCounter:Int = 0
-        fun putDeploy(deploy: Deploy) {
-            println("Try with effort : " + putDeployCounter)
+        fun putDeploy(deploy: Deploy) :String {
+            val deployHash:String = deploy.hash
             val jsonStr:String = PutDeployRPC.fromDeployToJsonString(deploy)
             val client = HttpClient.newBuilder().build()
             val request = HttpRequest.newBuilder()
@@ -33,7 +33,6 @@ class PutDeployRPC {
             val json =response.body().toJson()
             if(json.get("error") != null) {
                 val message = json.get("error").get("message")
-                println("Message is:" + message)
                 if(message == "invalid deploy: the approval at index 0 is invalid: asymmetric key error: failed to verify secp256k1 signature: signature error") {
                     putDeployCounter ++
                     if(putDeployCounter<10) {
@@ -43,13 +42,19 @@ class PutDeployRPC {
                         oneA.signature = "02" + Secp256k1Handle.signMessage(deploy.hash, PutDeployUtils.privateKey)
                         deploy.approvals.add(oneA)
                         PutDeployRPC.putDeploy(deploy)
+                    } else {
+                        return ConstValues.PUT_DEPLOY_ERROR_MESSAGE
                     }
+                } else {
+                    return ConstValues.PUT_DEPLOY_ERROR_MESSAGE
                 }
             } else {
                val putDeployResult:PutDeployResult = PutDeployResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
                 println("Put deploy successfull with deploy hash:" + putDeployResult.deployHash)
+                return putDeployResult.deployHash
                 putDeployCounter = 0
             }
+            return deployHash
         }
         fun fromDeployToJsonString(deploy: Deploy):String {
             val headerString:String = "\"header\": {\"account\": \"" + deploy.header.account + "\",\"timestamp\": \"" + deploy.header.timeStamp + "\",\"ttl\":\""+deploy.header.ttl+"\",\"gas_price\":"+deploy.header.gasPrice+",\"body_hash\":\"" + deploy.header.bodyHash + "\",\"dependencies\": [],\"chain_name\": \"" + deploy.header.chainName + "\"}"

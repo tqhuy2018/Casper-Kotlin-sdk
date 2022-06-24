@@ -107,8 +107,9 @@ class ConstValues {
         val PEM_WRITE_PRIVATE_SEC256K1 : String = "Secp256k1/writePrivateSecp256k1.pem"
         val PEM_WRITE_PUBLIC_SECP256K1 : String = "Secp256k1/writePublicSecp256k1.pem"
 
-        val ED25519_PREFIX : String = "01"
-        val SECP256K1_PREFIX : String = "02"
+        //For account_put_deploy error message when can't send a deploy
+        val PUT_DEPLOY_ERROR_MESSAGE : String = "ERROR_PUT_DEPLOY"
+
 
     }
 }

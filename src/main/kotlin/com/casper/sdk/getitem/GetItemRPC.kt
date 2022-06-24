@@ -1,7 +1,6 @@
 package com.casper.sdk.getitem
 
 import com.casper.sdk.ConstValues
-import com.casper.sdk.getblock.GetBlockResult
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.values.JsonObject
@@ -37,8 +36,7 @@ class GetItemRPC {
         if(json.get("error") != null) {
             throw IllegalArgumentException("Error get item")
         } else { //If not error then get the GetItemResult
-            val ret:  GetItemResult = GetItemResult.fromJsonObjectToGetItemResult(json.get("result") as JsonObject)
-            return ret
+            return GetItemResult.fromJsonObjectToGetItemResult(json.get("result") as JsonObject)
         }
     }
 }

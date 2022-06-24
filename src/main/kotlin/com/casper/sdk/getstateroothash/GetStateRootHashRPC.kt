@@ -2,7 +2,6 @@ package com.casper.sdk.getstateroothash
 import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
-import net.jemzart.jsonkraken.toJsonString
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest

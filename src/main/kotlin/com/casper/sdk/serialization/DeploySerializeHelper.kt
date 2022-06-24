@@ -16,24 +16,24 @@ class DeploySerializeHelper {
         Returned result = deployHeader.account + U64.serialize(deployHeader.timeStampMiliSecondFrom1970InU64) + U64.serialize(deployHeader.ttlMilisecondsFrom1980InU64) + U64.serialize(gas_price) + deployHeader.bodyHash
          */
         fun serializeForHeader(header:DeployHeader):String {
-            var ret:String = ""
+            val ret:String
             val timeStampMiliSeconds = CasperUtils.fromTimeStampToU64Str(header.timeStamp)
             val ttlMiliSeconds = CasperUtils.ttlToMilisecond(header.ttl)
-            val clParseTimeStamp:CLParsed = CLParsed()
+            val clParseTimeStamp = CLParsed()
             clParseTimeStamp.itsCLType.itsTypeStr = ConstValues.CLTYPE_U64
             clParseTimeStamp.itsValueInStr = timeStampMiliSeconds.toString()
             val timeStampSerialization:String = CLParseSerialization.serializeFromCLParse(clParseTimeStamp)
-            val clParseTTL:CLParsed = CLParsed()
+            val clParseTTL = CLParsed()
             clParseTTL.itsCLType.itsTypeStr = ConstValues.CLTYPE_U64
             clParseTTL.itsValueInStr  = ttlMiliSeconds.toString()
             val ttlSerialization:String = CLParseSerialization.serializeFromCLParse(clParseTTL)
-            val clParseGasPrice:CLParsed = CLParsed()
+            val clParseGasPrice = CLParsed()
             clParseGasPrice.itsCLType.itsTypeStr = ConstValues.CLTYPE_U64
             clParseGasPrice.itsValueInStr  = header.gasPrice.toString()
             val gasPriceSerialization:String = CLParseSerialization.serializeFromCLParse(clParseGasPrice)
-            var dependencySerialization:String = ""
+            var dependencySerialization : String
             val totalDependency:Int = header.dependencies.size
-            val clDependency:CLParsed = CLParsed()
+            val clDependency = CLParsed()
             clDependency.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
             clDependency.itsValueInStr = totalDependency.toString()
             dependencySerialization = CLParseSerialization.serializeFromCLParse(clDependency)
@@ -42,7 +42,7 @@ class DeploySerializeHelper {
                     dependencySerialization = dependencySerialization + header.dependencies.get(i)
                 }
             }
-            val chainCLParse:CLParsed = CLParsed()
+            val chainCLParse = CLParsed()
             chainCLParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
             chainCLParse.itsValueInStr = header.chainName
             val chainSerialization:String = CLParseSerialization.serializeFromCLParse(chainCLParse)
@@ -59,25 +59,24 @@ class DeploySerializeHelper {
         Final result = prefix + (list.serialize)
          */
         fun serializeForDeployApproval(listApprovals:MutableList<Approval>):String {
-            var ret:String = ""
+            var ret:String
             val totalApproval:Int = listApprovals.size
-            val clParse32:CLParsed = CLParsed()
+            val clParse32 = CLParsed()
             clParse32.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
             clParse32.itsValueInStr = totalApproval.toString()
             ret = CLParseSerialization.serializeFromCLParse(clParse32)
             for(i in 0..totalApproval-1) {
-                val oneA:Approval = listApprovals.get(i) as Approval
+                val oneA:Approval = listApprovals.get(i)
                 ret = ret + oneA.signer + oneA.signature
             }
             return  ret
         }
         fun serializeForDeploy(deploy:Deploy):String {
-            var ret:String = ""
-            ret = DeploySerializeHelper.serializeForHeader(deploy.header)
+            var ret:String = serializeForHeader(deploy.header)
             ret = ret + deploy.hash
             val paymentSerialization:String = ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.payment)
             val sessionSerialization:String = ExecutableDeployItemSerializationHelper.serializeForExecutableDeployItem(deploy.session)
-            val approvalSerialization:String = DeploySerializeHelper.serializeForDeployApproval(deploy.approvals)
+            val approvalSerialization:String = serializeForDeployApproval(deploy.approvals)
             ret = ret + paymentSerialization + sessionSerialization + approvalSerialization
             return ret
         }

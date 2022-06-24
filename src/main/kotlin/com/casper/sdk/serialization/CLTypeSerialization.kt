@@ -34,32 +34,32 @@ class CLTypeSerialization {
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_UREF) {
                 return "0c"
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_OPTION) {
-                val innerSerialize : String = CLTypeSerialization.serializeForCLType(clType.innerCLType1)
+                val innerSerialize : String = serializeForCLType(clType.innerCLType1)
                     return "0d" + innerSerialize
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_LIST) {
-                val innerSerialize : String = CLTypeSerialization.serializeForCLType(clType.innerCLType1)
+                val innerSerialize : String = serializeForCLType(clType.innerCLType1)
                 return "0e" + innerSerialize
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_BYTEARRAY) {
                 return "0f"
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_RESULT) {
-                val innerSerialize1 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType1)
-                val innerSerialize2 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType2)
+                val innerSerialize1 : String = serializeForCLType(clType.innerCLType1)
+                val innerSerialize2 : String = serializeForCLType(clType.innerCLType2)
                 return "10" + innerSerialize1 + innerSerialize2
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_MAP) {
-                val innerSerialize1 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType1)
-                val innerSerialize2 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType2)
+                val innerSerialize1 : String = serializeForCLType(clType.innerCLType1)
+                val innerSerialize2 : String = serializeForCLType(clType.innerCLType2)
                 return "11" + innerSerialize1 + innerSerialize2
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_TUPLE1) {
-                val innerSerialize : String = CLTypeSerialization.serializeForCLType(clType.innerCLType1)
+                val innerSerialize : String = serializeForCLType(clType.innerCLType1)
                 return "12" + innerSerialize
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_TUPLE2) {
-                val innerSerialize1 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType1)
-                val innerSerialize2 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType2)
+                val innerSerialize1 : String = serializeForCLType(clType.innerCLType1)
+                val innerSerialize2 : String = serializeForCLType(clType.innerCLType2)
                 return "13" + innerSerialize1 + innerSerialize2
             }  else if (clType.itsTypeStr == ConstValues.CLTYPE_TUPLE3) {
-                val innerSerialize1 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType1)
-                val innerSerialize2 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType2)
-                val innerSerialize3 : String = CLTypeSerialization.serializeForCLType(clType.innerCLType3)
+                val innerSerialize1 : String = serializeForCLType(clType.innerCLType1)
+                val innerSerialize2 : String = serializeForCLType(clType.innerCLType2)
+                val innerSerialize3 : String = serializeForCLType(clType.innerCLType3)
                 return "14" + innerSerialize1 + innerSerialize2 + innerSerialize3
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_ANY) {
                 return "15"

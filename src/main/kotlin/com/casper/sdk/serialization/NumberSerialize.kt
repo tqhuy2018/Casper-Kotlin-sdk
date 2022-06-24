@@ -1,7 +1,5 @@
 package com.casper.sdk.serialization
 
-import org.bouncycastle.oer.its.ieee1609dot2.basetypes.UINT3
-
 class NumberSerialize {
     companion object {
         // Function for the serialization of unsigned number u8
@@ -15,8 +13,8 @@ class NumberSerialize {
                 } else {
                     val remainder : UInt = value % 16u
                     val quotient : UInt = (value - remainder) / 16u
-                    val remainderStr : String = NumberSerialize.from10To16(remainder)
-                    val quotientStr : String  = NumberSerialize.from10To16(quotient)
+                    val remainderStr : String = from10To16(remainder)
+                    val quotientStr : String  = from10To16(quotient)
                     return  quotientStr + remainderStr
                 }
             }
@@ -26,17 +24,17 @@ class NumberSerialize {
             if (numberInStr == "0") {
                 return "00000000"
             }
-            var ret : String = NumberSerialize.fromDecimalStringToHexaString(numberInStr)
+            var ret : String = fromDecimalStringToHexaString(numberInStr)
             val retLength : Int = ret.length
             if(retLength < 8) {
                 val total0Add : Int = 8 - retLength - 1
-                var prefix0 : String = ""
+                var prefix0  = ""
                 for(i in 0 .. total0Add) {
                     prefix0 = prefix0 + "0"
                 }
                 ret = prefix0 + ret
             }
-            val realRet : String = NumberSerialize.stringReversed2Digit(ret)
+            val realRet : String = stringReversed2Digit(ret)
             return realRet
         }
         // Function for the serialization of unsigned number u64
@@ -44,7 +42,7 @@ class NumberSerialize {
             if (numberInStr == "0") {
                 return "0000000000000000"
             }
-            var ret : String = NumberSerialize.fromDecimalStringToHexaString(numberInStr)
+            var ret : String = fromDecimalStringToHexaString(numberInStr)
             val retLength : Int = ret.length
             if(retLength < 16) {
                 val total0Add : Int = 16 - retLength - 1
@@ -54,7 +52,7 @@ class NumberSerialize {
                 }
                 ret = prefix0 + ret
             }
-            val realRet : String = NumberSerialize.stringReversed2Digit(ret)
+            val realRet : String = stringReversed2Digit(ret)
             return realRet
         }
         /**
@@ -71,9 +69,9 @@ class NumberSerialize {
                 val numberValue : UInt  = numberInStr.substring(1,lastChar).toUInt()
                 val maxU32 = UInt.MAX_VALUE
                 val remain : UInt = maxU32 - numberValue + 1u
-                return  NumberSerialize.serializeForU32(remain.toString())
+                return  serializeForU32(remain.toString())
             } else {
-                return  NumberSerialize.serializeForU32(numberInStr)
+                return  serializeForU32(numberInStr)
             }
         }
         /**

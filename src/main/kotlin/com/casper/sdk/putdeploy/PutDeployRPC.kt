@@ -1,15 +1,12 @@
 package com.casper.sdk.putdeploy
 
 import com.casper.sdk.ConstValues
-import com.casper.sdk.crypto.Ed25519Handle
 import com.casper.sdk.crypto.Secp256k1Handle
 import com.casper.sdk.getdeploy.Approval
 import com.casper.sdk.getdeploy.Deploy
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.values.JsonObject
-import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
-import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -22,7 +19,7 @@ class PutDeployRPC {
         var putDeployCounter:Int = 0
         fun putDeploy(deploy: Deploy) :String {
             val deployHash:String = deploy.hash
-            val jsonStr:String = PutDeployRPC.fromDeployToJsonString(deploy)
+            val jsonStr:String = fromDeployToJsonString(deploy)
             val client = HttpClient.newBuilder().build()
             val request = HttpRequest.newBuilder()
                 .uri(URI.create(this.methodURL))
@@ -37,11 +34,11 @@ class PutDeployRPC {
                     putDeployCounter ++
                     if(putDeployCounter<10) {
                         deploy.approvals.removeAt(0)
-                        val oneA: Approval = Approval()
+                        val oneA = Approval()
                         oneA.signer = deploy.header.account
                         oneA.signature = "02" + Secp256k1Handle.signMessage(deploy.hash, PutDeployUtils.privateKey)
                         deploy.approvals.add(oneA)
-                        PutDeployRPC.putDeploy(deploy)
+                        putDeploy(deploy)
                     } else {
                         return ConstValues.PUT_DEPLOY_ERROR_MESSAGE
                     }
@@ -51,8 +48,8 @@ class PutDeployRPC {
             } else {
                val putDeployResult:PutDeployResult = PutDeployResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
                 println("Put deploy successfull with deploy hash:" + putDeployResult.deployHash)
-                return putDeployResult.deployHash
                 putDeployCounter = 0
+                return putDeployResult.deployHash
             }
             return deployHash
         }

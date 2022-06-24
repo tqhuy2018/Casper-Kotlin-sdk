@@ -1,6 +1,5 @@
 package com.casper.sdk.getstatus
 
-import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 
 /** Class built for storing NextUpgrade information */
@@ -18,7 +17,7 @@ class NextUpgrade {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the NextUpgrade object */
         fun  fromJsonToNextUpgrade(from: JsonObject): NextUpgrade {
-            val ret: NextUpgrade = NextUpgrade()
+            val ret = NextUpgrade()
             ret.protocolVersion = from["protocol_version"].toString()
             val ap = from["activation_point"].toString()
             if (ap.toULong() > 0u) {

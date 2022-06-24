@@ -1,14 +1,12 @@
 package com.casper.sdk.getstatus
 
 import com.casper.sdk.ConstValues
-import com.casper.sdk.getpeers.GetPeersResult
 import com.casper.sdk.getpeers.PeerEntry
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
-import netscape.javascript.JSObject
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -34,13 +32,13 @@ class GetStatusRPC {
         val json =response.body().toJson()
         val resultJson: JsonObject = json.get("result") as JsonObject
         val peerList = resultJson.get("peers")
-        val getStatusResult:  GetStatusResult = GetStatusResult()
+        val getStatusResult = GetStatusResult()
         getStatusResult.apiVersion = resultJson.get("api_version").toString()
         getStatusResult.chainspecName = resultJson.get("chainspec_name").toString()
         getStatusResult.startingStateRootHash = resultJson.get("starting_state_root_hash").toString()
         if (peerList is JsonArray) {
             for(peer in peerList) {
-                val onePeerEntry:  PeerEntry = PeerEntry()
+                val onePeerEntry = PeerEntry()
                 onePeerEntry.address = peer.get("address").toString()
                 onePeerEntry.node_id = peer.get("node_id").toString()
                 getStatusResult.peers.add(onePeerEntry)

@@ -13,7 +13,7 @@ class MinimalBlockInfo {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the MinimalBlockInfo object */
         fun  fromJsonToMinimalBlockInfo(from: JsonObject) :  MinimalBlockInfo {
-            val ret :  MinimalBlockInfo = MinimalBlockInfo()
+            val ret  = MinimalBlockInfo()
             ret.creator = from["creator"].toString()
             val eraIDStr = from["era_id"].toJsonString()
             ret.eraId = eraIDStr.toULong()

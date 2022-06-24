@@ -3,11 +3,8 @@ package com.casper.sdk.getpeers
 import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
-import net.jemzart.jsonkraken.toJsonString
-
 import net.jemzart.jsonkraken.values.JsonArray
 import java.net.URI
-import java.net.URLEncoder
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse

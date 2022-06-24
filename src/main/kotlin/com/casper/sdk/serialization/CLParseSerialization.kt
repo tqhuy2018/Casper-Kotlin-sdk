@@ -2,7 +2,6 @@ package com.casper.sdk.serialization
 
 import com.casper.sdk.ConstValues
 import com.casper.sdk.clvalue.CLParsed
-import com.casper.sdk.clvalue.CLType
 
 class CLParseSerialization {
 
@@ -68,7 +67,7 @@ class CLParseSerialization {
             if (clParse.itsValueInStr == "") {
                 return "00000000"
             }
-            var ret: String = ""
+            var ret : String
             val strToParse: String = clParse.itsValueInStr
             val strLength : UInt = strToParse.length.toUInt()
             ret = NumberSerialize.serializeForU32(strLength.toString())
@@ -101,7 +100,6 @@ class CLParseSerialization {
         /// "hash-8cf5e4acf51f54eb59291599187838dc3bc234089c46fc6ca8ad17e762ae4401" will has the serialization with value
         /// "8cf5e4acf51f54eb59291599187838dc3bc234089c46fc6ca8ad17e762ae4401"
         fun serializeFromCLParseKey(clParse: CLParsed) : String {
-            var ret:String = ""
             val keyStr : String = clParse.itsValueInStr
             if(keyStr.contains("account-hash-")) {
                 val array:List<String> = keyStr.split("-")
@@ -111,7 +109,6 @@ class CLParseSerialization {
                 return  "01" + array[1]
             } else if (keyStr.contains("uref-")) {
                 val array:List<String> = keyStr.split("-")
-                ret = "02" + array[1]
                 val suffix:String = array[2].substring(1,3)
                 return  "02" + array[1] + suffix
             }
@@ -121,11 +118,9 @@ class CLParseSerialization {
         /// Sample serialization for value : uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007
         /// Return result will be be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c607
         fun serializeFromCLParseURef(clParse: CLParsed): String {
-            var ret:String = ""
             val keyStr : String = clParse.itsValueInStr
             if (keyStr.contains("uref-")) {
                 val array:List<String> = keyStr.split("-")
-                ret = "02" + array[1]
                 val suffix:String = array[2].substring(1,3)
                 return  "02" + array[1] + suffix
             }
@@ -147,7 +142,7 @@ class CLParseSerialization {
             if (clParse.itsValueInStr == ConstValues.VALUE_NULL) {
                 return "00"
             }
-            val innerParsedSerialization: String = CLParseSerialization.serializeFromCLParse(clParse.innerParsed1)
+            val innerParsedSerialization: String = serializeFromCLParse(clParse.innerParsed1)
             val ret: String = "01" + innerParsedSerialization
             return  ret
         }
@@ -165,8 +160,8 @@ class CLParseSerialization {
             }
             var ret:String = NumberSerialize.serializeForU32(totalElement.toString())
             for(i in 0..totalElement-1) {
-                val oneCLParse:CLParsed = clParse.itsArrayValue.get(i)
-                val oneSerialization:String = CLParseSerialization.serializeFromCLParse(clParse.itsArrayValue.get(i))
+                //val oneCLParse:CLParsed = clParse.itsArrayValue.get(i)
+                val oneSerialization:String = serializeFromCLParse(clParse.itsArrayValue.get(i))
                 ret = ret + oneSerialization
             }
             return ret
@@ -184,8 +179,8 @@ class CLParseSerialization {
             }
             var ret:String = NumberSerialize.serializeForU32(totalElement.toString())
             for(i in 0..totalElement-1) {
-                val keySerialization:String = CLParseSerialization.serializeFromCLParse(clParse.innerParsed1.itsArrayValue.get(i))
-                val valueSerialization:String = CLParseSerialization.serializeFromCLParse(clParse.innerParsed2.itsArrayValue.get(i))
+                val keySerialization:String = serializeFromCLParse(clParse.innerParsed1.itsArrayValue.get(i))
+                val valueSerialization:String = serializeFromCLParse(clParse.innerParsed2.itsArrayValue.get(i))
                 ret = ret + keySerialization + valueSerialization
             }
             return ret
@@ -195,7 +190,7 @@ class CLParseSerialization {
         ///If the result is Err, then the prefix = "00"
         ///result = prefix + (inner CLParse value).serialized
         fun serializeFromCLParseResult(clParse: CLParsed): String {
-            var prefixStr:String = ""
+            val prefixStr : String
             if(clParse.itsValueInStr == ConstValues.CLPARSE_RESULT_OK) {
                 prefixStr = "01"
             } else if(clParse.itsValueInStr == ConstValues.CLPARSE_RESULT_ERR) {
@@ -203,54 +198,54 @@ class CLParseSerialization {
             } else {
                 prefixStr = "ERR_RESULT"
             }
-            val innerSerialize:String = CLParseSerialization.serializeFromCLParse(clParse.innerParsed1)
+            val innerSerialize:String = serializeFromCLParse(clParse.innerParsed1)
             return prefixStr + innerSerialize
         }
         //This function serialize  CLValue of type  Tuple1, the result is the serialization of the CLParse inner value in the Tuple1
         fun serializeFromCLParseTuple1(clParse: CLParsed):String {
-            return CLParseSerialization.serializeFromCLParse(clParse.innerParsed1)
+            return serializeFromCLParse(clParse.innerParsed1)
         }
         //This function serialize  CLValue of type  Tuple2,  the result is the concatenation of 2 inner CLParse values in the Tuple2
         fun serializeFromCLParseTuple2(clParse: CLParsed):String {
-            return CLParseSerialization.serializeFromCLParse(clParse.innerParsed1) + CLParseSerialization.serializeFromCLParse(clParse.innerParsed2)
+            return serializeFromCLParse(clParse.innerParsed1) + serializeFromCLParse(clParse.innerParsed2)
         }
         //This function serialize  CLValue of type  Tuple3, the result is the concatenation of 3 inner CLParse values in the Tuple3
         fun serializeFromCLParseTuple3(clParse: CLParsed):String {
-            return CLParseSerialization.serializeFromCLParse(clParse.innerParsed1) + CLParseSerialization.serializeFromCLParse(clParse.innerParsed2) + CLParseSerialization.serializeFromCLParse(clParse.innerParsed3)
+            return serializeFromCLParse(clParse.innerParsed1) + serializeFromCLParse(clParse.innerParsed2) + serializeFromCLParse(clParse.innerParsed3)
         }
 
         ///Function for the serialization of  CLParse primitive in type with no recursive CLValue inside, such as Bool, U8, U32, I32, String, ....
         fun serializeFromCLParsePrimitive(clParse: CLParsed): String {
             if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_BOOL) {
-                return CLParseSerialization.serializeFromCLParseBool(clParse)
+                return serializeFromCLParseBool(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_U8) {
-                return CLParseSerialization.serializeFromCLParseU8(clParse)
+                return serializeFromCLParseU8(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_U32) {
-                return CLParseSerialization.serializeFromCLParseU32(clParse)
+                return serializeFromCLParseU32(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_U64) {
-                return CLParseSerialization.serializeFromCLParseU64(clParse)
+                return serializeFromCLParseU64(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_I32) {
-                return CLParseSerialization.serializeFromCLParseInt32(clParse)
+                return serializeFromCLParseInt32(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_I64) {
-                return CLParseSerialization.serializeFromCLParseInt64(clParse)
+                return serializeFromCLParseInt64(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_U128) {
-                return CLParseSerialization.serializeFromCLParseBigNumber(clParse)
+                return serializeFromCLParseBigNumber(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_U256) {
-                return CLParseSerialization.serializeFromCLParseBigNumber(clParse)
+                return serializeFromCLParseBigNumber(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_U512) {
-                return CLParseSerialization.serializeFromCLParseBigNumber(clParse)
+                return serializeFromCLParseBigNumber(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_STRING) {
-                return CLParseSerialization.serializeFromCLParseString(clParse)
+                return serializeFromCLParseString(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_UNIT) {
-                return CLParseSerialization.serializeFromCLParseUnit(clParse)
+                return serializeFromCLParseUnit(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_KEY) {
-                return CLParseSerialization.serializeFromCLParseKey(clParse)
+                return serializeFromCLParseKey(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_UREF) {
-                return CLParseSerialization.serializeFromCLParseURef(clParse)
+                return serializeFromCLParseURef(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_PUBLIC_KEY) {
-                return CLParseSerialization.serializeFromCLParsePublicKey(clParse)
+                return serializeFromCLParsePublicKey(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_BYTEARRAY) {
-                return CLParseSerialization.serializeFromCLParseByteArray(clParse)
+                return serializeFromCLParseByteArray(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_ANY) {
                 return "NULL"
             }
@@ -258,19 +253,19 @@ class CLParseSerialization {
         }
         fun serializeFromCLParseCompound(clParse: CLParsed): String {
             if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_OPTION) {
-                return CLParseSerialization.serializeFromCLParseOption(clParse)
+                return serializeFromCLParseOption(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST) {
-                return CLParseSerialization.serializeFromCLParseList(clParse)
+                return serializeFromCLParseList(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_MAP) {
-                return CLParseSerialization.serializeFromCLParseMap(clParse)
+                return serializeFromCLParseMap(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE1) {
-                return CLParseSerialization.serializeFromCLParseTuple1(clParse)
+                return serializeFromCLParseTuple1(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE2) {
-                return CLParseSerialization.serializeFromCLParseTuple2(clParse)
+                return serializeFromCLParseTuple2(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE3) {
-                return CLParseSerialization.serializeFromCLParseTuple3(clParse)
+                return serializeFromCLParseTuple3(clParse)
             } else if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_RESULT) {
-                return CLParseSerialization.serializeFromCLParseResult(clParse)
+                return serializeFromCLParseResult(clParse)
             }
             return "NONE_COMPOUND"
         }
@@ -283,9 +278,9 @@ class CLParseSerialization {
          */
         fun serializeFromCLParse(clParse: CLParsed): String {
             if(clParse.itsCLType.isCLTypePrimitive()) {
-                return CLParseSerialization.serializeFromCLParsePrimitive(clParse)
+                return serializeFromCLParsePrimitive(clParse)
             } else {
-                return CLParseSerialization.serializeFromCLParseCompound(clParse)
+                return serializeFromCLParseCompound(clParse)
             }
         }
     }

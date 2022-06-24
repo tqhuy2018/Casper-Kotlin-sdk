@@ -2,13 +2,12 @@ package com.casper.sdk.serialization
 
 import com.casper.sdk.ConstValues
 import com.casper.sdk.clvalue.CLType
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class CLTypeSerializationTest {
     @Test
     fun clTypeSerialize() {
-        val clType:CLType = CLType()
+        val clType = CLType()
 
         //Assertion for CLType Primitive
 

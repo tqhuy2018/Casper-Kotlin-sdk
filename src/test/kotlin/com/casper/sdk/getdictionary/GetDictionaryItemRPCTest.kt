@@ -23,7 +23,7 @@ internal class GetDictionaryItemRPCTest {
         val parameterStr: String = getDictionaryItemParams.generateParameterStr()
         val getDictionaryItemResult: GetDictionaryItemResult = getDictionaryItemRPC.getDictionaryItem(parameterStr)
         assert(getDictionaryItemResult.dictionaryKey == "dictionary-5d3e90f064798d54e5e53643c4fce0cbb1024aadcad1586cc4b7c1358a530373")
-        assert(getDictionaryItemResult.apiVersion == "1.4.5")
+        assert(getDictionaryItemResult.apiVersion.length > 0)
         assert(getDictionaryItemResult.storedValue.itsType == ConstValues.STORED_VALUE_CLVALUE)
         val clValue: CLValue = getDictionaryItemResult.storedValue.itsValue[0] as CLValue
         assert(clValue.itsBytes == "090000006162635f76616c7565")
@@ -44,7 +44,7 @@ internal class GetDictionaryItemRPCTest {
         val parameterStr2: String = getDictionaryItemParams2.generateParameterStr()
         val getDictionaryItemResult2: GetDictionaryItemResult = getDictionaryItemRPC.getDictionaryItem(parameterStr2)
         assert(getDictionaryItemResult2.dictionaryKey == "dictionary-ac34673fa957fa8083306892815496b8fdee0aa1509f0080823979d869176060")
-        assert(getDictionaryItemResult2.apiVersion == "1.4.5")
+        assert(getDictionaryItemResult2.apiVersion.length > 0)
         assert(getDictionaryItemResult2.storedValue.itsType == ConstValues.STORED_VALUE_CLVALUE)
         val clValue2: CLValue = getDictionaryItemResult2.storedValue.itsValue[0] as CLValue
         assert(clValue2.itsBytes == "0800000061626376616c7565")
@@ -65,7 +65,7 @@ internal class GetDictionaryItemRPCTest {
 
         val getDictionaryItemResult3: GetDictionaryItemResult = getDictionaryItemRPC.getDictionaryItem(parameterStr3)
         assert(getDictionaryItemResult3.dictionaryKey == "dictionary-5d3e90f064798d54e5e53643c4fce0cbb1024aadcad1586cc4b7c1358a530373")
-        assert(getDictionaryItemResult3.apiVersion == "1.4.5")
+        assert(getDictionaryItemResult3.apiVersion.length > 0)
         assert(getDictionaryItemResult3.storedValue.itsType == ConstValues.STORED_VALUE_CLVALUE)
         val clValue3: CLValue = getDictionaryItemResult3.storedValue.itsValue[0] as CLValue
         assert(clValue3.itsBytes == "090000006162635f76616c7565")
@@ -84,7 +84,7 @@ internal class GetDictionaryItemRPCTest {
         val parameterStr4: String = getDictionaryItemParams4.generateParameterStr()
         val getDictionaryItemResult4: GetDictionaryItemResult = getDictionaryItemRPC.getDictionaryItem(parameterStr4)
         assert(getDictionaryItemResult4.dictionaryKey == "dictionary-5d3e90f064798d54e5e53643c4fce0cbb1024aadcad1586cc4b7c1358a530373")
-        assert(getDictionaryItemResult4.apiVersion == "1.4.5")
+        assert(getDictionaryItemResult4.apiVersion.length > 0 )
         assert(getDictionaryItemResult4.storedValue.itsType == ConstValues.STORED_VALUE_CLVALUE)
         val clValue4: CLValue = getDictionaryItemResult4.storedValue.itsValue[0] as CLValue
         assert(clValue4.itsBytes == "090000006162635f76616c7565")

@@ -18,7 +18,7 @@ internal class GetBlockTransferRPCTest {
         val parameter1: String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
         try {
             val getBlockTransfersResult = getBlockTransferRPC.getBlockTransfer(parameter1)
-            assert(getBlockTransfersResult.apiVersion=="1.4.5")
+            assert(getBlockTransfersResult.apiVersion.length > 0)
             assert(getBlockTransfersResult.blockHash.length>0)
         } catch (e: IllegalArgumentException) {}
         //Call 2:  Get block transfer with BlockIdentifier of type Block Hash with correct Block Hash

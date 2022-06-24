@@ -13,7 +13,7 @@ internal class GetBalanceRPCTest {
         val parameterStr: String = getBalanceParams.generateParameter()
         val getBalanceResult: GetBalanceResult = getBalanceRPC.getBalance(parameterStr)
         assert(getBalanceResult.balanceValue.itsValue == "522693296224")
-        assert(getBalanceResult.apiVersion == "1.4.5")
+        assert(getBalanceResult.apiVersion.length > 0)
         assert(getBalanceResult.merkleProof.length == 31766)
         //negative path1 - send wrong state root hash
         getBalanceParams.stateRootHash = "AAA"

@@ -15,6 +15,6 @@ internal class GetStatusRPCTest {
         println("First peer entry node_id:  ${getStatusResult.peers[0].node_id} and address: ${getStatusResult.peers[0].address}")
         assert(getStatusResult.isNextUpgradeInit() == false)
         assert(getStatusResult.uptime.length > 0)
-        assert(getStatusResult.buildVersion == "1.4.5-a7f6a648d-casper-mainnet")
+        assert(getStatusResult.buildVersion.length > 0)
     }
 }

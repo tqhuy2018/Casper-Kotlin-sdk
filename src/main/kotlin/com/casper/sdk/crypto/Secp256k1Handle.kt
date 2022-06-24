@@ -1,6 +1,5 @@
 package com.casper.sdk.crypto
 
-//import java.security.*
 import com.casper.sdk.CasperUtils
 import com.casper.sdk.ConstValues
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
@@ -10,14 +9,9 @@ import org.bouncycastle.crypto.params.*
 import org.bouncycastle.crypto.signers.DSADigestSigner
 import org.bouncycastle.crypto.signers.ECDSASigner
 import org.bouncycastle.crypto.signers.PlainDSAEncoding
-import org.bouncycastle.crypto.util.PublicKeyFactory
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
-import org.bouncycastle.jcajce.provider.asymmetric.edec.BCEdDSAPublicKey
-import org.bouncycastle.jce.ECNamedCurveTable
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.bouncycastle.jce.spec.ECPublicKeySpec
-import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter
@@ -25,7 +19,6 @@ import org.bouncycastle.util.encoders.Hex
 import java.io.*
 import java.security.*
 import java.security.spec.ECGenParameterSpec
-import java.util.*
 
 class Secp256k1Handle {
 
@@ -67,15 +60,13 @@ class Secp256k1Handle {
         }
         //Generate the Secp256k1 key pair, from this key pair you can write the private/public key to Pem file
         //Or use the keys for sign/verify message for Secp256k1 Crypto
-        fun generateKey() : KeyPair{
+        //The private,public key pair is of type (BCECPrivateKey,BCECPublicKey)
+        fun generateKey() : KeyPair {
             Security.addProvider( BouncyCastleProvider())
             val keyPairGenerator = KeyPairGenerator.getInstance("ECDSA", BouncyCastleProvider.PROVIDER_NAME)
             val ecGenParameterSpec = ECGenParameterSpec("secp256k1")
             keyPairGenerator.initialize(ecGenParameterSpec,  SecureRandom())
             val keyPair = keyPairGenerator.generateKeyPair()
-            val privateKey : BCECPrivateKey = keyPair.private as BCECPrivateKey
-            println("Private key in secp256k1 is:"  + privateKey.toString())
-            println("Public key in secp256k1 is:" + keyPair.public.toString())
             return keyPair
         }
         //This function read the private key from the Pem file, with input is the file path
@@ -104,30 +95,17 @@ class Secp256k1Handle {
         //Otherwise IOException is thrown
         @Throws(IOException::class)
         fun readPublicKeyFromPemFile(filePath:String) : BCECPublicKey {
-            println("In read Public key, Pem file path:" + filePath)
             Security.addProvider(BouncyCastleProvider())
-            //val converter =  JcaPEMKeyConverter().setProvider("BC")
             val converter = JcaPEMKeyConverter().setProvider(BouncyCastleProvider())
             val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
-            println(" public key type is: " + pemKeyPair)
             if(pemKeyPair is SubjectPublicKeyInfo) {
                 val pKey = converter.getPublicKey(pemKeyPair)
                 if(pKey is BCECPublicKey) { //Secp256k1 public key
-                    println("PUblic key is BCECPublicKey")
                     return pKey
                 } else {
                     throw IOException()
                 }
-            } else if(pemKeyPair is PEMKeyPair) {
-                println("Public key is Pem key pair:" + pemKeyPair.publicKeyInfo)
-                val keyFactory = KeyFactory.getInstance("ECDSA", BouncyCastleProvider.PROVIDER_NAME)
-                val ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1")
-                val point = ecSpec.getCurve().decodePoint(pemKeyPair.publicKeyInfo.publicKeyData.bytes)
-                val pubSpec = ECPublicKeySpec(point, ecSpec)
-                val publicKey = keyFactory.generatePublic(pubSpec) as BCECPublicKey
-                println("Public key is: " + publicKey)
-                throw  IOException()
-            } else {
+            }  else {
                 throw IOException()
             }
         }
@@ -146,31 +124,5 @@ class Secp256k1Handle {
             val bytesArray: ByteArray = signer.generateSignature()
             return  Hex.toHexString(bytesArray)
         }
-        //This function is from scala, both read private key then sign the message
-        /*fun loadPemFile(filePath:String,message: String) :String{
-            val CURVE_PARAMS = CustomNamedCurves.getByName("secp256k1")
-            val CURVE =  ECDomainParameters(CURVE_PARAMS.getCurve(), CURVE_PARAMS.getG(), CURVE_PARAMS.getN(), CURVE_PARAMS.getH())
-            //val HALF_CURVE_ORDER = CURVE_PARAMS.getN().shiftRight(1)
-            Security.addProvider(BouncyCastleProvider())
-            val converter =  JcaPEMKeyConverter().setProvider("BC")
-            val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
-            if(pemKeyPair is org.bouncycastle.openssl.PEMKeyPair) {
-                //println("Pem key is of type PEMKEYPAIR")
-                val keyPair = converter.getKeyPair(pemKeyPair)
-                val pivk = keyPair.private as BCECPrivateKey
-                val privateKeyD = pivk.d
-                val param =  ParametersWithRandom( ECPrivateKeyParameters(privateKeyD, CURVE), SecureRandom())
-                val signer =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
-                signer.init(true,param)
-                signer.update(CasperUtils.fromStringToHexaBytes(message),0,message.length/2)
-                val bytesArray: ByteArray = signer.generateSignature()
-                //println("Sinature is: " + Hex.toHexString(bytesArray))
-                return  "02" + Hex.toHexString(bytesArray)
-            } else {
-                println("PEM KEY IS OF DIF KIND")
-            }
-            return  ""
-           // return BCECPrivateKey()
-        }*/
     }
 }

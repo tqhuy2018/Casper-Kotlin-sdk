@@ -19,7 +19,9 @@ import java.net.http.HttpResponse
 class PutDeployRPC {
     companion object {
         var methodURL: String = ConstValues.TESTNET_URL
+        var putDeployCounter:Int = 0
         fun putDeploy(deploy: Deploy) {
+            println("Try with effort : " + putDeployCounter)
             val jsonStr:String = PutDeployRPC.fromDeployToJsonString(deploy)
             val client = HttpClient.newBuilder().build()
             val request = HttpRequest.newBuilder()
@@ -30,17 +32,24 @@ class PutDeployRPC {
             val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
             val json =response.body().toJson()
             if(json.get("error") != null) {
-                deploy.approvals.removeAt(0)
-                val oneA: Approval = Approval()
-                oneA.signer = deploy.header.account
-                oneA.signature = Secp256k1Handle.signMessage(deploy.hash,PutDeployUtils.privateKey)
-                deploy.approvals.add(oneA)
-                PutDeployRPC.putDeploy(deploy)
+                val message = json.get("error").get("message")
+                println("Message is:" + message)
+                if(message == "invalid deploy: the approval at index 0 is invalid: asymmetric key error: failed to verify secp256k1 signature: signature error") {
+                    putDeployCounter ++
+                    if(putDeployCounter<10) {
+                        deploy.approvals.removeAt(0)
+                        val oneA: Approval = Approval()
+                        oneA.signer = deploy.header.account
+                        oneA.signature = "02" + Secp256k1Handle.signMessage(deploy.hash, PutDeployUtils.privateKey)
+                        deploy.approvals.add(oneA)
+                        PutDeployRPC.putDeploy(deploy)
+                    }
+                }
             } else {
                val putDeployResult:PutDeployResult = PutDeployResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
                 println("Put deploy successfull with deploy hash:" + putDeployResult.deployHash)
+                putDeployCounter = 0
             }
-
         }
         fun fromDeployToJsonString(deploy: Deploy):String {
             val headerString:String = "\"header\": {\"account\": \"" + deploy.header.account + "\",\"timestamp\": \"" + deploy.header.timeStamp + "\",\"ttl\":\""+deploy.header.ttl+"\",\"gas_price\":"+deploy.header.gasPrice+",\"body_hash\":\"" + deploy.header.bodyHash + "\",\"dependencies\": [],\"chain_name\": \"" + deploy.header.chainName + "\"}"

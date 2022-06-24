@@ -96,7 +96,7 @@ class ConstValues {
         val PARSED_FIXED_STRING: String = "!!!!!___PARSED___!!!!!"
         //For Crypto file name - read from Pem file
         val PEM_READ_PRIVATE_ED25519 : String = "Ed25519/KotlinEd25519PrivateKey.pem"
-        val PEM_READ_PRIVATE_SECP256k1 : String = "Ed25519/KotlinSecp256k1PrivateKey.pem"
+        val PEM_READ_PRIVATE_SECP256k1 : String = "Secp256k1/KotlinSecp256k1PrivateKey.pem"
         val PEM_READ_PUBLIC_ED25519 : String = "Ed25519/WriteSwiftPublicKeyEd25519.pem"
         val PEM_READ_PRIVATE2_ED25519 : String = "Ed25519/WriteSwiftPrivateKeyEd25519.pem"
         val PEM_READ_PUBLIC_SECP256k1 : String = "Secp256k1/writePublicSecp256k1.pem"

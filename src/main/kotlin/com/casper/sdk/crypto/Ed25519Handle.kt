@@ -97,32 +97,27 @@ class Ed25519Handle {
                 throw IOException()
             }
         }
-
         //Read public key from pem file, return the pem file as CLPublicKey object
         //The CLPublicKey object hold the main information of the PublicKey as ByteArray
         //if the file path exists and the file is in correct public key format, then an CLPublicKey object is returned
         //Otherwise IOException is thrown
         @Throws(IOException::class)
-        fun readPublicKeyFromPemFile(filePath:String) : CLPublicKey {
+        fun readPublicKeyFromPemFile(filePath:String) : Ed25519PublicKeyParameters {
             Security.addProvider(BouncyCastleProvider())
             val converter = JcaPEMKeyConverter().setProvider(BouncyCastleProvider())
             val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
-            val ret:CLPublicKey = CLPublicKey()
             if(pemKeyPair is SubjectPublicKeyInfo) {
                 val pKey = converter.getPublicKey(pemKeyPair)
                 if(pKey is BCEdDSAPublicKey) { //Ed25519 public key
                     val bytes:ByteArray = pKey.pointEncoding
-                    ret.bytes = bytes
-                    ret.keyAlgorithm = ConstValues.ED25519_PREFIX
+                    val ret : Ed25519PublicKeyParameters = Ed25519PublicKeyParameters(bytes)
                     return ret
-                } else if(pKey is BCECPublicKey) { //Secp256k1 public key
-
+                } else {
+                    throw IOException()
                 }
-
             } else {
                 throw IOException()
             }
-            return ret
         }
     }
 }

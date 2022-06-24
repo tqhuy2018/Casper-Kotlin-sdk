@@ -16,7 +16,7 @@ class Delegator {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the Delegator object */
         fun fromJsonToDelegator(from:  JsonObject): Delegator {
-            val ret: Delegator = Delegator()
+            val ret = Delegator()
             ret.bondingPurse = from["bonding_purse"].toString()
             ret.stakedAmount = U512Class.fromStringToU512(from["staked_amount"].toString())
             ret.validatorPublicKey = from["validator_public_key"].toString()

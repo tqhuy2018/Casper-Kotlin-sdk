@@ -12,7 +12,7 @@ class GetDictionaryItemResult {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to GetDictionaryItemResult object */
         fun fromJsonObjectToGetDictionaryItemResult(from: JsonObject) :  GetDictionaryItemResult {
-            var ret: GetDictionaryItemResult = GetDictionaryItemResult()
+            val ret = GetDictionaryItemResult()
             ret.apiVersion = from["api_version"].toString()
             ret.dictionaryKey = from["dictionary_key"].toString()
             ret.merkleProof = from["merkle_proof"].toString()

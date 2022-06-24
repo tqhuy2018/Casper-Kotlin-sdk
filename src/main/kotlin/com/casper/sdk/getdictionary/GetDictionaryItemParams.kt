@@ -10,7 +10,7 @@ class GetDictionaryItemParams {
     /** This function generate the parameter for the post method of the state_get_dictionary_item RPC call
      * Depends on what the DictionaryIdentifier enum type, corresponding parameter is generated */
     fun generateParameterStr(): String {
-        var ret: String = ""
+        var ret = ""
         when(dictionaryIdentifier.itsType) {
             ConstValues.DI_ACCOUNT_NAMED_KEY-> {
                 val ank: DIAccountNamedKey = dictionaryIdentifier.itsValue[0] as DIAccountNamedKey

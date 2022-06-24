@@ -42,8 +42,7 @@ class GetAuctionInfoRPC {
         if(json.get("error") != null) {
             throw IllegalArgumentException("Error get auction")
         } else { //If not error then get the GetAuctionInfoResult object
-            val ret:  GetAuctionInfoResult = GetAuctionInfoResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
-            return ret
+            return GetAuctionInfoResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
         }
     }
 }

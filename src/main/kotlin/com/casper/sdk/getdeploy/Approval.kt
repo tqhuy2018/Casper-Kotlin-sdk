@@ -8,7 +8,7 @@ class Approval {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the Approval object */
         fun  fromJsonToApproval(from: JsonObject):  Approval {
-            var ret: Approval = Approval()
+            val ret = Approval()
             ret.signature = from["signature"].toString()
             ret.signer = from["signer"].toString()
             return ret

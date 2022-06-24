@@ -2,7 +2,6 @@ package com.casper.sdk.clvalue
 
 import com.casper.sdk.ConstValues
 import com.casper.sdk.serialization.CLParseSerialization
-import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonObject
 /**Class built for storing the  CLValue object.
 Information of a sample CLValue object
@@ -26,7 +25,7 @@ class CLValue {
         }
         */
         fun toJsonString(clValue:CLValue) : String{
-            var ret:String = ""
+            val ret : String
             var clTypeStr : String = CLType.toJsonString(clValue.itsCLType)
             var clParsedStr: String = CLParsed.toJsonString(clValue.itsParse)
             if (clParsedStr.contains(ConstValues.PARSED_FIXED_STRING)) {
@@ -41,15 +40,15 @@ class CLValue {
         }
         //Generate the CLValue object  from the JsonObject
         fun  fromJsonObjToCLValue(fromJson: JsonObject): CLValue {
-            var ret:  CLValue = CLValue()
+            val ret = CLValue()
             ret.itsBytes = fromJson["bytes"].toString()
-            var clType = fromJson["cl_type"]
+            val clType = fromJson["cl_type"]
             ret.itsCLType = CLType.getCLType(clType as Any)
             ret.itsParse.itsCLType = ret.itsCLType
             if(fromJson["parsed"].toString() != "null") {
                 ret.itsParse = CLParsed.getCLParsed(fromJson["parsed"] as Any,  ret.itsCLType)
             } else {
-                var clParsed: CLParsed = CLParsed()
+                val clParsed = CLParsed()
                 clParsed.itsValueInStr = ConstValues.VALUE_NULL
                 ret.itsParse = clParsed
             }

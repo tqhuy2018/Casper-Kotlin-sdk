@@ -16,7 +16,7 @@ class SeigniorageAllocation {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the SeigniorageAllocation object */
         fun fromJsonToSeigniorageAllocation(from: JsonObject): SeigniorageAllocation {
-            val ret: SeigniorageAllocation = SeigniorageAllocation()
+            val ret = SeigniorageAllocation()
             val validator = from["Validator"].toJsonString()
             if(validator != "null") {//enum of type validator
                 ret.isValidator = true

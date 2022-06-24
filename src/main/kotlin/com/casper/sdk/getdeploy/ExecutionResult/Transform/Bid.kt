@@ -1,9 +1,7 @@
 package com.casper.sdk.getdeploy.ExecutionResult.Transform
 
 import com.casper.sdk.common.classes.U512Class
-import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJsonString
-import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 /** Class built for storing Bid information */
 class Bid {
@@ -19,7 +17,7 @@ class Bid {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the Bid object */
         fun fromJsonToBid(from: JsonObject): Bid {
-            val ret: Bid = Bid()
+            val ret = Bid()
             ret.bondingPurse = from["bonding_purse"].toString()
             val dr = from["delegation_rate"].toJsonString()
             ret.delegationRate = dr.toUByte()
@@ -32,7 +30,7 @@ class Bid {
             val totalElement = listKey.count() - 1
             for(i in 0 .. totalElement) {
                 val oneDelegator = Delegator.fromJsonToDelegator(listValue[i])
-                oneDelegator.itsPublicKey = listKey[i].toString()
+                oneDelegator.itsPublicKey = listKey[i]
                 ret.delegators.add(oneDelegator)
             }
             val vsJson = from["vesting_schedule"].toJsonString()

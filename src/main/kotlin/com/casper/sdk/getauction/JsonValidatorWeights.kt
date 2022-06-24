@@ -9,7 +9,7 @@ class JsonValidatorWeights {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to generate the JsonValidatorWeights object */
         fun fromJsonObjectToJsonValidatorWeights(from: JsonObject): JsonValidatorWeights {
-            var ret: JsonValidatorWeights = JsonValidatorWeights()
+            val ret = JsonValidatorWeights()
             ret.publicKey = from["public_key"].toString()
             ret.weight = U512Class.fromStringToU512(from["weight"].toString())
             return ret

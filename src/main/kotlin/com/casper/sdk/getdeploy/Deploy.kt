@@ -16,11 +16,11 @@ class Deploy{
    companion object {
       /** This function parse the JsonArray (taken from server RPC method call) to get the list of Approval object */
       fun  fromJsonToListApprovals(from: JsonArray) :  MutableList<Approval> {
-         var ret: MutableList<Approval> = mutableListOf()
-         var totalApproval: Int = from.count()
+         val ret: MutableList<Approval> = mutableListOf()
+         val totalApproval: Int = from.count()
          if(totalApproval > 0) {
             for(i in 0..totalApproval-1) {
-               var oneApproval: Approval = Approval.fromJsonToApproval(from[i] as JsonObject)
+               val oneApproval: Approval = Approval.fromJsonToApproval(from[i] as JsonObject)
                ret.add(oneApproval)
             }
          }

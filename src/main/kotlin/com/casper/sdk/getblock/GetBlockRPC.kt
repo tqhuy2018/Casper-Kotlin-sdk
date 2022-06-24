@@ -42,8 +42,7 @@ class GetBlockRPC {
         if(json.get("error") != null) {
             throw IllegalArgumentException("Error get block")
         } else { //If not error then get the state root hash
-            val ret:  GetBlockResult = GetBlockResult.fromJsonObjectToGetBlockResult(json.get("result") as JsonObject)
-            return ret
+            return GetBlockResult.fromJsonObjectToGetBlockResult(json.get("result") as JsonObject)
         }
     }
 }

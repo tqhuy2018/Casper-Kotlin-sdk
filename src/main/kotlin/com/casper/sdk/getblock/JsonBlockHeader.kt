@@ -23,7 +23,7 @@ class JsonBlockHeader {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to JsonBlockHeader object */
         fun fromJsonToJsonBlockHeader(from: JsonObject): JsonBlockHeader {
-            var ret: JsonBlockHeader = JsonBlockHeader()
+            val ret = JsonBlockHeader()
             ret.parentHash = from["parent_hash"].toString()
             ret.stateRootHash = from["state_root_hash"].toString()
             ret.bodyHash = from["body_hash"].toString()

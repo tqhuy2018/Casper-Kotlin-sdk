@@ -59,11 +59,10 @@ class CLType {
         "U512"
        */
         fun toJsonString(clType: CLType) :String{
-            var ret:String = ""
             if(clType.isCLTypePrimitive()) {
-                return "\"" + CLType.clTypePrimitiveToJsonString(clType) + "\""
+                return "\"" + clTypePrimitiveToJsonString(clType) + "\""
             } else {
-                return CLType.clTypeCompoundToJsonString(clType)
+                return clTypeCompoundToJsonString(clType)
             }
         }
         /*This function generate the Json String represent the CLType primitive, such as Bool, I32, I64 , U32 , ...
@@ -110,109 +109,109 @@ class CLType {
                 return "{\"ByteArray\": 32}"
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_TUPLE1) {
                 if(clType.innerCLType1.isCLTypePrimitive()) {
-                    val clTypeStr:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType1)
+                    val clTypeStr:String = clTypePrimitiveToJsonString(clType.innerCLType1)
                     return "{\"Tuple1\": \"" + clTypeStr + "\"}"
                 } else {
-                    val clTypeStr:String = CLType.clTypeCompoundToJsonString(clType.innerCLType1)
+                    val clTypeStr:String = clTypeCompoundToJsonString(clType.innerCLType1)
                     return "{\"Tuple1\": " + clTypeStr + "}"
                 }
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_TUPLE2) {
                 if(clType.innerCLType1.isCLTypePrimitive()) {
-                    val clType1Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType1)
+                    val clType1Str:String = clTypePrimitiveToJsonString(clType.innerCLType1)
                     if(clType.innerCLType2.isCLTypePrimitive()) {
-                        val clType2Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypePrimitiveToJsonString(clType.innerCLType2)
                         return "{\"Tuple2\": [\"" + clType1Str +"\", \"" + clType2Str + "\"]}"
                     } else {
-                        val clType2Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypeCompoundToJsonString(clType.innerCLType2)
                         return "{\"Tuple2\": [\"" + clType1Str +"\", " + clType2Str + "]}"
                     }
                 } else {
-                    val clType1Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType1)
+                    val clType1Str:String = clTypeCompoundToJsonString(clType.innerCLType1)
                     if(clType.innerCLType2.isCLTypePrimitive()) {
-                        val clType2Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypePrimitiveToJsonString(clType.innerCLType2)
                         return "{\"Tuple2\": [" + clType1Str +", \"" + clType2Str + "\"]}"
                     } else {
-                        val clType2Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypeCompoundToJsonString(clType.innerCLType2)
                         return "{\"Tuple2\": [" + clType1Str +", " + clType2Str + "]}"
                     }
                 }
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_TUPLE3) {
                 var ret = "{\"Tuple3\": ["
                 if(clType.innerCLType1.isCLTypePrimitive()) {
-                    val  clTypeStr1 : String = "\"" + CLType.clTypePrimitiveToJsonString(clType.innerCLType1) + "\""
+                    val  clTypeStr1 : String = "\"" + clTypePrimitiveToJsonString(clType.innerCLType1) + "\""
                     ret = ret + clTypeStr1 + ", "
                 } else {
-                    val clType1Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType1)
+                    val clType1Str:String = clTypeCompoundToJsonString(clType.innerCLType1)
                     ret = ret + clType1Str + ", "
                 }
                 if(clType.innerCLType2.isCLTypePrimitive()) {
-                    val  clTypeStr2 : String = "\"" + CLType.clTypePrimitiveToJsonString(clType.innerCLType2) + "\""
+                    val  clTypeStr2 : String = "\"" + clTypePrimitiveToJsonString(clType.innerCLType2) + "\""
                     ret = ret + clTypeStr2 + ", "
                 } else {
-                    val clType2Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType2)
+                    val clType2Str:String = clTypeCompoundToJsonString(clType.innerCLType2)
                     ret = ret + clType2Str + ", "
                 }
                 if(clType.innerCLType3.isCLTypePrimitive()) {
-                    val  clTypeStr3 : String = "\"" + CLType.clTypePrimitiveToJsonString(clType.innerCLType3) + "\""
+                    val  clTypeStr3 : String = "\"" + clTypePrimitiveToJsonString(clType.innerCLType3) + "\""
                     ret = ret + clTypeStr3 + "]"
                 } else {
-                    val clType3Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType3)
+                    val clType3Str:String = clTypeCompoundToJsonString(clType.innerCLType3)
                     ret = ret + clType3Str + "]"
                 }
                 return ret
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_MAP) {
                 if(clType.innerCLType1.isCLTypePrimitive()) {
-                    val clType1Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType1)
+                    val clType1Str:String = clTypePrimitiveToJsonString(clType.innerCLType1)
                     if(clType.innerCLType2.isCLTypePrimitive()) {
-                        val clType2Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypePrimitiveToJsonString(clType.innerCLType2)
                         return "{\"Map\": {\"key\":\"" + clType1Str + "\", \"value\":\"" + clType2Str + "\")}}"
                     } else {
-                        val clType2Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypeCompoundToJsonString(clType.innerCLType2)
                         return "{\"Map\": {\"key\":" + clType1Str + ", \"value\":" + clType2Str + ")}}"
                     }
                 } else {
-                    val clType1Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType1)
+                    val clType1Str:String = clTypeCompoundToJsonString(clType.innerCLType1)
                     if(clType.innerCLType2.isCLTypePrimitive()) {
-                        val clType2Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypePrimitiveToJsonString(clType.innerCLType2)
                         return "{\"Map\": {\"key\":" + clType1Str + ", \"value\":\"" + clType2Str + "\")}}"
                     } else {
-                        val clType2Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypeCompoundToJsonString(clType.innerCLType2)
                         return "{\"Map\": {\"key\":" + clType1Str + ", \"value\":" + clType2Str + ")}}"
                     }
                 }
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_LIST) {
                 if(clType.innerCLType1.isCLTypePrimitive()) {
-                    val clTypeStr:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType1)
+                    val clTypeStr:String = clTypePrimitiveToJsonString(clType.innerCLType1)
                     return "{\"List\": \"" + clTypeStr + "\"}"
                 } else {
-                    val clTypeStr:String = CLType.clTypeCompoundToJsonString(clType.innerCLType1)
+                    val clTypeStr:String = clTypeCompoundToJsonString(clType.innerCLType1)
                     return "{\"List\": " + clTypeStr + "}"
                 }
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_OPTION) {
                 if(clType.innerCLType1.isCLTypePrimitive()) {
-                    val clTypeStr:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType1)
+                    val clTypeStr:String = clTypePrimitiveToJsonString(clType.innerCLType1)
                     return "{\"Option\": \"" + clTypeStr + "\"}"
                 } else {
-                    val clTypeStr:String = CLType.clTypeCompoundToJsonString(clType.innerCLType1)
+                    val clTypeStr:String = clTypeCompoundToJsonString(clType.innerCLType1)
                     return "{\"Option\": " + clTypeStr + "}"
                 }
             } else if (clType.itsTypeStr == ConstValues.CLTYPE_RESULT) {
                 if(clType.innerCLType1.isCLTypePrimitive()) {
-                    val clType1Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType1)
+                    val clType1Str:String = clTypePrimitiveToJsonString(clType.innerCLType1)
                     if(clType.innerCLType2.isCLTypePrimitive()) {
-                        val clType2Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypePrimitiveToJsonString(clType.innerCLType2)
                         return "{\"Result\": {\"ok\":" + clType1Str + ", \"err\":" + clType2Str + ")}}"
                     } else {
-                        val clType2Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypeCompoundToJsonString(clType.innerCLType2)
                         return "{\"Result\": {\"ok\":" + clType1Str + ", \"err\":" + clType2Str + ")}}"
                     }
                 } else {
-                    val clType1Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType1)
+                    val clType1Str:String = clTypeCompoundToJsonString(clType.innerCLType1)
                     if(clType.innerCLType2.isCLTypePrimitive()) {
-                        val clType2Str:String = CLType.clTypePrimitiveToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypePrimitiveToJsonString(clType.innerCLType2)
                         return "{\"Result\": {\"ok\":" + clType1Str + ", \"err\":" + clType2Str + ")}}"
                     } else {
-                        val clType2Str:String = CLType.clTypeCompoundToJsonString(clType.innerCLType2)
+                        val clType2Str:String = clTypeCompoundToJsonString(clType.innerCLType2)
                         return "{\"Result\": {\"ok\":" + clType1Str + ", \"err\":" + clType2Str + ")}}"
                     }
                 }
@@ -223,14 +222,14 @@ class CLType {
         //Generate the CLType object  from the JSON object
         fun getCLType(from: Any): CLType {
             if (from is String) {
-                return CLType.getCLTypePrimitive(from)
+                return getCLTypePrimitive(from)
             } else {
-                return CLType.getCLTypeCompound(from as JsonObject)
+                return getCLTypeCompound(from as JsonObject)
             }
         }
         //Generate the CLType object (of type primitive (such as bool,  i32,  i64,  u8,  u32,  u64,  u128,  u266,  u512,  string,  unit,  publickey,  key,  ...)  from the JSON object
         fun getCLTypePrimitive(from: String): CLType {
-            val ret: CLType = CLType()
+            val ret = CLType()
             if (from == ConstValues.CLTYPE_BOOL) {
                 ret.itsTypeStr = ConstValues.CLTYPE_BOOL
             }  else  if (from == ConstValues.CLTYPE_I32) {
@@ -268,33 +267,33 @@ class CLType {
         }
         //Generate the CLType object  of type compound (type with recursive CLValue inside its body,  such as List,  Map,  Tuple ,  Result , Option...)  from the JSON object
         fun getCLTypeCompound(from: JsonObject): CLType {
-            val ret: CLType = CLType()
+            val ret = CLType()
             from[ConstValues.CLTYPE_OPTION] ?.let  {
                 ret.itsTypeStr = ConstValues.CLTYPE_OPTION
                 ret.innerCLType1 = CLType()
-                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_OPTION] as Any)
+                ret.innerCLType1 = getCLType(from[ConstValues.CLTYPE_OPTION] as Any)
                 return ret
             }
             from[ConstValues.CLTYPE_LIST] ?.let  {
                 ret.itsTypeStr = ConstValues.CLTYPE_LIST
                 ret.innerCLType1 = CLType()
-                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_LIST] as Any)
+                ret.innerCLType1 = getCLType(from[ConstValues.CLTYPE_LIST] as Any)
                 return ret
             }
             from[ConstValues.CLTYPE_MAP] ?.let  {
                 ret.itsTypeStr = ConstValues.CLTYPE_MAP
                 //clParse for key
-                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_MAP].get("key") as Any)
+                ret.innerCLType1 = getCLType(from[ConstValues.CLTYPE_MAP].get("key") as Any)
                 //clParse for value
-                ret.innerCLType2 = CLType.getCLType(from[ConstValues.CLTYPE_MAP].get("value") as Any)
+                ret.innerCLType2 = getCLType(from[ConstValues.CLTYPE_MAP].get("value") as Any)
                 return ret
             }
             from[ConstValues.CLTYPE_RESULT] ?.let  {
                 ret.itsTypeStr = ConstValues.CLTYPE_RESULT
                 //clParse for ok
-                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_RESULT].get("ok") as Any)
+                ret.innerCLType1 = getCLType(from[ConstValues.CLTYPE_RESULT].get("ok") as Any)
                 //clParse for err
-                ret.innerCLType2 = CLType.getCLType(from[ConstValues.CLTYPE_RESULT].get("err") as Any)
+                ret.innerCLType2 = getCLType(from[ConstValues.CLTYPE_RESULT].get("err") as Any)
                 return ret
             }
             from[ConstValues.CLTYPE_BYTEARRAY] ?.let {
@@ -304,25 +303,25 @@ class CLType {
             from[ConstValues.CLTYPE_TUPLE1] ?.let  {
                 ret.itsTypeStr = ConstValues.CLTYPE_TUPLE1
                 //clParse for tuple 1
-                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE1][0] as Any)
+                ret.innerCLType1 = getCLType(from[ConstValues.CLTYPE_TUPLE1][0] as Any)
                  return ret
             }
             from[ConstValues.CLTYPE_TUPLE2] ?.let  {
                  ret.itsTypeStr = ConstValues.CLTYPE_TUPLE2
                 //clParse for tuple 1
-                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE2][0] as Any)
+                ret.innerCLType1 = getCLType(from[ConstValues.CLTYPE_TUPLE2][0] as Any)
                 //clParse for tuple 2
-                ret.innerCLType2 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE2][1] as Any)
+                ret.innerCLType2 = getCLType(from[ConstValues.CLTYPE_TUPLE2][1] as Any)
                 return ret
             }
             from[ConstValues.CLTYPE_TUPLE3] ?.let  {
                 ret.itsTypeStr = ConstValues.CLTYPE_TUPLE3
                 //clParse for tuple 1
-                ret.innerCLType1 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE3][0] as Any)
+                ret.innerCLType1 = getCLType(from[ConstValues.CLTYPE_TUPLE3][0] as Any)
                 //clParse for tuple 2
-                ret.innerCLType2 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE3][1] as Any)
+                ret.innerCLType2 = getCLType(from[ConstValues.CLTYPE_TUPLE3][1] as Any)
                 //clParse for tuple 3
-                ret.innerCLType3 = CLType.getCLType(from[ConstValues.CLTYPE_TUPLE3][2] as Any)
+                ret.innerCLType3 = getCLType(from[ConstValues.CLTYPE_TUPLE3][2] as Any)
                 return ret
             }
             return ret

@@ -10,7 +10,7 @@ class JsonBlockBody {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to JsonBlockBody object */
         fun fromJsonToJsonBlockBody(from: JsonObject): JsonBlockBody {
-            var ret: JsonBlockBody = JsonBlockBody()
+            val ret = JsonBlockBody()
             ret.proposer = from["proposer"].toString()
             val deployHashes: JsonArray = from["deploy_hashes"] as JsonArray
             val transferHashes: JsonArray = from["transfer_hashes"] as JsonArray

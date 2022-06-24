@@ -19,7 +19,7 @@ class Transfer {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the Transfer object */
         fun fromJsonToTransfer(from: JsonObject): Transfer {
-            var ret: Transfer = Transfer()
+            val ret = Transfer()
             ret.deployHash = from["deploy_hash"].toString()
             ret.from = from["from"].toString()
             ret.source = from["source"].toString()

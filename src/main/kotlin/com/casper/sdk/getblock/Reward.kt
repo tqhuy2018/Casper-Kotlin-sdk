@@ -9,7 +9,7 @@ class Reward {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to Reward object */
         fun fromJsonToReward(from: JsonObject): Reward {
-            val ret: Reward = Reward()
+            val ret = Reward()
             ret.validator = from["validator"].toString()
             ret.amount = from["amount"].toJsonString().toULong()
             return ret

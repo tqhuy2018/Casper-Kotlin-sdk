@@ -16,11 +16,11 @@ class DeployHeader {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the DeployHeader object */
         fun fromJsonToDeployHeader(from: JsonObject): DeployHeader {
-            var ret: DeployHeader = DeployHeader()
+            val ret = DeployHeader()
             ret.account = from["account"].toString()
             ret.bodyHash = from["body_hash"].toString()
             ret.chainName = from["chain_name"].toString()
-            var gasPrice = from["gas_price"].toJsonString()
+            val gasPrice = from["gas_price"].toJsonString()
             ret.gasPrice = gasPrice.toULong()
             ret.timeStamp = from["timestamp"].toString()
             ret.ttl = from["ttl"].toString()

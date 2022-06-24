@@ -7,7 +7,7 @@ class U512Class {
     companion object {
         //This function convert a string that represents the number to a U512Class
         fun fromStringToU512(from: String): U512Class {
-            var ret: U512Class = U512Class()
+            val ret: U512Class = U512Class()
             ret.itsValue = from
             return ret
         }

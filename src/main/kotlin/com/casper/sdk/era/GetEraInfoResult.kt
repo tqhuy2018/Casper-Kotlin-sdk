@@ -14,7 +14,7 @@ class GetEraInfoResult {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to GetEraInfoResult object */
         fun fromJsonToGetEraInfoResult(from: JsonObject):  GetEraInfoResult {
-            val ret: GetEraInfoResult = GetEraInfoResult()
+            val ret = GetEraInfoResult()
             ret.apiVersion = from["api_version"].toString()
             val eraSummary = from["era_summary"]
             if(eraSummary != null) {

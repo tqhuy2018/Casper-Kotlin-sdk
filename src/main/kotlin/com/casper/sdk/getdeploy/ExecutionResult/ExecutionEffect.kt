@@ -10,14 +10,14 @@ class ExecutionEffect {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the ExecutionEffect object */
         fun  fromJsonToExecutionEffect(from: JsonObject): ExecutionEffect {
-            val ret:  ExecutionEffect = ExecutionEffect()
+            val ret = ExecutionEffect()
             if(from.toJsonString() != "null") {
                 val operationArray:  JsonArray = from["operations"] as JsonArray
                 if(operationArray.count()>0) {
                     val totalOperation: Int = operationArray.count() - 1
                     for(i in 0.. totalOperation) {
                         val oneOJson: JsonObject = operationArray[i] as JsonObject
-                        val oneOperation: CasperOperation = CasperOperation()
+                        val oneOperation = CasperOperation()
                         oneOperation.key = oneOJson.get("key").toString()
                         oneOperation.kind = oneOJson.get("kind").toString()
                         ret.operations.add(oneOperation)

@@ -13,7 +13,7 @@ class GetBlockTransfersResult {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to GetBlockTransfersResult object */
         fun fromJsonToGetBlockTransfersResult(from: JsonObject): GetBlockTransfersResult {
-            var ret: GetBlockTransfersResult = GetBlockTransfersResult()
+            val ret = GetBlockTransfersResult()
             ret.apiVersion = from["api_version"].toString()
             val blockHash = from["block_hash"]
             if(blockHash != null) {

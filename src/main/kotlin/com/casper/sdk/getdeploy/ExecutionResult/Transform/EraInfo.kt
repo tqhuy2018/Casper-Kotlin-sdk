@@ -9,7 +9,7 @@ class EraInfo {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the EraInfo object */
         fun fromJsonArrayToEraInfo(from: JsonObject): EraInfo {
-            val ret: EraInfo = EraInfo()
+            val ret = EraInfo()
             val jsonArray: JsonArray = from["seigniorage_allocations"] as JsonArray
             val totalElement = jsonArray.count()
             if(totalElement>0) {

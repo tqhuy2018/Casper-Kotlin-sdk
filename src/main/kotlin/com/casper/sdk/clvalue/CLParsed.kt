@@ -40,17 +40,18 @@ class CLParsed {
         }
         return false
     }
+    /*
     fun isInnerParsed3Initialize(): Boolean {
         if(this:: innerParsed3.isInitialized) {
             return true
         }
         return false
-    }
+    }*/
     companion object
     {
         //Generate the CLParse object  of type primitive (such as bool,  i32,  i64,  u8,  u32,  u64,  u128,  u266,  u512,  string,  unit,  publickey,  key,  ...)  from the JSON object fromObj with given clType
         fun getCLParsedPrimitive(from: Any,  withCLType:  CLType): CLParsed {
-            val ret: CLParsed = CLParsed()
+            val ret = CLParsed()
             ret.itsCLType = withCLType
             if (withCLType.itsTypeStr == ConstValues.CLTYPE_BOOL) {
                 ret.itsValueInStr = from.toJsonString()
@@ -89,51 +90,50 @@ class CLParsed {
                 ret.itsValueInStr = from as String
             } else if (withCLType.itsTypeStr == ConstValues.CLTYPE_ANY) {
                 ret.itsValueInStr = ConstValues.VALUE_NULL
-            } else {
             }
             return ret
         }
         //Generate the CLParse object  of type compound (type with recursive CLValue inside its body,  such as List,  Map,  Tuple ,  Result , Option...)  from the JSON object fromObj with given clType
         fun getCLParsedCompound(from:  Any,  withCLType:  CLType): CLParsed {
-            val ret:  CLParsed = CLParsed()
+            val ret = CLParsed()
             ret.itsCLType = withCLType
             if (withCLType.itsTypeStr == ConstValues.CLTYPE_OPTION) {
                 ret.innerParsed1 = CLParsed()
-                ret.innerParsed1 = CLParsed.getCLParsed(from, withCLType.innerCLType1)
+                ret.innerParsed1 = getCLParsed(from, withCLType.innerCLType1)
             } else if (withCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE1) {
                 ret.innerParsed1 = CLParsed()
                 val jsonArray: JsonArray = from as JsonArray
-                ret.innerParsed1 = CLParsed.getCLParsed(jsonArray[0] as Any, withCLType.innerCLType1)
+                ret.innerParsed1 = getCLParsed(jsonArray[0] as Any, withCLType.innerCLType1)
                 return ret
             }else if (withCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE2) {
                 ret.innerParsed1 = CLParsed()
                 ret.innerParsed2 = CLParsed()
                 val jsonArray: JsonArray = from as JsonArray
-                ret.innerParsed1 = CLParsed.getCLParsed(jsonArray[0] as Any, withCLType.innerCLType1)
-                ret.innerParsed2 = CLParsed.getCLParsed(jsonArray[1] as Any, withCLType.innerCLType2)
+                ret.innerParsed1 = getCLParsed(jsonArray[0] as Any, withCLType.innerCLType1)
+                ret.innerParsed2 = getCLParsed(jsonArray[1] as Any, withCLType.innerCLType2)
                 return ret
             }else if (withCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE3) {
                 ret.innerParsed1 = CLParsed()
                 ret.innerParsed2 = CLParsed()
                 ret.innerParsed3 = CLParsed()
                 val jsonArray: JsonArray = from as JsonArray
-                ret.innerParsed1 = CLParsed.getCLParsed(jsonArray[0] as Any, withCLType.innerCLType1)
-                ret.innerParsed2 = CLParsed.getCLParsed(jsonArray[1] as Any, withCLType.innerCLType2)
-                ret.innerParsed3 = CLParsed.getCLParsed(jsonArray[2] as Any, withCLType.innerCLType3)
+                ret.innerParsed1 = getCLParsed(jsonArray[0] as Any, withCLType.innerCLType1)
+                ret.innerParsed2 = getCLParsed(jsonArray[1] as Any, withCLType.innerCLType2)
+                ret.innerParsed3 = getCLParsed(jsonArray[2] as Any, withCLType.innerCLType3)
                 return ret
             }else if (withCLType.itsTypeStr == ConstValues.CLTYPE_RESULT) {
                 val parseOK = from.get("Ok").toJsonString()
                 if(parseOK != "null") {
                     ret.itsValueInStr = "Ok"
                     ret.innerParsed1 = CLParsed()
-                    ret.innerParsed1 = CLParsed.getCLParsed(from.get("Ok") as Any, withCLType.innerCLType1)
+                    ret.innerParsed1 = getCLParsed(from.get("Ok") as Any, withCLType.innerCLType1)
                     return ret
                 }
                 val parseErr = from.get("Err").toJsonString()
                 if(parseErr != "null") {
                     ret.itsValueInStr = "Err"
                     ret.innerParsed1 = CLParsed()
-                    ret.innerParsed1 = CLParsed.getCLParsed(from.get("Err") as Any, withCLType.innerCLType1)
+                    ret.innerParsed1 = getCLParsed(from.get("Err") as Any, withCLType.innerCLType1)
                     return ret
                 }
 
@@ -172,9 +172,9 @@ class CLParsed {
         //Generate the CLParse object from JsonObject or String with given information of Type
         fun getCLParsed(from: Any,  withCLType: CLType): CLParsed {
             if ( withCLType.isCLTypePrimitive()) {
-                return CLParsed.getCLParsedPrimitive(from, withCLType)
+                return getCLParsedPrimitive(from, withCLType)
            } else {
-                return CLParsed.getCLParsedCompound(from, withCLType)
+                return getCLParsedCompound(from, withCLType)
            }
         }
         /*This function generate the Json String represent the CLParse, built for account_put_deploy call
@@ -204,11 +204,10 @@ class CLParsed {
         ]
       */
         fun toJsonString(clParse:CLParsed) : String {
-            var ret:String = ""
             if (clParse.itsCLType.isCLTypePrimitive()) {
-                return CLParsed.getParsedPrimitive(clParse)
+                return getParsedPrimitive(clParse)
             } else {
-                return  CLParsed.getParsedCompound(clParse)
+                return getParsedCompound(clParse)
             }
         }
         fun getParsedPrimitive(clParse: CLParsed) : String {
@@ -260,22 +259,22 @@ class CLParsed {
                     return ConstValues.NULL_VALUE_JSON
                 } else {
                     if(clParsed.innerParsed1.itsCLType.isCLTypePrimitive()) {
-                        return CLParsed.getParsedPrimitive(clParsed.innerParsed1)
+                        return getParsedPrimitive(clParsed.innerParsed1)
                     } else {
-                        return  CLParsed.getParsedCompound(clParsed.innerParsed1)
+                        return getParsedCompound(clParsed.innerParsed1)
                     }
                 }
             } else if(clParsed.itsCLType.itsTypeStr == ConstValues.CLTYPE_LIST) {
-                var ret:String = "["
-                var elementStr : String = ""
-                var counter:Int = 0;
+                var ret = "["
+                var elementStr : String
+                var counter = 0
                 val totalList:Int = clParsed.innerParsed1.itsArrayValue.size
                 for(element in clParsed.innerParsed1.itsArrayValue) {
-                    val realElement = element as CLParsed
+                    val realElement = element
                     if(realElement.itsCLType.isCLTypePrimitive()) {
-                        elementStr = CLParsed.getParsedPrimitive(realElement)
+                        elementStr = getParsedPrimitive(realElement)
                     } else {
-                        elementStr = CLParsed.getParsedCompound(realElement)
+                        elementStr = getParsedCompound(realElement)
                     }
                     if(counter < totalList) {
                         ret = ret + elementStr + ","
@@ -286,11 +285,11 @@ class CLParsed {
                 }
                 return ret
             } else if(clParsed.itsCLType.itsTypeStr == ConstValues.CLTYPE_RESULT) {
-                var resultStr:String = ""
+                val resultStr: String
                 if(clParsed.innerParsed1.itsCLType.isCLTypePrimitive()) {
-                    resultStr = CLParsed.getParsedPrimitive(clParsed.innerParsed1)
+                    resultStr = getParsedPrimitive(clParsed.innerParsed1)
                 } else {
-                    resultStr = CLParsed.getParsedCompound(clParsed.innerParsed2)
+                    resultStr = getParsedCompound(clParsed.innerParsed2)
                 }
                 return "{" + clParsed.itsValueInStr + ":" + resultStr + "}}" //}?
             } else if(clParsed.itsCLType.itsTypeStr == ConstValues.CLTYPE_MAP) {
@@ -298,22 +297,22 @@ class CLParsed {
                 if(totalElement == 0 ) {
                     return "[]"
                 }
-                var ret:String = "["
-                var keyStr:String = ""
-                var valueStr:String = ""
-                var counter:Int = 0
+                var ret = "["
+                var keyStr : String
+                var valueStr : String
+                var counter = 0
                 for (i in 0..totalElement-1) {
-                    val keyElement = clParsed.innerParsed1.itsArrayValue.get(i) as CLParsed
+                    val keyElement = clParsed.innerParsed1.itsArrayValue.get(i)
                     if (keyElement.itsCLType.isCLTypePrimitive()) {
-                        keyStr = CLParsed.getParsedPrimitive(keyElement)
+                        keyStr = getParsedPrimitive(keyElement)
                     } else {
-                        keyStr = CLParsed.getParsedCompound(keyElement)
+                        keyStr = getParsedCompound(keyElement)
                     }
-                    val valueElement = clParsed.innerParsed2.itsArrayValue.get(i) as CLParsed
+                    val valueElement = clParsed.innerParsed2.itsArrayValue.get(i)
                     if (valueElement.itsCLType.isCLTypePrimitive()) {
-                        valueStr = CLParsed.getParsedPrimitive(valueElement)
+                        valueStr = getParsedPrimitive(valueElement)
                     } else {
-                        valueStr = CLParsed.getParsedCompound(valueElement)
+                        valueStr = getParsedCompound(valueElement)
                     }
                     if(counter < totalElement) {
                         ret = ret + "{\"key\": " + keyStr + ",\"value\":" + valueStr + "},"
@@ -324,50 +323,50 @@ class CLParsed {
                 }
                 return ret
             } else if(clParsed.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE1) {
-                var ret:String = "["
-                var tupleStr:String = ""
+                var ret = "["
+                val tupleStr : String
                 if(clParsed.innerParsed1.itsCLType.isCLTypePrimitive()) {
-                    tupleStr = CLParsed.getParsedPrimitive(clParsed.innerParsed1)
+                    tupleStr = getParsedPrimitive(clParsed.innerParsed1)
                 } else {
-                    tupleStr = CLParsed.getParsedCompound(clParsed.innerParsed1)
+                    tupleStr = getParsedCompound(clParsed.innerParsed1)
                 }
                 ret = ret + tupleStr + "]"
                 return  ret
             } else if(clParsed.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE2) {
-                var ret:String = ""
-                var tupleStr1:String = ""
+                val ret : String
+                val tupleStr1:String
                 if(clParsed.innerParsed1.itsCLType.isCLTypePrimitive()) {
-                    tupleStr1 = CLParsed.getParsedPrimitive(clParsed.innerParsed1)
+                    tupleStr1 = getParsedPrimitive(clParsed.innerParsed1)
                 } else {
-                    tupleStr1 = CLParsed.getParsedCompound(clParsed.innerParsed1)
+                    tupleStr1 = getParsedCompound(clParsed.innerParsed1)
                 }
-                var tupleStr2:String = ""
+                val tupleStr2:String
                 if(clParsed.innerParsed2.itsCLType.isCLTypePrimitive()) {
-                    tupleStr2 = CLParsed.getParsedPrimitive(clParsed.innerParsed2)
+                    tupleStr2 = getParsedPrimitive(clParsed.innerParsed2)
                 } else {
-                    tupleStr2 = CLParsed.getParsedCompound(clParsed.innerParsed2)
+                    tupleStr2 = getParsedCompound(clParsed.innerParsed2)
                 }
                 ret = "[" + tupleStr1 + "," + tupleStr2 + "]"
                 return  ret
             } else if(clParsed.itsCLType.itsTypeStr == ConstValues.CLTYPE_TUPLE3) {
-                var ret:String = ""
-                var tupleStr1:String = ""
+                val ret : String
+                val tupleStr1:String
                 if(clParsed.innerParsed1.itsCLType.isCLTypePrimitive()) {
-                    tupleStr1 = CLParsed.getParsedPrimitive(clParsed.innerParsed1)
+                    tupleStr1 = getParsedPrimitive(clParsed.innerParsed1)
                 } else {
-                    tupleStr1 = CLParsed.getParsedCompound(clParsed.innerParsed1)
+                    tupleStr1 = getParsedCompound(clParsed.innerParsed1)
                 }
-                var tupleStr2:String = ""
+                val tupleStr2:String
                 if(clParsed.innerParsed2.itsCLType.isCLTypePrimitive()) {
-                    tupleStr2 = CLParsed.getParsedPrimitive(clParsed.innerParsed2)
+                    tupleStr2 = getParsedPrimitive(clParsed.innerParsed2)
                 } else {
-                    tupleStr2 = CLParsed.getParsedCompound(clParsed.innerParsed2)
+                    tupleStr2 = getParsedCompound(clParsed.innerParsed2)
                 }
-                var tupleStr3:String = ""
+                val tupleStr3:String
                 if(clParsed.innerParsed3.itsCLType.isCLTypePrimitive()) {
-                    tupleStr3 = CLParsed.getParsedPrimitive(clParsed.innerParsed3)
+                    tupleStr3 = getParsedPrimitive(clParsed.innerParsed3)
                 } else {
-                    tupleStr3 = CLParsed.getParsedCompound(clParsed.innerParsed3)
+                    tupleStr3 = getParsedCompound(clParsed.innerParsed3)
                 }
                 ret = "[" + tupleStr1 + "," + tupleStr2 + "," + tupleStr3 + "]"
                 return  ret
@@ -377,5 +376,4 @@ class CLParsed {
             return  ConstValues.INVALID_VALUE
         }
     }
-
 }

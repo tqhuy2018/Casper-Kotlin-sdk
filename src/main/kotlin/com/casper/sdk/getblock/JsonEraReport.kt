@@ -10,7 +10,7 @@ class JsonEraReport {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to JsonEraReport object */
         fun fromJsonToJsonEraReport(from: JsonObject): JsonEraReport {
-            var ret: JsonEraReport = JsonEraReport()
+            val ret = JsonEraReport()
             val equivocators = from["equivocators"] as JsonArray
             val inactiveValidators = from["inactive_validators"] as JsonArray
             val rewards = from["rewards"] as JsonArray
@@ -29,7 +29,7 @@ class JsonEraReport {
             }
             if(totalReward >0) {
                 for(i in 0 .. totalReward) {
-                    var oneReward: Reward = Reward.fromJsonToReward(rewards[i] as JsonObject)
+                    val oneReward: Reward = Reward.fromJsonToReward(rewards[i] as JsonObject)
                     ret.rewards.add(oneReward)
                 }
             }

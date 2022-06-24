@@ -8,7 +8,7 @@ class JsonProof {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to JsonProof object */
         fun fromJsonToJsonProof(from: JsonObject) : JsonProof {
-            var ret: JsonProof = JsonProof()
+            val ret = JsonProof()
             ret.publicKey = from["public_key"].toString()
             ret.signature = from["signature"].toString()
             return ret

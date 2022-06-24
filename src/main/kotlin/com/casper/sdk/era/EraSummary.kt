@@ -16,7 +16,7 @@ class EraSummary {
     /** This function parse the JsonObject (taken from server RPC method call) to generate the EraSummary object */
     companion object {
         fun fromJsonToEraSummary(from:  JsonObject) :  EraSummary {
-            val ret: EraSummary = EraSummary()
+            val ret = EraSummary()
             ret.blockHash = from["block_hash"].toString()
             ret.eraId = from["era_id"].toJsonString().toULong()
             ret.stateRootHash = from["state_root_hash"].toString()

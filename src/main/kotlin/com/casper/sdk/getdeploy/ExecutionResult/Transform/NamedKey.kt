@@ -9,7 +9,7 @@ class NamedKey {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the NamedKey object */
         fun fromJsonObjectToNamedKey(from: JsonObject): NamedKey {
-            var ret: NamedKey = NamedKey()
+            val ret = NamedKey()
             ret.name = from["name"].toString()
             ret.key = from["key"].toString()
             return ret

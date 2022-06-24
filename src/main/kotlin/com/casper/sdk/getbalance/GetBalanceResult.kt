@@ -10,7 +10,7 @@ class GetBalanceResult {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to GetBalanceResult object */
         fun  fromJsonObjectToGetBalanceResult(from: JsonObject): GetBalanceResult {
-            var ret: GetBalanceResult = GetBalanceResult()
+            val ret = GetBalanceResult()
             ret.apiVersion = from["api_version"].toString()
             ret.merkleProof = from["merkle_proof"].toString()
             ret.balanceValue = U512Class.fromStringToU512(from["balance_value"].toString())

@@ -7,7 +7,7 @@ class U256Class {
     companion object {
         //This function convert a string that represents the number to a U256Class
         fun fromStringToU256(from: String): U256Class {
-            var ret: U256Class = U256Class()
+            val ret: U256Class = U256Class()
             ret.itsValue = from
             return ret
         }

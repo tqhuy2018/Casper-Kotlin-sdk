@@ -11,7 +11,7 @@ class JsonDelegator {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to generate the JsonDelegator object */
         fun fromJsonObjectToJsonDelegator(from: JsonObject): JsonDelegator {
-            var ret: JsonDelegator = JsonDelegator()
+            val ret = JsonDelegator()
             ret.bondingPurse = from["bonding_purse"].toString()
             ret.delegatee = from["delegatee"].toString()
             ret.publicKey = from["public_key"].toString()

@@ -2,7 +2,6 @@ package com.casper.sdk.crypto
 
 import com.casper.sdk.CasperUtils
 import com.casper.sdk.CasperUtils.Companion.toHex
-import com.casper.sdk.ConstValues
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair
@@ -16,7 +15,6 @@ import org.bouncycastle.crypto.signers.Ed25519Signer
 import org.bouncycastle.crypto.util.PrivateKeyFactory
 import org.bouncycastle.crypto.util.PrivateKeyInfoFactory
 import org.bouncycastle.crypto.util.SubjectPublicKeyInfoFactory
-import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
 import org.bouncycastle.jcajce.provider.asymmetric.edec.BCEdDSAPublicKey
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.PEMParser

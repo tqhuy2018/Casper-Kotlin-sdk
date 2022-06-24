@@ -10,7 +10,7 @@ class ValidatorWeight {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to ValidatorWeight object */
         fun fromJsonToValidatorWeight(from: JsonObject): ValidatorWeight {
-            var ret: ValidatorWeight = ValidatorWeight()
+            val ret = ValidatorWeight()
             ret.validator = from["validator"].toString()
             ret.weight = U512Class.fromStringToU512(from["weight"].toString())
             return ret

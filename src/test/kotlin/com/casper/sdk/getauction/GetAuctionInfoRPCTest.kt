@@ -15,7 +15,7 @@ internal class GetAuctionInfoRPCTest {
         val parameter1: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
             val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter1)
-            assert(getAuctionInfoResult.apiVersion == "1.4.5")
+            assert(getAuctionInfoResult.apiVersion.length > 0)
             assert(getAuctionInfoResult.auctionState.stateRootHash.length > 0)
         } catch (e: IllegalArgumentException) {}
         //Test2:  get auction with block identifier - correct block hash
@@ -24,7 +24,7 @@ internal class GetAuctionInfoRPCTest {
         val parameter2: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
             val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter2)
-            assert(getAuctionInfoResult.apiVersion == "1.4.5")
+            assert(getAuctionInfoResult.apiVersion.length > 0)
             assert(getAuctionInfoResult.auctionState.stateRootHash == "bb3a1f9325c1da6820358f9b4981b84e0c28d924b0ef5776f6bb4cdd1328e261")
             assert(getAuctionInfoResult.auctionState.blockHeight.toString() == "673041")
             assert(getAuctionInfoResult.auctionState.eraValidators.count() == 2)
@@ -55,7 +55,7 @@ internal class GetAuctionInfoRPCTest {
         val parameter3: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
             val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter3)
-            assert(getAuctionInfoResult.apiVersion == "1.4.5")
+            assert(getAuctionInfoResult.apiVersion.length > 0)
             assert(getAuctionInfoResult.auctionState.stateRootHash == "c50822987f4b0b620825f7b8941c7bd446a426c8b8fa2f19bec432727a32d196")
             assert(getAuctionInfoResult.auctionState.blockHeight.toString() == "100")
             assert(getAuctionInfoResult.auctionState.eraValidators.count() == 2)
@@ -86,7 +86,7 @@ internal class GetAuctionInfoRPCTest {
         val parameter5: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {
             val getAuctionInfoResult = getAuctionInfoRPC.getAuctionInfo(parameter5)
-            assert(getAuctionInfoResult.apiVersion == "1.4.5")
+            assert(getAuctionInfoResult.apiVersion.length > 0)
             assert(getAuctionInfoResult.auctionState.stateRootHash.length > 0)
         } catch (e: IllegalArgumentException) { }
     }

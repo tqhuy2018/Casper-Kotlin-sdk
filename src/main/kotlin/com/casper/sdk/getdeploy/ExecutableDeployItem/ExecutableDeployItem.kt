@@ -28,11 +28,11 @@ class ExecutableDeployItem {
                 const val  TRANSFER                                     = "Transfer"
                 /** This function parse the JsonArray (taken from server RPC method call) to get the ExecutableDeployItem object */
                 fun fromJsonToExecutableDeployItem(from: JsonObject): ExecutableDeployItem {
-                        val ret:  ExecutableDeployItem = ExecutableDeployItem()
+                        val ret = ExecutableDeployItem()
                         val ediModuleBytes: String = from.get("ModuleBytes").toJsonString()
                         if(ediModuleBytes != "null" ) {
-                                ret.itsType = ExecutableDeployItem.MODULE_BYTES
-                                val eMB:  ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
+                                ret.itsType = MODULE_BYTES
+                                val eMB = ExecutableDeployItem_ModuleBytes()
                                 eMB.module_bytes = from.get("ModuleBytes").get("module_bytes").toString()
                                 eMB.args = RuntimeArgs.fromJsonArrayToObj(from.get("ModuleBytes").get("args") as JsonArray)
                                 ret.itsValue.add(eMB)
@@ -40,8 +40,8 @@ class ExecutableDeployItem {
                         }
                         val ediStoredContractByHash = from.get("StoredContractByHash").toJsonString()
                         if(ediStoredContractByHash != "null") {
-                                ret.itsType = ExecutableDeployItem.STORED_CONTRACT_BY_HASH
-                                val eSCBH: ExecutableDeployItem_StoredContractByHash = ExecutableDeployItem_StoredContractByHash()
+                                ret.itsType = STORED_CONTRACT_BY_HASH
+                                val eSCBH = ExecutableDeployItem_StoredContractByHash()
                                 eSCBH.itsHash = from.get("StoredContractByHash").get("hash").toString()
                                 eSCBH.entryPoint = from.get("StoredContractByHash").get("entry_point").toString()
                                 eSCBH.args = RuntimeArgs.fromJsonArrayToObj(from.get("StoredContractByHash").get("args") as JsonArray)
@@ -50,8 +50,8 @@ class ExecutableDeployItem {
                         }
                         val ediStoredContractByName = from.get("StoredContractByName").toJsonString()
                         if(ediStoredContractByName != "null") {
-                                ret.itsType = ExecutableDeployItem.STORED_CONTRACT_BY_NAME
-                                val eSCBN: ExecutableDeployItem_StoredContractByName = ExecutableDeployItem_StoredContractByName()
+                                ret.itsType = STORED_CONTRACT_BY_NAME
+                                val eSCBN = ExecutableDeployItem_StoredContractByName()
                                 eSCBN.itsName = from.get("StoredContractByName").get("name").toString()
                                 eSCBN.entryPoint = from.get("StoredContractByName").get("entry_point").toString()
                                 eSCBN.args = RuntimeArgs.fromJsonArrayToObj(from.get("StoredContractByName").get("args") as JsonArray)
@@ -60,8 +60,8 @@ class ExecutableDeployItem {
                         }
                         val ediStoredVersionedContractByHash = from.get("StoredVersionedContractByHash").toJsonString()
                         if(ediStoredVersionedContractByHash != "null") {
-                                ret.itsType = ExecutableDeployItem.STORED_VERSIONED_CONTRACT_BY_HASH
-                                val eSCBH: ExecutableDeployItem_StoredVersionedContractByHash = ExecutableDeployItem_StoredVersionedContractByHash()
+                                ret.itsType = STORED_VERSIONED_CONTRACT_BY_HASH
+                                val eSCBH = ExecutableDeployItem_StoredVersionedContractByHash()
                                 eSCBH.itsHash = from.get("StoredVersionedContractByHash").get("hash").toString()
                                 eSCBH.entryPoint = from.get("StoredVersionedContractByHash").get("entry_point").toString()
                                 eSCBH.args = RuntimeArgs.fromJsonArrayToObj(from.get("StoredVersionedContractByHash").get("args") as JsonArray)
@@ -77,8 +77,8 @@ class ExecutableDeployItem {
                         }
                         val ediStoredVersionedContractByName = from.get("StoredVersionedContractByName").toJsonString()
                         if(ediStoredVersionedContractByName != "null") {
-                                ret.itsType = ExecutableDeployItem.STORED_VERSIONED_CONTRACT_BY_NAME
-                                val eSCBH: ExecutableDeployItem_StoredVersionedContractByName = ExecutableDeployItem_StoredVersionedContractByName()
+                                ret.itsType = STORED_VERSIONED_CONTRACT_BY_NAME
+                                val eSCBH = ExecutableDeployItem_StoredVersionedContractByName()
                                 eSCBH.itsName = from.get("StoredVersionedContractByName").get("name").toString()
                                 eSCBH.entryPoint = from.get("StoredVersionedContractByName").get("entry_point").toString()
                                 eSCBH.args = RuntimeArgs.fromJsonArrayToObj(from.get("StoredVersionedContractByName").get("args") as JsonArray)
@@ -94,8 +94,8 @@ class ExecutableDeployItem {
                         }
                         val ediTransfer = from.get("Transfer").toJsonString()
                         if (ediTransfer != "null") {
-                                ret.itsType = ExecutableDeployItem.TRANSFER
-                                val transfer: ExecutableDeployItem_Transfer = ExecutableDeployItem_Transfer()
+                                ret.itsType = TRANSFER
+                                val transfer = ExecutableDeployItem_Transfer()
                                 transfer.args = RuntimeArgs.fromJsonArrayToObj(from.get("Transfer").get("args") as JsonArray)
                                 ret.itsValue.add(transfer)
                                 return ret

@@ -10,7 +10,7 @@ class JsonEraValidators {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to generate the JsonEraValidators object */
         fun fromJsonObjectToJsonEraValidators(from: JsonObject): JsonEraValidators {
-            var ret: JsonEraValidators = JsonEraValidators()
+            val ret = JsonEraValidators()
             ret.eraId = from["era_id"].toJsonString().toULong()
             val validatorWeights = from["validator_weights"]
             if(validatorWeights!=null) {

@@ -12,12 +12,10 @@ class RuntimeArgs {
        /** This function parse the JsonArray (taken from server RPC method call) to get the list of NamedArg object
         * Then store it in the RuntimeArgs object */
        fun  fromJsonArrayToObj(jsonArray: JsonArray): RuntimeArgs {
-           var ret : RuntimeArgs = RuntimeArgs()
-           var totalObj = jsonArray.size - 1
-           println("Total args: ${totalObj}")
+           val ret = RuntimeArgs()
+           val totalObj = jsonArray.size - 1
            for(i in 0..totalObj) {
-               println("----------Get arg item number : ${i}----------")
-               var oneNA: NamedArg = NamedArg.fromJsonToNamedArg(jsonArray[i] as JsonArray)
+               val oneNA: NamedArg = NamedArg.fromJsonToNamedArg(jsonArray[i] as JsonArray)
                ret.listNamedArg.add(oneNA)
            }
            return ret

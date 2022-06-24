@@ -1,7 +1,6 @@
 package com.casper.sdk.getauction
 
 import com.casper.sdk.common.classes.U512Class
-import com.casper.sdk.getdeploy.ExecutionResult.Transform.Delegator
 import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
@@ -15,7 +14,7 @@ class JsonBid {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to generate the JsonBid object */
         fun fromJsonObjectToJsonBid(from: JsonObject): JsonBid {
-            var ret: JsonBid = JsonBid()
+            val ret = JsonBid()
             ret.bondingPurse = from["bonding_purse"].toString()
             ret.delegationRate = from["delegation_rate"].toJsonString().toUByte()
             ret.inactive = from["inactive"].toString().toBoolean()

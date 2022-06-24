@@ -42,8 +42,7 @@ class GetBlockTransferRPC {
         if(json.get("error") != null) {
             throw IllegalArgumentException("Error get block transfer")
         } else { //If not error then get the block transfer
-            val ret: GetBlockTransfersResult = GetBlockTransfersResult.fromJsonToGetBlockTransfersResult(json.get("result") as JsonObject)
-            return ret
+            return GetBlockTransfersResult.fromJsonToGetBlockTransfersResult(json.get("result") as JsonObject)
         }
     }
 }

@@ -14,7 +14,7 @@ class UnbondingPurse {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the UnbondingPurse object */
         fun  fromJsonToUnbondingPurse(from: JsonObject): UnbondingPurse {
-            var ret: UnbondingPurse = UnbondingPurse()
+            val ret = UnbondingPurse()
             ret.bondingPurse = from["bonding_purse"].toString()
             ret.validatorPublicKey = from["validator_public_key"].toString()
             ret.unbonderPublicKey = from["unbonder_public_key"].toString()

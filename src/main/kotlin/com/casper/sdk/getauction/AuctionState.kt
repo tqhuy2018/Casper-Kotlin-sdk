@@ -12,7 +12,7 @@ class AuctionState {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to generate the AuctionState object */
         fun fromJsonObjectToAuctionState(from: JsonObject): AuctionState {
-            var ret: AuctionState = AuctionState()
+            val ret = AuctionState()
             ret.stateRootHash = from["state_root_hash"].toString()
             ret.blockHeight = from["block_height"].toJsonString().toULong()
             // Get EraValidators
@@ -32,7 +32,7 @@ class AuctionState {
             if(bids != null) {
                 val bidsList = from["bids"] as JsonArray
                 val totalBid: Int = bidsList.count() - 1
-                var counter: Int = 0
+                var counter = 0
                 if(totalBid >= 0) {
                     for(i in 0.. totalBid) {
                         counter += 1

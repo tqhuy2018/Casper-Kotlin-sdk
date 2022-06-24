@@ -35,8 +35,7 @@ class GetBalanceRPC {
         if(json.get("error") != null) {
             throw IllegalArgumentException("Error get balance")
         } else { //If not error then get the state root hash
-            val ret:  GetBalanceResult = GetBalanceResult.fromJsonObjectToGetBalanceResult(json.get("result") as JsonObject)
-            return ret
+            return GetBalanceResult.fromJsonObjectToGetBalanceResult(json.get("result") as JsonObject)
         }
     }
 }

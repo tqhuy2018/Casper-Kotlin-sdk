@@ -10,7 +10,6 @@ import net.jemzart.jsonkraken.toJsonString
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
 import java.net.URI
-import java.net.URLEncoder
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
@@ -29,7 +28,7 @@ class GetDeployRPC {
      */
     @Throws(IllegalArgumentException:: class)
     fun getDeployFromJsonStr(str: String): GetDeployResult {
-        val getDeployResult: GetDeployResult = GetDeployResult()
+        val getDeployResult = GetDeployResult()
         val client = HttpClient.newBuilder().build()
         val request = HttpRequest.newBuilder()
             .uri(URI.create(methodURL))
@@ -58,7 +57,7 @@ class GetDeployRPC {
         val listER: JsonArray = jsonResult.get("execution_results") as JsonArray
         val totalER: Int = listER.count()
         for(i in 0.. totalER-1) {
-            val jer:  JsonExecutionResult = JsonExecutionResult()
+            val jer = JsonExecutionResult()
             val oneItem = listER[i]
             jer.blockHash = oneItem.get("block_hash").toString()
             jer.result = ExecutionResult.fromJsonToExecutionResult(oneItem.get("result") as JsonObject)

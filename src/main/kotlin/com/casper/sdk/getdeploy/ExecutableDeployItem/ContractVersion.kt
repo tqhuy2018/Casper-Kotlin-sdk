@@ -10,7 +10,7 @@ class ContractVersion {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the ContractVersion object */
         fun  fromJsonToContractVersion(from: JsonObject): ContractVersion {
-            var ret: ContractVersion = ContractVersion()
+            val ret = ContractVersion()
             ret.contractHash = from.get("contract_hash").toString()
             ret.contractVersion = from.get("contract_version").toString().toUInt()
             ret.protocolVersionMajor = from.get("protocol_version_major").toString().toUInt()

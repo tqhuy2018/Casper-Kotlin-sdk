@@ -17,7 +17,7 @@ class ExecutionResult {
     companion object {
         /** This function parse the JsonObject (taken from server RPC method call) to get the ExecutionResult object */
         fun fromJsonToExecutionResult(from: JsonObject): ExecutionResult {
-            val ret: ExecutionResult = ExecutionResult()
+            val ret = ExecutionResult()
             val successJson = from["Success"].toJsonString()
             if(successJson != "null") {
                 ret.itsType = ConstValues.EXECUTION_RESULT_SUCCESS

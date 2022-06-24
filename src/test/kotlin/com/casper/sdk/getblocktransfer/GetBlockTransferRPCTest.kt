@@ -3,18 +3,17 @@ package com.casper.sdk.getblocktransfer
 import com.casper.sdk.BlockIdentifier
 import com.casper.sdk.BlockIdentifierType
 import com.casper.sdk.ConstValues
-import com.casper.sdk.getblock.GetBlockResult
 import com.casper.sdk.getdeploy.ExecutionResult.Transform.Transfer
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
+
 
 internal class GetBlockTransferRPCTest {
 
     @Test
     fun getBlockTransfer() {
-        val getBlockTransferRPC :  GetBlockTransferRPC = GetBlockTransferRPC()
-        val bi:  BlockIdentifier = BlockIdentifier()
+        val getBlockTransferRPC = GetBlockTransferRPC()
+        val bi = BlockIdentifier()
         bi.blockType = BlockIdentifierType.NONE
         val parameter1: String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK_TRANSFER)
         try {

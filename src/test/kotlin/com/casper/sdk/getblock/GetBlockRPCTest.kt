@@ -5,15 +5,13 @@ import com.casper.sdk.BlockIdentifierType
 import com.casper.sdk.ConstValues
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 internal class GetBlockRPCTest {
 
     @Test
     fun getBlock() {
-        val getBlock: GetBlockRPC = GetBlockRPC()
+        val getBlock = GetBlockRPC()
         //Test 1:  get block with no parameter,  latest block information is retrieved
-        val bi:  BlockIdentifier = BlockIdentifier()
+        val bi = BlockIdentifier()
         bi.blockType = BlockIdentifierType.NONE
         val parameter1: String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_BLOCK)
         try {

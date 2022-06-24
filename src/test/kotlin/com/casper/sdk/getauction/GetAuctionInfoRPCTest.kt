@@ -3,16 +3,14 @@ package com.casper.sdk.getauction
 import com.casper.sdk.BlockIdentifier
 import com.casper.sdk.BlockIdentifierType
 import com.casper.sdk.ConstValues
-import net.jemzart.jsonkraken.get
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 internal class GetAuctionInfoRPCTest {
 
     @Test
     fun getAuction() {
-        val getAuctionInfoRPC: GetAuctionInfoRPC = GetAuctionInfoRPC()
+        val getAuctionInfoRPC = GetAuctionInfoRPC()
         //Test 1:  get auction with no parameter,  latest auction state information is retrieved
-        val bi:  BlockIdentifier = BlockIdentifier()
+        val bi = BlockIdentifier()
         bi.blockType = BlockIdentifierType.NONE
         val parameter1: String = bi.toJsonStr(ConstValues.RPC_STATE_GET_AUTION_INFO)
         try {

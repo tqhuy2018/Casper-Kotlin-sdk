@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class GetDeployRPCTest {
     @Test
     fun getDeployTest() {
-        val getDeployRPC:  GetDeployRPC = GetDeployRPC()
+        val getDeployRPC = GetDeployRPC()
         val getDeployParams = GetDeployParams()
         getDeployRPC.methodURL = ConstValues.TESTNET_URL
         getDeployParams.deploy_hash = "9ff98d8027795a002e41a709d5b5846e49c2e9f9c8bfbe74e4c857adc26d5571"
@@ -49,7 +49,7 @@ internal class GetDeployRPCTest {
             assert(sessionNA2.clValue.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_STRING)
             //assertion for CLParse with only 1 item and the very first item value is correct
             assert(sessionNA2.clValue.itsParse.itsArrayValue[0].itsValueInStr == "61eff5566f55860c96d51d9e")
-            //assertion for session 3th element with CLValue of CLType Key - account
+            //assertion for session 3rd element with CLValue of CLType Key - account
             val sessionNAKey:  NamedArg = session.args.listNamedArg[3]
             assert(sessionNAKey.itsName == "kyc_package_hash")
             assert(sessionNAKey.clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_KEY)

@@ -6,16 +6,15 @@ import com.casper.sdk.ConstValues
 import com.casper.sdk.getdeploy.ExecutionResult.Transform.EraInfo
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 
 internal class GetEraBySwitchBlockRPCTest {
 
     @Test
     fun getEraInfo() {
-        val getEraRPC: GetEraBySwitchBlockRPC = GetEraBySwitchBlockRPC()
+        val getEraRPC = GetEraBySwitchBlockRPC()
         getEraRPC.methodURL = ConstValues.MAINNET_URL
-        //Test 1:  get block with no parameter,  latest block information is retrieved
-        val bi:  BlockIdentifier = BlockIdentifier()
+        //Test 1:  get block with no parameter, latest block information is retrieved
+        val bi = BlockIdentifier()
         bi.blockType = BlockIdentifierType.NONE
         val parameter1: String = bi.toJsonStr(ConstValues.RPC_CHAIN_GET_ERA)
         try {

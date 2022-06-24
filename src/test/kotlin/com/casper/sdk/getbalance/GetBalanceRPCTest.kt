@@ -2,14 +2,12 @@ package com.casper.sdk.getbalance
 
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 internal class GetBalanceRPCTest {
 
     @Test
     fun getBalance() {
-        val getBalanceRPC: GetBalanceRPC = GetBalanceRPC()
-        val getBalanceParams: GetBalanceParams = GetBalanceParams()
+        val getBalanceRPC = GetBalanceRPC()
+        val getBalanceParams = GetBalanceParams()
         getBalanceParams.purseUref = "uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007"
         getBalanceParams.stateRootHash = "8b463b56f2d124f43e7c157e602e31d5d2d5009659de7f1e79afbd238cbaa189"
         val parameterStr: String = getBalanceParams.generateParameter()

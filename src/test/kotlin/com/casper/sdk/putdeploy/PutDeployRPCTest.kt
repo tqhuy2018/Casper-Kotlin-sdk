@@ -18,7 +18,6 @@ import java.time.LocalDateTime
 
 //Test for account_put_deploy RPC call , with total of 8 test case
 internal class PutDeployRPCTest {
-
     @Test
     fun  testAll() {
         //Positive path - put deploy for ed25519 account
@@ -58,18 +57,18 @@ internal class PutDeployRPCTest {
         val deployHash5:String = PutDeployRPC.putDeploy(deploy5)
         assert(deployHash5 == ConstValues.PUT_DEPLOY_ERROR_MESSAGE)
 
-        //Negative path 5 - put a transfer deploy for Secp256k1 account, to a correct public key address, stored in toTransferPublicKey input, but wrong amount to send - too small amount to send
+        //Negative path 6 - put a transfer deploy for Secp256k1 account, to a correct public key address, stored in toTransferPublicKey input, but wrong amount to send - too small amount to send
         //Try to send only 2500, when the minimum amount is 2500000000
         val deploy6:Deploy = setupDeploy2(isEd25519 = false, toTransferPublicKey = "01fd708b1df7264949b649c423395f882ac7f35732116c989a0edfed3166fbb729", amountToTransfer = "2500")
         val deployHash6:String = PutDeployRPC.putDeploy(deploy6)
         assert(deployHash6 == ConstValues.PUT_DEPLOY_ERROR_MESSAGE)
     }
-    fun setupDeploy2(isEd25519:Boolean, toTransferPublicKey:String,amountToTransfer:String) :Deploy {
-        val accountEd25519:String = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
-        val accountSecp256k1:String = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635"
-        val deploy:Deploy = Deploy()
+    private fun setupDeploy2(isEd25519:Boolean, toTransferPublicKey:String, amountToTransfer:String) :Deploy {
+        val accountEd25519 = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
+        val accountSecp256k1 = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635"
+        val deploy = Deploy()
         //Set up for header
-        val deployHeader: DeployHeader = DeployHeader()
+        val deployHeader = DeployHeader()
         if(isEd25519) {
             deployHeader.account = accountEd25519
         } else {
@@ -78,80 +77,75 @@ internal class PutDeployRPCTest {
         var current = LocalDateTime.now().toString()
         current = current.substring(0,current.length-3)
         current = current + "Z"
-        println("Current Date and Time is: $current")
-        //current = "2022-06-14T09:58:16.223Z"
-        // deployHeader.timeStamp = "2020-11-17T00:39:24.072Z"
         deployHeader.timeStamp = current
         deployHeader.ttl = "1h 30m"
         deployHeader.gasPrice = 1u
-        // deployHeader.bodyHash = "4811966d37fe5674a8af4001884ea0d9042d1c06668da0c963769c3a01ebd08f"
-        //deployHeader.dependencies.add("0101010101010101010101010101010101010101010101010101010101010101")
         deployHeader.chainName = "casper-test"
         deploy.header = deployHeader
         // Setup for payment
-        val payment: ExecutableDeployItem = ExecutableDeployItem()
+        val payment = ExecutableDeployItem()
         payment.itsType = ExecutableDeployItem.MODULE_BYTES
-        val edi_mb: ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
-        edi_mb.module_bytes = ""
+        val ediMB = ExecutableDeployItem_ModuleBytes()
+        ediMB.module_bytes = ""
         //set up RuntimeArgs with 1 element of NamedArg only
         //setup 1st NamedArgs
-        val oneNA: NamedArg = NamedArg()
+        val oneNA = NamedArg()
         oneNA.itsName = "amount"
-        val oneCLValue: CLValue = CLValue()
-        val oneCLType: CLType = CLType()
+        val oneCLValue = CLValue()
+        val oneCLType = CLType()
         oneCLType.itsTypeStr = ConstValues.CLTYPE_U512
         oneCLValue.itsCLType = oneCLType
         oneCLValue.itsBytes = "0400ca9a3b"
-        val oneCLParse: CLParsed = CLParsed()
+        val oneCLParse = CLParsed()
         oneCLParse.itsCLType = oneCLType
         oneCLParse.itsValueInStr = "1000000000"
         oneCLValue.itsParse = oneCLParse
         oneNA.clValue = oneCLValue
-        val ra: RuntimeArgs = RuntimeArgs()
+        val ra = RuntimeArgs()
         ra.listNamedArg.add(oneNA)
-        edi_mb.args = ra
-        payment.itsValue.add(edi_mb)
+        ediMB.args = ra
+        payment.itsValue.add(ediMB)
         deploy.payment = payment
         //Setup for session
-        val session: ExecutableDeployItem = ExecutableDeployItem()
+        val session = ExecutableDeployItem()
         session.itsType = ExecutableDeployItem.TRANSFER
-        val ediSession: ExecutableDeployItem_Transfer = ExecutableDeployItem_Transfer()
+        val ediSession = ExecutableDeployItem_Transfer()
         //set up RuntimeArgs with 1 element of NamedArg only
         //setup 1st NamedArgs
-        val oneNASession1: NamedArg = NamedArg()
+        val oneNASession1 = NamedArg()
         oneNASession1.itsName = "amount"
-        val oneCLValueSession1: CLValue = CLValue()
-        val oneCLTypeSession1: CLType = CLType()
+        val oneCLValueSession1 = CLValue()
+        val oneCLTypeSession1 = CLType()
         oneCLTypeSession1.itsTypeStr = ConstValues.CLTYPE_U512
         oneCLValueSession1.itsCLType = oneCLTypeSession1
         oneCLValueSession1.itsBytes = "04005ed0b2"
-        val oneCLParseSession1: CLParsed = CLParsed()
+        val oneCLParseSession1 = CLParsed()
         oneCLParseSession1.itsCLType = oneCLTypeSession1
         oneCLParseSession1.itsValueInStr = amountToTransfer
         oneCLValueSession1.itsParse = oneCLParseSession1
         oneNASession1.clValue = oneCLValueSession1
 
         //setup 2nd NamedArgs
-        val oneNASession2: NamedArg = NamedArg()
+        val oneNASession2 = NamedArg()
         oneNASession2.itsName = "target"
-        val oneCLValueSession2: CLValue = CLValue()
-        val oneCLTypeSession2: CLType = CLType()
+        val oneCLValueSession2 = CLValue()
+        val oneCLTypeSession2 = CLType()
         oneCLTypeSession2.itsTypeStr = ConstValues.CLTYPE_PUBLIC_KEY
         oneCLValueSession2.itsCLType = oneCLTypeSession2
         oneCLValueSession2.itsBytes = toTransferPublicKey
-        val oneCLParseSession2: CLParsed = CLParsed()
+        val oneCLParseSession2 = CLParsed()
         oneCLParseSession2.itsCLType = oneCLTypeSession2
         oneCLParseSession2.itsValueInStr = toTransferPublicKey
         oneCLValueSession2.itsParse = oneCLParseSession2
         oneNASession2.clValue = oneCLValueSession2
 
         //setup 3rd NamedArgs - Option(U64(0))
-        val oneNASession3: NamedArg = NamedArg()
+        val oneNASession3 = NamedArg()
         oneNASession3.itsName = "id"
         //clValue - Option(U64(0)) assignment
-        val oneCLValueSession3: CLValue = CLValue()
+        val oneCLValueSession3 = CLValue()
         //CLType assignment
-        val oneCLTypeSession3: CLType = CLType()
+        val oneCLTypeSession3 = CLType()
         oneCLTypeSession3.itsTypeStr = ConstValues.CLTYPE_OPTION
         oneCLTypeSession3.innerCLType1 = CLType()
         oneCLTypeSession3.innerCLType1.itsTypeStr = ConstValues.CLTYPE_U64
@@ -159,7 +153,7 @@ internal class PutDeployRPCTest {
         //bytes assignment
         oneCLValueSession3.itsBytes = "010000000000000000"
         //CLParse assignment
-        val oneCLParseSession3: CLParsed = CLParsed()
+        val oneCLParseSession3 = CLParsed()
         oneCLParseSession3.itsCLType.itsTypeStr = ConstValues.CLTYPE_OPTION
         oneCLParseSession3.innerParsed1 = CLParsed()
         oneCLParseSession3.innerParsed1.itsCLType.itsTypeStr = ConstValues.CLTYPE_U64
@@ -167,21 +161,21 @@ internal class PutDeployRPCTest {
         oneCLValueSession3.itsParse = CLParsed()
         oneCLValueSession3.itsParse = oneCLParseSession3
         oneNASession3.clValue = oneCLValueSession3
-        // 4rd namedArg of type Key
-        val oneNASession4: NamedArg = NamedArg()
+        // 4th namedArg of type Key
+        val oneNASession4 = NamedArg()
         oneNASession4.itsName = "spender"
-        val oneCLValueSession4: CLValue = CLValue()
-        val oneCLTypeSession4: CLType = CLType()
+        val oneCLValueSession4 = CLValue()
+        val oneCLTypeSession4 = CLType()
         oneCLTypeSession4.itsTypeStr = ConstValues.CLTYPE_KEY
         oneCLValueSession4.itsCLType = oneCLTypeSession4
         oneCLValueSession4.itsBytes = "01dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b"
-        val oneCLParseSession4: CLParsed = CLParsed()
+        val oneCLParseSession4 = CLParsed()
         oneCLParseSession4.itsCLType = oneCLTypeSession4
         oneCLParseSession4.itsValueInStr = "hash-dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b"
         oneCLValueSession4.itsParse = oneCLParseSession4
         oneNASession4.clValue = oneCLValueSession4
 
-        val raSession: RuntimeArgs = RuntimeArgs()
+        val raSession = RuntimeArgs()
         raSession.listNamedArg.add(oneNASession1)
         raSession.listNamedArg.add(oneNASession2)
         raSession.listNamedArg.add(oneNASession3)
@@ -190,13 +184,11 @@ internal class PutDeployRPCTest {
         session.itsValue.add(ediSession)
         deploy.session = session
         val deployBodyHash:String = Deploy.getBodyHash(deploy)
-        println("Body hash is: " + deployBodyHash)
         deployHeader.bodyHash = deployBodyHash
         deploy.hash = Deploy.getDeployHash(deploy)
-        println("Deploy hash is:" + deploy.hash)
         // Setup approvals
         val listApprovals:MutableList<Approval> = mutableListOf()
-        val oneA: Approval = Approval()
+        val oneA = Approval()
         if(isEd25519) {
             oneA.signer = accountEd25519
             val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
@@ -213,12 +205,12 @@ internal class PutDeployRPCTest {
         deploy.approvals = listApprovals
         return deploy
     }
-    fun setupDeploy(isEd25519:Boolean) :Deploy {
-        val accountEd25519:String = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
-        val accountSecp256k1:String = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635"
-        val deploy:Deploy = Deploy()
+    private fun setupDeploy(isEd25519:Boolean) :Deploy {
+        val accountEd25519 = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
+        val accountSecp256k1 = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635"
+        val deploy = Deploy()
         //Set up for header
-        val deployHeader: DeployHeader = DeployHeader()
+        val deployHeader = DeployHeader()
         if(isEd25519) {
             deployHeader.account = accountEd25519
         } else {
@@ -227,80 +219,75 @@ internal class PutDeployRPCTest {
         var current = LocalDateTime.now().toString()
         current = current.substring(0,current.length-3)
         current = current + "Z"
-        println("Current Date and Time is: $current")
-        //current = "2022-06-14T09:58:16.223Z"
-        // deployHeader.timeStamp = "2020-11-17T00:39:24.072Z"
         deployHeader.timeStamp = current
         deployHeader.ttl = "1h 30m"
         deployHeader.gasPrice = 1u
-        // deployHeader.bodyHash = "4811966d37fe5674a8af4001884ea0d9042d1c06668da0c963769c3a01ebd08f"
-        //deployHeader.dependencies.add("0101010101010101010101010101010101010101010101010101010101010101")
         deployHeader.chainName = "casper-test"
         deploy.header = deployHeader
         // Setup for payment
-        val payment: ExecutableDeployItem = ExecutableDeployItem()
+        val payment = ExecutableDeployItem()
         payment.itsType = ExecutableDeployItem.MODULE_BYTES
-        val edi_mb: ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
-        edi_mb.module_bytes = ""
+        val ediMB = ExecutableDeployItem_ModuleBytes()
+        ediMB.module_bytes = ""
         //set up RuntimeArgs with 1 element of NamedArg only
         //setup 1st NamedArgs
-        val oneNA: NamedArg = NamedArg()
+        val oneNA = NamedArg()
         oneNA.itsName = "amount"
-        val oneCLValue: CLValue = CLValue()
-        val oneCLType: CLType = CLType()
+        val oneCLValue = CLValue()
+        val oneCLType = CLType()
         oneCLType.itsTypeStr = ConstValues.CLTYPE_U512
         oneCLValue.itsCLType = oneCLType
         oneCLValue.itsBytes = "0400ca9a3b"
-        val oneCLParse: CLParsed = CLParsed()
+        val oneCLParse = CLParsed()
         oneCLParse.itsCLType = oneCLType
         oneCLParse.itsValueInStr = "1000000000"
         oneCLValue.itsParse = oneCLParse
         oneNA.clValue = oneCLValue
-        val ra: RuntimeArgs = RuntimeArgs()
+        val ra = RuntimeArgs()
         ra.listNamedArg.add(oneNA)
-        edi_mb.args = ra
-        payment.itsValue.add(edi_mb)
+        ediMB.args = ra
+        payment.itsValue.add(ediMB)
         deploy.payment = payment
         //Setup for session
-        val session: ExecutableDeployItem = ExecutableDeployItem()
+        val session = ExecutableDeployItem()
         session.itsType = ExecutableDeployItem.TRANSFER
-        val ediSession: ExecutableDeployItem_Transfer = ExecutableDeployItem_Transfer()
+        val ediSession = ExecutableDeployItem_Transfer()
         //set up RuntimeArgs with 1 element of NamedArg only
         //setup 1st NamedArgs
-        val oneNASession1: NamedArg = NamedArg()
+        val oneNASession1 = NamedArg()
         oneNASession1.itsName = "amount"
-        val oneCLValueSession1: CLValue = CLValue()
-        val oneCLTypeSession1: CLType = CLType()
+        val oneCLValueSession1 = CLValue()
+        val oneCLTypeSession1 = CLType()
         oneCLTypeSession1.itsTypeStr = ConstValues.CLTYPE_U512
         oneCLValueSession1.itsCLType = oneCLTypeSession1
         oneCLValueSession1.itsBytes = "04005ed0b2"
-        val oneCLParseSession1: CLParsed = CLParsed()
+        val oneCLParseSession1 = CLParsed()
         oneCLParseSession1.itsCLType = oneCLTypeSession1
         oneCLParseSession1.itsValueInStr = "3000000000"
         oneCLValueSession1.itsParse = oneCLParseSession1
         oneNASession1.clValue = oneCLValueSession1
 
         //setup 2nd NamedArgs
-        val oneNASession2: NamedArg = NamedArg()
+        val oneNASession2 = NamedArg()
         oneNASession2.itsName = "target"
-        val oneCLValueSession2: CLValue = CLValue()
-        val oneCLTypeSession2: CLType = CLType()
+        val oneCLValueSession2 = CLValue()
+        val oneCLTypeSession2 = CLType()
         oneCLTypeSession2.itsTypeStr = ConstValues.CLTYPE_PUBLIC_KEY
         oneCLValueSession2.itsCLType = oneCLTypeSession2
         oneCLValueSession2.itsBytes = "015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a"
-        val oneCLParseSession2: CLParsed = CLParsed()
+        val oneCLParseSession2 = CLParsed()
         oneCLParseSession2.itsCLType = oneCLTypeSession2
         oneCLParseSession2.itsValueInStr = "015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a"
         oneCLValueSession2.itsParse = oneCLParseSession2
         oneNASession2.clValue = oneCLValueSession2
 
         //setup 3rd NamedArgs - Option(U64(0))
-        val oneNASession3: NamedArg = NamedArg()
+        val oneNASession3 = NamedArg()
         oneNASession3.itsName = "id"
         //clValue - Option(U64(0)) assignment
-        val oneCLValueSession3: CLValue = CLValue()
+        val oneCLValueSession3 = CLValue()
         //CLType assignment
-        val oneCLTypeSession3: CLType = CLType()
+        val oneCLTypeSession3 = CLType()
         oneCLTypeSession3.itsTypeStr = ConstValues.CLTYPE_OPTION
         oneCLTypeSession3.innerCLType1 = CLType()
         oneCLTypeSession3.innerCLType1.itsTypeStr = ConstValues.CLTYPE_U64
@@ -308,7 +295,7 @@ internal class PutDeployRPCTest {
         //bytes assignment
         oneCLValueSession3.itsBytes = "010000000000000000"
         //CLParse assignment
-        val oneCLParseSession3: CLParsed = CLParsed()
+        val oneCLParseSession3 = CLParsed()
         oneCLParseSession3.itsCLType.itsTypeStr = ConstValues.CLTYPE_OPTION
         oneCLParseSession3.innerParsed1 = CLParsed()
         oneCLParseSession3.innerParsed1.itsCLType.itsTypeStr = ConstValues.CLTYPE_U64
@@ -316,21 +303,21 @@ internal class PutDeployRPCTest {
         oneCLValueSession3.itsParse = CLParsed()
         oneCLValueSession3.itsParse = oneCLParseSession3
         oneNASession3.clValue = oneCLValueSession3
-        // 4rd namedArg of type Key
-        val oneNASession4: NamedArg = NamedArg()
+        // 4th namedArg of type Key
+        val oneNASession4 = NamedArg()
         oneNASession4.itsName = "spender"
-        val oneCLValueSession4: CLValue = CLValue()
-        val oneCLTypeSession4: CLType = CLType()
+        val oneCLValueSession4 = CLValue()
+        val oneCLTypeSession4 = CLType()
         oneCLTypeSession4.itsTypeStr = ConstValues.CLTYPE_KEY
         oneCLValueSession4.itsCLType = oneCLTypeSession4
         oneCLValueSession4.itsBytes = "01dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b"
-        val oneCLParseSession4: CLParsed = CLParsed()
+        val oneCLParseSession4 = CLParsed()
         oneCLParseSession4.itsCLType = oneCLTypeSession4
         oneCLParseSession4.itsValueInStr = "hash-dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b"
         oneCLValueSession4.itsParse = oneCLParseSession4
         oneNASession4.clValue = oneCLValueSession4
 
-        val raSession: RuntimeArgs = RuntimeArgs()
+        val raSession = RuntimeArgs()
         raSession.listNamedArg.add(oneNASession1)
         raSession.listNamedArg.add(oneNASession2)
         raSession.listNamedArg.add(oneNASession3)
@@ -339,13 +326,11 @@ internal class PutDeployRPCTest {
         session.itsValue.add(ediSession)
         deploy.session = session
         val deployBodyHash:String = Deploy.getBodyHash(deploy)
-        println("Body hash is: " + deployBodyHash)
         deployHeader.bodyHash = deployBodyHash
         deploy.hash = Deploy.getDeployHash(deploy)
-        println("Deploy hash is:" + deploy.hash)
         // Setup approvals
         val listApprovals:MutableList<Approval> = mutableListOf()
-        val oneA: Approval = Approval()
+        val oneA = Approval()
         if(isEd25519) {
             oneA.signer = accountEd25519
             val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
@@ -362,17 +347,14 @@ internal class PutDeployRPCTest {
         deploy.approvals = listApprovals
         return deploy
     }
-    //Negative test, put deploy with some problems
-    fun putDeployNegative(isEd25519: Boolean) {
 
-    }
     //Positive test, put deploy with correct information for both Ed25519 and Secp256k1 account
-    fun testPutDeploy(isEd25519:Boolean) {
-        val accountEd25519:String = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
-        val accountSecp256k1:String = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635"
-        val deploy:Deploy = Deploy()
+    private fun testPutDeploy(isEd25519:Boolean) {
+        val accountEd25519 = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
+        val accountSecp256k1 = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635"
+        val deploy = Deploy()
         //Set up for header
-        val deployHeader: DeployHeader = DeployHeader()
+        val deployHeader = DeployHeader()
         if(isEd25519) {
             deployHeader.account = accountEd25519
         } else {
@@ -381,80 +363,75 @@ internal class PutDeployRPCTest {
         var current = LocalDateTime.now().toString()
         current = current.substring(0,current.length-3)
         current = current + "Z"
-        println("Current Date and Time is: $current")
-        //current = "2022-06-14T09:58:16.223Z"
-       // deployHeader.timeStamp = "2020-11-17T00:39:24.072Z"
         deployHeader.timeStamp = current
         deployHeader.ttl = "1h 30m"
         deployHeader.gasPrice = 1u
-       // deployHeader.bodyHash = "4811966d37fe5674a8af4001884ea0d9042d1c06668da0c963769c3a01ebd08f"
-        //deployHeader.dependencies.add("0101010101010101010101010101010101010101010101010101010101010101")
         deployHeader.chainName = "casper-test"
         deploy.header = deployHeader
         // Setup for payment
-        val payment: ExecutableDeployItem = ExecutableDeployItem()
+        val payment = ExecutableDeployItem()
         payment.itsType = ExecutableDeployItem.MODULE_BYTES
-        val edi_mb: ExecutableDeployItem_ModuleBytes = ExecutableDeployItem_ModuleBytes()
-        edi_mb.module_bytes = ""
+        val ediMB = ExecutableDeployItem_ModuleBytes()
+        ediMB.module_bytes = ""
         //set up RuntimeArgs with 1 element of NamedArg only
         //setup 1st NamedArgs
-        val oneNA: NamedArg = NamedArg()
+        val oneNA = NamedArg()
         oneNA.itsName = "amount"
-        val oneCLValue: CLValue = CLValue()
-        val oneCLType: CLType = CLType()
+        val oneCLValue = CLValue()
+        val oneCLType = CLType()
         oneCLType.itsTypeStr = ConstValues.CLTYPE_U512
         oneCLValue.itsCLType = oneCLType
         oneCLValue.itsBytes = "0400ca9a3b"
-        val oneCLParse: CLParsed = CLParsed()
+        val oneCLParse = CLParsed()
         oneCLParse.itsCLType = oneCLType
         oneCLParse.itsValueInStr = "1000000000"
         oneCLValue.itsParse = oneCLParse
         oneNA.clValue = oneCLValue
-        val ra: RuntimeArgs = RuntimeArgs()
+        val ra = RuntimeArgs()
         ra.listNamedArg.add(oneNA)
-        edi_mb.args = ra
-        payment.itsValue.add(edi_mb)
+        ediMB.args = ra
+        payment.itsValue.add(ediMB)
         deploy.payment = payment
         //Setup for session
-        val session: ExecutableDeployItem = ExecutableDeployItem()
+        val session = ExecutableDeployItem()
         session.itsType = ExecutableDeployItem.TRANSFER
-        val ediSession: ExecutableDeployItem_Transfer = ExecutableDeployItem_Transfer()
+        val ediSession = ExecutableDeployItem_Transfer()
         //set up RuntimeArgs with 1 element of NamedArg only
         //setup 1st NamedArgs
-        val oneNASession1: NamedArg = NamedArg()
+        val oneNASession1 = NamedArg()
         oneNASession1.itsName = "amount"
-        val oneCLValueSession1: CLValue = CLValue()
-        val oneCLTypeSession1: CLType = CLType()
+        val oneCLValueSession1 = CLValue()
+        val oneCLTypeSession1 = CLType()
         oneCLTypeSession1.itsTypeStr = ConstValues.CLTYPE_U512
         oneCLValueSession1.itsCLType = oneCLTypeSession1
         oneCLValueSession1.itsBytes = "04005ed0b2"
-        val oneCLParseSession1: CLParsed = CLParsed()
+        val oneCLParseSession1 = CLParsed()
         oneCLParseSession1.itsCLType = oneCLTypeSession1
         oneCLParseSession1.itsValueInStr = "3000000000"
         oneCLValueSession1.itsParse = oneCLParseSession1
         oneNASession1.clValue = oneCLValueSession1
 
         //setup 2nd NamedArgs
-        val oneNASession2: NamedArg = NamedArg()
+        val oneNASession2 = NamedArg()
         oneNASession2.itsName = "target"
-        val oneCLValueSession2: CLValue = CLValue()
-        val oneCLTypeSession2: CLType = CLType()
+        val oneCLValueSession2 = CLValue()
+        val oneCLTypeSession2 = CLType()
         oneCLTypeSession2.itsTypeStr = ConstValues.CLTYPE_PUBLIC_KEY
         oneCLValueSession2.itsCLType = oneCLTypeSession2
         oneCLValueSession2.itsBytes = "015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a"
-        val oneCLParseSession2: CLParsed = CLParsed()
+        val oneCLParseSession2 = CLParsed()
         oneCLParseSession2.itsCLType = oneCLTypeSession2
         oneCLParseSession2.itsValueInStr = "015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a"
         oneCLValueSession2.itsParse = oneCLParseSession2
         oneNASession2.clValue = oneCLValueSession2
 
         //setup 3rd NamedArgs - Option(U64(0))
-        val oneNASession3: NamedArg = NamedArg()
+        val oneNASession3 = NamedArg()
         oneNASession3.itsName = "id"
         //clValue - Option(U64(0)) assignment
-        val oneCLValueSession3: CLValue = CLValue()
+        val oneCLValueSession3 = CLValue()
         //CLType assignment
-        val oneCLTypeSession3: CLType = CLType()
+        val oneCLTypeSession3 = CLType()
         oneCLTypeSession3.itsTypeStr = ConstValues.CLTYPE_OPTION
         oneCLTypeSession3.innerCLType1 = CLType()
         oneCLTypeSession3.innerCLType1.itsTypeStr = ConstValues.CLTYPE_U64
@@ -462,7 +439,7 @@ internal class PutDeployRPCTest {
         //bytes assignment
         oneCLValueSession3.itsBytes = "010000000000000000"
         //CLParse assignment
-        val oneCLParseSession3: CLParsed = CLParsed()
+        val oneCLParseSession3 = CLParsed()
         oneCLParseSession3.itsCLType.itsTypeStr = ConstValues.CLTYPE_OPTION
         oneCLParseSession3.innerParsed1 = CLParsed()
         oneCLParseSession3.innerParsed1.itsCLType.itsTypeStr = ConstValues.CLTYPE_U64
@@ -470,21 +447,21 @@ internal class PutDeployRPCTest {
         oneCLValueSession3.itsParse = CLParsed()
         oneCLValueSession3.itsParse = oneCLParseSession3
         oneNASession3.clValue = oneCLValueSession3
-        // 4rd namedArg of type Key
-        val oneNASession4: NamedArg = NamedArg()
+        // 4th namedArg of type Key
+        val oneNASession4 = NamedArg()
         oneNASession4.itsName = "spender"
-        val oneCLValueSession4: CLValue = CLValue()
-        val oneCLTypeSession4: CLType = CLType()
+        val oneCLValueSession4 = CLValue()
+        val oneCLTypeSession4 = CLType()
         oneCLTypeSession4.itsTypeStr = ConstValues.CLTYPE_KEY
         oneCLValueSession4.itsCLType = oneCLTypeSession4
         oneCLValueSession4.itsBytes = "01dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b"
-        val oneCLParseSession4: CLParsed = CLParsed()
+        val oneCLParseSession4 = CLParsed()
         oneCLParseSession4.itsCLType = oneCLTypeSession4
         oneCLParseSession4.itsValueInStr = "hash-dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b"
         oneCLValueSession4.itsParse = oneCLParseSession4
         oneNASession4.clValue = oneCLValueSession4
 
-        val raSession: RuntimeArgs = RuntimeArgs()
+        val raSession = RuntimeArgs()
         raSession.listNamedArg.add(oneNASession1)
         raSession.listNamedArg.add(oneNASession2)
         raSession.listNamedArg.add(oneNASession3)
@@ -493,26 +470,22 @@ internal class PutDeployRPCTest {
         session.itsValue.add(ediSession)
         deploy.session = session
         val deployBodyHash:String = Deploy.getBodyHash(deploy)
-        println("Body hash is: " + deployBodyHash)
         deployHeader.bodyHash = deployBodyHash
         deploy.hash = Deploy.getDeployHash(deploy)
-        println("Deploy hash is:" + deploy.hash)
         // Setup approvals
         val listApprovals:MutableList<Approval> = mutableListOf()
-        val oneA: Approval = Approval()
+        val oneA = Approval()
         if(isEd25519) {
             oneA.signer = accountEd25519
             val privateKey: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
             var signature:String = Ed25519Handle.signMessage(deploy.hash,privateKey)
             signature = "01" + signature
             oneA.signature = signature
-            println("Signature for ed25519 is: " + signature)
         } else {
             oneA.signer = accountSecp256k1
             val privateKey:BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_SECP256k1)
             PutDeployUtils.privateKey = privateKey
             oneA.signature = "02" + Secp256k1Handle.signMessage(deploy.hash,privateKey)
-            println("Signature for secp256k1 is: " + oneA.signature)
         }
         listApprovals.add(oneA)
         deploy.approvals = listApprovals

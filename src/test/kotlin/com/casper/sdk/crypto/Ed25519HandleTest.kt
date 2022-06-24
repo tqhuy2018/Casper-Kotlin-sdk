@@ -42,8 +42,8 @@ internal class Ed25519HandleTest {
     //This function test the sign and verify a message using Ed25519 Crypto
     //Total test case: 7 in which 4 for positive test case, 3 for negative test case
     fun  testSignAndVerifyMessage() {
-        val message:String = "e5c900aef7c4d512b6ca2b4083bc926c3697da6340f6ca6acfc0c2e05e69ebae"
-        val message2:String = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d"
+        val message = "e5c900aef7c4d512b6ca2b4083bc926c3697da6340f6ca6acfc0c2e05e69ebae"
+        val message2 = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d"
         //Test with auto generated key pair
         val keyPair = Ed25519Handle.generateKey()
         val privateKey = keyPair.private as Ed25519PrivateKeyParameters
@@ -52,14 +52,14 @@ internal class Ed25519HandleTest {
         val isVerifySuccess:Boolean =  Ed25519Handle.verifyMessage(message,signature,keyPair.public as Ed25519PublicKeyParameters)
         assert(isVerifySuccess == true)
         //Test with key load from Pem file
-        var privateFile:String = "Ed25519/writePrivate.pem"
-        var publicFile:String = "Ed25519/writePublic.pem"
+        /*var privateFile = "Ed25519/writePrivate.pem"
+        var publicFile = "Ed25519/writePublic.pem"
         privateFile = ConstValues.PEM_READ_PRIVATE2_ED25519
-        publicFile = ConstValues.PEM_READ_PUBLIC_ED25519
-        val privateKeyPem: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(privateFile)
+        publicFile = ConstValues.PEM_READ_PUBLIC_ED25519*/
+        val privateKeyPem: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE2_ED25519)
         val signature2 = Ed25519Handle.signMessage(message,privateKeyPem)
         assert(signature2.length > 0)
-        val publicKeyParameters:Ed25519PublicKeyParameters = Ed25519Handle.readPublicKeyFromPemFile(publicFile)
+        val publicKeyParameters:Ed25519PublicKeyParameters = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
         val isVerifySuccess2:Boolean = Ed25519Handle.verifyMessage(message,signature2,publicKeyParameters)
         assert(isVerifySuccess2 == true)
 
@@ -84,20 +84,20 @@ internal class Ed25519HandleTest {
         assert(Hex.toHexString(publicKey.encoded).length == 64)
         //Negative path 1, load public key from a wrong file format
         try {
-            val publicKey2: Ed25519PublicKeyParameters = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
+            Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
         } catch (e: IOException) {
             println("Error load public key from a wrong file format")
         }
         //Negative path 2, load public key from a wrong file format
         try {
-            val publicKey2: Ed25519PublicKeyParameters = Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_SECP256k1)
+            Ed25519Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_SECP256k1)
         } catch (e: IOException) {
             println("Error load public key from a wrong file format")
         }
         //Negative path 3, load public key from a non-exist file
-        val wrongPemPath:String = "wrongEd25519PublicKey.pem"
+        val wrongPemPath = "wrongEd25519PublicKey.pem"
         try {
-            val publicKey2: Ed25519PublicKeyParameters = Ed25519Handle.readPublicKeyFromPemFile(wrongPemPath)
+            Ed25519Handle.readPublicKeyFromPemFile(wrongPemPath)
         } catch (e: IOException) {
             println("Error load wrong public key from a wrong path")
         }
@@ -109,20 +109,20 @@ internal class Ed25519HandleTest {
         assert(Hex.toHexString(privateKey.encoded) == "954b81a59283ec5bcf7186148f9f8b2f1cdfb62ebbf54652ef6a246d6fcc65f2")
         //Negative path 1, load public key from a wrong file format
         try {
-            val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
+           Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
         } catch (e: IOException) {
             println("Error load private key from a wrong file format")
         }
         //Negative path 2, load public key from a wrong file format
         try {
-            val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE2_SECP256k1)
+            Ed25519Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE2_SECP256k1)
         } catch (e: IOException) {
             println("Error load private key from a wrong file format")
         }
         //Negative path 3, load private key from a non-exist file
-        val wrongPemPath:String = "wrongEd25519PrivateKey.pem"
+        val wrongPemPath = "wrongEd25519PrivateKey.pem"
         try {
-            val privateKey2: Ed25519PrivateKeyParameters = Ed25519Handle.readPrivateKeyFromPemFile(wrongPemPath)
+            Ed25519Handle.readPrivateKeyFromPemFile(wrongPemPath)
         } catch (e: IOException) {
             println("Error load wrong private key from a wrong path")
         }

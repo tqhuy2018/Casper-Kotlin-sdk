@@ -6,14 +6,11 @@ import org.bouncycastle.crypto.digests.SHA256Digest
 import org.bouncycastle.crypto.ec.CustomNamedCurves
 import org.bouncycastle.crypto.params.ECDomainParameters
 import org.bouncycastle.crypto.params.ECPublicKeyParameters
-import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters
 import org.bouncycastle.crypto.signers.DSADigestSigner
 import org.bouncycastle.crypto.signers.ECDSASigner
 import org.bouncycastle.crypto.signers.PlainDSAEncoding
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
-import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import org.bouncycastle.util.encoders.Hex
 import org.junit.jupiter.api.Test
 import java.io.IOException
@@ -28,9 +25,9 @@ internal class Secp256k1HandleTest {
     }
     //This function test the sign and verify a message using Ed25519 Crypto
     //Total test case: 7 in which 4 for positive test case, 3 for negative test case
-    fun testSignAndVerifyMessage() {
-        val message:String = "e5c900aef7c4d512b6ca2b4083bc926c3697da6340f6ca6acfc0c2e05e69ebae"
-        val message2:String = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d"
+    private fun testSignAndVerifyMessage() {
+        val message = "e5c900aef7c4d512b6ca2b4083bc926c3697da6340f6ca6acfc0c2e05e69ebae"
+        val message2 = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d"
         //Positive test 1: Test with auto generated key pair
         //Generate the key pair
         val keyPair = Secp256k1Handle.generateKey()
@@ -54,8 +51,8 @@ internal class Secp256k1HandleTest {
 
         //Positive test 2: Test with key load from Pem file
         //Load private and public key from pem file
-        var privatePath:String = ConstValues.PEM_READ_PRIVATE2_SECP256k1
-        var publicPath:String = ConstValues.PEM_READ_PUBLIC_SECP256k1
+        val privatePath:String = ConstValues.PEM_READ_PRIVATE2_SECP256k1
+        val publicPath:String = ConstValues.PEM_READ_PUBLIC_SECP256k1
         val privateKey2 = Secp256k1Handle.readPrivateKeyFromPemFile(privatePath)
         val publicKey2 = Secp256k1Handle.readPublicKeyFromPemFile(publicPath)
         //Sign the message
@@ -94,58 +91,58 @@ internal class Secp256k1HandleTest {
     }
     //This function test the load public key from Pem file, the public key is in BCECPublicKey format
     //Total test case: 4 with 1 for positive path, 3 for negative path
-    fun testLoadPublicKey() {
+    private fun testLoadPublicKey() {
         val publicKey: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_SECP256k1)
         assert(Hex.toHexString(publicKey.encoded).length == 176)
         //Negative path 1, load public key from a wrong file format
         try {
-            val publicKey2: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
+           Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
         } catch (e: IOException) {
             println("Error load public key from a wrong file format")
         }
         //Negative path 2, load public key from a wrong file format
         try {
-            val publicKey2: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
+            Secp256k1Handle.readPublicKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
         } catch (e: IOException) {
             println("Error load public key from a wrong file format")
         }
         //Negative path 3, load public key from a non-exist file
-        val wrongPemPath:String = "wrongEd25519PublicKey.pem"
+        val wrongPemPath = "wrongEd25519PublicKey.pem"
         try {
-            val publicKey2: BCECPublicKey = Secp256k1Handle.readPublicKeyFromPemFile(wrongPemPath)
+            Secp256k1Handle.readPublicKeyFromPemFile(wrongPemPath)
         } catch (e: IOException) {
             println("Error load wrong public key from a wrong path")
         }
     }
     //This function test the load private key from Pem file, the public key is in BCECPrivateKey format
     //Total test case: 4 with 1 for positive path, 3 for negative path
-    fun testLoadPrivateKey() {
+    private fun testLoadPrivateKey() {
         val privateKey: BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_SECP256k1)
         assert(Hex.toHexString(privateKey.encoded).length == 288)
         //assert(Hex.toHexString(privateKey.encoded) == "954b81a59283ec5bcf7186148f9f8b2f1cdfb62ebbf54652ef6a246d6fcc65f2")
         //Negative path 1, load public key from a wrong file format
         try {
-            val privateKey2: BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
+            Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PUBLIC_ED25519)
         } catch (e: IOException) {
             println("Error load private key from a wrong file format")
         }
         //Negative path 2, load public key from a wrong file format
         try {
-            val privateKey2: BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
+            Secp256k1Handle.readPrivateKeyFromPemFile(ConstValues.PEM_READ_PRIVATE_ED25519)
         } catch (e: IOException) {
             println("Error load private key from a wrong file format")
         }
         //Negative path 3, load private key from a non-exist file
-        val wrongPemPath:String = "wrongEd25519PrivateKey.pem"
+        val wrongPemPath = "wrongEd25519PrivateKey.pem"
         try {
-            val privateKey2: BCECPrivateKey = Secp256k1Handle.readPrivateKeyFromPemFile(wrongPemPath)
+            Secp256k1Handle.readPrivateKeyFromPemFile(wrongPemPath)
         } catch (e: IOException) {
             println("Error load wrong private key from a wrong path")
         }
     }
     //This function do the work of generate the (private/public) key pair and then write them to pem files
     //Total test case: 4 - 2 for positive path and 2 for negative path
-    fun testWriteToPemFile() {
+    private fun testWriteToPemFile() {
         //Generate the public/private key pair
         val keyPair = Secp256k1Handle.generateKey()
         //Write private key to pem file

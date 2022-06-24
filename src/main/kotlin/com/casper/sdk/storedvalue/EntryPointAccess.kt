@@ -19,7 +19,7 @@ class EntryPointAccess {
     companion object{
         /** This function parse the JsonObject (taken from server RPC method call) to get the EntryPointAccess object */
         fun fromJsonObjectToEntryPointAccess(from: JsonObject): EntryPointAccess {
-            var ret = EntryPointAccess()
+            val ret = EntryPointAccess()
             if(from.toJsonString().toString() == "Public") {
                 ret.isPublic = true
             } else {

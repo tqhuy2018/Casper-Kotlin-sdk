@@ -15,7 +15,7 @@ class EntryPoint {
 
         /** This function parse the JsonObject (taken from server RPC method call) to get the EntryPoint object */
         fun fromJsonObjectToEntryPoint(from: JsonObject): EntryPoint {
-            var retEntryPoint = EntryPoint()
+            val retEntryPoint = EntryPoint()
             retEntryPoint.name = from["name"].toString()
             retEntryPoint.ret = CLType.getCLType(from["ret"] as Any)
             retEntryPoint.access = EntryPointAccess.fromJsonObjectToEntryPointAccess(from["access"] as JsonObject)

@@ -7,7 +7,7 @@ class EntryPointType {
     companion object {
         /** This function get the String fill the value for EntryPointType object */
         fun fromJsonToEntryPointType(from: String) :  EntryPointType {
-            var ret = EntryPointType()
+            val ret = EntryPointType()
             ret.itsType = from
             return  ret
         }

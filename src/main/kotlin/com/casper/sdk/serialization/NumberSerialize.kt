@@ -46,7 +46,7 @@ class NumberSerialize {
             val retLength : Int = ret.length
             if(retLength < 16) {
                 val total0Add : Int = 16 - retLength - 1
-                var prefix0 : String = ""
+                var prefix0  = ""
                 for(i in 0 .. total0Add) {
                     prefix0 = prefix0 + "0"
                 }
@@ -88,9 +88,9 @@ class NumberSerialize {
                 val numberValue : UInt  = numberInStr.substring(1,lastChar).toUInt()
                 val maxU64 = ULong.MAX_VALUE
                 val remain : ULong = maxU64 - numberValue + 1u
-                return  NumberSerialize.serializeForU64(remain.toString())
+                return  serializeForU64(remain.toString())
             } else {
-                return  NumberSerialize.serializeForU64(numberInStr)
+                return  serializeForU64(numberInStr)
             }
         }
         /*
@@ -107,22 +107,22 @@ class NumberSerialize {
             if (numberInStr == "0") {
                 return "00"
             }
-            var retStr : String = NumberSerialize.fromDecimalStringToHexaString(numberInStr)
+            var retStr : String = fromDecimalStringToHexaString(numberInStr)
             val retStrLength : Int = retStr.length
-            var bytes : Int = 0
+            val bytes : Int
             if(retStrLength % 2 == 1) {
                 retStr = "0" + retStr
                  bytes = (retStrLength + 1)/2
             } else {
                 bytes = retStrLength/2
             }
-            val prefixLengthString : String = NumberSerialize.serializeForU8(bytes.toString())
-            var realRet:String = NumberSerialize.stringReversed2Digit(retStr)
+            val prefixLengthString : String = serializeForU8(bytes.toString())
+            var realRet:String = stringReversed2Digit(retStr)
             realRet = prefixLengthString + realRet
             return realRet
         }
         fun stringReversed2Digit(fromString:String) : String {
-            var retStr : String = ""
+            var retStr = ""
             var charIndex : Int = fromString.length
             while(charIndex > 0) {
                 charIndex -= 2
@@ -132,11 +132,11 @@ class NumberSerialize {
             return  retStr
         }
         fun findQuotientAndRemainderOfStringNumber(fromNumberInStr:String) : QuotientNRemainder {
-            var retQNR : QuotientNRemainder = QuotientNRemainder()
-            var ret : String = ""
+            val retQNR  = QuotientNRemainder()
+            var ret : String
             var strLength : UInt = fromNumberInStr.length.toUInt()
-            var startIndex: UInt = 0u
-            var remainder : UInt = 0u
+            var startIndex: UInt
+            var remainder : UInt
             if(strLength < 2u ) {
                 val value:UInt = fromNumberInStr.toUInt()
                 retQNR.quotient = "0"
@@ -160,12 +160,12 @@ class NumberSerialize {
                     val value3 : UInt = first3.toUInt()
                     remainder = value3 % 16u
                     val quotient : UInt = (value3 - remainder) / 16u
-                    ret = NumberSerialize.from10To16(quotient)
+                    ret = from10To16(quotient)
                 } else {
                     startIndex = 2u
                     remainder = value % 16u
                     val quotient : UInt = (value-remainder) / 16u
-                    ret = NumberSerialize.from10To16(quotient)
+                    ret = from10To16(quotient)
                 }
                 while(startIndex < strLength) {
                     val nextChar  = fromNumberInStr.subSequence(startIndex.toInt(),startIndex.toInt() + 1)
@@ -178,7 +178,7 @@ class NumberSerialize {
                             nextValue = remainder * 100u + nextChar2.toString().toUInt()
                             remainder = nextValue % 16u
                             val quotient2 : UInt = (nextValue - remainder) / 16u
-                            val nextCharInRet : String = NumberSerialize.from10To16(quotient2)
+                            val nextCharInRet : String = from10To16(quotient2)
                             ret = ret + nextCharInRet
                             startIndex += 2u
                         } else {
@@ -194,7 +194,7 @@ class NumberSerialize {
                     } else {
                         remainder = nextValue % 16u
                         val quotient2 : UInt = (nextValue - remainder) / 16u
-                        val nextCharInRet : String = NumberSerialize.from10To16(quotient2)
+                        val nextCharInRet : String = from10To16(quotient2)
                         ret = ret + nextCharInRet
                         startIndex += 1u
                     }
@@ -205,21 +205,21 @@ class NumberSerialize {
             return retQNR
         }
         fun fromDecimalStringToHexaString(fromNumberInStr : String) : String {
-            var ret : String = ""
-            val ret1 : QuotientNRemainder = NumberSerialize.findQuotientAndRemainderOfStringNumber(fromNumberInStr)
+            var ret : String
+            val ret1 : QuotientNRemainder = findQuotientAndRemainderOfStringNumber(fromNumberInStr)
             var numberLength : UInt = ret1.quotient.length.toUInt()
             var bigNumber : String = ret1.quotient
-            var remainderStr : String = NumberSerialize.from10To16(ret1.remainder)
+            var remainderStr : String = from10To16(ret1.remainder)
             ret = remainderStr
             var lastQuotient = ""
             if(numberLength < 2u) {
                 lastQuotient = ret1.quotient
             }
             while(numberLength >= 2u) {
-                val retN : QuotientNRemainder = NumberSerialize.findQuotientAndRemainderOfStringNumber(bigNumber)
+                val retN : QuotientNRemainder = findQuotientAndRemainderOfStringNumber(bigNumber)
                 numberLength = retN.quotient.length.toUInt()
                 bigNumber = retN.quotient
-                remainderStr = NumberSerialize.from10To16(retN.remainder)
+                remainderStr = from10To16(retN.remainder)
                 ret = ret + remainderStr
                 lastQuotient  = retN.quotient
             }
@@ -227,11 +227,11 @@ class NumberSerialize {
             } else {
                 ret = ret + lastQuotient
             }
-            val realRet:String = NumberSerialize.stringReversed(ret)
+            val realRet:String = stringReversed(ret)
             return realRet
         }
         fun stringReversed(fromString:String) : String {
-            var ret:String = ""
+            var ret = ""
             var charIndex : Int = fromString.length
             while(charIndex > 0) {
                 charIndex --

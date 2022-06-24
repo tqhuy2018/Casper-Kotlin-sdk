@@ -11,7 +11,7 @@ class Parameter {
         /** This function parse the JsonObject (taken from server RPC method call) to get the Account object */
 
         fun fromJsonObjectToParameter(from: JsonObject): Parameter {
-            var ret = Parameter()
+            val ret = Parameter()
             ret.name = from["name"].toString()
             ret.clType = CLType.getCLType(from["cl_type"] as Any)
             return ret

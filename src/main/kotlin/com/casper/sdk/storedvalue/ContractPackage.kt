@@ -3,7 +3,6 @@ package com.casper.sdk.storedvalue
 import com.casper.sdk.getdeploy.ExecutableDeployItem.ContractVersion
 import net.jemzart.jsonkraken.values.JsonArray
 import net.jemzart.jsonkraken.values.JsonObject
-import java.lang.Runtime.Version
 
 /** Class built for storing ContractPackage information */
 class ContractPackage {

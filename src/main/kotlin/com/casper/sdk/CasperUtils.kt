@@ -1,6 +1,5 @@
 package com.casper.sdk
 
-import com.casper.sdk.crypto.Ed25519Handle
 import org.bouncycastle.jcajce.provider.digest.Blake2b
 import java.io.BufferedReader
 import java.io.IOException
@@ -17,9 +16,9 @@ class CasperUtils {
         //input string is somehow in this format:
         //00000000000100000006000000616d6f756e74050000000400ca9a3b08050400000006000000616d6f756e740500000004005ed0b2080600000074617267657421000000015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a16020000006964090000000100000000000000000d05070000007370656e6465722100000001dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b0b
         fun getBlake2bFromStr(from:String) : String {
-            val hexaBytes:List<UByte> = CasperUtils.fromStringToHexaArray(from)
+            val hexaBytes:List<UByte> = fromStringToHexaArray(from)
             val totalBytes:Int = hexaBytes.size-1
-            var hexaByteArray:ByteArray = ByteArray(totalBytes + 1)
+            val hexaByteArray = ByteArray(totalBytes + 1)
             for(i in 0..totalBytes) {
                 hexaByteArray.set(i,hexaBytes.get(i).toByte())
             }
@@ -31,7 +30,7 @@ class CasperUtils {
         //This function turn string in form of hexa format to bytes array
         fun fromStringToHexaArray(from:String):List<UByte> {
             val ret:MutableList<UByte> = mutableListOf()
-            val strLength:Int = from.length.toInt() / 2 - 1
+            val strLength:Int = from.length / 2 - 1
             for(i in 0 .. strLength) {
                 val onePair:String = from.substring(i * 2, i* 2 + 2)
                 val firstE:UByte = fromHexaToDecimal(onePair.substring(0,1))
@@ -43,25 +42,25 @@ class CasperUtils {
             return ret
         }
         fun fromStringToHexaBytes2(from:String): ByteArray {
-            var ret:ByteArray = ByteArray(from.length/2)
+            val ret = ByteArray(from.length/2)
             val strLength:Int = from.length/2-1
             for(i in 0..strLength) {
                 val twoChar:String = from.substring(i*2,i*2 + 2)
                 val firstChar:String = twoChar.substring(0,1)
                 val secondChar:String = twoChar.substring(1,2)
-                val hexaValue:Int = CasperUtils.from16to10(firstChar) * 16 + CasperUtils.from16to10(secondChar)
+                val hexaValue:Int = from16to10(firstChar) * 16 + from16to10(secondChar)
                 ret.set(i,hexaValue.toByte())
             }
             return ret
         }
         fun fromStringToHexaBytes(from:String): ByteArray {
-            var ret:ByteArray = ByteArray(32)
+            val ret = ByteArray(32)
             val strLength:Int = from.length/2-1
             for(i in 0..strLength) {
                 val twoChar:String = from.substring(i*2,i*2 + 2)
                 val firstChar:String = twoChar.substring(0,1)
                 val secondChar:String = twoChar.substring(1,2)
-                val hexaValue:Int = CasperUtils.from16to10(firstChar) * 16 + CasperUtils.from16to10(secondChar)
+                val hexaValue:Int = from16to10(firstChar) * 16 + from16to10(secondChar)
                 ret.set(i,hexaValue.toByte())
             }
             return ret
@@ -114,7 +113,7 @@ class CasperUtils {
             if(ttl.contains(" ")) {
                 val elements:List<String> = ttl.split(" ")
                 for(element in elements) {
-                    ret = ret + CasperUtils.ttlToMilisecond(element)
+                    ret = ret + ttlToMilisecond(element)
                 }
                 return  ret
             }
@@ -197,7 +196,7 @@ class CasperUtils {
             }
             return  ret
         }
-        @Throws(IOException::class)
+        /*@Throws(IOException::class)
         fun readFromInputStream(inputStream: InputStream): String? {
             val resultStringBuilder = StringBuilder()
             BufferedReader(InputStreamReader(inputStream)).use { br ->
@@ -208,6 +207,6 @@ class CasperUtils {
                 }
             }
             return resultStringBuilder.toString()
-        }
+        }*/
     }
 }

@@ -24,7 +24,7 @@ class StoredValue {
             //Get StoredValue as enum type Account
             val storeValueAccount = from["Account"]
             if(storeValueAccount != null) {
-                var account:  Account = Account.fromJsonObjectToAccount(from["Account"] as JsonObject)
+                val account:  Account = Account.fromJsonObjectToAccount(from["Account"] as JsonObject)
                 ret.itsValue.add(account)
                 ret.itsType = ConstValues.STORED_VALUE_ACCOUNT
             }

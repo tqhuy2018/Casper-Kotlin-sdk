@@ -2,6 +2,7 @@ package com.casper.sdk.crypto
 
 //import java.security.*
 import com.casper.sdk.CasperUtils
+import com.casper.sdk.ConstValues
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
 import org.bouncycastle.crypto.digests.SHA256Digest
 import org.bouncycastle.crypto.ec.CustomNamedCurves
@@ -9,9 +10,14 @@ import org.bouncycastle.crypto.params.*
 import org.bouncycastle.crypto.signers.DSADigestSigner
 import org.bouncycastle.crypto.signers.ECDSASigner
 import org.bouncycastle.crypto.signers.PlainDSAEncoding
+import org.bouncycastle.crypto.util.PublicKeyFactory
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPrivateKey
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
+import org.bouncycastle.jcajce.provider.asymmetric.edec.BCEdDSAPublicKey
+import org.bouncycastle.jce.ECNamedCurveTable
 import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.bouncycastle.jce.spec.ECPublicKeySpec
+import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter
@@ -97,23 +103,30 @@ class Secp256k1Handle {
         //if the file path exists and the file is in correct private key format, then an BCECPrivateKey object is returned
         //Otherwise IOException is thrown
         @Throws(IOException::class)
-        fun readPublicKeyFromPemFile(filePath:String) : ByteArray {
+        fun readPublicKeyFromPemFile(filePath:String) : BCECPublicKey {
             println("In read Public key, Pem file path:" + filePath)
             Security.addProvider(BouncyCastleProvider())
             //val converter =  JcaPEMKeyConverter().setProvider("BC")
             val converter = JcaPEMKeyConverter().setProvider(BouncyCastleProvider())
-            val publicKeyInfo = PEMParser(FileReader(filePath)).readObject()
-            println(" public key type is: " + publicKeyInfo)
-            if(publicKeyInfo is SubjectPublicKeyInfo) {
-                println("Public key is of PEM KEY PAIR")
-               // val keyPair = converter.getKeyPair(pemKeyPair)
-                val pkey = converter.getPublicKey(publicKeyInfo)
-
-                println("Public hexa:" + Hex.toHexString(publicKeyInfo.publicKeyData.bytes))
-               // val publicKey = keyPair.public as BCECPublicKey
-                return publicKeyInfo.publicKeyData.bytes
-               // return publicKeyInfo.
-               // return pkey.q.getEncoded(true)
+            val pemKeyPair = PEMParser(FileReader(filePath)).readObject()
+            println(" public key type is: " + pemKeyPair)
+            if(pemKeyPair is SubjectPublicKeyInfo) {
+                val pKey = converter.getPublicKey(pemKeyPair)
+                if(pKey is BCECPublicKey) { //Secp256k1 public key
+                    println("PUblic key is BCECPublicKey")
+                    return pKey
+                } else {
+                    throw IOException()
+                }
+            } else if(pemKeyPair is PEMKeyPair) {
+                println("Public key is Pem key pair:" + pemKeyPair.publicKeyInfo)
+                val keyFactory = KeyFactory.getInstance("ECDSA", BouncyCastleProvider.PROVIDER_NAME)
+                val ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1")
+                val point = ecSpec.getCurve().decodePoint(pemKeyPair.publicKeyInfo.publicKeyData.bytes)
+                val pubSpec = ECPublicKeySpec(point, ecSpec)
+                val publicKey = keyFactory.generatePublic(pubSpec) as BCECPublicKey
+                println("Public key is: " + publicKey)
+                throw  IOException()
             } else {
                 throw IOException()
             }

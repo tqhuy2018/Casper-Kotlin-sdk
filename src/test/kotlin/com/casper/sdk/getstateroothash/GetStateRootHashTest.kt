@@ -5,7 +5,7 @@ import com.casper.sdk.BlockIdentifierType
 import com.casper.sdk.ConstValues
 import org.junit.jupiter.api.Test
 
-internal class GetStateRootHashTest {
+public class GetStateRootHashTest {
 
     @Test
     fun getStateRootHash() {
@@ -55,7 +55,5 @@ internal class GetStateRootHashTest {
         } catch (e: IllegalArgumentException) {
             println("Error Get State Root Hash,  invalid parameter")
         }
-
-
     }
 }

@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>consoleApp</artifactId>
-    <groupId>me.hien</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>casper-kotlin-sdk</artifactId>
+    <groupId>casper.kotlin.sdk</groupId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>consoleApp</name>
+    <name>CasperKotlinSDK</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,19 +20,38 @@
     <repositories>
         <repository>
             <id>mavenCentral</id>
-            <url>https: //repo1.maven.org/maven2/</url>
+            <url>https://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>1.5.10</version>
+                <version>1.6.10</version>
                 <executions>
+
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+
                     <execution>
                         <id>compile</id>
                         <phase>compile</phase>
@@ -62,7 +81,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>MainKt</mainClass>
+                    <!--<mainClass>MainKt</mainClass>-->
                 </configuration>
             </plugin>
         </plugins>

@@ -87,7 +87,7 @@ internal class GetDeployRPCTest {
             assert(sessionNAOption2.clValue.itsBytes == "010105")
             assert(sessionNAOption2.clValue.itsCLType.itsTypeStr == ConstValues.CLTYPE_OPTION)
             assert(sessionNAOption2.clValue.itsCLType.innerCLType1.itsTypeStr == ConstValues.CLTYPE_U512)
-            println("Value of OptionU512: ${sessionNAOption2.clValue.itsParse.innerParsed1.itsValueInStr}")
+            //println("Value of OptionU512: ${sessionNAOption2.clValue.itsParse.innerParsed1.itsValueInStr}")
             assert(sessionNAOption2.clValue.itsParse.innerParsed1.itsValueInStr == "5")
             //assertion for session 16th element with CLValue of CLType U32
             val sessionNAU32:  NamedArg = session.args.listNamedArg[16]
@@ -100,7 +100,7 @@ internal class GetDeployRPCTest {
             assert(getDeployResult.executionResults[0].blockHash == "aea4ee6a46ab60337557fa5526667796888b84ee9c70d5b74cf72e2a8c7f9816")
             assert(getDeployResult.executionResults[0].result.itsType == ConstValues.EXECUTION_RESULT_FAILURE)
             assert(getDeployResult.executionResults[0].result.cost.itsValue == "92233020")
-            assert(getDeployResult.executionResults[0].result.errorMessage == "ApiError: : InvalidArgument [3]")
+            assert(getDeployResult.executionResults[0].result.errorMessage == "ApiError::InvalidArgument [3]")
             assert(getDeployResult.executionResults[0].result.transfers.count() == 0)
             assert(getDeployResult.executionResults[0].result.effect.operations.count() == 0)
             assert(getDeployResult.executionResults[0].result.effect.transforms.count() == 16)
@@ -156,7 +156,7 @@ internal class GetDeployRPCTest {
             val getDeployResult3 = getDeployRPC.getDeployFromJsonStr(postParameter3)
             assert(getDeployResult3.deploy.hash == "32e3d01bc6bb0ef9bec5efa9fbc4c7a15595242edf624de6589cfb6dc52df3bf")
             assert(getDeployResult3.deploy.header.bodyHash == "0b1c01434b33b7f7ca3a173849e2292333391338ed2af8c1eafd26d6db18ded5")
-            assert(getDeployResult3.deploy.header.timeStamp == "2022-01-16T03: 42: 12.899Z")
+            assert(getDeployResult3.deploy.header.timeStamp == "2022-01-16T03:42:12.899Z")
             val payment3:  ExecutableDeployItem_ModuleBytes =
                 getDeployResult3.deploy.payment.itsValue[0] as ExecutableDeployItem_ModuleBytes
             assert(payment3.args.listNamedArg.count() == 1)
@@ -206,7 +206,6 @@ internal class GetDeployRPCTest {
             assert(transformWriteTransfer.transform.itsType == ConstValues.TRANSFORM_WRITE_TRANSFER)
             val transfer:  Transfer = transformWriteTransfer.transform.itsValue[0] as Transfer
             assert(transfer.isToExisted == true)
-            println("transfertois: ${transfer.to}")
             assert(transfer.to == "account-hash-6174cf2e6f8fed1715c9a3bace9c50bfe572eecb763b0ed3f644532616452008")
             assert(transfer.isIDExisted == false)
             assert(transfer.gas.itsValue == "0")
@@ -558,7 +557,7 @@ internal class GetDeployRPCTest {
             getDeployRPC.methodURL = ConstValues.TESTNET_URL
             getDeployRPC.getDeployFromJsonStr(postParameter11)
         } catch (e: IllegalArgumentException) {
-            println("Error IllegalArgumentException caught")
+            println("Negative test, Error IllegalArgumentException caught")
         }
         //Negative Path 1:  Get Deploy with no parameter - no deploy hash
         try {
@@ -567,7 +566,7 @@ internal class GetDeployRPCTest {
             getDeployRPC.methodURL = ConstValues.TESTNET_URL
             getDeployRPC.getDeployFromJsonStr(postParameter11)
         } catch (e: IllegalArgumentException) {
-            println("Error IllegalArgumentException caught")
+            println("Negative test, Error IllegalArgumentException caught")
         }
     }
 }

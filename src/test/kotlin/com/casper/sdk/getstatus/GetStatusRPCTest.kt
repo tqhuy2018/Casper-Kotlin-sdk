@@ -3,7 +3,6 @@ package com.casper.sdk.getstatus
 import org.junit.jupiter.api.Test
 
 internal class GetStatusRPCTest {
-
     @Test
     fun getStatusResult() {
         val getStatusRPC = GetStatusRPC()

@@ -11,7 +11,6 @@ import com.casper.sdk.getdeploy.ExecutionResult.Transform.Withdraw
 import org.junit.jupiter.api.Test
 
 internal class GetItemRPCTest {
-
     @Test
     fun getItem() {
         val getItemRPC = GetItemRPC()

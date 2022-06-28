@@ -115,7 +115,7 @@ A windows will appear, check all the check box then click "Invalidate and Restar
 
 <img width="466" alt="Screen Shot 2022-06-28 at 10 39 28" src="https://user-images.githubusercontent.com/94465107/176086984-583e19be-42bb-46dc-92c7-028836a653a3.png">
 
-The IntelliJ IDEA will close and restart. Now you are ready to build and test the SDK.
+The IntelliJ IDEA will close and restart. You may have to wait for 1 or several minutes to wait for IntelliJ IDEA to be ready for the changes. Then you can build and test the SDK.
 
 #### Build the sdk: 
 

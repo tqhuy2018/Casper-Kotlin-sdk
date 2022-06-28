@@ -540,3 +540,26 @@ Output:  The GetAuctionInfoResult which contains all information of the aunction
 
 Exception:  An error is thrown when you send the wrong parameter,  for example when you pass the wrong block height (too big block height) in BlockIdentifier. If you pass a BlockIdentifier without block hash or height,  or pass the wrong block hash,  the latest auction info is retrieved.
 
+### XII. Put deploy 
+
+#### 1. Method declaration
+
+The call for Put Deploy RPC method is done through this function in "PutDeployRPC.kotlin" file in package "com.casper.sdk.putdeploy"
+
+```Kotlin
+fun putDeploy(deploy: Deploy) :String 
+```
+
+#### 2. Input & Output:  
+
+Input: One deploy object
+
+From this deploy, a string for posting that deploy is generated using this function, aslo in file "PutDeployRPC.kotlin"
+```Kotlin
+fun fromDeployToJsonString(deploy: Deploy):String 
+```
+
+The result of this function is a Json string represent the deploy, that can later use as parameter for the POST request.
+```Kotlin
+{"id": 1,"method": "account_put_deploy","jsonrpc": "2.0","params": [{"header": {"account": "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53","timestamp": "2022-06-28T11:35:19.349Z","ttl":"1h 30m","gas_price":1,"body_hash":"798a65dae48dbefb398ba2f0916fa5591950768b7a467ca609a9a631caf13001","dependencies": [],"chain_name": "casper-test"},"payment": {"ModuleBytes": {"module_bytes": "","args": [["amount",{"bytes": "0400ca9a3b","cl_type":"U512","parsed":"1000000000"}]]}},"session": {"Transfer": {"args": [["amount",{"bytes": "04005ed0b2","cl_type":"U512","parsed":"3000000000"}],["target",{"bytes": "015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a","cl_type":"PublicKey","parsed":"015f12b5776c66d2782a4408d3910f64485dd4047448040955573aa026256cfa0a"}],["id",{"bytes": "010000000000000000","cl_type":{"Option": "U64"},"parsed":0}],["spender",{"bytes": "01dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b","cl_type":"Key","parsed":{"Hash":"hash-dde7472639058717a42e22d297d6cf3e07906bb57bc28efceac3677f8a3dc83b"}}]]}},"approvals": [{"signer": "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53","signature": "016596f09083d32eaffc50556f1a5d22202e8927d5aa3267639aff4b9d3412b5ae4a3475a5da6c1c1086a9a090b0e1090db5d7e1b7084bb60b2fee3ce9447a2a04"}],"hash": "65c6ccdc5aacc9dcd073ca79358bf0b5115061e8d561b3e6f461a34a6c5858f0"}]}
+```

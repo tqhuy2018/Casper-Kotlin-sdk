@@ -49,3 +49,37 @@ fun  main(args:Array<String>) {
     println("Hello Casper Kotlin SDK")
 }
 ```
+
+Right click anywhere in the "Main.kt" file and choose "Run MainKt"
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 16 43 59" src="https://user-images.githubusercontent.com/94465107/176148284-ca261587-5366-4f95-b7c7-46b9fd97116b.png">
+
+There will be line of "Hello Casper Kotlin SDK" printed out. The next step is to import the "CasperKotlinSDK.jar" file.
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 16 45 00" src="https://user-images.githubusercontent.com/94465107/176148609-6fa3f45e-d5a1-42ef-a9d0-01b74973a643.png">
+
+### Import "CasperKotlinSDK.jar" file.
+
+The first step is to import "net.jemzart" library for Json handle.
+
+Open "pom.xml" file and paste the following content to the <dependencies> section
+
+```Kotlin
+<dependency>
+    <groupId>net.jemzart</groupId>
+    <artifactId>jsonkraken</artifactId>
+    <version>1.2.0</version>
+</dependency>
+```
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 16 42 19" src="https://user-images.githubusercontent.com/94465107/176149123-50e929e0-be6c-4dab-92bf-c6587117452d.png">
+ 
+Click "File-> Invalidate Caches ..."
+    
+    <img width="1440" alt="Screen Shot 2022-06-28 at 16 48 25" src="https://user-images.githubusercontent.com/94465107/176149304-be6a4170-6032-4039-abe2-f1bb3b7516cf.png">
+    
+ Check all the check boxes and click "Invalidate and Restart"
+
+<img width="465" alt="Screen Shot 2022-06-28 at 16 35 08" src="https://user-images.githubusercontent.com/94465107/176149404-e7ea76e0-483d-4a46-a68e-a8a03aacd354.png">
+
+

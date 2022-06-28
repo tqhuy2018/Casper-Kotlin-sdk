@@ -650,4 +650,17 @@ The function for doing the positive test for both Ed25519 and Secp256k1 is
 private fun testPutDeploy(isEd25519:Boolean) : String
 ```
 
-This function takes parameter of isEd25519 with value true or false. If the value of the input is true, then the account of type Ed25519 is used, otherwise the account of type Secp256k1 is used
+This function takes parameter of isEd25519 with value true or false. If the value of the input is true, then the account of type Ed25519 is used, otherwise the account of type Secp256k1 is used.
+
+After each time the "PutDeployRPCTest" is called, there will be transfer deploy listed in the account. Scroll down the page for Ed25519 or Secp256k1 account to see the list of deploy being created.
+
+For example this is the list of deploys being created for account "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53" by going to this address https://testnet.cspr.live/account/0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53 and scroll down.
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 14 25 55" src="https://user-images.githubusercontent.com/94465107/176119681-b338c053-1a99-4270-8c91-cef4b3d24798.png">
+
+This is the list of the deploys being created for account "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635" by going to this address 
+ https://testnet.cspr.live/account/0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635 and scroll down.
+ 
+ <img width="1440" alt="Screen Shot 2022-06-28 at 14 26 30" src="https://user-images.githubusercontent.com/94465107/176119896-42a6b2b9-4c11-4f9c-aa2c-1aff00480ee7.png">
+ 
+ 

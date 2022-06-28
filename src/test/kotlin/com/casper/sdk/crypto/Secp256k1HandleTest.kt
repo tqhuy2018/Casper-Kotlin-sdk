@@ -40,13 +40,7 @@ internal class Secp256k1HandleTest {
         val CURVE = ECDomainParameters(CURVE_PARAMS.getCurve(),CURVE_PARAMS.g, CURVE_PARAMS.n, CURVE_PARAMS.h)
        // val HALF_CURVE_ORDER = CURVE_PARAMS.getN().shiftRight(1)
         val publicKey:BCECPublicKey = keyPair.public as BCECPublicKey
-        val publicKeyBytes = publicKey.getQ().getEncoded(true)
-        val ecPoint = CURVE.getCurve().decodePoint(publicKeyBytes)
-        val ecPkparam =  ECPublicKeyParameters(ecPoint, CURVE)
-        val signer =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
-        signer.init(false, ecPkparam)
-        signer.update(CasperUtils.fromStringToHexaBytes(message), 0, message.length/2)
-        val result = signer.verifySignature(CasperUtils.fromStringToHexaBytes2(signature))
+        val result = Secp256k1Handle.verifyMessage(message,publicKey,signature)
         assert(result == true)
 
         //Positive test 2: Test with key load from Pem file
@@ -58,35 +52,19 @@ internal class Secp256k1HandleTest {
         //Sign the message
         val signature2 = Secp256k1Handle.signMessage(message,privateKey2)
         //Verify the message
-        val publicKeyBytes2 = publicKey2.getQ().getEncoded(true)
-        val ecPoint2 = CURVE.getCurve().decodePoint(publicKeyBytes2)
-        val ecPkparam2 =  ECPublicKeyParameters(ecPoint2, CURVE)
-        val signer2 =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
-        signer2.init(false, ecPkparam2)
-        signer2.update(CasperUtils.fromStringToHexaBytes(message), 0, message.length/2)
-        val result2 = signer2.verifySignature(CasperUtils.fromStringToHexaBytes2(signature2))
+        val result2 = Secp256k1Handle.verifyMessage(message,publicKey2,signature2)
         assert(result2 == true)
-
         //Negative path 1 - verify with a different public key - private key pair
         //private key from the auto generated, public key from the pem file
-        val publicKeyBytes3 = publicKey.getQ().getEncoded(true)
-        val ecPoint3 = CURVE.getCurve().decodePoint(publicKeyBytes3)
-        val ecPkparam3 =  ECPublicKeyParameters(ecPoint3, CURVE)
-        val signer3 =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
-        signer3.init(false, ecPkparam3)
-        signer3.update(CasperUtils.fromStringToHexaBytes(message), 0, message.length/2)
-        val result3 = signer3.verifySignature(CasperUtils.fromStringToHexaBytes2(signature2))
+        val result3 = Secp256k1Handle.verifyMessage(message,publicKey,signature2)
         assert(result3 == false)
-
         //Negative path 2 - verify with a correct public key - private key pair but wrong message
         //private key is from pem file, public key is from pem file
-        signer2.update(CasperUtils.fromStringToHexaBytes(message2), 0, message2.length/2)
-        val result4 = signer2.verifySignature(CasperUtils.fromStringToHexaBytes2(signature2))
+        val result4 = Secp256k1Handle.verifyMessage(message2,publicKey,signature)
         assert(result4 == false)
-
         //Negative path 3 - verify with a correct public key - private key pair but wrong signature
         //private key is from the auto generated, public key is from the auto generated
-        val result5 = signer.verifySignature(CasperUtils.fromStringToHexaBytes2(signature2))
+        val result5 = Secp256k1Handle.verifyMessage(message,publicKey,signature2)
         assert(result5 == false)
     }
     //This function test the load public key from Pem file, the public key is in BCECPublicKey format

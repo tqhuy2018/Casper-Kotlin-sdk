@@ -120,5 +120,22 @@ class Secp256k1Handle {
             val bytesArray: ByteArray = signer.generateSignature()
             return  Hex.toHexString(bytesArray)
         }
+        /*
+     This function verifies the message in form of String, and signature in form of hexa string, with Secp256k1 public key in form of BCECPublicKey object
+     If the signature is generated from the private key and the verification use the corresponding public key
+     of the private key for the signed message, then the true value is returned, otherwise false value returned
+      */
+        fun verifyMessage(message: String,publicKey: BCECPublicKey,signature:String) : Boolean {
+            val CURVE_PARAMS = CustomNamedCurves.getByName("secp256k1")
+            val CURVE = ECDomainParameters(CURVE_PARAMS.getCurve(),CURVE_PARAMS.g, CURVE_PARAMS.n, CURVE_PARAMS.h)
+            val publicKeyBytes = publicKey.getQ().getEncoded(true)
+            val ecPoint = CURVE.getCurve().decodePoint(publicKeyBytes)
+            val ecPkparam =  ECPublicKeyParameters(ecPoint, CURVE)
+            val signer =  DSADigestSigner( ECDSASigner(),  SHA256Digest(), PlainDSAEncoding.INSTANCE)
+            signer.init(false, ecPkparam)
+            signer.update(CasperUtils.fromStringToHexaBytes(message), 0, message.length/2)
+            val result = signer.verifySignature(CasperUtils.fromStringToHexaBytes2(signature))
+            return result
+        }
     }
 }

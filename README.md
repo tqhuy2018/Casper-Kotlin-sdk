@@ -157,10 +157,14 @@ The Key wrapper do the following work:(for both Secp256k1 and Ed25519):
 
 The key wrapper is used in account_put_deploy RPC method to generate approvals signature based on deploy hash.
 
-The Crypto task for Ed25519 and Secp256k1 use BouncyCastle library at this address https://bouncycastle.org/
+The Crypto task for Ed25519 and Secp256k1 use BouncyCastle library at this address https://bouncycastle.org/, with the Jar files from this address 
+
+https://bouncycastle.org/latest_releases.html
 
 The Ed25519 crypto task is implemented in file Ed25519Handle under package com.casper.sdk.crypto
+
 The Secp256k1 crypto task is implemented in file Secp256k1Handle under package com.casper.sdk.crypto
+
 # Documentation for classes and methods
 
 * [List of classes and methods](./Docs/Help.md#list-of-rpc-methods)

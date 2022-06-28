@@ -82,4 +82,7 @@ Click "File-> Invalidate Caches ..."
 
 <img width="465" alt="Screen Shot 2022-06-28 at 16 35 08" src="https://user-images.githubusercontent.com/94465107/176149404-e7ea76e0-483d-4a46-a68e-a8a03aacd354.png">
 
+Go to file "Main.kt" and type import net.jemzart, if you can see the hint appears, then you are import the net.jemzart successfully.
+    
+ <img width="1440" alt="Screen Shot 2022-06-28 at 16 52 19" src="https://user-images.githubusercontent.com/94465107/176150390-84dbbaf8-85a0-413b-a29d-1e2ec7754001.png">
 

@@ -26,6 +26,18 @@ You can see the "jar" file is exported succcessfully
 
 <img width="1212" alt="Screen Shot 2022-06-28 at 16 16 24" src="https://user-images.githubusercontent.com/94465107/176142387-b28e7ab8-1dd9-4005-be8a-d4b57dc03009.png">
 
+Open "Terminal", go to the folder of the "CasperKotlinSDK.jar" file and type this command 
+
+```Kotlin
+zip -d CasperKotlinSDK.jar 'META-INF/.SF' 'META-INF/.RSA' 'META-INF/*SF'
+```
+
+You will see some result generated like this
+
+<img width="633" alt="Screen Shot 2022-06-28 at 17 50 51" src="https://user-images.githubusercontent.com/94465107/176162004-fc3795d1-ff16-4d49-8b5f-b2b690625e47.png">
+
+This is to make sure that some encryption being made in the "CasperKotlinSDK.jar" file is removed so that the SDK can be access without any restriction.
+
 With this "CasperKotlinSDK.jar" file, you can import to other project to call for Casper RPC methods.
 
 ## Call RPC method from the exported "jar" file from the SDK.

@@ -26,6 +26,10 @@ import java.security.Security
 
 class Ed25519Handle {
     companion object {
+        /*
+        This function signs the message in form of String, with Ed25519 private key in form of Ed25519PrivateKeyParameters object
+        The signature is a hexa string
+         */
         fun signMessage(messageToSign:String,privateKey:Ed25519PrivateKeyParameters):String {
              //val message10:String = messageToSign
             val signer: Signer = Ed25519Signer()
@@ -35,6 +39,11 @@ class Ed25519Handle {
             val signatureHexa : String = signature.toHex()
             return  signatureHexa
         }
+        /*
+       This function verifies the message in form of String, and signature in form of hexa string, with Ed25519 public key in form of Ed25519PublicKeyParameters object
+       If the signature is generated from the private key and the verification use the corresponding public key
+       of the private key for the signed message, then the true value is returned, otherwise false value returned
+        */
         fun verifyMessage(originalMessage:String,signature:String,publicKey:Ed25519PublicKeyParameters) : Boolean{
             val verifier: Signer = Ed25519Signer()
             verifier.init(false, publicKey)

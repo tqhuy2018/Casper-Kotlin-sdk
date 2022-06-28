@@ -101,7 +101,7 @@ class CasperUtils {
         }
         //This function change timestamp in format of "2020-11-17T00:39:24.072Z" to millisecondsSince1970 U64 number in String format like this "1605573564072"
         fun fromTimeStampToU64Str(timeStamp:String) : ULong {
-            var ret:ULong = 0u
+            var ret: ULong
             val dateStr: String = timeStamp.substring(0,timeStamp.length-1)
             val dateTime = LocalDateTime.parse(dateStr)//2020-11-17T00:39:24.072Z
             val milisecond = dateTime.toEpochSecond(ZoneOffset.UTC) * 1000 + dateTime.get(ChronoField.MILLI_OF_SECOND)

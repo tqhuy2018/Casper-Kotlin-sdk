@@ -22,11 +22,13 @@ internal class PutDeployRPCTest {
     fun  testAll() {
         //Positive path - put deploy for ed25519 account
         //Use this account 0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53
-        testPutDeploy(isEd25519 = true)
+        val deployHashEd25519 = testPutDeploy(isEd25519 = true)
         //Positive path - put deploy for secp256k1 account
         //Use this account 0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635
-        testPutDeploy(isEd25519 = false)
-
+        val deployHashSecp256k1 =testPutDeploy(isEd25519 = false)
+        assert(deployHashEd25519.length > 0)
+        assert(deployHashSecp256k1.length > 0)
+        //println("Deploy hash ed25519 is: " + deployHashEd25519 + " deploy Hash secp256k1:" + deployHashSecp256k1)
         //Negative path 1 - put deploy with wrong deploy hash - for ed25519 account
         val deploy1 = setupDeploy(isEd25519=true)
         //Try to make a wrong deploy by give it a fake deploy hash
@@ -349,7 +351,7 @@ internal class PutDeployRPCTest {
     }
 
     //Positive test, put deploy with correct information for both Ed25519 and Secp256k1 account
-    private fun testPutDeploy(isEd25519:Boolean) {
+    private fun testPutDeploy(isEd25519:Boolean) : String {
         val accountEd25519 = "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53"
         val accountSecp256k1 = "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635"
         val deploy = Deploy()
@@ -490,6 +492,7 @@ internal class PutDeployRPCTest {
         listApprovals.add(oneA)
         deploy.approvals = listApprovals
         val deployHash:String = PutDeployRPC.putDeploy(deploy)
-        assert(deployHash == deploy.hash)
+        assert(deploy.hash == deployHash)
+        return deployHash
     }
 }

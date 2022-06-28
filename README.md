@@ -65,7 +65,7 @@ Just do this for the SDK configuration, left the other configurations with defau
 <img width="1440" alt="Screen Shot 2022-04-20 at 09 17 17" src="https://user-images.githubusercontent.com/94465107/164136336-6900e4cd-bcca-41fd-97b7-f31e5aad76ee.png">
 
 
-Click "Apply" and then "OK" to save the configruation. Now you are ready to build and test the project in IntelliJ IDEA.
+Click "Apply" and then "OK" to save the configruation. The next step is to import the necessary Jar files to the SDK.
 
 #### Import jars file to the SDK
 
@@ -88,7 +88,6 @@ Browse to the 2 jar folders that you have already downloaded from the link https
 Select all the files in the "bcutils" folder and click "Open" button
 
 <img width="1440" alt="Screen Shot 2022-06-28 at 10 24 57" src="https://user-images.githubusercontent.com/94465107/176086250-6439a633-382f-457a-ab14-91234c9921e7.png">
-
 
 You will see the jar files imported in the list
 

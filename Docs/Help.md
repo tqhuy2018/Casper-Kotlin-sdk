@@ -717,8 +717,14 @@ Wait for 1-5 minutes and refresh the page for the account, you will now see the 
 
 In file "ConstValues" under package "com.casper.sdk" of the Casper Kotlin SDK find for the variable "PEM_READ_PRIVATE_ED25519", change its value to your pem name "Ed25519PrivateKeyKotlin01.pem". It is the path for the private key of the account you are working on.
 
+<img width="1440" alt="Screen Shot 2022-06-28 at 15 13 47" src="https://user-images.githubusercontent.com/94465107/176129400-5510971a-c301-4e12-93ca-91b5dd95f7d7.png">
+
+
 In file "PutDeployRPCTest" under package "com.casper.sdk.putdeploy" of the test folder, find for testPutDeploy function and replace the accountEd25519 value with the new account you have created, in this example it is "01afed08ed3ccf68a087db0e15e0b9d90d5d7c0f6eb3a3cc84eff52e81db733a50".
 
 <img width="1440" alt="Screen Shot 2022-06-28 at 15 05 31" src="https://user-images.githubusercontent.com/94465107/176128037-84950bf7-19d4-4f34-9798-ad92ec99015d.png">
 
-Now you can test the new account  
+Now you can test the new account by openning the file "PutDeployRPCTest" and right click any where in the file, choose "Run'PutDeployRPCTest'"
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 15 16 05" src="https://user-images.githubusercontent.com/94465107/176130197-3e3ad286-6ebd-451e-8da4-641245505033.png">
+

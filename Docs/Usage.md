@@ -30,6 +30,13 @@ With this "CasperKotlinSDK.jar" file, you can import to other project to call fo
 
 ## Call RPC method from the exported "jar" file from the SDK.
 
-Create a new project in IntelliJ IDEA
+Create a new project in IntelliJ IDEA. Make sure that "Kotlin" and "Maven" is selected, as the image below.
+
+<img width="804" alt="Screen Shot 2022-06-28 at 16 20 33" src="https://user-images.githubusercontent.com/94465107/176144564-6637df74-8991-4d12-b868-fbf40e716047.png">
+
+Wait for a while for the project structure to fully loaded. Then right click on "kotlin" folder, choose "New-> Kotlin file/class"
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 16 25 19" src="https://user-images.githubusercontent.com/94465107/176144643-46ddbe3b-4321-4bdd-b9b2-df02576aa045.png">
+
 
 

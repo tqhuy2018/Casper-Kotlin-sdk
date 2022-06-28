@@ -686,6 +686,8 @@ The above manual is for exising account in the test net. If you are familiar wit
  
 Here is a brief description of the steps to do:
 
+#### Test put deploy with your own account 
+
 Install Casper Signer. Create 1 account of type Ed25519 (for example, Secp256k1 is quite the same). 
 
 <img width="304" alt="Screen Shot 2022-06-28 at 14 55 53" src="https://user-images.githubusercontent.com/94465107/176126379-c5057e07-b3dc-471e-a462-988414ca162c.png">
@@ -740,6 +742,8 @@ As you can see, the deploy is in Pending mode, and not listed in the Account dep
 
 <img width="1440" alt="Screen Shot 2022-06-28 at 15 29 02" src="https://user-images.githubusercontent.com/94465107/176132500-5903ac9b-0ac3-4591-8ddc-3adedef0659b.png">
 
-The deploy will be there in several hours, but as you can see the deploy in Pending mode, then the Deploy is put to the system successfully.
+The deploy will be there in hours, but as you can see the deploy in Pending mode, then the Deploy is put to the system successfully.
+
+The procedure for Secp256k1 account is quite the same, as long as you create the right account, copy the private key for the account to the right folder and point to it correctly, change the Secp256k1 account for sending the deploy in the PutDeployRPCTest file, then the test will be done without error.
 
 

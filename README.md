@@ -139,6 +139,31 @@ The test list is in the right panel, the result is in the left panel, as shown i
 
 <img width="1440" alt="Screen Shot 2022-04-19 at 17 18 28" src="https://user-images.githubusercontent.com/94465107/163983055-31730b51-c730-4878-99a4-c7aa104b3ce5.png">
 
+# Information for Secp256k1, Ed25519 Key Wrapper and Put Deploy
+
+## Key wrapper specification:
+
+The Key wrapper do the following work:(for both Secp256k1 and Ed25519):
+
+- (PrivateKey,PublicKey) generation
+
+- Sign message 
+
+- Verify message
+
+- Read PrivateKey/PublicKey from PEM file
+
+- Write PrivateKey/PublicKey to PEM file
+
+The key wrapper is used in account_put_deploy RPC method to generate approvals signature based on deploy hash.
+
+The Crypto task for Ed25519 and Secp256k1 use BouncyCastle library at this address https://bouncycastle.org/, with the Jar files from this address 
+
+https://bouncycastle.org/latest_releases.html
+
+The Ed25519 crypto task is implemented in file Ed25519Handle under package com.casper.sdk.crypto
+
+The Secp256k1 crypto task is implemented in file Secp256k1Handle under package com.casper.sdk.crypto
 
 # Documentation for classes and methods
 
@@ -165,4 +190,6 @@ The test list is in the right panel, the result is in the left panel, as shown i
   -  [Get Balance](./Docs/Help.md#x-get-balance)
   
   -  [Get Auction Info](./Docs/Help.md#xi-get-auction-info)
+  
+  -  [Put deploy](./Docs/Help.md#xii-put-deploy)
  

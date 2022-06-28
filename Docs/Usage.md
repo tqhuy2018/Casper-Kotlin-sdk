@@ -2,11 +2,15 @@
 
 To call for SDK RPC methods, the SDK is exported to "jar" file and can be imported from other Kotlin projects.
 
+There is already exported "jar" file at this address 
+
+https://drive.google.com/drive/folders/1BE8G2dSK-RaiFwJqehlxujs5YCGCS7QV?usp=sharing
+
 A sample project can be found at this address
     
 https://github.com/hienbui9999/SampleCallCasperKotlinSDK
 
-But still you need to read through the manual to get the mood of how to export the SDK and how to use the export "jar" file.
+But still you need to read through the manual to get the mood of how to export the SDK and how to use the exported "jar" file.
 
 ## Export SDK to "jar" file
 

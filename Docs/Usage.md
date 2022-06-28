@@ -48,7 +48,7 @@ You will see some result generated like this
 
 <img width="633" alt="Screen Shot 2022-06-28 at 17 50 51" src="https://user-images.githubusercontent.com/94465107/176162004-fc3795d1-ff16-4d49-8b5f-b2b690625e47.png">
 
-This is to make sure that some encryption being made in the "CasperKotlinSDK.jar" file is removed so that the SDK can be access without any restriction.
+This is to make sure that some encryption work being made in the "CasperKotlinSDK.jar" file is removed so that the SDK can be access without any restriction.
 
 With this "CasperKotlinSDK.jar" file, you can import to other project to call for Casper RPC methods.
 

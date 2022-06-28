@@ -728,3 +728,18 @@ Now you can test the new account by openning the file "PutDeployRPCTest" and rig
 
 <img width="1440" alt="Screen Shot 2022-06-28 at 15 16 05" src="https://user-images.githubusercontent.com/94465107/176130197-3e3ad286-6ebd-451e-8da4-641245505033.png">
 
+There will be 2 line informing the deploy has just been successfully posted in the log panel, like this "Put deploy successfull with deploy hash:857722d6a901d8f48938e8acd244af7f40985291324056fcf681f0704db9b589".
+Copy the first deploy hash, which is for Ed25519 account.
+<img width="1440" alt="Screen Shot 2022-06-28 at 15 23 39" src="https://user-images.githubusercontent.com/94465107/176131599-c2dadba6-54a9-4485-92c3-4052bf91c80d.png">
+
+Search for it in the Test net
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 15 26 39" src="https://user-images.githubusercontent.com/94465107/176132318-e702ccfb-4a49-41fc-bac3-fc5cf54179c9.png">
+
+As you can see, the deploy is in Pending mode, and not listed in the Account deploy list, as you go to the Account detail page.
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 15 29 02" src="https://user-images.githubusercontent.com/94465107/176132500-5903ac9b-0ac3-4591-8ddc-3adedef0659b.png">
+
+The deploy will be there in several hours, but as you can see the deploy in Pending mode, then the Deploy is put to the system successfully.
+
+

@@ -107,6 +107,16 @@ You will see that all the jars from the two folder "bcutils" and "otherjars" is 
 
 Click "Apply" and then "OK" button.
 
+You will need to restart IntelliJ IDEA to make the Jar files work. In IntelliJ IDEA click "File->Invalidate Caches ..."
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 38 00" src="https://user-images.githubusercontent.com/94465107/176086946-5f97004c-6ac5-487f-97ef-0597579a0e1e.png">
+
+A windows will appear, check all the check box then click "Invalidate and Restart"
+
+<img width="466" alt="Screen Shot 2022-06-28 at 10 39 28" src="https://user-images.githubusercontent.com/94465107/176086984-583e19be-42bb-46dc-92c7-028836a653a3.png">
+
+The IntelliJ IDEA will close and restart. Now you are ready to build and test the SDK.
+
 #### Build the sdk: 
 
 To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the image below

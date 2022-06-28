@@ -1,6 +1,8 @@
 # Kotlin Casper SDK usage
 
-The SDK is exported to "jar" file and can be imported from other Kotlin projects.
+To call for SDK RPC methods, the SDK is exported to "jar" file and can be imported from other Kotlin projects.
+
+## Export SDK to "jar" file
 
 To export the SDK hit "File->Project Structure ..."
 
@@ -19,3 +21,15 @@ Click "Build->Build Artifacts..."
 Then click the "Build" row.
 
 <img width="1440" alt="Screen Shot 2022-06-28 at 16 00 37" src="https://user-images.githubusercontent.com/94465107/176139248-26a6a5d4-6f6a-46e1-a147-fd2ab187da26.png">
+
+You can see the "jar" file is exported succcessfully
+
+<img width="1212" alt="Screen Shot 2022-06-28 at 16 16 24" src="https://user-images.githubusercontent.com/94465107/176142387-b28e7ab8-1dd9-4005-be8a-d4b57dc03009.png">
+
+With this "CasperKotlinSDK.jar" file, you can import to other project to call for Casper RPC methods.
+
+## Call RPC method from the exported "jar" file from the SDK.
+
+Create a new project in IntelliJ IDEA
+
+

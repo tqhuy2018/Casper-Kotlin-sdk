@@ -67,6 +67,21 @@ Just do this for the SDK configuration, left the other configurations with defau
 
 Click "Apply" and then "OK" to save the configruation. Now you are ready to build and test the project in IntelliJ IDEA.
 
+#### Import jars file to the SDK
+
+Get the jars file from this link https://drive.google.com/drive/folders/1oflaJ_1m3HX9NYI_5d0PuoT2WNGy6dPq?usp=sharing
+
+Download all the jars file to your local computer, you will have two folders with name "bcutils" and "otherjars" containing the jar files that will be later imported to the SDK.
+
+In IntelliJ IDEA, hit "File-> Project Structure ..."
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 15 14" src="https://user-images.githubusercontent.com/94465107/176084432-af7e4018-d3bc-4192-b2d4-d7b726a0ce97.png">
+
+A new window appears, click on "Libraries" and then "Maven: net.jemzart:jsonkraken:1.2.0", then click the "+" button
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 16 45" src="https://user-images.githubusercontent.com/94465107/176084923-a25c72bb-091c-46df-9d9a-f8b3b4fce19f.png">
+
+
 #### Build the sdk: 
 
 To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the image below

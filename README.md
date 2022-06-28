@@ -81,6 +81,31 @@ A new window appears, click on "Libraries" and then "Maven: net.jemzart:jsonkrak
 
 <img width="1440" alt="Screen Shot 2022-06-28 at 10 16 45" src="https://user-images.githubusercontent.com/94465107/176084923-a25c72bb-091c-46df-9d9a-f8b3b4fce19f.png">
 
+Browse to the 2 jar folders that you have already downloaded from the link https://drive.google.com/drive/folders/1oflaJ_1m3HX9NYI_5d0PuoT2WNGy6dPq?usp=sharing above. First choose "bcutils" folder
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 22 31" src="https://user-images.githubusercontent.com/94465107/176085572-fe6aab13-8d5e-4472-a7ec-575e8617f719.png">
+
+Select all the files in the "bcutils" folder and click "Open" button
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 24 52" src="https://user-images.githubusercontent.com/94465107/176085670-e9bb0c08-2579-488d-8baa-5257ad2b05de.png">
+
+You will see the jar files imported in the list
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 25 34" src="https://user-images.githubusercontent.com/94465107/176085755-2ab8155c-8510-4754-8f67-aeb066a9dcbf.png">
+
+Next step is to import all the files in the "otherjars", click the "+" button again and browse to the "otherjars" folder
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 25 52" src="https://user-images.githubusercontent.com/94465107/176085871-c559a470-2854-4e5c-ad92-d85749573c16.png">
+
+Choose all the files in the "otherjars" folder, then click "Open"
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 25 57" src="https://user-images.githubusercontent.com/94465107/176086026-e0026955-8677-4c69-b5bb-2970026c2d1e.png">
+
+You will see that all the jars from the two folder "bcutils" and "otherjars" is now imported to the list
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 26 04" src="https://user-images.githubusercontent.com/94465107/176086072-d5d91da3-00d7-4876-a727-35bca7966947.png">
+
+Click "Apply" and then "OK" button.
 
 #### Build the sdk: 
 

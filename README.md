@@ -190,4 +190,6 @@ The Secp256k1 crypto task is implemented in file Secp256k1Handle under package c
   -  [Get Balance](./Docs/Help.md#x-get-balance)
   
   -  [Get Auction Info](./Docs/Help.md#xi-get-auction-info)
+  
+  -  [Put deploy](./Docs/Help.md#xii-put-deploy)
  

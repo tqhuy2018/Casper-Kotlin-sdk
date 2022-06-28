@@ -123,6 +123,11 @@ To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the ima
 
 <img width="1440" alt="Screen Shot 2022-04-18 at 20 31 31" src="https://user-images.githubusercontent.com/94465107/163815577-87bddf54-9489-4cb0-b627-e8a95680f3cf.png">
 
+You can see the Build log by clicking the "Build" tab in the bottom of the IntelliJ IDEA window
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 48 01" src="https://user-images.githubusercontent.com/94465107/176087982-f6fb9d02-d954-45e9-b54a-b37379d9fd63.png">
+
+
 #### Test the sdk:
 
 To run the test, in the Project panel that show the files and folders, under the folder "test", right click on the "kotlin" folder (folder marked with green in the below image), hit "Run 'All Tests'".

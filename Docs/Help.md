@@ -36,7 +36,7 @@ The calling the RPC follow this sequence:
 
 11) [Get Auction info (state_get_auction_info)](#xi-get-auction-info)
 
-12) Put Deploy (account_put_deploy) 
+12) Put Deploy (account_put_deploy)(#xii-put-deploy)
 
 ### I. Get State Root Hash  
 

@@ -97,6 +97,19 @@ Click the "+" button and browse to the CasperKotlinSDK.jar" file
     
 <img width="1440" alt="Screen Shot 2022-06-28 at 17 24 14" src="https://user-images.githubusercontent.com/94465107/176157699-e34d26c1-c041-4145-a6cd-4034e3c04cb5.png">
 
+Click "Open", you will then see the "CasperKotlinSDK.jar" file being imported. Click "Apply" then "OK"
     
+    <img width="1440" alt="Screen Shot 2022-06-28 at 17 34 55" src="https://user-images.githubusercontent.com/94465107/176158874-719d682c-ce55-42cb-b7fc-c10a103f9f82.png">
 
 
+Again click "File->Invalidate caches ..."
+    
+<img width="1440" alt="Screen Shot 2022-06-28 at 16 48 25" src="https://user-images.githubusercontent.com/94465107/176159042-c2df64b3-0e8e-45af-90d4-b0d2536a486f.png">
+    
+Check all the check boxes and click "Invalidate and Restart"
+    
+<img width="465" alt="Screen Shot 2022-06-28 at 16 35 08" src="https://user-images.githubusercontent.com/94465107/176159153-a0c7e07a-d30b-4e56-a4e0-a8f3941b2e1a.png">
+
+Wait for a while for the project to load again.
+    
+    

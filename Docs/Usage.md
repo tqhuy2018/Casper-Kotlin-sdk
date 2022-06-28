@@ -86,3 +86,17 @@ Go to file "Main.kt" and type import net.jemzart, if you can see the hint appear
     
  <img width="1440" alt="Screen Shot 2022-06-28 at 16 52 19" src="https://user-images.githubusercontent.com/94465107/176150390-84dbbaf8-85a0-413b-a29d-1e2ec7754001.png">
 
+Click File->Project Structure ...
+    <img width="1440" alt="Screen Shot 2022-06-28 at 17 16 53" src="https://user-images.githubusercontent.com/94465107/176155836-8eb4ebcd-f495-4401-8693-6cd104f93fc4.png">
+
+Click "Libraries" and add the "CasperKotlinSDK.jar" as in the image below
+ 
+<img width="1440" alt="Screen Shot 2022-06-28 at 17 20 33" src="https://user-images.githubusercontent.com/94465107/176157536-fa291f48-c729-4d45-bb0c-d79698777bae.png">
+
+Click the "+" button and browse to the CasperKotlinSDK.jar" file
+    
+<img width="1440" alt="Screen Shot 2022-06-28 at 17 24 14" src="https://user-images.githubusercontent.com/94465107/176157699-e34d26c1-c041-4145-a6cd-4034e3c04cb5.png">
+
+    
+
+

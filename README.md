@@ -193,3 +193,8 @@ The Secp256k1 crypto task is implemented in file Secp256k1Handle under package c
   
   -  [Put deploy](./Docs/Help.md#xii-put-deploy)
  
+# SDK Usage
+
+To use the SDK as external libary in other project, please refer to this document for more detail.
+
+[Casper Kotlin SDK usage](./Docs/Usage.md)

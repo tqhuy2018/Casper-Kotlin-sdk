@@ -2,7 +2,7 @@
 
 To call for SDK RPC methods, the SDK is exported to "jar" file and can be imported from other Kotlin projects.
 
-There is already exported "jar" file at this address 
+There is already exported "jar" file of the Casper Kotlin SDK at this address 
 
 https://drive.google.com/drive/folders/1BE8G2dSK-RaiFwJqehlxujs5YCGCS7QV?usp=sharing
 

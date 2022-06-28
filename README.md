@@ -166,8 +166,3 @@ The test list is in the right panel, the result is in the left panel, as shown i
   
   -  [Get Auction Info](./Docs/Help.md#xi-get-auction-info)
  
- # Coding standard
- 
- The code in the SDK follow the coding convention at this address
- 
- https://kotlinlang.org/docs/coding-conventions.html#immutability

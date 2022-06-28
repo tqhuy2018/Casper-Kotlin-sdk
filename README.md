@@ -18,7 +18,7 @@ To build and test the SDK you need the flowing things installed in your computer
 
 ## Build and test
 
-The package can be built and tested from IntelliJ IDEA and from command line
+The package can be built and tested from IntelliJ IDEA
 
 ### Build and test in IntelliJ IDEA
 
@@ -65,13 +65,68 @@ Just do this for the SDK configuration, left the other configurations with defau
 <img width="1440" alt="Screen Shot 2022-04-20 at 09 17 17" src="https://user-images.githubusercontent.com/94465107/164136336-6900e4cd-bcca-41fd-97b7-f31e5aad76ee.png">
 
 
-Click "Apply" and then "OK" to save the configruation. Now you are ready to build and test the project in IntelliJ IDEA.
+Click "Apply" and then "OK" to save the configruation. The next step is to import the necessary Jar files to the SDK.
+
+#### Import jars file to the SDK
+
+Get the jars file from this link https://drive.google.com/drive/folders/1oflaJ_1m3HX9NYI_5d0PuoT2WNGy6dPq?usp=sharing
+
+Download all the jars file to your local computer, you will have two folders with name "bcutils" and "otherjars" containing the jar files that will be later imported to the SDK.
+
+In IntelliJ IDEA, hit "File-> Project Structure ..."
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 15 14" src="https://user-images.githubusercontent.com/94465107/176084432-af7e4018-d3bc-4192-b2d4-d7b726a0ce97.png">
+
+A new window appears, click on "Libraries" and then "Maven: net.jemzart:jsonkraken:1.2.0", then click the "+" button
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 16 45" src="https://user-images.githubusercontent.com/94465107/176084923-a25c72bb-091c-46df-9d9a-f8b3b4fce19f.png">
+
+Browse to the 2 jar folders that you have already downloaded from the link https://drive.google.com/drive/folders/1oflaJ_1m3HX9NYI_5d0PuoT2WNGy6dPq?usp=sharing above. First choose "bcutils" folder
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 22 31" src="https://user-images.githubusercontent.com/94465107/176085572-fe6aab13-8d5e-4472-a7ec-575e8617f719.png">
+
+Select all the files in the "bcutils" folder and click "Open" button
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 24 57" src="https://user-images.githubusercontent.com/94465107/176086250-6439a633-382f-457a-ab14-91234c9921e7.png">
+
+You will see the jar files imported in the list
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 25 34" src="https://user-images.githubusercontent.com/94465107/176085755-2ab8155c-8510-4754-8f67-aeb066a9dcbf.png">
+
+Next step is to import all the files in the "otherjars", click the "+" button again and browse to the "otherjars" folder
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 25 52" src="https://user-images.githubusercontent.com/94465107/176085871-c559a470-2854-4e5c-ad92-d85749573c16.png">
+
+Choose all the files in the "otherjars" folder, then click "Open"
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 25 57" src="https://user-images.githubusercontent.com/94465107/176086026-e0026955-8677-4c69-b5bb-2970026c2d1e.png">
+
+You will see that all the jars from the two folder "bcutils" and "otherjars" is now imported to the list
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 26 04" src="https://user-images.githubusercontent.com/94465107/176086072-d5d91da3-00d7-4876-a727-35bca7966947.png">
+
+Click "Apply" and then "OK" button.
+
+You will need to restart IntelliJ IDEA to make the Jar files work. In IntelliJ IDEA click "File->Invalidate Caches ..."
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 38 00" src="https://user-images.githubusercontent.com/94465107/176086946-5f97004c-6ac5-487f-97ef-0597579a0e1e.png">
+
+A windows will appear, check all the check box then click "Invalidate and Restart"
+
+<img width="466" alt="Screen Shot 2022-06-28 at 10 39 28" src="https://user-images.githubusercontent.com/94465107/176086984-583e19be-42bb-46dc-92c7-028836a653a3.png">
+
+The IntelliJ IDEA will close and restart. You may have to wait for 1 or several minutes to wait for IntelliJ IDEA to be ready for the changes. Then you can build and test the SDK.
 
 #### Build the sdk: 
 
 To build the project, in IntelliJ IDEA, hit "Build->Build Project" as in the image below
 
 <img width="1440" alt="Screen Shot 2022-04-18 at 20 31 31" src="https://user-images.githubusercontent.com/94465107/163815577-87bddf54-9489-4cb0-b627-e8a95680f3cf.png">
+
+You can see the Build log by clicking the "Build" tab in the bottom of the IntelliJ IDEA window
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 48 01" src="https://user-images.githubusercontent.com/94465107/176087982-f6fb9d02-d954-45e9-b54a-b37379d9fd63.png">
+
 
 #### Test the sdk:
 
@@ -84,108 +139,6 @@ The test list is in the right panel, the result is in the left panel, as shown i
 
 <img width="1440" alt="Screen Shot 2022-04-19 at 17 18 28" src="https://user-images.githubusercontent.com/94465107/163983055-31730b51-c730-4878-99a4-c7aa104b3ce5.png">
 
-### Build and test in command line
-
-In order to build and test the sdk, you need to install Java JDK and Maven.
-
-#### Install Java JDK
-
-This step include the work of installing JDK and setting up the path in local system environment variable.
-
-The detail process of this step can be done with the manual in this address https://www.geeksforgeeks.org/setting-environment-java/
-
-Here is a brief instruction: (For Windows)
-1) Download the JDK at this address: https://www.oracle.com/java/technologies/downloads/, depends on which operating system you are using, choose the corresponding download (Windows, Mac, Linux). Currently the latest JDK is JDK 18 and it is suggested to install this version.
-2) Run the already downloaded JDK .exe file (for example "jdk-18_windows-x64_bin.exe" to setup the JDK.
-3) Open the "Environment Variables" setting
-
-<img width="300" alt="step1" src="https://user-images.githubusercontent.com/94465107/163914481-89014e5c-2164-41d3-99ce-ecf8c5df73ce.png">
-
-4) Double click on the "Path" line or Click on "Path" line variable under System variables and then hit the "Edit" button
-
-<img width="438" alt="step2" src="https://user-images.githubusercontent.com/94465107/163925113-acd82c87-333c-404f-90e6-513a760ce523.png">
-
-5) Click New and enter the path for the jdk bin folder, in this example "C:\Program Files\Java\jdk-18\bin" (in general the default location will be this value, but if your folder is different, please enter the bin folder address for the sdk)
-
-<img width="377" alt="step3" src="https://user-images.githubusercontent.com/94465107/163926358-1d145c73-02ff-4dd5-9130-7c545abb0c50.png">
-
-
-Click OK several times to close the "Environment Variables" setting window, then open the "Command Prompt" progame in Windows, type in this command:
-
-```Kotlin
-javac -version
-```
-
-You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18. If not, please restart your computer and type the command line ```javac -version``` again.
-
-#### Install Maven
-
-Maven can be downloaded at this address: https://maven.apache.org/download.cgi
-
-Follow these step in this address to install Maven (for Windows & Linux)
-
-https://maven.apache.org/install.html
-
-For MacOS, run this command in Terminal
-
-```Kotlin
-brew install maven
-```
-
-Once you have maven install successfully in your machine, type this in the Command Prompt or Terminal to check for it
-
-```Kotlin
-mvn -v
-```
-
-If you install Maven successfully, you will see the result of the above command somehow like this:
-
-```Kotlin
-Maven home: /opt/homebrew/Cellar/maven/3.8.5/libexec
-Java version: 18, vendor: Homebrew, runtime: /opt/homebrew/Cellar/openjdk/18/libexec/openjdk.jdk/Contents/Home
-Default locale: en_VN, platform encoding: UTF-8
-OS name: "mac os x", version: "11.5.2", arch: "aarch64", family: "mac"
-```
-If not, please restart your computer and run the ```mvn -v``` command again.
-
-You are now ready to build and test the SDK.
-
-#### Build the SDK
-
-Enter the Casper Kotlin SDK root folder, then run the following command
-
-```Kotlin
-mvn clean package
-```
-
-Then run this command
-
-```Kotlin
-mvn package
-```
-
-#### Test the sdk
-
-Enter the Casper Kotlin SDK root folder, then run the following command
-
-```Kotlin
-mvn test
-```
-
-
-### Build and test using Github script
-
-You can build and test the package with Github script in the "Action" section. Hit the "Action" section of this SDK and choose the latest Work Flow, for example with the below image, hit the green line "Update CONTRIBUTING.md"
-
-<img width="1440" alt="Screen Shot 2022-04-18 at 21 37 33" src="https://user-images.githubusercontent.com/94465107/163824425-510fd77a-9c34-42c3-b3e1-82f676e1983f.png">
-
-Then hit the "Build" button in the next screen
-
-<img width="1440" alt="Screen Shot 2022-04-18 at 21 37 52" src="https://user-images.githubusercontent.com/94465107/163824912-c92d47d3-b38c-4edf-8c72-64e45150ebcc.png">
-
-In the next screen, hit the line "Build with Maven" and scroll down to see the full list of the test
-
-<img width="1440" alt="Screen Shot 2022-04-18 at 21 38 18" src="https://user-images.githubusercontent.com/94465107/163824987-13178c63-a4e4-4f00-965a-5b4797064dc7.png">
 
 # Documentation for classes and methods
 
@@ -213,8 +166,3 @@ In the next screen, hit the line "Build with Maven" and scroll down to see the f
   
   -  [Get Auction Info](./Docs/Help.md#xi-get-auction-info)
  
- # Coding standard
- 
- The code in the SDK follow the coding convention at this address
- 
- https://kotlinlang.org/docs/coding-conventions.html#immutability

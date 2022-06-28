@@ -18,11 +18,13 @@ To export the SDK hit "File->Project Structure ..."
 
 <img width="1440" alt="Screen Shot 2022-06-28 at 15 55 19" src="https://user-images.githubusercontent.com/94465107/176137964-36e77e2e-7689-4a37-bb7a-19a65b5f0aeb.png">
 
-Click the "Artifacts" row. Then give the jar a name. Choose the folder for the "jar" to store in the "Output directory" section. In this example the out put "jar" file will be in the "out/artifacts/CasperKotlinSDK_jar" folder under the SDK folder. You can change the folder to any folder you like. Remember that folder so that you can find the exported "jar" file later.
+Click the "Artifacts" row. Then give the jar a name. Choose the folder for the "jar" to store in the "Output directory" section. In this example the out put "jar" file will be in the "out/artifacts/CasperKotlinSDK_jar" folder under the SDK folder. You can change the folder to any folder you like. Remember that folder so that you can find the exported "jar" file later. You can adjust some information in this windows, as shown in the below image.
 
-Click "Apply" and "OK"
 
-<img width="1440" alt="Screen Shot 2022-06-28 at 15 51 37" src="https://user-images.githubusercontent.com/94465107/176138266-997b2cc6-4945-4290-bed0-895d6941bc21.png">
+
+<img width="1440" alt="Screen Shot 2022-06-28 at 18 08 38" src="https://user-images.githubusercontent.com/94465107/176165353-4a42716b-d504-4d8e-aa17-95289d6e2df0.png">
+
+Change the information to what you like or just do quite the same like the image. Click "Apply" and "OK"
 
 Click "Build->Build Artifacts..."
 

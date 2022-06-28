@@ -191,4 +191,7 @@ fun getStateRootHash() {
 }
 ```
     
+You will see the state root hash being retrieved and printed out in the log region.
+    
+<img width="1440" alt="Screen Shot 2022-06-28 at 17 55 43" src="https://user-images.githubusercontent.com/94465107/176162501-71b41b02-cb82-467b-b56b-37edd887efec.png">
 

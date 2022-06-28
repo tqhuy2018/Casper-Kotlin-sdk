@@ -18,7 +18,7 @@ To build and test the SDK you need the flowing things installed in your computer
 
 ## Build and test
 
-The package can be built and tested from IntelliJ IDEA and from command line
+The package can be built and tested from IntelliJ IDEA
 
 ### Build and test in IntelliJ IDEA
 
@@ -84,108 +84,6 @@ The test list is in the right panel, the result is in the left panel, as shown i
 
 <img width="1440" alt="Screen Shot 2022-04-19 at 17 18 28" src="https://user-images.githubusercontent.com/94465107/163983055-31730b51-c730-4878-99a4-c7aa104b3ce5.png">
 
-### Build and test in command line
-
-In order to build and test the sdk, you need to install Java JDK and Maven.
-
-#### Install Java JDK
-
-This step include the work of installing JDK and setting up the path in local system environment variable.
-
-The detail process of this step can be done with the manual in this address https://www.geeksforgeeks.org/setting-environment-java/
-
-Here is a brief instruction: (For Windows)
-1) Download the JDK at this address: https://www.oracle.com/java/technologies/downloads/, depends on which operating system you are using, choose the corresponding download (Windows, Mac, Linux). Currently the latest JDK is JDK 18 and it is suggested to install this version.
-2) Run the already downloaded JDK .exe file (for example "jdk-18_windows-x64_bin.exe" to setup the JDK.
-3) Open the "Environment Variables" setting
-
-<img width="300" alt="step1" src="https://user-images.githubusercontent.com/94465107/163914481-89014e5c-2164-41d3-99ce-ecf8c5df73ce.png">
-
-4) Double click on the "Path" line or Click on "Path" line variable under System variables and then hit the "Edit" button
-
-<img width="438" alt="step2" src="https://user-images.githubusercontent.com/94465107/163925113-acd82c87-333c-404f-90e6-513a760ce523.png">
-
-5) Click New and enter the path for the jdk bin folder, in this example "C:\Program Files\Java\jdk-18\bin" (in general the default location will be this value, but if your folder is different, please enter the bin folder address for the sdk)
-
-<img width="377" alt="step3" src="https://user-images.githubusercontent.com/94465107/163926358-1d145c73-02ff-4dd5-9130-7c545abb0c50.png">
-
-
-Click OK several times to close the "Environment Variables" setting window, then open the "Command Prompt" progame in Windows, type in this command:
-
-```Kotlin
-javac -version
-```
-
-You will see that java is running on your machine, somehow the result will be "javac 18" if you install JDK 18. If not, please restart your computer and type the command line ```javac -version``` again.
-
-#### Install Maven
-
-Maven can be downloaded at this address: https://maven.apache.org/download.cgi
-
-Follow these step in this address to install Maven (for Windows & Linux)
-
-https://maven.apache.org/install.html
-
-For MacOS, run this command in Terminal
-
-```Kotlin
-brew install maven
-```
-
-Once you have maven install successfully in your machine, type this in the Command Prompt or Terminal to check for it
-
-```Kotlin
-mvn -v
-```
-
-If you install Maven successfully, you will see the result of the above command somehow like this:
-
-```Kotlin
-Maven home: /opt/homebrew/Cellar/maven/3.8.5/libexec
-Java version: 18, vendor: Homebrew, runtime: /opt/homebrew/Cellar/openjdk/18/libexec/openjdk.jdk/Contents/Home
-Default locale: en_VN, platform encoding: UTF-8
-OS name: "mac os x", version: "11.5.2", arch: "aarch64", family: "mac"
-```
-If not, please restart your computer and run the ```mvn -v``` command again.
-
-You are now ready to build and test the SDK.
-
-#### Build the SDK
-
-Enter the Casper Kotlin SDK root folder, then run the following command
-
-```Kotlin
-mvn clean package
-```
-
-Then run this command
-
-```Kotlin
-mvn package
-```
-
-#### Test the sdk
-
-Enter the Casper Kotlin SDK root folder, then run the following command
-
-```Kotlin
-mvn test
-```
-
-
-### Build and test using Github script
-
-You can build and test the package with Github script in the "Action" section. Hit the "Action" section of this SDK and choose the latest Work Flow, for example with the below image, hit the green line "Update CONTRIBUTING.md"
-
-<img width="1440" alt="Screen Shot 2022-04-18 at 21 37 33" src="https://user-images.githubusercontent.com/94465107/163824425-510fd77a-9c34-42c3-b3e1-82f676e1983f.png">
-
-Then hit the "Build" button in the next screen
-
-<img width="1440" alt="Screen Shot 2022-04-18 at 21 37 52" src="https://user-images.githubusercontent.com/94465107/163824912-c92d47d3-b38c-4edf-8c72-64e45150ebcc.png">
-
-In the next screen, hit the line "Build with Maven" and scroll down to see the full list of the test
-
-<img width="1440" alt="Screen Shot 2022-04-18 at 21 38 18" src="https://user-images.githubusercontent.com/94465107/163824987-13178c63-a4e4-4f00-965a-5b4797064dc7.png">
 
 # Documentation for classes and methods
 

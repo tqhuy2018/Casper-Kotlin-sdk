@@ -574,13 +574,55 @@ The code for the whole process is done in this code
 
 ```Kotlin
 fun fromDeployToJsonString(deploy: Deploy):String {
-            val headerString:String = "\"header\": {\"account\": \"" + deploy.header.account + "\",\"timestamp\": \"" + deploy.header.timeStamp + "\",\"ttl\":\""+deploy.header.ttl+"\",\"gas_price\":"+deploy.header.gasPrice+",\"body_hash\":\"" + deploy.header.bodyHash + "\",\"dependencies\": [],\"chain_name\": \"" + deploy.header.chainName + "\"}"
-            val paymentJsonStr:String = "\"payment\": " + ExecutableDeployItemHelper.toJsonString(deploy.payment)
-            val sessionJsonStr:String = "\"session\": " + ExecutableDeployItemHelper.toJsonString(deploy.session)
-            val approvalJsonStr: String = "\"approvals\": [{\"signer\": \"" + deploy.approvals.get(0).signer + "\",\"signature\": \"" + deploy.approvals.get(0).signature + "\"}]"
-            val hashStr = "\"hash\": \"" + deploy.hash + "\""
-            val deployJsonStr: String = "{\"id\": 1,\"method\": \"account_put_deploy\",\"jsonrpc\": \"2.0\",\"params\": [{" + headerString + ","+paymentJsonStr + "," + sessionJsonStr + "," + approvalJsonStr + "," + hashStr + "}]}"
-            println(deployJsonStr)
-            return deployJsonStr
-        }
+    val headerString:String = "\"header\": {\"account\": \"" + deploy.header.account + "\",\"timestamp\": \"" + deploy.header.timeStamp + "\",\"ttl\":\""+deploy.header.ttl+"\",\"gas_price\":"+deploy.header.gasPrice+",\"body_hash\":\"" + deploy.header.bodyHash + "\",\"dependencies\": [],\"chain_name\": \"" + deploy.header.chainName + "\"}"
+    val paymentJsonStr:String = "\"payment\": " + ExecutableDeployItemHelper.toJsonString(deploy.payment)
+    val sessionJsonStr:String = "\"session\": " + ExecutableDeployItemHelper.toJsonString(deploy.session)
+    val approvalJsonStr: String = "\"approvals\": [{\"signer\": \"" + deploy.approvals.get(0).signer + "\",\"signature\": \"" + deploy.approvals.get(0).signature + "\"}]"
+    val hashStr = "\"hash\": \"" + deploy.hash + "\""
+    val deployJsonStr: String = "{\"id\": 1,\"method\": \"account_put_deploy\",\"jsonrpc\": \"2.0\",\"params\": [{" + headerString + ","+paymentJsonStr + "," + sessionJsonStr + "," + approvalJsonStr + "," + hashStr + "}]}"
+    println(deployJsonStr)
+    return deployJsonStr
+}
 ```
+
+Output:
+If the deploy is sent successfully to the system, then the result will be a Json string back like this
+```Kotlin
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+        "api_version": "1.4.6",
+        "deploy_hash": "65c6ccdc5aacc9dcd073ca79358bf0b5115061e8d561b3e6f461a34a6c5858f0"
+    }
+}
+```
+
+Then this function 
+
+```Kotlin
+fun putDeploy(deploy: Deploy) :String 
+```
+
+will parse the Json string and take the "deploy_hash" value and return it back as output.
+
+If the deploy fails to send to the system, then the result will be a Json string back like this:
+```Kotlin
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "error": {
+        "code": -32602,
+        "message": "Invalid params",
+        "data": null
+    }
+}
+```
+
+Then this function 
+
+```Kotlin
+fun putDeploy(deploy: Deploy) :String 
+```
+
+will parse the error message string return it back as output.

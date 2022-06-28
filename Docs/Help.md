@@ -633,3 +633,21 @@ fun putDeploy(deploy: Deploy) :String
 ```
 
 will parse the error message string return it back as output.
+
+#### Put deploy test 
+
+There are positive and negative test cases for putting deploy of Ed25519 account and Secp256k1 account.
+
+The Ed25519 account is using this account "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53" which you can see the account detail at this address https://testnet.cspr.live/account/0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53
+
+The Secp256k1 account is using this account "0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635" which you can see the account detail at this address https://testnet.cspr.live/account/0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635
+
+The test is done in file "PutDeployRPCTest" under package "com.casper.sdk.putdeploy" of the "test" folder.
+
+The function for doing the positive test for both Ed25519 and Secp256k1 is 
+
+```Kotlin
+private fun testPutDeploy(isEd25519:Boolean) : String
+```
+
+This function takes parameter of isEd25519 with value true or false. If the value of the input is true, then the account of type Ed25519 is used, otherwise the account of type Secp256k1 is used

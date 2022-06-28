@@ -87,7 +87,8 @@ Browse to the 2 jar folders that you have already downloaded from the link https
 
 Select all the files in the "bcutils" folder and click "Open" button
 
-<img width="1440" alt="Screen Shot 2022-06-28 at 10 24 52" src="https://user-images.githubusercontent.com/94465107/176085670-e9bb0c08-2579-488d-8baa-5257ad2b05de.png">
+<img width="1440" alt="Screen Shot 2022-06-28 at 10 24 57" src="https://user-images.githubusercontent.com/94465107/176086250-6439a633-382f-457a-ab14-91234c9921e7.png">
+
 
 You will see the jar files imported in the list
 

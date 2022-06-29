@@ -246,7 +246,7 @@ clParse.itsArrayValue.add(mapParse)
 ```
 ### CLValue in detail
  
- To store information of one CLValue object, which include the following information: {bytes,parsed,cl_type}, this SDK uses a class with name CLValue, which is declared in "CLValue.kt" file under package "com.casper.sdk.clvalue", with main information like this:
+To store information of one CLValue object, which include the following information: {bytes,parsed,cl_type}, this SDK uses a class with name CLValue, which is declared in "CLValue.kt" file under package "com.casper.sdk.clvalue", with main information like this:
  
 ```Kotlin
 var itsBytes: String = ""
@@ -305,11 +305,13 @@ Take this CLValue in JSON:
       }
 }
  ```
- 
-  This JSON will turn to a CLValue like this:
+Base on the deploy at this address: https://testnet.cspr.live/deploy/AaB4aa0C14a37Bc9386020609aa1CabaD895c3E2E104d877B936C6Ffa2302268 refer to session section of the deploy, args item number 2, here is the CLValue detail
+
+<img width="831" alt="Screen Shot 2022-06-29 at 11 32 49" src="https://user-images.githubusercontent.com/94465107/176352315-502d6230-6a33-4165-a049-31a5671f890f.png">
+
+This JSON will turn to a CLValue like this:
   
-   ```Kotlin
-   
+```Kotlin 
 val oneCLValue = CLValue()
 oneCLValue.itsBytes = "010000000100000009000000746f6b656e5f7572695000000068747470733a2f2f676174657761792e70696e6174612e636c6f75642f697066732f516d5a4e7a337a564e7956333833666e315a6762726f78434c5378566e78376a727134796a4779464a6f5a35566b"
 //assignment for cl_type

@@ -22,7 +22,3 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 16
-      - name: Make Gradle executable
-        run: chmod +x ./gradlew
-      - name: Unit tests
-        run: bash ./gradlew test --stacktrace

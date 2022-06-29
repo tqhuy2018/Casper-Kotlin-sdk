@@ -12,9 +12,9 @@ SDK  to streamline the 3rd party Kotlin client integration processes. Such 3rd p
 
 To build and test the SDK you need the flowing things installed in your computer:
 
-- Java JDK version 11 or above, Java JDK 18 is suggested
+- Java JDK version 8 or above, Java JDK 18 is suggested
 
-- Maven latest version.
+- IntelliJ IDEA latest version, can be download at this address https://www.jetbrains.com/idea/download
 
 ## Build and test
 
@@ -22,9 +22,11 @@ The package can be built and tested from IntelliJ IDEA
 
 ### Build and test in IntelliJ IDEA
 
-Download the latest IntelliJ IDEA from https://www.jetbrains.com/idea/
+Download the latest IntelliJ IDEA from https://www.jetbrains.com/idea/download
 
 The SDK is developed with IntelliJ IDEA 2021.3.3 (Community Edition). Then a Community Edition is good enough to test the SDK.
+
+<img width="1440" alt="Screen Shot 2022-06-29 at 12 39 34" src="https://user-images.githubusercontent.com/94465107/176360047-a3f02ac0-9371-4010-ba1b-3b817df7ddf1.png">
 
 Download or clone the code from github,  then open it with IntelliJ IDEA.
 

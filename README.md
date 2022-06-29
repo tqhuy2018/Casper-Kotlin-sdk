@@ -258,9 +258,9 @@ The main properties of the CLType object are:
   
   Option,  Result,  Tuple1 will take only 1 item:  innerCLType1
   
-  Map,  Tuple2 will take 2  item:  innerCLType1, innerCLType2
+  Map,  Tuple2 will take 2  items:  innerCLType1, innerCLType2
   
-  Tuple3 will take 3 item:  innerCLType1,  innerCLType2,  innerCLType3
+  Tuple3 will take 3 items:  innerCLType1,  innerCLType2,  innerCLType3
   
   
   These innerCLType variables are lateinit var, which means that they can be initialized or not, depends on the CLType. For example if the CLType is primitive, then the 3 variable innerCLType1, innerCLType2, innerCLType3 is not used and not initialized.
@@ -268,6 +268,41 @@ The main properties of the CLType object are:
   If the CLType is List, then the innerCLType1 is used in initialized, while innerCLType2 and innerCLType3 is not.
   
   If the CLType is Map, then the innerCLType1, innerCLType2 are in used and initialized, while innerCLType3 is not.
+  
+ 
+#### Examples of declaring the CLType object for some types: 
+
+Declaration for a CLType of type Bool:
+
+ ```Kotlin
+ val clType = CLType()
+ clType.itsTypeStr = ConstValues.CLTYPE_BOOL
+ ```
+ 
+ Declaration for a CLType of type Option(U512):
+ 
+ ```Kotlin
+ val clType = CLType()
+ clType.itsTypeStr = ConstValues.CLTYPE_OPTION
+ clType.innerCLType1 = CLType()
+ clType.innerCLType1.itsTypeStr = ConstValues.CLTYPE_U512
+ ```
+ 
+ 
+ Declaration for a CLType of type Map(String,String):
+ 
+```Kotlin
+val clType = CLType()
+clType.itsTypeStr = ConstValues.CLTYPE_MAP
+clType.innerCLType1 = CLType()
+clType.innerCLType2 = CLType()
+clType.innerCLType1.itsTypeStr = ConstValues.CLTYPE_STRING
+clType.innerCLType2.itsTypeStr = ConstValues.CLTYPE_STRING
+```
+ 
+ ## Casper Domain Specific Objects
+
+ All of the main Casper Domain Specific Objects is built in Kotlin with classes like Deploy, DeployHeader, ExecutionDeployItem, NamedArg, Approval,  JsonBlock, JsonBlockHeader, JsonEraEnd, JsonEraReport, JsonBlockBody, JsonProof, ValidatorWeight, Reward, ... and so on. All the class belonging to the RPC call is built to store coressponding information.
 
 # Documentation for classes and methods
 

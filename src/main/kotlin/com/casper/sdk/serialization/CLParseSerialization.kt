@@ -2,7 +2,7 @@ package com.casper.sdk.serialization
 
 import com.casper.sdk.ConstValues
 import com.casper.sdk.clvalue.CLParsed
-
+//This class provides the serialization for CLParsed object
 class CLParseSerialization {
 
     companion object {

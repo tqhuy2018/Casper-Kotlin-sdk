@@ -55,19 +55,5 @@ class GetAuctionInfoRPC {
                 return GetAuctionInfoResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
             }
         }
-       /* val client = HttpClient.newBuilder().build()
-        val request = HttpRequest.newBuilder()
-            .uri(URI.create(this.methodURL))
-            .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
-            .header("Content-Type",  "application/json")
-            .build()
-        val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
-        val json =response.body().toJson()
-        //Check for error
-        if(json.get("error") != null) {
-            throw IllegalArgumentException("Error get auction")
-        } else { //If not error then get the GetAuctionInfoResult object
-            return GetAuctionInfoResult.fromJsonObjectToGetAuctionInfoResult(json.get("result") as JsonObject)
-        }*/
     }
 }

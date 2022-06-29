@@ -2,10 +2,13 @@ package com.casper.sdk.serialization
 
 import com.casper.sdk.ConstValues
 import com.casper.sdk.clvalue.CLType
-
+//This class provides the serialization for CLType object
 class CLTypeSerialization {
 
     companion object {
+        //This function do the serialization for a CLType object
+        //Input: a clType object
+        //Output: serialization of the CLType object, in String format
         fun  serializeForCLType(clType:CLType) : String {
             if (clType.itsTypeStr == ConstValues.CLTYPE_BOOL) {
                 return "00"

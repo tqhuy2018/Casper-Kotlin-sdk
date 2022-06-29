@@ -72,41 +72,5 @@ class GetDeployRPC {
             }
             return getDeployResult
         }
-       /* val getDeployResult = GetDeployResult()
-        val client = HttpClient.newBuilder().build()
-        val request = HttpRequest.newBuilder()
-            .uri(URI.create(methodURL))
-            .POST((HttpRequest.BodyPublishers.ofString(str)))
-            .header("Content-Type",  "application/json")
-            .build()
-        val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
-        val json =response.body().toJson()
-        //check for error getting deploy
-        //error can happen if send the wrong deploy hash
-        val jsonError = json.get("error").toJsonString()
-        if (jsonError != "null") {
-            throw IllegalArgumentException("Deploy hash is not valid")
-        }
-        val jsonResult: JsonObject = json.get("result") as JsonObject
-        getDeployResult.api_version = jsonResult.get("api_version").toString()
-        getDeployResult.deploy.header = DeployHeader.fromJsonToDeployHeader(jsonResult.get("deploy").get("header") as JsonObject)
-        getDeployResult.deploy.hash = jsonResult.get("deploy").get("hash").toString()
-        val deployPayment = jsonResult.get("deploy").get("payment") as JsonObject
-        getDeployResult.deploy.payment = ExecutableDeployItem.fromJsonToExecutableDeployItem(deployPayment)
-        val deploySession : JsonObject = jsonResult.get("deploy").get("session") as JsonObject
-        getDeployResult.deploy.session = ExecutableDeployItem.fromJsonToExecutableDeployItem(deploySession)
-        //get approvals
-        getDeployResult.deploy.approvals = Deploy.fromJsonToListApprovals(jsonResult.get("deploy").get("approvals") as JsonArray)
-        //get execution result
-        val listER: JsonArray = jsonResult.get("execution_results") as JsonArray
-        val totalER: Int = listER.count()
-        for(i in 0.. totalER-1) {
-            val jer = JsonExecutionResult()
-            val oneItem = listER[i]
-            jer.blockHash = oneItem.get("block_hash").toString()
-            jer.result = ExecutionResult.fromJsonToExecutionResult(oneItem.get("result") as JsonObject)
-            getDeployResult.executionResults.add(jer)
-        }
-        return getDeployResult*/
     }
 }

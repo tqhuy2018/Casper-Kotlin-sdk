@@ -6,7 +6,7 @@ import com.casper.sdk.clvalue.CLParsed
 import com.casper.sdk.getdeploy.Approval
 import com.casper.sdk.getdeploy.Deploy
 import com.casper.sdk.getdeploy.DeployHeader
-
+//This class provides the serialization for Deploy object
 class DeploySerializeHelper {
 
     companion object {
@@ -71,6 +71,11 @@ class DeploySerializeHelper {
             }
             return  ret
         }
+        /*
+        This function do the serialization for the whole deploy object.
+        Input: a deploy object
+        Output: the serialization of the deploy, built with the rule: header serialization + deploy.hash + payment serialization + session serialization + approval serialization
+         */
         fun serializeForDeploy(deploy:Deploy):String {
             var ret:String = serializeForHeader(deploy.header)
             ret = ret + deploy.hash

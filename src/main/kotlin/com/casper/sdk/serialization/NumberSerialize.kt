@@ -1,5 +1,5 @@
 package com.casper.sdk.serialization
-
+//This class do the serialization for number of all types: u8, u32, i32, i64, u128, u256, u512
 class NumberSerialize {
     companion object {
         // Function for the serialization of unsigned number u8

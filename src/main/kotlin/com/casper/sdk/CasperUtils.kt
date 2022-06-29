@@ -8,7 +8,7 @@ import java.io.InputStreamReader
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.temporal.ChronoField
-
+//This class provides util functions for the SDK
 class CasperUtils {
     companion object {
         fun ByteArray.toHex(): String = joinToString(separator = "") { eachByte -> "%02x".format(eachByte) }

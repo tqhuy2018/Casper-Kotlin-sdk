@@ -132,3 +132,35 @@ clType.innerCLType2 = CLType()
 clType.innerCLType1.itsTypeStr = ConstValues.CLTYPE_STRING
 clType.innerCLType2.itsTypeStr = ConstValues.CLTYPE_STRING
 ```
+
+### CLParsed in detail 
+
+The "parsed" is wrapped in CLParsed class, which is declared in  "CLParsed.kt" file under package "com.casper.sdk.clvalue". The CLParsed class stores all information need when you want to declare a CLParsed object, and also this class provides functions to turn JSON object to CLParsed object and supporter function such as function to check if the CLParsed hold pure value of CLType object or with hold value of recursive CLType object inside its body.
+
+The main properties of the CLParsed object are:
+
+```Kotlin
+var itsValueInStr: String = ""
+var itsCLType: CLType = CLType()
+lateinit var innerParsed1: CLParsed
+lateinit var innerParsed2: CLParsed
+lateinit var innerParsed3: CLParsed
+var itsArrayValue: MutableList<CLParsed> = mutableListOf()
+```
+
+In which the property "itsCLType" is to hold CLType of the CLParsed object, which can be 1 among 23 possible value from "Bool", "I32","I64", "U8" ... to "Tuple1", "Tuple2", "Tuple3" and "Any".
+ 
+The property "itsValueInStr" is to hold value of CLParsed that doesn't contain recursive CLParsed inside its body
+
+The property "itsArrayValue" is to hold value of List and FixedList elements
+ 
+The property "innerParsed1" is to hold the inner CLParsed object for the following CLType: Tuple1, Option
+
+The properties "innerParsed1" and "innerParsed2" are to hold the inner CLParsed for the following CLType: Map, Result, Tuple2
+
+The properties "innerParsed1", "innerParsed2" and "innerParsed3" are to hold the inner CLParsed for the following CLType: Tuple3
+
+#### Here are some examples of declaring the CLParsed object for some types: 
+
+To declare for a CLParsed of type U512 with value "1234":
+

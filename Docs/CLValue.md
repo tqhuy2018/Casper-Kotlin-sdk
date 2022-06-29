@@ -81,13 +81,13 @@ The main properties of the CLType object are:
 
 In which itsTypeStr is the type of the CLType in String,  can be Bool,  String,  I32,  I64,  List,  Map, ...
 
-The CLType is divided into 2 types: Primitive and Compound CLType.
+The CLType is divided into 2 types: Primitive and Compound.
 
-Primitive CLType is the CLType with no recursive CLType declaration inside its body. The following CLType is primitive: Bool, I32, I64, U8, U32, U64, U128, U256, U512, String, Unit, Key, URef, PublicKey, ByteArray, Any
+Primitive CLType is the CLType with no recursive CLType declaration inside its body. The following CLType are primitive: Bool, I32, I64, U8, U32, U64, U128, U256, U512, String, Unit, Key, URef, PublicKey, ByteArray, Any
 
-Compound CLType is the CLType with recursive CLType declaration inside its body. The following CLType is compound: List, Map, Option, Result, Tuple1, Tuple2, Tuple 3.
+Compound CLType is the CLType with recursive CLType declaration inside its body. The following CLType are compound: List, Map, Option, Result, Tuple1, Tuple2, Tuple 3.
 
-innerCLType to hold value for the following type:
+The variables innerCLType1, innerCLType2, innerCLType3 to hold value for the following type:
 
 Option,  Result,  Tuple1 will take only 1 item:  innerCLType1
 
@@ -96,12 +96,13 @@ Map,  Tuple2 will take 2  items:  innerCLType1, innerCLType2
 Tuple3 will take 3 items:  innerCLType1,  innerCLType2,  innerCLType3
 
 
-These innerCLType variables are lateinit var, which means that they can be initialized or not, depends on the CLType. For example if the CLType is primitive, then the 3 variable innerCLType1, innerCLType2, innerCLType3 is not used and not initialized.
+These innerCLType variables are lateinit var, which means that they can be initialized or not, depends on the CLType. For example if the CLType is primitive (Bool, I32, I64, U8, U32 ...) , then the 3 variables: innerCLType1, innerCLType2, innerCLType3 is not used and not initialized.
 
 If the CLType is List, then the innerCLType1 is used in initialized, while innerCLType2 and innerCLType3 is not.
 
 If the CLType is Map, then the innerCLType1, innerCLType2 are in used and initialized, while innerCLType3 is not.
 
+If the CLType is Tuple3, all the innerCLType1, innerCLType2, innerCLType3 are used.
 
 #### Examples of declaring the CLType object for some types:
 

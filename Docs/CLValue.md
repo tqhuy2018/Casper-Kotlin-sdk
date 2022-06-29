@@ -203,3 +203,20 @@ clParse.innerParsed1.itsCLType = CLType()
 clParse.innerParsed1.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
 clParse.innerParsed1.itsValueInStr = "10"
 ```
+
+To declare for a List of 3 CLParse U32 numbers 
+
+```Kotlin
+val u321 = CLParsed()
+u321.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
+u321.itsValueInStr = "1"
+val u322 = CLParsed()
+u322.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
+u322.itsValueInStr = "2"
+val u323 = CLParsed()
+u323.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
+u323.itsValueInStr = "3"
+clParse.itsArrayValue.add(u321)
+clParse.itsArrayValue.add(u322)
+clParse.itsArrayValue.add(u323)
+```

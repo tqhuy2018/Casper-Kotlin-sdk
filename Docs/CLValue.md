@@ -193,3 +193,13 @@ val clParse = CLParsed()
 clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_OPTION
 clParse.itsValueInStr = ConstValues.VALUE_NULL
 ```
+
+To declare for a CLParsed of type Option(U32(10))
+
+```Kotlin
+clParse.innerParsed1 = CLParsed()
+clParse.itsValueInStr = ""
+clParse.innerParsed1.itsCLType = CLType()
+clParse.innerParsed1.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
+clParse.innerParsed1.itsValueInStr = "10"
+```

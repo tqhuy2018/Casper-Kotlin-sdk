@@ -197,6 +197,7 @@ clParse.itsValueInStr = ConstValues.VALUE_NULL
 To declare for a CLParsed of type Option(U32(10))
 
 ```Kotlin
+val clParse = CLParsed()
 clParse.innerParsed1 = CLParsed()
 clParse.itsValueInStr = ""
 clParse.innerParsed1.itsCLType = CLType()
@@ -207,6 +208,7 @@ clParse.innerParsed1.itsValueInStr = "10"
 To declare for a List of 3 CLParse U32 numbers 
 
 ```Kotlin
+val clParse = CLParsed()
 val u321 = CLParsed()
 u321.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
 u321.itsValueInStr = "1"
@@ -219,4 +221,22 @@ u323.itsValueInStr = "3"
 clParse.itsArrayValue.add(u321)
 clParse.itsArrayValue.add(u322)
 clParse.itsArrayValue.add(u323)
+```
+
+To declare a Map(String,String) base on the deploy at this address: https://testnet.cspr.live/deploy/AaB4aa0C14a37Bc9386020609aa1CabaD895c3E2E104d877B936C6Ffa2302268 refer to session section of the deploy, args item number 2
+
+```Kotlin
+val mapParse = CLParsed()
+mapParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_MAP
+val mapKey1 = CLParsed()
+mapKey1.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
+mapKey1.itsValueInStr = "token_uri"
+val mapValue1 = CLParsed()
+mapValue1.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
+mapValue1.itsValueInStr = "https://gateway.pinata.cloud/ipfs/QmZNz3zVNyV383fn1ZgbroxCLSxVnx7jrq4yjGyFJoZ5Vk"
+mapParse.innerParsed1 = CLParsed()
+mapParse.innerParsed1.itsArrayValue.add(mapKey1)
+mapParse.innerParsed2 = CLParsed()
+mapParse.innerParsed2.itsArrayValue.add(mapValue1)
+clParse.itsArrayValue.add(mapParse)
 ```

@@ -282,3 +282,59 @@ oneCLParse.itsValueInStr = "100000000"
 oneCLValue.itsParse = oneCLParse
 oneCLValue.itsBytes = "0400e1f505"
 ```
+
+Take this CLValue in JSON:
+
+ ```Kotlin
+ {
+"bytes":"010000000100000009000000746f6b656e5f7572695000000068747470733a2f2f676174657761792e70696e6174612e636c6f75642f697066732f516d5a4e7a337a564e7956333833666e315a6762726f78434c5378566e78376a727134796a4779464a6f5a35566b"
+"parsed":[
+          [
+             {
+             "key":"token_uri"
+             "value":"https://gateway.pinata.cloud/ipfs/QmZNz3zVNyV383fn1ZgbroxCLSxVnx7jrq4yjGyFJoZ5Vk"
+             }
+          ]
+]
+"cl_type":{
+        "List":{
+           "Map":{
+           "key":"String"
+           "value":"String"
+           }
+      }
+}
+ ```
+ 
+  This JSON will turn to a CLValue like this:
+  
+   ```Kotlin
+   
+val oneCLValue = CLValue()
+oneCLValue.itsBytes = "010000000100000009000000746f6b656e5f7572695000000068747470733a2f2f676174657761792e70696e6174612e636c6f75642f697066732f516d5a4e7a337a564e7956333833666e315a6762726f78434c5378566e78376a727134796a4779464a6f5a35566b"
+//assignment for cl_type
+val clType = CLType()
+clType.itsTypeStr = ConstValues.CLTYPE_LIST
+clType.innerCLType1.itsTypeStr = ConstValues.CLTYPE_MAP
+clType.innerCLType1.innerCLType1 = CLType()
+clType.innerCLType1.innerCLType2 = CLType()
+clType.innerCLType1.innerCLType1.itsTypeStr = ConstValues.CLTYPE_STRING
+clType.innerCLType1.innerCLType2.itsTypeStr = ConstValues.CLTYPE_STRING
+oneCLValue.itsCLType = clType
+//assignment for parsed
+val mapParse = CLParsed()
+mapParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_MAP
+val mapKey1 = CLParsed()
+mapKey1.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
+mapKey1.itsValueInStr = "token_uri"
+val mapValue1 = CLParsed()
+mapValue1.itsCLType.itsTypeStr = ConstValues.CLTYPE_STRING
+mapValue1.itsValueInStr = "https://gateway.pinata.cloud/ipfs/QmZNz3zVNyV383fn1ZgbroxCLSxVnx7jrq4yjGyFJoZ5Vk"
+mapParse.innerParsed1 = CLParsed()
+mapParse.innerParsed1.itsArrayValue.add(mapKey1)
+mapParse.innerParsed2 = CLParsed()
+mapParse.innerParsed2.itsArrayValue.add(mapValue1)
+clParse.itsArrayValue.add(mapParse)
+oneCLValue.itsParse = clParse
+    ```
+  

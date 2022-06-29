@@ -223,7 +223,11 @@ clParse.itsArrayValue.add(u322)
 clParse.itsArrayValue.add(u323)
 ```
 
-To declare a Map(String,String) base on the deploy at this address: https://testnet.cspr.live/deploy/AaB4aa0C14a37Bc9386020609aa1CabaD895c3E2E104d877B936C6Ffa2302268 refer to session section of the deploy, args item number 2
+To declare a Map(String,String) base on the deploy at this address: https://testnet.cspr.live/deploy/AaB4aa0C14a37Bc9386020609aa1CabaD895c3E2E104d877B936C6Ffa2302268 refer to session section of the deploy, args item number 2, here is the CLValue detail
+
+<img width="831" alt="Screen Shot 2022-06-29 at 11 32 49" src="https://user-images.githubusercontent.com/94465107/176352315-502d6230-6a33-4165-a049-31a5671f890f.png">
+
+and here is the declaration in Kotlin for such CLParsed in the CLValue
 
 ```Kotlin
 val mapParse = CLParsed()

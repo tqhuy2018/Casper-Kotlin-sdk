@@ -14,7 +14,9 @@ To build and test the SDK you need the flowing things installed in your computer
 
 - Java JDK version 8 or above, Java JDK 18 is suggested
 
-- Maven latest version.
+- IntelliJ IDEA latest version, can be download at this address https://www.jetbrains.com/idea/download. Use a free Community version for the IDEA is just enough.
+
+<img width="1440" alt="Screen Shot 2022-06-29 at 12 39 34" src="https://user-images.githubusercontent.com/94465107/176360047-a3f02ac0-9371-4010-ba1b-3b817df7ddf1.png">
 
 ## Build and test
 

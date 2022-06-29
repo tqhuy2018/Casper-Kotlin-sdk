@@ -28,7 +28,6 @@ class GetStateRootHashRPC {
      */
     @Throws(IllegalArgumentException:: class)
     fun getStateRootHash(parameterStr: String) : String {
-
         val url = URL(methodUrl)
         val con: HttpURLConnection = url.openConnection() as HttpURLConnection
         con.setRequestMethod("POST")

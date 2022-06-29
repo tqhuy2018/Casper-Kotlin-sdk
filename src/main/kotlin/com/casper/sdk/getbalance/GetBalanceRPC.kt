@@ -4,10 +4,10 @@ import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
 import net.jemzart.jsonkraken.values.JsonObject
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 /**Class built for state_get_balance RPC call */
 class GetBalanceRPC {
     var methodURL: String = ConstValues.TESTNET_URL
@@ -23,19 +23,30 @@ class GetBalanceRPC {
      */
     @Throws(IllegalArgumentException:: class)
     fun getBalance(parameterStr: String):  GetBalanceResult {
-        val client = HttpClient.newBuilder().build()
-        val request = HttpRequest.newBuilder()
-            .uri(URI.create(this.methodURL))
-            .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
-            .header("Content-Type",  "application/json")
-            .build()
-        val response = client.send(request,  HttpResponse.BodyHandlers.ofString())
-        val json =response.body().toJson()
-        //Check for error
-        if(json.get("error") != null) {
-            throw IllegalArgumentException("Error get balance")
-        } else { //If not error then get the state root hash
-            return GetBalanceResult.fromJsonObjectToGetBalanceResult(json.get("result") as JsonObject)
+        val url = URL(methodURL)
+        val con: HttpURLConnection = url.openConnection() as HttpURLConnection
+        con.setRequestMethod("POST")
+        con.setRequestProperty("Content-Type", "application/json")
+        con.setRequestProperty("Accept", "application/json");
+        con.doOutput = true
+        con.outputStream.use { os ->
+            val input: ByteArray = parameterStr.toByteArray()
+            os.write(input, 0, input.size)
+        }
+        BufferedReader(
+            InputStreamReader(con.inputStream, "utf-8")
+        ).use {
+            val response = StringBuilder()
+            var responseLine: String? = null
+            while (it.readLine().also { responseLine = it } != null) {
+                response.append(responseLine!!.trim { it <= ' ' })
+            }
+            val json = response.toString().toJson()
+            if(json.get("error") != null) {
+                throw IllegalArgumentException("Error get state root hash")
+            } else {
+                return GetBalanceResult.fromJsonObjectToGetBalanceResult(json.get("result") as JsonObject)
+            }
         }
     }
 }

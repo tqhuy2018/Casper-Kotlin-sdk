@@ -203,6 +203,8 @@ class CLParsed {
             "5000"
         ]
       */
+        //This function turn a CLParsed to a Json String that represents that CLParsed. It is used to generate the
+        //Json string for account_put_deploy RPC call
         fun toJsonString(clParse:CLParsed) : String {
             if (clParse.itsCLType.isCLTypePrimitive()) {
                 return getParsedPrimitive(clParse)
@@ -210,6 +212,8 @@ class CLParsed {
                 return getParsedCompound(clParse)
             }
         }
+        //This function turn a CLParsed of type primitive to a Json String that represents that CLParsed. It is used to generate the
+        //Json string for account_put_deploy RPC call
         fun getParsedPrimitive(clParse: CLParsed) : String {
             if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_BOOL) {
                 return  ConstValues.PARSED_FIXED_STRING + ":" + clParse.itsValueInStr
@@ -253,6 +257,8 @@ class CLParsed {
             }
             return  ConstValues.INVALID_VALUE
         }
+        //This function turn a CLParsed of type compound (CLParsed that has inner CLParsed inside its body) to a Json String that represents that CLParsed. It is used to generate the
+        //Json string for account_put_deploy RPC call
         fun getParsedCompound(clParsed: CLParsed) : String {
             if(clParsed.itsCLType.itsTypeStr == ConstValues.CLTYPE_OPTION) {
                 if(clParsed.itsValueInStr == ConstValues.VALUE_NULL) {

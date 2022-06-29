@@ -244,3 +244,41 @@ mapParse.innerParsed2 = CLParsed()
 mapParse.innerParsed2.itsArrayValue.add(mapValue1)
 clParse.itsArrayValue.add(mapParse)
 ```
+### CLValue in detail
+ 
+ To store information of one CLValue object, which include the following information: {bytes,parsed,cl_type}, this SDK uses a class with name CLValue, which is declared in CLValue.h and CLValue.m file. with main information like this:
+ 
+```Kotlin
+var itsBytes: String = ""
+var itsParse: CLParsed = CLParsed()
+var itsCLType: CLType = CLType()
+```
+
+This class also provide a supporter function to parse a JSON object to CLValue object.
+
+When get information for a deploy, for example, the args of the payment/session or items in the execution_results can hold CLValue values, and they will be turned to CLValue object in ObjectiveC to support the work of storing information and doing the serialization.
+
+### Example of declaring CLValue object
+
+Take this CLValue in JSON
+
+ ```Kotlin
+ {
+"bytes":"0400e1f505"
+"parsed":"100000000"
+"cl_type":"U512"
+}
+```
+
+This JSON will turn to a CLValue like this:
+ ```Kotlin
+val oneCLValue = CLValue()
+val oneCLType = CLType()
+oneCLType.itsTypeStr = ConstValues.CLTYPE_U512
+oneCLValue.itsCLType = oneCLType
+val oneCLParse = CLParsed()
+oneCLParse.itsCLType = oneCLType
+oneCLParse.itsValueInStr = "100000000"
+oneCLValue.itsParse = oneCLParse
+oneCLValue.itsBytes = "0400e1f505"
+```

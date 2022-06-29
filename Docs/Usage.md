@@ -10,7 +10,7 @@ A sample project can be found at this address
     
 https://github.com/hienbui9999/SampleCallCasperKotlinSDK
 
-But still you need to read through the manual to get the mood of how to export the SDK and how to use the exported "jar" file.
+You can go directly to the sample, but if you wish to export the SDK to "jar" file and do step by step how to use the jar file, please read through the manual.
 
 ## Export SDK to "jar" file
 

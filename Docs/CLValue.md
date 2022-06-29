@@ -162,5 +162,34 @@ The properties "innerParsed1", "innerParsed2" and "innerParsed3" are to hold the
 
 #### Here are some examples of declaring the CLParsed object for some types: 
 
-To declare for a CLParsed of type U512 with value "1234":
+To declare for a CLParsed of type Bool with value "true":
 
+```Kotlin
+val clParse = CLParsed()
+clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_BOOL
+clParse.itsValueInStr = "true"
+```
+
+To declare for a CLParsed of type U8 with value "12":
+
+```Kotlin
+val clParse = CLParsed()
+clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_U8
+clParse.itsValueInStr = "12"
+```
+
+To declare for a CLParsed of type U512 with value "999888666555444999887988887777666655556666777888999666999":
+
+```Kotlin
+val clParse = CLParsed()
+clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_U512
+clParse.itsValueInStr = "999888666555444999887988887777666655556666777888999666999"
+```
+
+To declare for a CLParsed of type Option(NULL)
+
+```Kotlin
+val clParse = CLParsed()
+clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_OPTION
+clParse.itsValueInStr = ConstValues.VALUE_NULL
+```

@@ -18,8 +18,8 @@ class CLType {
     var itsTypeStr: String = ""
     //innerCLType to hold value for the following type: 
     //Option,  Result,  Tuple1 will take only 1 item:  innerCLType1
-    //Map,  Tuple2 will take 2  item:  innerCLType1, innerCLType2
-    //Tuple3 will take 3 item:  innerCLType1,  innerCLType2,  innerCLType3
+    //Map,  Tuple2 will take 2  items:  innerCLType1, innerCLType2
+    //Tuple3 will take 3 items:  innerCLType1,  innerCLType2,  innerCLType3
     lateinit var innerCLType1: CLType
     lateinit var innerCLType2: CLType
     lateinit var innerCLType3:  CLType

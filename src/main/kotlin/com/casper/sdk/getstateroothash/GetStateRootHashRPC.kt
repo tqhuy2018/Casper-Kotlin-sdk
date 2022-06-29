@@ -2,10 +2,10 @@ package com.casper.sdk.getstateroothash
 import com.casper.sdk.ConstValues
 import net.jemzart.jsonkraken.get
 import net.jemzart.jsonkraken.toJson
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 /**Class built for chain_get_state_root_hash RPC call
  */
 class GetStateRootHashRPC {
@@ -28,7 +28,34 @@ class GetStateRootHashRPC {
      */
     @Throws(IllegalArgumentException:: class)
     fun getStateRootHash(parameterStr: String) : String {
-        val client = HttpClient.newBuilder().build()
+
+        val url = URL(methodUrl)
+        val con: HttpURLConnection = url.openConnection() as HttpURLConnection
+        con.setRequestMethod("POST")
+        con.setRequestProperty("Content-Type", "application/json")
+        con.setRequestProperty("Accept", "application/json");
+        con.doOutput = true
+        con.outputStream.use { os ->
+            val input: ByteArray = parameterStr.toByteArray()
+            os.write(input, 0, input.size)
+        }
+        BufferedReader(
+            InputStreamReader(con.inputStream, "utf-8")
+        ).use {
+            val response = StringBuilder()
+            var responseLine: String? = null
+            while (it.readLine().also { responseLine = it } != null) {
+                response.append(responseLine!!.trim { it <= ' ' })
+            }
+            val jsonBack = response.toString().toJson()
+            if(jsonBack.get("error") != null) {
+                throw IllegalArgumentException("Error get state root hash")
+            } else {
+                val stateRootHash = jsonBack.get("result").get("state_root_hash").toString()
+                return stateRootHash
+            }
+        }
+        /*val client = HttpClient.newBuilder().build()
         val request = HttpRequest.newBuilder()
             .uri(URI.create(this.methodUrl))
             .POST((HttpRequest.BodyPublishers.ofString(parameterStr)))
@@ -42,6 +69,6 @@ class GetStateRootHashRPC {
         } else { //If not error then get the state root hash
             val stateRootHash = json.get("result").get("state_root_hash").toString()
             return stateRootHash
-        }
+        }*/
     }
 }

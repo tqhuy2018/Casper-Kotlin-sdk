@@ -246,7 +246,7 @@ clParse.itsArrayValue.add(mapParse)
 ```
 ### CLValue in detail
  
- To store information of one CLValue object, which include the following information: {bytes,parsed,cl_type}, this SDK uses a class with name CLValue, which is declared in CLValue.h and CLValue.m file. with main information like this:
+ To store information of one CLValue object, which include the following information: {bytes,parsed,cl_type}, this SDK uses a class with name CLValue, which is declared in "CLValue.kt" file under package "com.casper.sdk.clvalue", with main information like this:
  
 ```Kotlin
 var itsBytes: String = ""
@@ -256,7 +256,7 @@ var itsCLType: CLType = CLType()
 
 This class also provide a supporter function to parse a JSON object to CLValue object.
 
-When get information for a deploy, for example, the args of the payment/session or items in the execution_results can hold CLValue values, and they will be turned to CLValue object in ObjectiveC to support the work of storing information and doing the serialization.
+When get information for a deploy, for example, the args of the payment/session or items in the execution_results can hold CLValue values, and they will be turned to CLValue object in Kotlin to support the work of storing information and doing the serialization.
 
 ### Example of declaring CLValue object
 

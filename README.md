@@ -12,7 +12,7 @@ SDK  to streamline the 3rd party Kotlin client integration processes. Such 3rd p
 
 To build and test the SDK you need the flowing things installed in your computer:
 
-- Java JDK version 11 or above, Java JDK 18 is suggested
+- Java JDK version 8 or above, Java JDK 18 is suggested
 
 - Maven latest version.
 

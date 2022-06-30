@@ -686,7 +686,7 @@ The above manual is for exising account in the test net. If you are familiar wit
  
 Here is a brief description of the steps to do:
 
-#### Test put deploy with your own account 
+### Test put deploy with your own account 
 
 Install Casper Signer. Create 1 account of type Ed25519 (for example, Secp256k1 is quite the same). 
 

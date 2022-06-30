@@ -251,6 +251,7 @@ class CLParseSerialization {
             }
             return "NONE_PRIMITIVE"
         }
+        ///Function for the serialization of  CLParse compound in type with recursive CLValue inside, such as List, Map, Tuple1, Tuple2, Tuple3, Option, Result ....
         fun serializeFromCLParseCompound(clParse: CLParsed): String {
             if(clParse.itsCLType.itsTypeStr == ConstValues.CLTYPE_OPTION) {
                 return serializeFromCLParseOption(clParse)

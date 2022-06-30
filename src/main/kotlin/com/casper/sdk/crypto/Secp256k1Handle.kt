@@ -18,7 +18,13 @@ import org.bouncycastle.util.encoders.Hex
 import java.io.*
 import java.security.*
 import java.security.spec.ECGenParameterSpec
-
+//Class for handling Secp256k1 Crypto tasks
+//The following tasks are being implemented:
+//Sign message
+//Verify message
+//Generate key pair
+//Read private/public key from Pem file
+//Write private/public key from Pem file
 class Secp256k1Handle {
 
     companion object {

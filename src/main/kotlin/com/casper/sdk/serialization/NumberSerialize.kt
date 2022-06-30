@@ -131,6 +131,9 @@ class NumberSerialize {
             }
             return  retStr
         }
+        //This function find the quotient and remainder of a number when divide to 16
+        //Input: number in string format. This function can accept input as number of very big value, such as U512 number
+        //Output: a QuotientNRemainder object, which hold the quotient and remainder of the number when devide to 16
         fun findQuotientAndRemainderOfStringNumber(fromNumberInStr:String) : QuotientNRemainder {
             val retQNR  = QuotientNRemainder()
             var ret : String
@@ -204,6 +207,8 @@ class NumberSerialize {
             retQNR.quotient = ret
             return retQNR
         }
+        //This function turn a number in decimal value to hexa value. The number is in String format and can be
+        //very big number, such as U512
         fun fromDecimalStringToHexaString(fromNumberInStr : String) : String {
             var ret : String
             val ret1 : QuotientNRemainder = findQuotientAndRemainderOfStringNumber(fromNumberInStr)
@@ -230,6 +235,8 @@ class NumberSerialize {
             val realRet:String = stringReversed(ret)
             return realRet
         }
+        //This function reverse a string, used to build the serialization of number for Casper.
+        //For example the number in hexa format 0ca532 when do this function will turn to 235ac0
         fun stringReversed(fromString:String) : String {
             var ret = ""
             var charIndex : Int = fromString.length
@@ -239,6 +246,7 @@ class NumberSerialize {
             }
             return ret
         }
+        //This function turn the number in decimal to hexa. The input number is the decimal format, with value from 0 to 15
         fun from10To16(number:UInt):String {
             if(number < 10u) {
                 return number.toString()

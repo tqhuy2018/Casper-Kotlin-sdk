@@ -146,13 +146,49 @@ Copy the following code to do the sample work of "chain_get_state_root_hash" RPC
 import com.casper.sdk.BlockIdentifier
 import com.casper.sdk.BlockIdentifierType
 import com.casper.sdk.ConstValues
+import com.casper.sdk.getdeploy.Deploy
+import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem
+import com.casper.sdk.getdeploy.ExecutableDeployItem.ExecutableDeployItem_ModuleBytes
+import com.casper.sdk.getdeploy.ExecutableDeployItem.NamedArg
+import com.casper.sdk.getdeploy.GetDeployParams
+import com.casper.sdk.getdeploy.GetDeployRPC
 import com.casper.sdk.getstateroothash.GetStateRootHashRPC
 
 fun  main(args:Array<String>) {
     println("Hello Casper Kotlin SDK")
     getStateRootHash()
+    getDeployTest()
 }
 
+fun getDeployTest() {
+    //Get deploy base on deploy at this address
+    //https://testnet.cspr.live/deploy/9ff98d8027795a002e41a709d5b5846e49c2e9f9c8bfbe74e4c857adc26d5571
+    val getDeployRPC = GetDeployRPC()
+    val getDeployParams = GetDeployParams()
+    getDeployRPC.methodURL = ConstValues.TESTNET_URL
+    getDeployParams.deploy_hash = "9ff98d8027795a002e41a709d5b5846e49c2e9f9c8bfbe74e4c857adc26d5571"
+    val postParameter = getDeployParams.generatePostParameterStr()
+    try {
+        val getDeployResult = getDeployRPC.getDeployFromJsonStr(postParameter)
+        val deploy: Deploy = getDeployResult.deploy
+        println("Deploy hash is: " + deploy.hash)
+        if(deploy.payment.itsType == ExecutableDeployItem.MODULE_BYTES) {
+            println("Deploy payment is of type ModuleBytes")
+        }
+        if(deploy.session.itsType == ExecutableDeployItem.MODULE_BYTES) {
+            println("Deploy session is of type ModuleBytes")
+        }
+        val payment: ExecutableDeployItem_ModuleBytes =
+            deploy.payment.itsValue[0] as ExecutableDeployItem_ModuleBytes
+        //payment first arg
+        val paymentNA: NamedArg = payment.args.listNamedArg[0]
+        println("Payment first args name:" + paymentNA.itsName)
+        println("Payment first args cl type:" + paymentNA.clValue.itsCLType.itsTypeStr)
+        println("Payment first args clvalue bytes:" +paymentNA.clValue.itsBytes )
+        println("Payment first args clvalue parse:" + paymentNA.clValue.itsParse.itsValueInStr)
+    }  catch (e:  IllegalArgumentException) {
+    }
+}
 fun getStateRootHash() {
     val getStateRootHashTest = GetStateRootHashRPC()
     //Call 1:  Get state root hash with non parameter
@@ -179,8 +215,6 @@ fun getStateRootHash() {
         val stateRootHash3 = getStateRootHashTest.getStateRootHash(str3)
         println("stateRootHash3:" + stateRootHash3)
     } catch (e: IllegalArgumentException){}
-
-    //Negative test
 
     //Call 4:  Get state root hash with BlockIdentifier of type Block Hash with incorrect Block Hash.
     // Expected result:  latest state root hash

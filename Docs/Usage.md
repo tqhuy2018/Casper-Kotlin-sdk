@@ -203,9 +203,12 @@ fun getStateRootHash() {
 }
 ```
     
-You will see the state root hash being retrieved and printed out in the log region.
+You will see the state root hash being retrieved and printed out in the log region. Some of the deploy information is printed out also.
+
+The deploy information can aslo be seen at this address https://testnet.cspr.live/deploy/9ff98d8027795a002e41a709d5b5846e49c2e9f9c8bfbe74e4c857adc26d5571
     
-<img width="1440" alt="Screen Shot 2022-06-28 at 17 55 43" src="https://user-images.githubusercontent.com/94465107/176162501-71b41b02-cb82-467b-b56b-37edd887efec.png">
+<img width="1440" alt="Screen Shot 2022-06-30 at 09 44 41" src="https://user-images.githubusercontent.com/94465107/176581732-bb915d7e-65c5-46fe-aff4-2e65ed46cd42.png">
+
 
 Full source code for the sample project can be found at this address
     

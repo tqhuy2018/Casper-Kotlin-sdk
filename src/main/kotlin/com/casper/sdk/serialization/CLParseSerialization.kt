@@ -76,7 +76,9 @@ These value will be turn to Hexa value, then "H" will be 72 in ansi and then 48 
 "," will be 44 in ansi and then 2c in Hexa
 "o" will be 111 in ansi and then 6f in Hexa
 The returned value will be the concatenation of the Hexa value over the ansi code for each character of the input String
-For example input string is "HeW,o" then the output will be "72652c6f"
+Final output will be U32.Serialize(string.length) + Hexa(String.ansi code)
+For example input string is "HeW,o" then the output will be "72652c6f", with String length is 5, U32.serialize(5) = "05000000"
+Then the String.serialization("HeW,o") = "0500000072652c6f"
  */
         fun serializeFromCLParseString(clParse: CLParsed) : String {
             if (clParse.itsValueInStr == "") {

@@ -130,6 +130,13 @@ internal class CLParseSerializationTest {
         assert(CLParseSerialization.serializeFromCLParse(clParse) == "36000000313233343536373839313233343536373839313233343536373839313233343536373839313233343536373839313233343536373839")
         clParse.itsValueInStr = "target"
         assert(CLParseSerialization.serializeFromCLParse(clParse) == "06000000746172676574")
+        clParse.itsValueInStr = "Weather"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "0700000057656174686572")
+        clParse.itsValueInStr = "aa"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "020000006161")
+        clParse.itsValueInStr = "I want to know, really!"
+        assert(CLParseSerialization.serializeFromCLParse(clParse) == "17000000492077616e7420746f206b6e6f772c207265616c6c7921")
+
         //Unit assertion
         clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_UNIT
         assert(CLParseSerialization.serializeFromCLParse(clParse) == "")

@@ -62,7 +62,22 @@ class CLParseSerialization {
         fun  serializeFromCLParseInt64(clParse: CLParsed) : String {
             return  NumberSerialize.serializeForI64(clParse.itsValueInStr)
         }
-        // This function serialize String
+
+/*
+This function serialize String
+Rule for the serialization:
+if the string is blank, return "00000000"
+if the string is not empty, then first get the length of the string, get the prefix = U32.Serialize(string.length)
+travel through the string, get each character and get each character ansi code, for example H will get value 72
+e will get value 101, o will get value 111, W get value 87
+These value will be turn to Hexa value, then "H" will be 72 in ansi and then 48 in Hexa
+"e" will be 101 in ansi and then 65 in Hexa
+"W" will be 87 in ansi and then 57 in Hexa
+"," will be 44 in ansi and then 2c in Hexa
+"o" will be 111 in ansi and then 6f in Hexa
+The returned value will be the concatenation of the Hexa value over the ansi code for each character of the input String
+For example input string is "HeW,o" then the output will be "72652c6f"
+ */
         fun serializeFromCLParseString(clParse: CLParsed) : String {
             if (clParse.itsValueInStr == "") {
                 return "00000000"

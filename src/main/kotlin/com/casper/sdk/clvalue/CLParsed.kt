@@ -295,9 +295,9 @@ class CLParsed {
                 if(clParsed.innerParsed1.itsCLType.isCLTypePrimitive()) {
                     resultStr = getParsedPrimitive(clParsed.innerParsed1)
                 } else {
-                    resultStr = getParsedCompound(clParsed.innerParsed2)
+                    resultStr = getParsedCompound(clParsed.innerParsed1)
                 }
-                return "{" + clParsed.itsValueInStr + ":" + resultStr + "}}" //}?
+                return "{" + clParsed.itsValueInStr + ":" + resultStr + "}"
             } else if(clParsed.itsCLType.itsTypeStr == ConstValues.CLTYPE_MAP) {
                 val totalElement = clParsed.innerParsed1.itsArrayValue.size
                 if(totalElement == 0 ) {

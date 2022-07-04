@@ -109,13 +109,13 @@ Then the String.serialization("HeW,o") = "0500000072652c6f"
         /// Sample value and serialization:
         /// For URef
         /// "uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007" will has the serialization with value
-        /// "be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c607"
+        /// "02be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c607"
         /// For Account
         /// "account-hash-d0bc9cA1353597c4004B8F881b397a89c1779004F5E547e04b57c2e7967c6269" will has the serialization with value
-        /// "d0bc9cA1353597c4004B8F881b397a89c1779004F5E547e04b57c2e7967c6269"
+        /// "00d0bc9cA1353597c4004B8F881b397a89c1779004F5E547e04b57c2e7967c6269"
         /// For Hash
         /// "hash-8cf5e4acf51f54eb59291599187838dc3bc234089c46fc6ca8ad17e762ae4401" will has the serialization with value
-        /// "8cf5e4acf51f54eb59291599187838dc3bc234089c46fc6ca8ad17e762ae4401"
+        /// "018cf5e4acf51f54eb59291599187838dc3bc234089c46fc6ca8ad17e762ae4401"
         fun serializeFromCLParseKey(clParse: CLParsed) : String {
             val keyStr : String = clParse.itsValueInStr
             if(keyStr.contains("account-hash-")) {
@@ -133,7 +133,7 @@ Then the String.serialization("HeW,o") = "0500000072652c6f"
         }
         /// This function serialize  CLValue of type  URef
         /// Sample serialization for value : uref-be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c6-007
-        /// Return result will be be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c607
+        /// Return result will be 02be1dc0fd639a3255c1e3e5e2aa699df66171e40fa9450688c5d718b470e057c607
         fun serializeFromCLParseURef(clParse: CLParsed): String {
             val keyStr : String = clParse.itsValueInStr
             if (keyStr.contains("uref-")) {

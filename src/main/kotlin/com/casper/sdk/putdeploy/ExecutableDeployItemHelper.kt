@@ -3,8 +3,9 @@ package com.casper.sdk.putdeploy
 import com.casper.sdk.ConstValues
 import com.casper.sdk.clvalue.CLValue
 import com.casper.sdk.getdeploy.ExecutableDeployItem.*
-
+// This class does the work of turning an ExecutableDeployItem object to Json String, used for account_put_deploy RPC call
 class ExecutableDeployItemHelper {
+    // This function does the work of turning an ExecutableDeployItem object to Json String, used for account_put_deploy RPC call
     companion object {
         fun toJsonString(executableDeployItem: ExecutableDeployItem) : String {
            if (executableDeployItem.itsType == ExecutableDeployItem.MODULE_BYTES) {
@@ -58,6 +59,7 @@ class ExecutableDeployItemHelper {
            }
            return ConstValues.INVALID_VALUE
         }
+        // This function does the work of turning an RuntimeArgs object to Json String, used for ExecutableDeployItemHelper.toJsonString function
         fun argsToJsonString(args: RuntimeArgs) :String{
             var ret = ""
             val totalArgs:Int = args.listNamedArg.size - 1

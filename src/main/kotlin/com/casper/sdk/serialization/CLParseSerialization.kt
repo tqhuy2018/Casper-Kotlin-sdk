@@ -288,7 +288,7 @@ Then the String.serialization("HeW,o") = "0500000072652c6f"
             return "NONE_COMPOUND"
         }
         /** Serialize for CLParse in general
-        The flow is quite simple:
+        The flow is:
         If the CLParse is of type Primitive, such as Bool, U8, U32 ... - CLParse that does not contain recursive type inside it, then call  function
         serializeFromCLParsePrimitive to get the CLParse serialization value.
         If the CLParse is of type Compound, such as List, Option, Map ... - CLParse that contains recursive type inside it, then call  function

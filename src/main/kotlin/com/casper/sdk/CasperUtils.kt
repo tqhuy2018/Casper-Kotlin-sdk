@@ -108,6 +108,9 @@ class CasperUtils {
             ret = milisecond.toULong()
             return ret
         }
+        //This function change ttl (Time to live) to milisecond
+        //The ttl is in format defined in this link
+        //https:// docs.rs/humantime/latest/humantime/fn.parse_duration.html
         fun ttlToMilisecond(ttl:String) :ULong {
             var ret:ULong = 0u
             if(ttl.contains(" ")) {

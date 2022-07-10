@@ -25,10 +25,9 @@ internal class PutDeployRPCTest {
         val deployHashEd25519 = testPutDeploy(isEd25519 = true)
         //Positive path - put deploy for secp256k1 account
         //Use this account 0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635
-        val deployHashSecp256k1 =testPutDeploy(isEd25519 = false)
+        val deployHashSecp256k1 = testPutDeploy(isEd25519 = false)
         assert(deployHashEd25519.length > 0)
         assert(deployHashSecp256k1.length > 0)
-        //println("Deploy hash ed25519 is: " + deployHashEd25519 + " deploy Hash secp256k1:" + deployHashSecp256k1)
         //Negative path 1 - put deploy with wrong deploy hash - for ed25519 account
         val deploy1 = setupDeploy(isEd25519=true)
         //Try to make a wrong deploy by give it a fake deploy hash
@@ -112,7 +111,7 @@ internal class PutDeployRPCTest {
         val session = ExecutableDeployItem()
         session.itsType = ExecutableDeployItem.TRANSFER
         val ediSession = ExecutableDeployItem_Transfer()
-        //set up RuntimeArgs with 1 element of NamedArg only
+        //set up RuntimeArgs with 4 elements of NamedArg
         //setup 1st NamedArgs
         val oneNASession1 = NamedArg()
         oneNASession1.itsName = "amount"
@@ -398,8 +397,8 @@ internal class PutDeployRPCTest {
         val session = ExecutableDeployItem()
         session.itsType = ExecutableDeployItem.TRANSFER
         val ediSession = ExecutableDeployItem_Transfer()
-        //set up RuntimeArgs with 1 element of NamedArg only
-        //setup 1st NamedArgs
+        //set up RuntimeArgs with 4 elements of NamedArg only
+        //setup 1st NamedArg
         val oneNASession1 = NamedArg()
         oneNASession1.itsName = "amount"
         val oneCLValueSession1 = CLValue()
@@ -413,7 +412,7 @@ internal class PutDeployRPCTest {
         oneCLValueSession1.itsParse = oneCLParseSession1
         oneNASession1.clValue = oneCLValueSession1
 
-        //setup 2nd NamedArgs
+        //setup 2nd NamedArg
         val oneNASession2 = NamedArg()
         oneNASession2.itsName = "target"
         val oneCLValueSession2 = CLValue()

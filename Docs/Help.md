@@ -587,7 +587,6 @@ fun fromDeployToJsonString(deploy: Deploy):String {
     val approvalJsonStr: String = "\"approvals\": [{\"signer\": \"" + deploy.approvals.get(0).signer + "\",\"signature\": \"" + deploy.approvals.get(0).signature + "\"}]"
     val hashStr = "\"hash\": \"" + deploy.hash + "\""
     val deployJsonStr: String = "{\"id\": 1,\"method\": \"account_put_deploy\",\"jsonrpc\": \"2.0\",\"params\": [{" + headerString + ","+paymentJsonStr + "," + sessionJsonStr + "," + approvalJsonStr + "," + hashStr + "}]}"
-    println(deployJsonStr)
     return deployJsonStr
 }
 ```
@@ -671,7 +670,19 @@ For Ed25519 account, the private key for signing the account is loaded from the 
 
 For Secp256k1 account, the private key for signing the account is loaded from the file "KotlinSecp256k1PrivateKey.pem" under folder "Secp256k1" of the SDK. The private key is read from the Pem file, then a signature with length of 128 will be generated, and a prefix of "02" will be added to the signature to make the real signature to use for putting the deploy. The pem file "KotlinSecp256k1PrivateKey.pem" is generated from Casper Signer from the account of the Secp256k1 account.
 
-After each time the "PutDeployRPCTest" is called, there will be transfer deploy listed in the account. Scroll down the page for Ed25519 or Secp256k1 account to see the list of deploy being created.
+After each time the "PutDeployRPCTest" is called, there will be information of the deploy hash that successfully put to the system - printed out in the log region, like this:
+
+<img width="1440" alt="Screen Shot 2022-07-11 at 17 54 31" src="https://user-images.githubusercontent.com/94465107/178250736-06fce30f-a26f-415b-b1e2-c3089367f59f.png">
+
+In this example, take the deploy hash "4877ad745a10771bcb9069a1b23427662799675d38def4b090a3eb5503269d5a" and find for it information in CSPR test net, by copying the deploy hash value and paste it in the search box, like this:
+
+<img width="1440" alt="Screen Shot 2022-07-11 at 18 05 16" src="https://user-images.githubusercontent.com/94465107/178251163-5d6ac10f-3233-469d-acc1-035113bd8e30.png">
+
+You will then see the deploy in pending mode, like this:
+
+<img width="1440" alt="Screen Shot 2022-07-11 at 18 07 11" src="https://user-images.githubusercontent.com/94465107/178251232-df837b69-4782-43ad-9455-624055bc2a71.png">
+
+This deploy will then in the list of deploy for the Account that put that deploy to the system, but you have to wait for maybe hours or 1 day to see it in the list. After doing the test, you can only the deploy in Pending mode - to make sure that you have put the deploy successfully to the system.
 
 For example this is the list of deploys being created for account "0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53" by going to this address https://testnet.cspr.live/account/0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53 and scroll down.
 

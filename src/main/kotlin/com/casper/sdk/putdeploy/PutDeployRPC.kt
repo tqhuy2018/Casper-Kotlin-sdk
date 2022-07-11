@@ -77,7 +77,6 @@ class PutDeployRPC {
                 } else {
                     val putDeployResult: PutDeployResult =
                         PutDeployResult.fromJsonObjectToPutDeployResult(json.get("result") as JsonObject)
-                    println("Put deploy successfull with deploy hash:" + putDeployResult.deployHash)
                     putDeployCounter = 0
                     return putDeployResult.deployHash
                 }

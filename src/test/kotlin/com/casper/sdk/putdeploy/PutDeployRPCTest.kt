@@ -23,9 +23,11 @@ internal class PutDeployRPCTest {
         //Positive path - put deploy for ed25519 account
         //Use this account 0152a685e0edd9060da4a0d52e500d65e21789df3cbfcb878c91ffeaea756d1c53
         val deployHashEd25519 = testPutDeploy(isEd25519 = true)
+        println("Put deploy successfull with deploy hash Ed25519:" + deployHashEd25519);
         //Positive path - put deploy for secp256k1 account
         //Use this account 0202d3de886567b1281eaa5687a85e14b4f2922e19b89a3f1014c7932f442c9d9635
         val deployHashSecp256k1 = testPutDeploy(isEd25519 = false)
+        println("Put deploy successfull with deploy hash Secp256k1:" + deployHashSecp256k1);
         assert(deployHashEd25519.length > 0)
         assert(deployHashSecp256k1.length > 0)
         //Negative path 1 - put deploy with wrong deploy hash - for ed25519 account

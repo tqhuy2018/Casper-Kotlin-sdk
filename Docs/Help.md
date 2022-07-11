@@ -587,7 +587,6 @@ fun fromDeployToJsonString(deploy: Deploy):String {
     val approvalJsonStr: String = "\"approvals\": [{\"signer\": \"" + deploy.approvals.get(0).signer + "\",\"signature\": \"" + deploy.approvals.get(0).signature + "\"}]"
     val hashStr = "\"hash\": \"" + deploy.hash + "\""
     val deployJsonStr: String = "{\"id\": 1,\"method\": \"account_put_deploy\",\"jsonrpc\": \"2.0\",\"params\": [{" + headerString + ","+paymentJsonStr + "," + sessionJsonStr + "," + approvalJsonStr + "," + hashStr + "}]}"
-    println(deployJsonStr)
     return deployJsonStr
 }
 ```

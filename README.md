@@ -173,7 +173,7 @@ The Secp256k1 crypto task is implemented in file Secp256k1Handle under package c
  
  A detail information on CLType primitive can be read here 
  
- [Casper Kotlin SDK CLType primitive](./docs/CLValue.md)
+ [Casper Kotlin SDK CLType primitive](./Docs/CLValue.md)
  
  
  ## Casper Domain Specific Objects

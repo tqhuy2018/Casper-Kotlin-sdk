@@ -154,7 +154,6 @@ class NumberSerialize {
                 return  retQNR
             } else { // string length >=3
                 //take first 2 characters
-                startIndex = 2u
                 val first2 : String = fromNumberInStr.substring(0,2)
                 val value : UInt = first2.toUInt()
                 if(value < 16u) {

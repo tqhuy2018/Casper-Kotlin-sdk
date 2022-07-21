@@ -34,7 +34,7 @@ class GetPeersRPC {
             InputStreamReader(con.inputStream, "utf-8")
         ).use {
             val response = StringBuilder()
-            var responseLine: String? = null
+            var responseLine: String?
             while (it.readLine().also { responseLine = it } != null) {
                 response.append(responseLine!!.trim { it <= ' ' })
             }

@@ -12,21 +12,21 @@ class ExecutableDeployItemSerializationHelper {
    companion object {
        //This function do the serialization for RuntimeArgs object
        fun  serializeForRuntimeArgs(input: RuntimeArgs) : String {
-           var ret:String = ""
+           var ret:String
            val totalNamedArg:Int = input.listNamedArg.size
            //If args is emtpy, just return "00000000" - same as U32 serialization for 0 (0 item)
            if(totalNamedArg == 0) {
                return "00000000"
            }
            //if args is not empty, first take u32 serialization for the number of args
-           val clParse:CLParsed = CLParsed()
+           val clParse = CLParsed()
            clParse.itsCLType = CLType()
            clParse.itsCLType.itsTypeStr = ConstValues.CLTYPE_U32
            clParse.itsValueInStr = totalNamedArg.toString()
            ret = CLParseSerialization.serializeFromCLParse(clParse)
            //then take serialization for each NamedArgs
            for(i in 0..totalNamedArg-1) {
-               val oneNA:NamedArg = input.listNamedArg.get(i) as NamedArg
+               val oneNA:NamedArg = input.listNamedArg.get(i)
                //Serialization for NamedArg.itsName, just the String serialize on itsName
                val clParseName:CLParsed = CLParsed()
                clParseName.itsCLType = CLType()
@@ -65,7 +65,7 @@ class ExecutableDeployItemSerializationHelper {
                    //serialization for module_bytes
                    //if module_bytes is blank, just return U32 serialization for value 0, which equals to "00000000"
                    //if module_bytes is not blank, ret = "00" + moduleBytes.StringSerialization + args.Serialization
-                   var moduleBytesSerialization:String = ""
+                   var moduleBytesSerialization:String
                    if (realItem.module_bytes == "") {
                        moduleBytesSerialization = "00000000"
                    } else {

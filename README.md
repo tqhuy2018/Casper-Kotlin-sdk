@@ -18,7 +18,22 @@ To build and test the SDK you need the flowing things installed in your computer
 
 ## Build and test
 
-The package can be built and tested from IntelliJ IDEA
+The package can be built and tested from IntelliJ IDEA or from command line with Maven.
+
+
+### Build and test from command line with Maven
+
+You need to have Maven installed in your machine. Follow the instruction here to install Maven:
+
+https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+
+Download the Casper-Kotlin-SDK code from Github and put it somewhere in your machine.
+
+Open Terminal if you are using Mac OS or Command Prompt if you are using Windows OS. Enter the root folder of the Casper-Kotlin-SDK, then run this command to test and build the SDK:
+
+```Kotlin
+mvn package
+```
 
 ### Build and test in IntelliJ IDEA
 

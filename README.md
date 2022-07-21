@@ -35,6 +35,11 @@ Open Terminal if you are using Mac OS or Command Prompt if you are using Windows
 mvn package
 ```
 
+Somehow the result will be like this
+
+<img width="1440" alt="Screen Shot 2022-07-21 at 10 43 11" src="https://user-images.githubusercontent.com/94465107/180125473-53fd9f33-ced8-4e4c-803d-ef50f32aff47.png">
+
+
 ### Build and test in IntelliJ IDEA
 
 Download the latest IntelliJ IDEA from https://www.jetbrains.com/idea/download
